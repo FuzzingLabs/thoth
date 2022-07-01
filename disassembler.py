@@ -154,6 +154,7 @@ def analyze(path, contract_type="cairo"):
             bytecodesToJson[key][l[offset]] = decodeToJson(str(decoded))
         except AssertionError:
             decoded = decodeInstruction(l[offset], l[offset+1])
+            # tofix : Why do we jump by 2 ? how can we verify that we got all the instruction if size != len of dictionnary ?
             offset += 2
             #bytecodesToJson[l[offset]] = decodeToJson(str(decoded))
             key = "Instruction " + str(offset)
