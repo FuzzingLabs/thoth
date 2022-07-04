@@ -175,4 +175,4 @@ def analyze(path, contract_type="cairo"):
     bytecodesToJson["MetaData"]["immediate value Number"] = immNumber
     
     result = json.dumps(bytecodesToJson, indent=3)
-    logging.info(result)
+    print("\n" + result)
