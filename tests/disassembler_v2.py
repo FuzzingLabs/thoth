@@ -7,15 +7,13 @@ from starkware.cairo.lang.compiler.instruction import Instruction
 from starkware.cairo.lang.compiler.instruction_builder import *
 from starkware.cairo.lang.compiler.parser import *
 import json
-import logging
-import re
 
 # ---------------------------------
 # Function which decode an encoded 
 # instruction and it possible immediate value
 # ---------------------------------
 
-def decodeInstruction(encoding: int, imm: Optional[int] = None) -> Instruction:
+def decode_instruction(encoding: int, imm: Optional[int] = None) -> Instruction:
     """
     Given 1 or 2 integers representing an instruction, returns the Instruction.
     If imm is given for an instruction with no immediate, it will be ignored.
@@ -114,65 +112,55 @@ def decodeInstruction(encoding: int, imm: Optional[int] = None) -> Instruction:
 # a given encoded instructions series
 # ---------------------------------
 
-def decodeToJson(decoded):
-    dataDict = {}
-    toParse = re.search(r'\((.*?)\)', decoded).group(1)
-    parsed = toParse.split(",")
-    for data in parsed:
-        key = data.split("=")[0].strip()
-        value = data.split("=")[1].strip()
-        dataDict[key] = value
-    return dataDict
-
 def analyze(path, contract_type="cairo"):
-    with path[0] as f:
+
+    with open(path, mode='r') as f:
+
         json_data = json.load(f)
 
     l = []
+
     if contract_type == "cairo":
-        l = [int(bytecode, 16) for bytecode in json_data["data"]]
+        l = [int(x, 16) for x in json_data["data"]]
     elif contract_type == "starknet":
-        l = [int(bytecode, 16) for bytecode in json_data["program"]["data"]]
+        l = [int(x, 16) for x in json_data["program"]["data"]]
     else:
-        logging.critical("Analyze: unknown contract_type")
+        print("unknown contract_type")
         exit()
 
-    # tofix : why do we need this ?
     if l[len(l)-1] != 2345108766317314046:
         l.append(2345108766317314046)
 
+    print("\nThe List:\n" + str(l) + "\n")
+
     size = len(l)
+
+    print("List Size: " + str(size) + "\n")
+
     offset = 0
-    bytecodesToJson = {}
-    instructionNumber = 0
-    immNumber = 0
-    while offset < size - 1:
+
+    while offset < size -1:
         try:
-            instructionNumber += 1
-            decoded = decodeInstruction(l[offset])
+            i = decode_instruction(l[offset])
             offset += 1
-            key = "Instruction " + str(offset)
-            bytecodesToJson[key] = {}
-            bytecodesToJson[key][l[offset]] = decodeToJson(str(decoded))
+            print(i)
         except AssertionError:
-            #l[offset + 1] -> imm value
-            instructionNumber += 1
-            immNumber += 1
-            decoded = decodeInstruction(l[offset], l[offset + 1])
+            i = decode_instruction(l[offset], l[offset+1])
             offset += 2
-            key = "Instruction " + str(offset)
-            bytecodesToJson[key] = {}
-            bytecodesToJson[key][l[offset]] = decodeToJson(str(decoded))
+            print(i)
 
-    if (offset != size):
-        instructionNumber += 1
-        key = "Instruction " + str(offset)
-        bytecodesToJson[key] = {}
-        bytecodesToJson[key][l[offset]] = decodeToJson(str(decoded))
+    print(str(decode_instruction(l[offset])) + "\n\n END \n\n")
 
-    bytecodesToJson["MetaData"] = {}
-    bytecodesToJson["MetaData"]["Instruction Number"] = instructionNumber
-    bytecodesToJson["MetaData"]["immediate value Number"] = immNumber
+
+
+# ---------------------------------
+# Goal : get the instructions from 
+# an encoded instructions series
+# ---------------------------------
+
+def main():
     
-    result = json.dumps(bytecodesToJson, indent=3)
-    logging.info(result)
+    analyze("a.json", "cairo")
+
+main()
+
