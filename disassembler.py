@@ -2,6 +2,7 @@
 # Imports and Costants
 # ---------------------------------
 
+from sre_constants import ASSERT
 from starkware.cairo.lang.compiler.encode import *
 from starkware.cairo.lang.compiler.instruction import Instruction
 from starkware.cairo.lang.compiler.instruction import decode_instruction_values as CairoDecode
@@ -121,7 +122,7 @@ def decodeToJson(decoded):
     parsed = toParse.split(",")
     for data in parsed:
         key = data.split("=")[0].strip()
-        if ("imm" not in key):
+        if ("imm" not in key and "off" not in key):
             value = data.split("=")[1].split(":")[0][1:].strip()
         else:
             value = data.split("=")[1].strip()
@@ -129,16 +130,44 @@ def decodeToJson(decoded):
     return dataDict
 
 def printData(dictResult):
-    #  0|  opcode|ap_update|pc_update|res_logic|op1_src|op0_reg|dst_reg
-    keys = ["opcode", "ap_update", "pc_update", "res", "op1_addr", "op0_register", "dst_register", "imm"]
+    spaces = " " * 13
+    prime = (2**251) + (17 * (2**192)) + 1
     for numberInstruction in dictResult.keys():
-        print("\n")
+        id = numberInstruction.split("Instruction ")[1]
+        print(f"\noffset {id} :" + spaces[len(id):], end="")
         for encodedInstruction in dictResult[numberInstruction].keys():
-            print(str(hex(encodedInstruction)) + " : ", end="")
-            for key in keys :
-                value = dictResult[numberInstruction][encodedInstruction].get(key)
-                if ("REGULAR" not in value and "None" not in value):
-                    print(value + " | ", end="")
+            opcode = dictResult[numberInstruction][encodedInstruction].get("opcode").split("Opcode.")[1]
+            if ("ASSERT_EQ" in opcode):
+                print(f"{opcode}" + spaces[len(opcode):], end="")
+                dstRegister = dictResult[numberInstruction][encodedInstruction].get("dst_register").split("Register.")[1]
+                offDest = dictResult[numberInstruction][encodedInstruction].get("off0")
+                imm = dictResult[numberInstruction][encodedInstruction].get("imm")
+                op1Addr = dictResult[numberInstruction][encodedInstruction].get("op1_addr").split("Op1Addr.")[1]
+                off2 = dictResult[numberInstruction][encodedInstruction].get("off2")
+                if ("IMM" in op1Addr):
+                    print(f"[{dstRegister}+{offDest}], {imm}")
+                else:
+                    if (int(off2) < 0):
+                        print(f"[{dstRegister}+{offDest}], [{op1Addr} - {off2[1:]}]")
+                    else:
+                        print(f"[{dstRegister}+{offDest}], [{op1Addr} + {off2}]")          
+                apUpdate = dictResult[numberInstruction][encodedInstruction].get("ap_update").split("ApUpdate.")[1]
+                if ("REGULAR" not in apUpdate):
+                    op = list(filter(None, re.split(r'(\d+)', apUpdate)))
+                    opcode = op[0]
+                    val = op[1]
+                    print(f"offset {id} :" + spaces[len(id):], end="")
+                    print(f"{opcode}" + spaces[len(opcode):], end="")
+                    print(f"AP, {val}")
+            if ("NOP" in opcode):
+                opcode = dictResult[numberInstruction][encodedInstruction].get("pc_update").split("PcUpdate.")[1]
+                imm = dictResult[numberInstruction][encodedInstruction].get("imm")
+                print(f"{opcode}" + spaces[len(opcode):], end="")
+                newOffset = int(id) + int(imm)
+                print(f"{newOffset}")
+            if ("RET" in opcode):
+                print(f"{opcode}", end="")
+
 
 def analyze(path, contract_type="cairo"):
     with path[0] as f:
@@ -167,25 +196,25 @@ def analyze(path, contract_type="cairo"):
             instructionNumber += 1
             #print(CairoDecode(l[offset]))
             decoded = decodeInstruction(l[offset])
-            offset += 1
             key = "Instruction " + str(offset)
             bytecodesToJson[key] = {}
-            bytecodesToJson[key][l[offset]] = decodeToJson(str(decoded))
+            bytecodesToJson[key][hex(l[offset])] = decodeToJson(str(decoded))
+            offset += 1
         except AssertionError:
             #l[offset + 1] -> imm value
             instructionNumber += 1
             immNumber += 1
             decoded = decodeInstruction(l[offset], l[offset + 1])
-            offset += 2
             key = "Instruction " + str(offset)
             bytecodesToJson[key] = {}
-            bytecodesToJson[key][l[offset]] = decodeToJson(str(decoded))
+            bytecodesToJson[key][hex(l[offset])] = decodeToJson(str(decoded))
+            offset += 2
 
-    if (offset != size):
-        instructionNumber += 1
-        key = "Instruction " + str(offset)
-        bytecodesToJson[key] = {}
-        bytecodesToJson[key][l[offset]] = decodeToJson(str(decoded))
+    instructionNumber += 1
+    key = "Instruction " + str(offset)
+    decoded = decodeInstruction(l[offset])
+    bytecodesToJson[key] = {}
+    bytecodesToJson[key][hex(l[offset])] = decodeToJson(str(decoded))
 
     #bytecodesToJson["MetaData"] = {}
     #bytecodesToJson["MetaData"]["Instruction Number"] = instructionNumber
