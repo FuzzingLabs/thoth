@@ -4,6 +4,7 @@
 
 from starkware.cairo.lang.compiler.encode import *
 from starkware.cairo.lang.compiler.instruction import Instruction
+from starkware.cairo.lang.compiler.instruction import decode_instruction_values as CairoDecode
 from starkware.cairo.lang.compiler.instruction_builder import *
 from starkware.cairo.lang.compiler.parser import *
 import json
@@ -120,9 +121,24 @@ def decodeToJson(decoded):
     parsed = toParse.split(",")
     for data in parsed:
         key = data.split("=")[0].strip()
-        value = data.split("=")[1].strip()
+        if ("imm" not in key):
+            value = data.split("=")[1].split(":")[0][1:].strip()
+        else:
+            value = data.split("=")[1].strip()
         dataDict[key] = value
     return dataDict
+
+def printData(dictResult):
+    #  0|  opcode|ap_update|pc_update|res_logic|op1_src|op0_reg|dst_reg
+    keys = ["opcode", "ap_update", "pc_update", "res", "op1_addr", "op0_register", "dst_register", "imm"]
+    for numberInstruction in dictResult.keys():
+        print("\n")
+        for encodedInstruction in dictResult[numberInstruction].keys():
+            print(str(hex(encodedInstruction)) + " : ", end="")
+            for key in keys :
+                value = dictResult[numberInstruction][encodedInstruction].get(key)
+                if ("REGULAR" not in value and "None" not in value):
+                    print(value + " | ", end="")
 
 def analyze(path, contract_type="cairo"):
     with path[0] as f:
@@ -149,6 +165,7 @@ def analyze(path, contract_type="cairo"):
     while offset < size - 1:
         try:
             instructionNumber += 1
+            #print(CairoDecode(l[offset]))
             decoded = decodeInstruction(l[offset])
             offset += 1
             key = "Instruction " + str(offset)
@@ -170,9 +187,10 @@ def analyze(path, contract_type="cairo"):
         bytecodesToJson[key] = {}
         bytecodesToJson[key][l[offset]] = decodeToJson(str(decoded))
 
-    bytecodesToJson["MetaData"] = {}
-    bytecodesToJson["MetaData"]["Instruction Number"] = instructionNumber
-    bytecodesToJson["MetaData"]["immediate value Number"] = immNumber
+    #bytecodesToJson["MetaData"] = {}
+    #bytecodesToJson["MetaData"]["Instruction Number"] = instructionNumber
+    #bytecodesToJson["MetaData"]["immediate value Number"] = immNumber
     
     result = json.dumps(bytecodesToJson, indent=3)
     print("\n" + result)
+    printData(bytecodesToJson)
