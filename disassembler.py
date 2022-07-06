@@ -129,44 +129,57 @@ def decodeToJson(decoded):
         dataDict[key] = value
     return dataDict
 
+def fPrint(data, end="\n"):
+    spaces = " " * 15
+    print(data + spaces[len(data):], end=end)
+
+class InstructionData:
+     def __init__(self, instructionData):
+        self.offDest = instructionData.get("off0")
+        self.off1 = instructionData.get("off1")
+        self.off2 = instructionData.get("off2")
+        self.imm = instructionData.get("imm")
+        self.dstRegister = instructionData.get("dst_register").split("Register.")[1]
+        self.op0Register = instructionData.get("op0_register").split("Register.")[1]
+        self.op1Addr = instructionData.get("op1_addr").split("Op1Addr.")[1]
+        self.res = instructionData.get("res").split("Res")[1]
+        self.pcUpdate = instructionData.get("pc_update").split("PcUpdate.")[1]
+        self.apUpdate = instructionData.get("ap_update").split("ApUpdate.")[1]
+        self.fpUpdate = instructionData.get("fp_update").split("FpUpdate.")[1]
+        self.opcode = instructionData.get("opcode").split("Opcode.")[1]
+
+
 def printData(dictResult):
     spaces = " " * 13
     prime = (2**251) + (17 * (2**192)) + 1
     for numberInstruction in dictResult.keys():
         id = numberInstruction.split("Instruction ")[1]
-        print(f"\noffset {id} :" + spaces[len(id):], end="")
+        instruction = dictResult[numberInstruction]
+        fPrint(f"offset {id}:", end="")
         for encodedInstruction in dictResult[numberInstruction].keys():
-            opcode = dictResult[numberInstruction][encodedInstruction].get("opcode").split("Opcode.")[1]
-            if ("ASSERT_EQ" in opcode):
-                print(f"{opcode}" + spaces[len(opcode):], end="")
-                dstRegister = dictResult[numberInstruction][encodedInstruction].get("dst_register").split("Register.")[1]
-                offDest = dictResult[numberInstruction][encodedInstruction].get("off0")
-                imm = dictResult[numberInstruction][encodedInstruction].get("imm")
-                op1Addr = dictResult[numberInstruction][encodedInstruction].get("op1_addr").split("Op1Addr.")[1]
-                off2 = dictResult[numberInstruction][encodedInstruction].get("off2")
-                if ("IMM" in op1Addr):
-                    print(f"[{dstRegister}+{offDest}], {imm}")
+            instructionData = InstructionData(instruction[encodedInstruction])
+            if ("ASSERT_EQ" in instructionData.opcode):
+                fPrint(f"{instructionData.opcode}", end="")
+                if ("IMM" in instructionData.op1Addr):
+                    fPrint(f"[{instructionData.dstRegister}+{instructionData.offDest}], {instructionData.imm}")
                 else:
-                    if (int(off2) < 0):
-                        print(f"[{dstRegister}+{offDest}], [{op1Addr} - {off2[1:]}]")
+                    if (int(instructionData.off2) < 0):
+                        fPrint(f"[{instructionData.dstRegister}+{instructionData.offDest}], [{instructionData.op1Addr} - {instructionData.off2[1:]}]")
                     else:
-                        print(f"[{dstRegister}+{offDest}], [{op1Addr} + {off2}]")          
-                apUpdate = dictResult[numberInstruction][encodedInstruction].get("ap_update").split("ApUpdate.")[1]
-                if ("REGULAR" not in apUpdate):
-                    op = list(filter(None, re.split(r'(\d+)', apUpdate)))
-                    opcode = op[0]
-                    val = op[1]
-                    print(f"offset {id} :" + spaces[len(id):], end="")
-                    print(f"{opcode}" + spaces[len(opcode):], end="")
-                    print(f"AP, {val}")
-            if ("NOP" in opcode):
-                opcode = dictResult[numberInstruction][encodedInstruction].get("pc_update").split("PcUpdate.")[1]
-                imm = dictResult[numberInstruction][encodedInstruction].get("imm")
-                print(f"{opcode}" + spaces[len(opcode):], end="")
-                newOffset = int(id) + int(imm)
-                print(f"{newOffset}")
-            if ("RET" in opcode):
-                print(f"{opcode}", end="")
+                        fPrint(f"[{instructionData.dstRegister}+{instructionData.offDest}], [{instructionData.op1Addr} + {instructionData.off2}]")          
+                if ("REGULAR" not in instructionData.apUpdate):
+                    op = list(filter(None, re.split(r'(\d+)', instructionData.apUpdate)))
+                    APopcode = op[0]
+                    APval = op[1]
+                    fPrint(f"offset {id}:", end="")
+                    fPrint(f"{APopcode}", end="")
+                    fPrint(f"AP, {APval}")
+            if ("NOP" in instructionData.opcode):
+                fPrint(f"{instructionData.opcode}", end="")
+                newOffset = int(id) + int(instructionData.imm)
+                fPrint(f"{newOffset}")
+            if ("RET" in instructionData.opcode):
+                fPrint(f"{instructionData.opcode}")
 
 
 def analyze(path, contract_type="cairo"):
@@ -194,7 +207,6 @@ def analyze(path, contract_type="cairo"):
     while offset < size - 1:
         try:
             instructionNumber += 1
-            #print(CairoDecode(l[offset]))
             decoded = decodeInstruction(l[offset])
             key = "Instruction " + str(offset)
             bytecodesToJson[key] = {}
