@@ -265,6 +265,6 @@ def disassemble(instruction):
 
 def main():
     
-    analyze("a.json")
+    analyze("test_condition1.json")
 
 main()
