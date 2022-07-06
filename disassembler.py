@@ -195,7 +195,6 @@ def printData(dictResult):
             if ("RET" in instructionData.opcode):
                 fPrint(f"{instructionData.opcode}")
 
-
 def analyze(path, contract_type="cairo"):
     with path[0] as f:
         json_data = json.load(f)
