@@ -178,23 +178,26 @@ def printData(dictResult):
                         fPrint(f"[{instructionData.dstRegister}{instructionData.offDest}], [{instructionData.op0Register}{instructionData.off1}] {op} [{instructionData.op1Addr}{instructionData.off2}]")  
                     else:
                         fPrint(f"[{instructionData.dstRegister}{instructionData.offDest}], [{instructionData.op0Register}{instructionData.off1}] {op} {instructionData.imm}") 
-                if ("REGULAR" not in instructionData.apUpdate):
-                    op = list(filter(None, re.split(r'(\d+)', instructionData.apUpdate)))
-                    APopcode = op[0]
-                    APval = op[1]
-                    fPrint(f"offset {id}:", end="")
-                    fPrint(f"{APopcode}", end="")
-                    fPrint(f"AP, {APval}")
 
             if ("NOP" in instructionData.opcode):
                 fPrint(f"{instructionData.opcode}", end="")
                 newOffset = int(id) + int(instructionData.imm)
                 fPrint(f"{newOffset}")
+
             if ("CALL" in instructionData.opcode):
-                fPrint("Test")
+                fPrint(f"{instructionData.opcode}", end="")
+                fPrint(f"{int(id) - (prime - int(instructionData.imm))}")
+
             if ("RET" in instructionData.opcode):
                 fPrint(f"{instructionData.opcode}")
 
+            if ("REGULAR" not in instructionData.apUpdate):
+                op = list(filter(None, re.split(r'(\d+)', instructionData.apUpdate)))
+                APopcode = op[0]
+                APval = op[1]
+                fPrint(f"offset {id}:", end="")
+                fPrint(f"{APopcode}", end="")
+                fPrint(f"AP, {APval}")
 
 def analyze(path, contract_type="cairo"):
     with path[0] as f:
