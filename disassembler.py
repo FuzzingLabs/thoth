@@ -162,6 +162,7 @@ def printData(dictResult):
         fPrint(f"offset {id}:", end="")
         for encodedInstruction in dictResult[numberInstruction].keys():
             instructionData = InstructionData(instruction[encodedInstruction])
+
             if ("ASSERT_EQ" in instructionData.opcode):
                 fPrint(f"{instructionData.opcode}", end="")
                 if ("OP1" in instructionData.res):
@@ -189,7 +190,8 @@ def printData(dictResult):
                 fPrint(f"{instructionData.opcode}", end="")
                 newOffset = int(id) + int(instructionData.imm)
                 fPrint(f"{newOffset}")
-
+            if ("CALL" in instructionData.opcode):
+                fPrint("Test")
             if ("RET" in instructionData.opcode):
                 fPrint(f"{instructionData.opcode}")
 
