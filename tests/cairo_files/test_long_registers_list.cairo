@@ -26,6 +26,7 @@ func main{output_ptr : felt*}() -> ():
 	let z = 1
 	let x = 100
 	[ap] = 11; ap++
+	a_func()
 	let zz = 222222222222222222222222
 	[ap] = 99999; ap++
 	[ap] = [ap - 1] - x; ap++

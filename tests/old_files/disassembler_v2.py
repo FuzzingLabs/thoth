@@ -160,8 +160,7 @@ def analyze(path, contract_type="cairo"):
 
 def main():
     
-    analyze("a.json", "cairo")
-    analyze("contract_compiled.json", "starknet")
+    analyze("tests/test_condition1.json", "cairo")
 
 main()
 
