@@ -192,7 +192,7 @@ def analyze(path, contract_type="cairo"):
         [int(bytecode, 16) for bytecode in json_data["program"]["data"]] 
 
     # tofix : why do we need this ?
-    if data[len(data)-1] != 2345108766317314046:
+    if data[len(data) - 1] != 2345108766317314046:
         data.append(2345108766317314046)
 
     size = len(data)
