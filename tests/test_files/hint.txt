@@ -1,0 +1,20 @@
+
+{
+   "Instruction 0": {
+      "0x208b7fff7fff7ffe": {
+         "off0": "-2",
+         "off1": "-1",
+         "off2": "-1",
+         "imm": "None",
+         "dst_register": "Register.FP",
+         "op0_register": "Register.FP",
+         "op1_addr": "Op1Addr.FP",
+         "res": "Res.OP1",
+         "pc_update": "PcUpdate.JUMP",
+         "ap_update": "ApUpdate.REGULAR",
+         "fp_update": "FpUpdate.DST",
+         "opcode": "Opcode.RET"
+      }
+   }
+}
+offset 0:      RET            

@@ -143,9 +143,14 @@ def handleAssertEq(instructionData):
             fPrint(f"[{instructionData.dstRegister}{instructionData.offDest}], [{instructionData.op0Register}{instructionData.off1}] {op} {instructionData.imm}")
  
 def handleNop(instructionData):
-    fPrint(f"{instructionData.opcode}", end="")
-    newOffset = int(instructionData.id) + int(instructionData.imm)
-    fPrint(f"{newOffset}")
+    if ("REGULAR" not in instructionData.pcUpdate):
+        fPrint(f"{instructionData.pcUpdate}", end="")
+        newOffset = int(instructionData.id) + int(instructionData.imm)
+        fPrint(f"{newOffset}")
+    else:
+        fPrint(f"{instructionData.opcode}", end="")
+        newOffset = int(instructionData.id) + int(instructionData.imm)
+        fPrint(f"{newOffset}")
 
 def handleCall(instructionData):
     fPrint(f"{instructionData.opcode}", end="")
