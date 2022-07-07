@@ -8,14 +8,12 @@ from starkware.cairo.lang.compiler.instruction import Instruction
 from starkware.cairo.lang.compiler.instruction import decode_instruction_values as CairoDecode
 from starkware.cairo.lang.compiler.instruction_builder import *
 from starkware.cairo.lang.compiler.parser import *
+from instructionData import InstructionData
 import json
-import logging
 import re
 
-# ---------------------------------
-# Function which decode an encoded 
-# instruction and it possible immediate value
-# ---------------------------------
+operator = {"ADD" : "+", "MUL" : "*"}
+prime = (2**251) + (17 * (2**192)) + 1
 
 def decodeInstruction(encoding: int, imm: Optional[int] = None) -> Instruction:
     """
@@ -111,12 +109,6 @@ def decodeInstruction(encoding: int, imm: Optional[int] = None) -> Instruction:
         opcode=opcode,
     )
 
-# ---------------------------------
-# Goal : get the instructions from 
-# a given encoded instructions series
-# ---------------------------------
-operator = {"ADD" : "+", "MUL" : "*"}
-
 def decodeToJson(decoded):
     dataDict = {}
     toParse = re.search(r'\((.*?)\)', decoded).group(1)
@@ -134,62 +126,55 @@ def fPrint(data, end="\n"):
     spaces = " " * 15
     print(data + spaces[len(data):], end=end)
 
-class InstructionData:
-     def __init__(self, instructionData):
-        self.offDest = instructionData.get("off0") if instructionData.get("off0")[0] == '-' else '+' + instructionData.get("off0")
-        self.offDest = self.offDest if int(self.offDest) != 0 else ""
-        self.off1 = instructionData.get("off1") if instructionData.get("off1")[0] == '-' else '+' + instructionData.get("off1")
-        self.off1 = self.off1 if int(self.off1) != 0 else ""
-        self.off2 = instructionData.get("off2") if instructionData.get("off2")[0] == '-' else '+' + instructionData.get("off2")
-        self.off2 = self.off2 if int(self.off2) != 0 else ""
-        self.imm = instructionData.get("imm")
-        self.dstRegister = instructionData.get("dst_register").split("Register.")[1]
-        self.op0Register = instructionData.get("op0_register").split("Register.")[1]
-        self.op1Addr = instructionData.get("op1_addr").split("Op1Addr.")[1]
-        self.res = instructionData.get("res").split("Res.")[1]
-        self.pcUpdate = instructionData.get("pc_update").split("PcUpdate.")[1]
-        self.apUpdate = instructionData.get("ap_update").split("ApUpdate.")[1]
-        self.fpUpdate = instructionData.get("fp_update").split("FpUpdate.")[1]
-        self.opcode = instructionData.get("opcode").split("Opcode.")[1]
+def handleAssertEq(instructionData):
+    fPrint(f"{instructionData.opcode}", end="")
+    if ("OP1" in instructionData.res):
+        if ("IMM" in instructionData.op1Addr):
+            fPrint(f"[{instructionData.dstRegister}{instructionData.offDest}], {instructionData.imm}")
+        elif ("OP0" in instructionData.op1Addr):
+            fPrint(f"[{instructionData.dstRegister}{instructionData.offDest}], [[{instructionData.op0Register}{instructionData.off1}]{instructionData.off2}]")
+        else:
+            fPrint(f"[{instructionData.dstRegister}{instructionData.offDest}], [{instructionData.op1Addr}{instructionData.off2}]") 
+    else:
+        op = operator[instructionData.res]
+        if ("IMM" not in instructionData.op1Addr):
+            fPrint(f"[{instructionData.dstRegister}{instructionData.offDest}], [{instructionData.op0Register}{instructionData.off1}] {op} [{instructionData.op1Addr}{instructionData.off2}]")  
+        else:
+            fPrint(f"[{instructionData.dstRegister}{instructionData.offDest}], [{instructionData.op0Register}{instructionData.off1}] {op} {instructionData.imm}")
+ 
+def handleNop(instructionData):
+    fPrint(f"{instructionData.opcode}", end="")
+    newOffset = int(instructionData.id) + int(instructionData.imm)
+    fPrint(f"{newOffset}")
 
+def handleCall(instructionData):
+    fPrint(f"{instructionData.opcode}", end="")
+    fPrint(f"{int(instructionData.id) - (prime - int(instructionData.imm))}")
+
+def handleRet(instructionData):
+    fPrint(f"{instructionData.opcode}")
 
 def printData(dictResult):
-    spaces = " " * 13
-    prime = (2**251) + (17 * (2**192)) + 1
     for numberInstruction in dictResult.keys():
         id = numberInstruction.split("Instruction ")[1]
         instruction = dictResult[numberInstruction]
         fPrint(f"offset {id}:", end="")
         for encodedInstruction in dictResult[numberInstruction].keys():
-            instructionData = InstructionData(instruction[encodedInstruction])
+            instructionData = InstructionData(instruction[encodedInstruction], id)
 
             if ("ASSERT_EQ" in instructionData.opcode):
-                fPrint(f"{instructionData.opcode}", end="")
-                if ("OP1" in instructionData.res):
-                    if ("IMM" in instructionData.op1Addr):
-                        fPrint(f"[{instructionData.dstRegister}{instructionData.offDest}], {instructionData.imm}")
-                    elif ("OP0" in instructionData.op1Addr):
-                        fPrint(f"[{instructionData.dstRegister}{instructionData.offDest}], [[{instructionData.op0Register}{instructionData.off1}]{instructionData.off2}]")
-                    else:
-                        fPrint(f"[{instructionData.dstRegister}{instructionData.offDest}], [{instructionData.op1Addr}{instructionData.off2}]") 
-                else:
-                    op = operator[instructionData.res]
-                    if ("IMM" not in instructionData.op1Addr):
-                        fPrint(f"[{instructionData.dstRegister}{instructionData.offDest}], [{instructionData.op0Register}{instructionData.off1}] {op} [{instructionData.op1Addr}{instructionData.off2}]")  
-                    else:
-                        fPrint(f"[{instructionData.dstRegister}{instructionData.offDest}], [{instructionData.op0Register}{instructionData.off1}] {op} {instructionData.imm}") 
+                handleAssertEq(instructionData)
+            
+            elif ("NOP" in instructionData.opcode):
+                handleNop(instructionData)
+            
+            elif ("CALL" in instructionData.opcode):
+                handleCall(instructionData)
 
-            if ("NOP" in instructionData.opcode):
-                fPrint(f"{instructionData.opcode}", end="")
-                newOffset = int(id) + int(instructionData.imm)
-                fPrint(f"{newOffset}")
-
-            if ("CALL" in instructionData.opcode):
-                fPrint(f"{instructionData.opcode}", end="")
-                fPrint(f"{int(id) - (prime - int(instructionData.imm))}")
-
-            if ("RET" in instructionData.opcode):
-                fPrint(f"{instructionData.opcode}")
+            elif ("RET" in instructionData.opcode):
+                handleRet(instructionData)
+            else:
+                fPrint("--TODO--")
 
             if ("REGULAR" not in instructionData.apUpdate):
                 op = list(filter(None, re.split(r'(\d+)', instructionData.apUpdate)))
@@ -203,35 +188,36 @@ def analyze(path, contract_type="cairo"):
     with path[0] as f:
         json_data = json.load(f)
 
-    l = [int(bytecode, 16) for bytecode in json_data["data"]] if (contract_type == "cairo") else\
-         [int(bytecode, 16) for bytecode in json_data["program"]["data"]] 
+    data = [int(bytecode, 16) for bytecode in json_data["data"]] if (contract_type == "cairo") else\
+        [int(bytecode, 16) for bytecode in json_data["program"]["data"]] 
 
     # tofix : why do we need this ?
-    if l[len(l)-1] != 2345108766317314046:
-        l.append(2345108766317314046)
+    if data[len(data)-1] != 2345108766317314046:
+        data.append(2345108766317314046)
 
-    size = len(l)
+    size = len(data)
     offset = 0
     bytecodesToJson = {}
 
     while (offset < size - 1):
         try:
-            decoded = decodeInstruction(l[offset])
+            decoded = decodeInstruction(data[offset])
             key = "Instruction " + str(offset)
             bytecodesToJson[key] = {}
-            bytecodesToJson[key][hex(l[offset])] = decodeToJson(str(decoded))
+            bytecodesToJson[key][hex(data[offset])] = decodeToJson(str(decoded))
             offset += 1
         except AssertionError:
             #l[offset + 1] -> imm value
-            decoded = decodeInstruction(l[offset], l[offset + 1])
+            decoded = decodeInstruction(data[offset], data[offset + 1])
             key = "Instruction " + str(offset)
             bytecodesToJson[key] = {}
-            bytecodesToJson[key][hex(l[offset])] = decodeToJson(str(decoded))
+            bytecodesToJson[key][hex(data[offset])] = decodeToJson(str(decoded))
             offset += 2
+    
     key = "Instruction " + str(offset)
-    decoded = decodeInstruction(l[offset])
+    decoded = decodeInstruction(data[offset])
     bytecodesToJson[key] = {}
-    bytecodesToJson[key][hex(l[offset])] = decodeToJson(str(decoded))
+    bytecodesToJson[key][hex(data[offset])] = decodeToJson(str(decoded))
 
     result = json.dumps(bytecodesToJson, indent=3)
     print("\n" + result)
