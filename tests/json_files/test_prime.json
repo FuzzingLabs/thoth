@@ -2,9 +2,9 @@
     "attributes": [],
     "builtins": [],
     "data": [
-        "0x480680017fff8000",
-        "0x800000000000010ffffffffffffffffffffffffffffffffffffffffffffffcf",
-        "0x480680017fff8000",
+        "0x400680017fff8000",
+        "0x800000000000010ffffffffffffffffffffffffffffffffffffffffffffffd0",
+        "0x400680017fff8000",
         "0x800000000000010ffffffffffffffffffffffffffffffffffffffffffffffcf",
         "0x208b7fff7fff7ffe"
     ],
@@ -25,10 +25,10 @@
                 },
                 "hints": [],
                 "inst": {
-                    "end_col": 91,
+                    "end_col": 89,
                     "end_line": 2,
                     "input_file": {
-                        "filename": "tests/cairo_files/negative.cairo"
+                        "filename": "tests/cairo_files/test_prime.cairo"
                     },
                     "start_col": 2,
                     "start_line": 2
@@ -42,18 +42,18 @@
                 "flow_tracking_data": {
                     "ap_tracking": {
                         "group": 0,
-                        "offset": 1
+                        "offset": 0
                     },
                     "reference_ids": {}
                 },
                 "hints": [],
                 "inst": {
-                    "end_col": 21,
+                    "end_col": 12,
                     "end_line": 3,
                     "input_file": {
-                        "filename": "tests/cairo_files/negative.cairo"
+                        "filename": "tests/cairo_files/test_prime.cairo"
                     },
-                    "start_col": 5,
+                    "start_col": 2,
                     "start_line": 3
                 }
             },
@@ -65,7 +65,7 @@
                 "flow_tracking_data": {
                     "ap_tracking": {
                         "group": 0,
-                        "offset": 2
+                        "offset": 0
                     },
                     "reference_ids": {}
                 },
@@ -74,7 +74,7 @@
                     "end_col": 5,
                     "end_line": 4,
                     "input_file": {
-                        "filename": "tests/cairo_files/negative.cairo"
+                        "filename": "tests/cairo_files/test_prime.cairo"
                     },
                     "start_col": 2,
                     "start_line": 4
