@@ -8,10 +8,13 @@ func main{}():
 			[ap-2] = -6
 		else:
 			[ap-2] = -1
+		end
 	else:
 		if -1 - [ap-1] == - 4:
 			[ap-2] = -7
 		else:
 			[ap-2] = -2
+		end
+	end
 	ret
 end

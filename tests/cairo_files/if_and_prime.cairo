@@ -6,5 +6,6 @@ func main{}():
 		[ap] = 10; ap++
 	else:
 		[ap] = 5; ap++
+	end
 	ret
 end
