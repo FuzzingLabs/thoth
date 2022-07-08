@@ -138,10 +138,10 @@ def analyze(path):
                 if o[4]: number_of_tabs += 1
                 offset += o[1]
                 end_of_if_list, number_of_tabs = test_end_of_if_list(end_of_if_list, o[1], number_of_tabs)
-            except:
-                o = disassemble(instruction)
-                print_with_tabs(o[0], number_of_tabs)
-                if o[4]: number_of_tabs += 1
+            # except:
+            #     o = disassemble(instruction)
+            #     print_with_tabs(o[0], number_of_tabs)
+            #     if o[4]: number_of_tabs += 1
 
             offset += 1
             end_of_if_list, number_of_tabs = test_end_of_if_list(end_of_if_list, 1, number_of_tabs)
@@ -165,10 +165,10 @@ def analyze(path):
                 if o[4]: number_of_tabs += 1
                 offset += o[1]
                 end_of_if_list, number_of_tabs = test_end_of_if_list(end_of_if_list, o[1], number_of_tabs)
-            except:
-                o = disassemble(instruction)
-                print_with_tabs(o[0], number_of_tabs)
-                if o[4]: number_of_tabs += 1
+            # except:
+            #     o = disassemble(instruction)
+            #     print_with_tabs(o[0], number_of_tabs)
+            #     if o[4]: number_of_tabs += 1
             offset += 2
             end_of_if_list, number_of_tabs = test_end_of_if_list(end_of_if_list, 2, number_of_tabs)
 
@@ -184,15 +184,12 @@ def print_with_tabs(value, number_of_tabs=0):
     print(str + value)
 
 def test_end_of_if_list(end_of_if_list, value_to_subtract, number_of_tabs):
-    # print("###")
-    # print(len(end_of_if_list))
-    # print("###")
     if len(end_of_if_list) == 0:
         return [end_of_if_list, number_of_tabs]
     for i in range(len(end_of_if_list)):
         end_of_if_list[i] = end_of_if_list[i] - value_to_subtract
         if end_of_if_list[i] <= 0:
-            print("end")
+            print_with_tabs("end", number_of_tabs-1)
     while 0 in end_of_if_list:
         end_of_if_list.remove(0)
         number_of_tabs -= 1
@@ -207,10 +204,8 @@ def disassemble(instruction, next_instruction=None):
         # if the instruction is an assert_equals and the next one is a no-operation
         if str(instruction.opcode) == "Opcode.ASSERT_EQ" and str(next_instruction.opcode) == "Opcode.NOP":
             if(str(next_instruction.pc_update) == "PcUpdate.JNZ"):
-                print(instruction)
-                ope = " + " if str(instruction.res) == "Res.ADD" else "*"
                 return ["if " + decode_if(instruction) + " == 0 :", 2, 0, True, True]
-            if(str(next_instruction.pc_update) == "PcUpdate.JUMP_REL"):
+            elif(str(next_instruction.pc_update) == "PcUpdate.JUMP_REL"):
                 return [str(disassemble_one_instruction(instruction)) + "\nelse:", 2, next_instruction.imm, True, False]
 
     # ret ( instruction decoded + no offset to change more than usual + no end to preset )
