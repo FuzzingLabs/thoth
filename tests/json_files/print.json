@@ -38,7 +38,7 @@
                     "end_col": 31,
                     "end_line": 3,
                     "input_file": {
-                        "filename": "/home/seb/cairo_venv/lib/python3.8/site-packages/starkware/cairo/common/serialize.cairo"
+                        "filename": "/home/fuzz/cairo_venv/lib/python3.8/site-packages/starkware/cairo/common/serialize.cairo"
                     },
                     "start_col": 5,
                     "start_line": 3
@@ -64,21 +64,21 @@
                     "end_col": 36,
                     "end_line": 4,
                     "input_file": {
-                        "filename": "/home/seb/cairo_venv/lib/python3.8/site-packages/starkware/cairo/common/serialize.cairo"
+                        "filename": "/home/fuzz/cairo_venv/lib/python3.8/site-packages/starkware/cairo/common/serialize.cairo"
                     },
                     "parent_location": [
                         {
                             "end_col": 39,
                             "end_line": 2,
                             "input_file": {
-                                "filename": "/home/seb/cairo_venv/lib/python3.8/site-packages/starkware/cairo/common/serialize.cairo"
+                                "filename": "/home/fuzz/cairo_venv/lib/python3.8/site-packages/starkware/cairo/common/serialize.cairo"
                             },
                             "parent_location": [
                                 {
                                     "end_col": 14,
                                     "end_line": 5,
                                     "input_file": {
-                                        "filename": "/home/seb/cairo_venv/lib/python3.8/site-packages/starkware/cairo/common/serialize.cairo"
+                                        "filename": "/home/fuzz/cairo_venv/lib/python3.8/site-packages/starkware/cairo/common/serialize.cairo"
                                     },
                                     "start_col": 5,
                                     "start_line": 5
@@ -114,7 +114,7 @@
                     "end_col": 14,
                     "end_line": 5,
                     "input_file": {
-                        "filename": "/home/seb/cairo_venv/lib/python3.8/site-packages/starkware/cairo/common/serialize.cairo"
+                        "filename": "/home/fuzz/cairo_venv/lib/python3.8/site-packages/starkware/cairo/common/serialize.cairo"
                     },
                     "start_col": 5,
                     "start_line": 5
@@ -146,7 +146,7 @@
                             "end_col": 39,
                             "end_line": 2,
                             "input_file": {
-                                "filename": "/home/seb/cairo_venv/lib/python3.8/site-packages/starkware/cairo/common/serialize.cairo"
+                                "filename": "/home/fuzz/cairo_venv/lib/python3.8/site-packages/starkware/cairo/common/serialize.cairo"
                             },
                             "parent_location": [
                                 {
@@ -275,10 +275,8 @@
             "value": 1234
         },
         "__main__.main.Return": {
-            "full_name": "__main__.main.Return",
-            "members": {},
-            "size": 0,
-            "type": "struct"
+            "cairo_type": "()",
+            "type": "type_definition"
         },
         "__main__.main.SIZEOF_LOCALS": {
             "type": "const",
@@ -339,10 +337,8 @@
             "type": "struct"
         },
         "starkware.cairo.common.serialize.serialize_word.Return": {
-            "full_name": "starkware.cairo.common.serialize.serialize_word.Return",
-            "members": {},
-            "size": 0,
-            "type": "struct"
+            "cairo_type": "()",
+            "type": "type_definition"
         },
         "starkware.cairo.common.serialize.serialize_word.SIZEOF_LOCALS": {
             "type": "const",

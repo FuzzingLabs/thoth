@@ -152,17 +152,20 @@ def handleNop(instructionData):
         newOffset = int(instructionData.id) + int(instructionData.imm)
         fPrint(f"{newOffset}")
 
-def handleCall(instructionData):
+def handleCall(instructionData, functionName):
     fPrint(f"{instructionData.opcode}", end="")
-    fPrint(f"{int(instructionData.id) - (prime - int(instructionData.imm))}")
+    offset = int(instructionData.id) - (prime - int(instructionData.imm))
+    fPrint(f"{offset}=>{functionName[str(offset)]}")
 
 def handleRet(instructionData):
     fPrint(f"{instructionData.opcode}")
 
-def printData(dictResult):
+def printData(dictResult, functionOffset):
     for numberInstruction in dictResult.keys():
         id = numberInstruction.split("Instruction ")[1]
         instruction = dictResult[numberInstruction]
+        if (id in functionOffset):
+            print(f"\n\t\tFUNCTION : {functionOffset[id]}\n")
         fPrint(f"offset {id}:", end="")
         for encodedInstruction in dictResult[numberInstruction].keys():
             instructionData = InstructionData(instruction[encodedInstruction], id)
@@ -174,7 +177,7 @@ def printData(dictResult):
                 handleNop(instructionData)
             
             elif ("CALL" in instructionData.opcode):
-                handleCall(instructionData)
+                handleCall(instructionData, functionOffset)
 
             elif ("RET" in instructionData.opcode):
                 handleRet(instructionData)
@@ -195,6 +198,16 @@ def analyze(path, contract_type="cairo"):
 
     data = [int(bytecode, 16) for bytecode in json_data["data"]] if (contract_type == "cairo") else\
         [int(bytecode, 16) for bytecode in json_data["program"]["data"]] 
+
+    debugInfo = json_data["debug_info"]
+    instructionLocations = debugInfo["instruction_locations"]
+    functionOffset = {}
+    actualFunction = ""
+    for offset in instructionLocations:
+        functionName = instructionLocations[offset]["accessible_scopes"][1]
+        if (actualFunction != functionName):
+            functionOffset[offset] = functionName
+            actualFunction = functionName
 
     # tofix : why do we need this ?
     if data[len(data) - 1] != 2345108766317314046:
@@ -226,4 +239,4 @@ def analyze(path, contract_type="cairo"):
 
     result = json.dumps(bytecodesToJson, indent=3)
     print("\n" + result)
-    printData(bytecodesToJson)
+    printData(bytecodesToJson, functionOffset)

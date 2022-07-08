@@ -878,15 +878,8 @@
             "type": "struct"
         },
         "__main__.a_func.Return": {
-            "full_name": "__main__.a_func.Return",
-            "members": {
-                "x": {
-                    "cairo_type": "felt",
-                    "offset": 0
-                }
-            },
-            "size": 1,
-            "type": "struct"
+            "cairo_type": "(x : felt)",
+            "type": "type_definition"
         },
         "__main__.a_func.SIZEOF_LOCALS": {
             "type": "const",
@@ -945,10 +938,8 @@
             "type": "struct"
         },
         "__main__.main.Return": {
-            "full_name": "__main__.main.Return",
-            "members": {},
-            "size": 0,
-            "type": "struct"
+            "cairo_type": "()",
+            "type": "type_definition"
         },
         "__main__.main.SIZEOF_LOCALS": {
             "type": "const",
