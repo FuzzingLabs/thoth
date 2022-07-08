@@ -503,7 +503,8 @@ offset 19:     ASSERT_EQ      [AP+2], [[AP-4]+7]
 offset 19:     ADD            AP, 1          
 offset 20:     ASSERT_EQ      [AP], 11       
 offset 20:     ADD            AP, 1          
-offset 22:     Test           
+offset 22:     CALL           0              
+offset 22:     ADD            AP, 2          
 offset 24:     ASSERT_EQ      [AP], 99999    
 offset 24:     ADD            AP, 1          
 offset 26:     ASSERT_EQ      [AP], [AP-1] + 3618502788666131213697322783095070105623107215331596699973092056135872020381

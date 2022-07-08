@@ -1,23 +1,23 @@
 
 {
    "Instruction 0": {
-      "0x480680017fff8000": {
+      "0x400680017fff8000": {
          "off0": "0",
          "off1": "-1",
          "off2": "1",
-         "imm": "3618502788666131213697322783095070105623107215331596699973092056135872020431",
+         "imm": "3618502788666131213697322783095070105623107215331596699973092056135872020432",
          "dst_register": "Register.AP",
          "op0_register": "Register.FP",
          "op1_addr": "Op1Addr.IMM",
          "res": "Res.OP1",
          "pc_update": "PcUpdate.REGULAR",
-         "ap_update": "ApUpdate.ADD1",
+         "ap_update": "ApUpdate.REGULAR",
          "fp_update": "FpUpdate.REGULAR",
          "opcode": "Opcode.ASSERT_EQ"
       }
    },
    "Instruction 2": {
-      "0x480680017fff8000": {
+      "0x400680017fff8000": {
          "off0": "0",
          "off1": "-1",
          "off2": "1",
@@ -27,7 +27,7 @@
          "op1_addr": "Op1Addr.IMM",
          "res": "Res.OP1",
          "pc_update": "PcUpdate.REGULAR",
-         "ap_update": "ApUpdate.ADD1",
+         "ap_update": "ApUpdate.REGULAR",
          "fp_update": "FpUpdate.REGULAR",
          "opcode": "Opcode.ASSERT_EQ"
       }
@@ -49,8 +49,6 @@
       }
    }
 }
-offset 0:      ASSERT_EQ      [AP], 3618502788666131213697322783095070105623107215331596699973092056135872020431
-offset 0:      ADD            AP, 1          
+offset 0:      ASSERT_EQ      [AP], 3618502788666131213697322783095070105623107215331596699973092056135872020432
 offset 2:      ASSERT_EQ      [AP], 3618502788666131213697322783095070105623107215331596699973092056135872020431
-offset 2:      ADD            AP, 1          
 offset 4:      RET            
