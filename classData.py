@@ -126,7 +126,8 @@ class FunctionData:
       while (headInstruction):
          if ("CALL" in headInstruction.opcode):
             offset = int(headInstruction.id) - (prime - int(headInstruction.imm))
-            self.dictFunctions.getFunctionAtOffset(str(offset)).cfgFunction(dot)
+            if (str(offset) != self.offsetStart):
+               self.dictFunctions.getFunctionAtOffset(str(offset)).cfgFunction(dot)
             dot.edge(self.offsetStart, str(offset))
          headInstruction = headInstruction.nextInstruction
       
