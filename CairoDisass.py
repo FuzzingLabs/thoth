@@ -4,7 +4,7 @@ import argparse
 import logging
 
 from __version__ import __version__, __title__
-from disassembler import analyze
+from disassembler import parseToJson
 
 
 class CairoDisassCommandLine:
@@ -40,6 +40,6 @@ class CairoDisassCommandLine:
         logging.getLogger().setLevel(logging.INFO)   
         logging.info(f"CairoDisass -- File : {args.file[0].name}")
 
-        analyze(args.file)
+        disassJson = parseToJson(args.file)
 
         return 0

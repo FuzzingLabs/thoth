@@ -8,9 +8,13 @@ from starkware.cairo.lang.compiler.instruction import Instruction
 from starkware.cairo.lang.compiler.instruction import decode_instruction_values as CairoDecode
 from starkware.cairo.lang.compiler.instruction_builder import *
 from starkware.cairo.lang.compiler.parser import *
-from instructionData import InstructionData
+from classData import InstructionData
+from classData import FunctionData
 import json
 import re
+
+## Create class Function
+
 
 operator = {"ADD" : "+", "MUL" : "*"}
 prime = (2**251) + (17 * (2**192)) + 1
@@ -145,12 +149,10 @@ def handleAssertEq(instructionData):
 def handleNop(instructionData):
     if ("REGULAR" not in instructionData.pcUpdate):
         fPrint(f"{instructionData.pcUpdate}", end="")
-        newOffset = int(instructionData.id) + int(instructionData.imm)
-        fPrint(f"{newOffset}")
     else:
         fPrint(f"{instructionData.opcode}", end="")
-        newOffset = int(instructionData.id) + int(instructionData.imm)
-        fPrint(f"{newOffset}")
+    newOffset = int(instructionData.id) + int(instructionData.imm)
+    fPrint(f"{newOffset}")
 
 def handleCall(instructionData, functionName):
     fPrint(f"{instructionData.opcode}", end="")
@@ -162,7 +164,7 @@ def handleRet(instructionData):
 
 def printData(dictResult, functionOffset):
     for numberInstruction in dictResult.keys():
-        id = numberInstruction.split("Instruction ")[1]
+        id = numberInstruction
         instruction = dictResult[numberInstruction]
         if (id in functionOffset):
             print(f"\n\t\tFUNCTION : {functionOffset[id]}\n")
@@ -192,7 +194,14 @@ def printData(dictResult, functionOffset):
                 fPrint(f"{APopcode}", end="")
                 fPrint(f"AP, {APval}")
 
-def analyze(path, contract_type="cairo"):
+def analyzeAll(bytecodesToJson):
+    head = None
+    for function in bytecodesToJson:
+
+
+
+
+def parseToJson(path, contract_type="cairo"):
     with path[0] as f:
         json_data = json.load(f)
 
@@ -204,6 +213,7 @@ def analyze(path, contract_type="cairo"):
     functionOffset = {}
     actualFunction = ""
     for offset in instructionLocations:
+        # Link instruction and offset to a function
         functionName = instructionLocations[offset]["accessible_scopes"][1]
         if (actualFunction != functionName):
             functionOffset[offset] = functionName
@@ -216,27 +226,25 @@ def analyze(path, contract_type="cairo"):
     size = len(data)
     offset = 0
     bytecodesToJson = {}
-
-    while (offset < size - 1):
+    actualFunction = ""
+    while (offset < size):
+        if (str(offset) in functionOffset):
+            actualFunction = functionOffset[str(offset)]
+            bytecodesToJson[actualFunction] = {}
         try:
             decoded = decodeInstruction(data[offset])
-            key = "Instruction " + str(offset)
-            bytecodesToJson[key] = {}
-            bytecodesToJson[key][hex(data[offset])] = decodeToJson(str(decoded))
+            key = str(offset)
+            bytecodesToJson[actualFunction][key] = {}
+            bytecodesToJson[actualFunction][key][hex(data[offset])] = decodeToJson(str(decoded))
             offset += 1
         except AssertionError:
             #l[offset + 1] -> imm value
             decoded = decodeInstruction(data[offset], data[offset + 1])
-            key = "Instruction " + str(offset)
-            bytecodesToJson[key] = {}
-            bytecodesToJson[key][hex(data[offset])] = decodeToJson(str(decoded))
+            key = str(offset)
+            bytecodesToJson[actualFunction][key] = {}
+            bytecodesToJson[actualFunction][key][hex(data[offset])] = decodeToJson(str(decoded))
             offset += 2
     
-    key = "Instruction " + str(offset)
-    decoded = decodeInstruction(data[offset])
-    bytecodesToJson[key] = {}
-    bytecodesToJson[key][hex(data[offset])] = decodeToJson(str(decoded))
-
-    result = json.dumps(bytecodesToJson, indent=3)
-    print("\n" + result)
-    printData(bytecodesToJson, functionOffset)
+    print("\n", json.dumps(bytecodesToJson, indent=3))
+    return bytecodesToJson
+    #printData(bytecodesToJson, functionOffset)
