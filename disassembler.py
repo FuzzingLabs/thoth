@@ -2,6 +2,7 @@
 # Imports and Costants
 # ---------------------------------
 
+from dis import dis
 from sre_constants import ASSERT
 from starkware.cairo.lang.compiler.encode import *
 from starkware.cairo.lang.compiler.instruction import Instruction
@@ -113,138 +114,33 @@ def decodeInstruction(encoding: int, imm: Optional[int] = None) -> Instruction:
         opcode=opcode,
     )
 
-def decodeToJson(decoded):
-    dataDict = {}
-    toParse = re.search(r'\((.*?)\)', decoded).group(1)
-    parsed = toParse.split(",")
-    for data in parsed:
-        key = data.split("=")[0].strip()
-        if ("imm" not in key and "off" not in key):
-            value = data.split("=")[1].split(":")[0][1:].strip()
-        else:
-            value = data.split("=")[1].strip()
-        dataDict[key] = value
-    return dataDict
-
-def fPrint(data, end="\n"):
-    spaces = " " * 15
-    print(data + spaces[len(data):], end=end)
-
-def handleAssertEq(instructionData):
-    fPrint(f"{instructionData.opcode}", end="")
-    if ("OP1" in instructionData.res):
-        if ("IMM" in instructionData.op1Addr):
-            fPrint(f"[{instructionData.dstRegister}{instructionData.offDest}], {instructionData.imm}")
-        elif ("OP0" in instructionData.op1Addr):
-            fPrint(f"[{instructionData.dstRegister}{instructionData.offDest}], [[{instructionData.op0Register}{instructionData.off1}]{instructionData.off2}]")
-        else:
-            fPrint(f"[{instructionData.dstRegister}{instructionData.offDest}], [{instructionData.op1Addr}{instructionData.off2}]") 
-    else:
-        op = operator[instructionData.res]
-        if ("IMM" not in instructionData.op1Addr):
-            fPrint(f"[{instructionData.dstRegister}{instructionData.offDest}], [{instructionData.op0Register}{instructionData.off1}] {op} [{instructionData.op1Addr}{instructionData.off2}]")  
-        else:
-            fPrint(f"[{instructionData.dstRegister}{instructionData.offDest}], [{instructionData.op0Register}{instructionData.off1}] {op} {instructionData.imm}")
- 
-def handleNop(instructionData):
-    if ("REGULAR" not in instructionData.pcUpdate):
-        fPrint(f"{instructionData.pcUpdate}", end="")
-    else:
-        fPrint(f"{instructionData.opcode}", end="")
-    newOffset = int(instructionData.id) + int(instructionData.imm)
-    fPrint(f"{newOffset}")
-
-def handleCall(instructionData, functionName):
-    fPrint(f"{instructionData.opcode}", end="")
-    offset = int(instructionData.id) - (prime - int(instructionData.imm))
-    fPrint(f"{offset}=>{functionName[str(offset)]}")
-
-def handleRet(instructionData):
-    fPrint(f"{instructionData.opcode}")
-
-def printData(dictResult, functionOffset):
-    for numberInstruction in dictResult.keys():
-        id = numberInstruction
-        instruction = dictResult[numberInstruction]
-        if (id in functionOffset):
-            print(f"\n\t\tFUNCTION : {functionOffset[id]}\n")
-        fPrint(f"offset {id}:", end="")
-        for encodedInstruction in dictResult[numberInstruction].keys():
-            instructionData = InstructionData(instruction[encodedInstruction], id)
-
-            if ("ASSERT_EQ" in instructionData.opcode):
-                handleAssertEq(instructionData)
-            
-            elif ("NOP" in instructionData.opcode):
-                handleNop(instructionData)
-            
-            elif ("CALL" in instructionData.opcode):
-                handleCall(instructionData, functionOffset)
-
-            elif ("RET" in instructionData.opcode):
-                handleRet(instructionData)
-            else:
-                fPrint("--TODO--")
-
-            if ("REGULAR" not in instructionData.apUpdate):
-                op = list(filter(None, re.split(r'(\d+)', instructionData.apUpdate)))
-                APopcode = op[0]
-                APval = op[1]
-                fPrint(f"offset {id}:", end="")
-                fPrint(f"{APopcode}", end="")
-                fPrint(f"AP, {APval}")
-
-def analyzeAll(bytecodesToJson):
+def analyzeGetFunctions(bytecodesToJson):
     head = None
+    previous = None
     for function in bytecodesToJson:
+        offsetStart = list(bytecodesToJson[function].keys())[0]
+        offsetEnd = list(bytecodesToJson[function].keys())[-1]
+        name = function
+        instructionList = bytecodesToJson[function]
+        functionClass = FunctionData(offsetStart, offsetEnd, name, instructionList)
+        if (not head):
+            head = functionClass
+        if (previous):
+            previous.nextFunction = functionClass
+        previous = functionClass
+    return head
 
-
-
-
-def parseToJson(path, contract_type="cairo"):
-    with path[0] as f:
-        json_data = json.load(f)
-
-    data = [int(bytecode, 16) for bytecode in json_data["data"]] if (contract_type == "cairo") else\
-        [int(bytecode, 16) for bytecode in json_data["program"]["data"]] 
-
-    debugInfo = json_data["debug_info"]
-    instructionLocations = debugInfo["instruction_locations"]
-    functionOffset = {}
-    actualFunction = ""
-    for offset in instructionLocations:
-        # Link instruction and offset to a function
-        functionName = instructionLocations[offset]["accessible_scopes"][1]
-        if (actualFunction != functionName):
-            functionOffset[offset] = functionName
-            actualFunction = functionName
-
-    # tofix : why do we need this ?
-    if data[len(data) - 1] != 2345108766317314046:
-        data.append(2345108766317314046)
-
-    size = len(data)
-    offset = 0
-    bytecodesToJson = {}
-    actualFunction = ""
-    while (offset < size):
-        if (str(offset) in functionOffset):
-            actualFunction = functionOffset[str(offset)]
-            bytecodesToJson[actualFunction] = {}
-        try:
-            decoded = decodeInstruction(data[offset])
-            key = str(offset)
-            bytecodesToJson[actualFunction][key] = {}
-            bytecodesToJson[actualFunction][key][hex(data[offset])] = decodeToJson(str(decoded))
-            offset += 1
-        except AssertionError:
-            #l[offset + 1] -> imm value
-            decoded = decodeInstruction(data[offset], data[offset + 1])
-            key = str(offset)
-            bytecodesToJson[actualFunction][key] = {}
-            bytecodesToJson[actualFunction][key][hex(data[offset])] = decodeToJson(str(decoded))
-            offset += 2
-    
-    print("\n", json.dumps(bytecodesToJson, indent=3))
-    return bytecodesToJson
-    #printData(bytecodesToJson, functionOffset)
+def disassembleFunction(functionData):
+    instructionList = functionData.instructionList
+    head = None
+    previous = None
+    instructionData = None
+    for offset in instructionList:
+        for bytecode in instructionList[offset]:
+            instructionData = InstructionData(instructionList[offset][bytecode], offset)
+        if (not head):
+            head = instructionData
+        if (previous):
+            previous.nextInstruction = instructionData
+        previous = instructionData
+    functionData.instructionData = head

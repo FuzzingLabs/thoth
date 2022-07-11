@@ -4,8 +4,9 @@ import argparse
 import logging
 
 from __version__ import __version__, __title__
-from disassembler import parseToJson
-
+from disassembler import *
+from utils import *
+from jsonParser import *
 
 class CairoDisassCommandLine:
     @staticmethod
@@ -41,5 +42,9 @@ class CairoDisassCommandLine:
         logging.info(f"CairoDisass -- File : {args.file[0].name}")
 
         disassJson = parseToJson(args.file)
-
+        headFunction = analyzeGetFunctions(disassJson)
+        while (headFunction):
+            headFunction.disassembleFunction()
+            headFunction.printData()
+            headFunction = headFunction.nextFunction
         return 0
