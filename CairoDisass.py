@@ -2,10 +2,12 @@
 
 import argparse
 import logging
+import graphviz
 
 from __version__ import __version__, __title__
-from disassembler import analyze
-
+from disassembler import *
+from utils import *
+from jsonParser import *
 
 class CairoDisassCommandLine:
     @staticmethod
@@ -40,6 +42,14 @@ class CairoDisassCommandLine:
         logging.getLogger().setLevel(logging.INFO)   
         logging.info(f"CairoDisass -- File : {args.file[0].name}")
 
-        analyze(args.file)
-
+        disassJson = parseToJson(args.file)
+        headFunction = analyzeGetFunctions(disassJson)
+        while (headFunction):
+            headFunction.disassembleFunction()
+            if (headFunction.name == "__main__.b_func"):
+                dot = graphviz.Digraph('CALL FLOW GRAPH', comment='CALL FLOW GRAPH')  
+                headFunction.cfgFunction(dot)
+                dot.render(directory='doctest-output', view=True)  
+                'doctest-output/callflowgraph.gv.pdf'
+            headFunction = headFunction.nextFunction
         return 0

@@ -52,10 +52,8 @@
             "type": "struct"
         },
         "__main__.main.Return": {
-            "full_name": "__main__.main.Return",
-            "members": {},
-            "size": 0,
-            "type": "struct"
+            "cairo_type": "()",
+            "type": "type_definition"
         },
         "__main__.main.SIZEOF_LOCALS": {
             "type": "const",
