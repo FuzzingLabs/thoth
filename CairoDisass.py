@@ -2,6 +2,7 @@
 
 import argparse
 import logging
+import graphviz
 
 from __version__ import __version__, __title__
 from disassembler import *
@@ -45,6 +46,10 @@ class CairoDisassCommandLine:
         headFunction = analyzeGetFunctions(disassJson)
         while (headFunction):
             headFunction.disassembleFunction()
-            headFunction.printData()
+            if (headFunction.name == "__main__.b_func"):
+                dot = graphviz.Digraph('CALL FLOW GRAPH', comment='CALL FLOW GRAPH')  
+                headFunction.cfgFunction(dot)
+                dot.render(directory='doctest-output', view=True)  
+                'doctest-output/callflowgraph.gv.pdf'
             headFunction = headFunction.nextFunction
         return 0

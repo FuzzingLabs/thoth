@@ -1,4 +1,5 @@
 import imp
+import graphviz
 import re
 from utils import *
 class InstructionData:
@@ -48,11 +49,22 @@ class InstructionData:
    def handleCall(self):
       fPrint(f"{self.opcode}", end="")
       offset = int(self.id) - (prime - int(self.imm))
+      fPrint(f"{offset}")
       #fPrint(f"{offset}=>{##need to get the function name}")
 
    def handleRet(self):
       fPrint(f"{self.opcode}")
       
+class FunctionDict:
+   def __init__(self):
+      self.functions = {}
+   
+   def append(self, functionData):
+      self.functions[functionData.offsetStart] = functionData
+   
+   def getFunctionAtOffset(self, offset):
+      return (self.functions.get(offset))
+
 class FunctionData:
    def __init__(self, offsetStart, offsetEnd, name, instructionList, analyze=True) -> None:
       self.offsetStart = offsetStart
@@ -61,6 +73,7 @@ class FunctionData:
       self.instructionList = instructionList
       self.instructionData = None
       self.nextFunction = None
+      self.dictFunctions = None
 
    def disassembleFunction(self):
       instructionList = self.instructionList
@@ -104,8 +117,16 @@ class FunctionData:
                fPrint(f"{APopcode}", end="")
                fPrint(f"AP, {APval}")
          instructionData = instructionData.nextInstruction
-      """if (analyze) :
-         self.analyze()
-
-   def analyze():
-      print("todo"):"""
+   
+   def cfgFunction(self, dot):
+      if (not self.instructionData):
+         self.instructionData = self.disassembleFunction()
+      headInstruction = self.instructionData
+      dot.node(self.offsetStart, self.name)
+      while (headInstruction):
+         if ("CALL" in headInstruction.opcode):
+            offset = int(headInstruction.id) - (prime - int(headInstruction.imm))
+            self.dictFunctions.getFunctionAtOffset(str(offset)).cfgFunction(dot)
+            dot.edge(self.offsetStart, str(offset))
+         headInstruction = headInstruction.nextInstruction
+      
