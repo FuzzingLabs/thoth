@@ -43,8 +43,8 @@ class InstructionData:
          fPrint(f"{self.pcUpdate}", end="")
       else:
          fPrint(f"{self.opcode}", end="")
-      newOffset = int(self.id) + int(self.imm)
-      fPrint(f"{newOffset}")
+      #newOffset = int(self.id) + int(self.imm)
+      #fPrint(f"{newOffset}")
 
    def handleCall(self):
       fPrint(f"{self.opcode}", end="")
@@ -112,7 +112,7 @@ class FunctionData:
          if ("REGULAR" not in instructionData.apUpdate):
                op = list(filter(None, re.split(r'(\d+)', instructionData.apUpdate)))
                APopcode = op[0]
-               APval = op[1]
+               APval = op[1] if (len(op) > 1) else instructionData.imm
                fPrint(f"offset {instructionData.id}:", end="")
                fPrint(f"{APopcode}", end="")
                fPrint(f"AP, {APval}")
