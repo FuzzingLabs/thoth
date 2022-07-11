@@ -46,6 +46,7 @@ class CairoDisassCommandLine:
         headFunction = analyzeGetFunctions(disassJson)
         while (headFunction):
             headFunction.disassembleFunction()
+            headFunction.printData()
             if (headFunction.name == "__main__.main"):
                 dot = graphviz.Digraph('CALL FLOW GRAPH', comment='CALL FLOW GRAPH')  
                 headFunction.cfgFunction(dot)
