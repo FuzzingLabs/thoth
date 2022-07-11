@@ -1,0 +1,182 @@
+{
+    "attributes": [],
+    "builtins": [],
+    "data": [
+        "0x208b7fff7fff7ffe"
+    ],
+    "debug_info": {
+        "file_contents": {},
+        "instruction_locations": {
+            "0": {
+                "accessible_scopes": [
+                    "__main__",
+                    "__main__.main"
+                ],
+                "flow_tracking_data": {
+                    "ap_tracking": {
+                        "group": 0,
+                        "offset": 0
+                    },
+                    "reference_ids": {}
+                },
+                "hints": [],
+                "inst": {
+                    "end_col": 8,
+                    "end_line": 34,
+                    "input_file": {
+                        "filename": "tests/cairo_files/big_struct.cairo"
+                    },
+                    "start_col": 5,
+                    "start_line": 34
+                }
+            }
+        }
+    },
+    "hints": {},
+    "identifiers": {
+        "__main__.BatchOutput": {
+            "full_name": "__main__.BatchOutput",
+            "members": {
+                "n_no_votes": {
+                    "cairo_type": "felt",
+                    "offset": 1
+                },
+                "n_yes_votes": {
+                    "cairo_type": "felt",
+                    "offset": 0
+                },
+                "public_keys_root_after": {
+                    "cairo_type": "felt",
+                    "offset": 3
+                },
+                "public_keys_root_before": {
+                    "cairo_type": "felt",
+                    "offset": 2
+                }
+            },
+            "size": 4,
+            "type": "struct"
+        },
+        "__main__.DictAccess": {
+            "destination": "starkware.cairo.common.dict.DictAccess",
+            "type": "alias"
+        },
+        "__main__.VoteInfo": {
+            "full_name": "__main__.VoteInfo",
+            "members": {
+                "pub_key": {
+                    "cairo_type": "felt",
+                    "offset": 1
+                },
+                "r": {
+                    "cairo_type": "felt",
+                    "offset": 3
+                },
+                "s": {
+                    "cairo_type": "felt",
+                    "offset": 4
+                },
+                "vote": {
+                    "cairo_type": "felt",
+                    "offset": 2
+                },
+                "voter_id": {
+                    "cairo_type": "felt",
+                    "offset": 0
+                }
+            },
+            "size": 5,
+            "type": "struct"
+        },
+        "__main__.VotingState": {
+            "full_name": "__main__.VotingState",
+            "members": {
+                "n_no_votes": {
+                    "cairo_type": "felt",
+                    "offset": 1
+                },
+                "n_yes_votes": {
+                    "cairo_type": "felt",
+                    "offset": 0
+                },
+                "public_key_tree_end": {
+                    "cairo_type": "starkware.cairo.common.dict_access.DictAccess*",
+                    "offset": 3
+                },
+                "public_key_tree_start": {
+                    "cairo_type": "starkware.cairo.common.dict_access.DictAccess*",
+                    "offset": 2
+                }
+            },
+            "size": 4,
+            "type": "struct"
+        },
+        "__main__.main": {
+            "decorators": [],
+            "pc": 0,
+            "type": "function"
+        },
+        "__main__.main.Args": {
+            "full_name": "__main__.main.Args",
+            "members": {},
+            "size": 0,
+            "type": "struct"
+        },
+        "__main__.main.ImplicitArgs": {
+            "full_name": "__main__.main.ImplicitArgs",
+            "members": {},
+            "size": 0,
+            "type": "struct"
+        },
+        "__main__.main.Return": {
+            "full_name": "__main__.main.Return",
+            "members": {},
+            "size": 0,
+            "type": "struct"
+        },
+        "__main__.main.SIZEOF_LOCALS": {
+            "type": "const",
+            "value": 0
+        },
+        "starkware.cairo.common.dict.DictAccess": {
+            "destination": "starkware.cairo.common.dict_access.DictAccess",
+            "type": "alias"
+        },
+        "starkware.cairo.common.dict.squash_dict": {
+            "destination": "starkware.cairo.common.squash_dict.squash_dict",
+            "type": "alias"
+        },
+        "starkware.cairo.common.dict_access.DictAccess": {
+            "full_name": "starkware.cairo.common.dict_access.DictAccess",
+            "members": {
+                "key": {
+                    "cairo_type": "felt",
+                    "offset": 0
+                },
+                "new_value": {
+                    "cairo_type": "felt",
+                    "offset": 2
+                },
+                "prev_value": {
+                    "cairo_type": "felt",
+                    "offset": 1
+                }
+            },
+            "size": 3,
+            "type": "struct"
+        },
+        "starkware.cairo.common.squash_dict.DictAccess": {
+            "destination": "starkware.cairo.common.dict_access.DictAccess",
+            "type": "alias"
+        },
+        "starkware.cairo.common.squash_dict.assert_lt_felt": {
+            "destination": "starkware.cairo.common.math.assert_lt_felt",
+            "type": "alias"
+        }
+    },
+    "main_scope": "__main__",
+    "prime": "0x800000000000011000000000000000000000000000000000000000000000001",
+    "reference_manager": {
+        "references": []
+    }
+}
