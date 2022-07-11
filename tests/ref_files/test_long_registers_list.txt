@@ -1,0 +1,533 @@
+
+{
+   "Instruction 0": {
+      "0x480680017fff8000": {
+         "off0": "0",
+         "off1": "-1",
+         "off2": "1",
+         "imm": "10",
+         "dst_register": "Register.AP",
+         "op0_register": "Register.FP",
+         "op1_addr": "Op1Addr.IMM",
+         "res": "Res.OP1",
+         "pc_update": "PcUpdate.REGULAR",
+         "ap_update": "ApUpdate.ADD1",
+         "fp_update": "FpUpdate.REGULAR",
+         "opcode": "Opcode.ASSERT_EQ"
+      }
+   },
+   "Instruction 2": {
+      "0x208b7fff7fff7ffe": {
+         "off0": "-2",
+         "off1": "-1",
+         "off2": "-1",
+         "imm": "None",
+         "dst_register": "Register.FP",
+         "op0_register": "Register.FP",
+         "op1_addr": "Op1Addr.FP",
+         "res": "Res.OP1",
+         "pc_update": "PcUpdate.JUMP",
+         "ap_update": "ApUpdate.REGULAR",
+         "fp_update": "FpUpdate.DST",
+         "opcode": "Opcode.RET"
+      }
+   },
+   "Instruction 3": {
+      "0x400780017fff8001": {
+         "off0": "1",
+         "off1": "-1",
+         "off2": "1",
+         "imm": "5",
+         "dst_register": "Register.FP",
+         "op0_register": "Register.FP",
+         "op1_addr": "Op1Addr.IMM",
+         "res": "Res.OP1",
+         "pc_update": "PcUpdate.REGULAR",
+         "ap_update": "ApUpdate.REGULAR",
+         "fp_update": "FpUpdate.REGULAR",
+         "opcode": "Opcode.ASSERT_EQ"
+      }
+   },
+   "Instruction 5": {
+      "0x400680017fff8002": {
+         "off0": "2",
+         "off1": "-1",
+         "off2": "1",
+         "imm": "42",
+         "dst_register": "Register.AP",
+         "op0_register": "Register.FP",
+         "op1_addr": "Op1Addr.IMM",
+         "res": "Res.OP1",
+         "pc_update": "PcUpdate.REGULAR",
+         "ap_update": "ApUpdate.REGULAR",
+         "fp_update": "FpUpdate.REGULAR",
+         "opcode": "Opcode.ASSERT_EQ"
+      }
+   },
+   "Instruction 7": {
+      "0x480a80007fff8000": {
+         "off0": "0",
+         "off1": "-1",
+         "off2": "0",
+         "imm": "None",
+         "dst_register": "Register.AP",
+         "op0_register": "Register.FP",
+         "op1_addr": "Op1Addr.FP",
+         "res": "Res.OP1",
+         "pc_update": "PcUpdate.REGULAR",
+         "ap_update": "ApUpdate.ADD1",
+         "fp_update": "FpUpdate.REGULAR",
+         "opcode": "Opcode.ASSERT_EQ"
+      }
+   },
+   "Instruction 8": {
+      "0x400b80077fff7ffd": {
+         "off0": "-3",
+         "off1": "-1",
+         "off2": "7",
+         "imm": "None",
+         "dst_register": "Register.FP",
+         "op0_register": "Register.FP",
+         "op1_addr": "Op1Addr.FP",
+         "res": "Res.OP1",
+         "pc_update": "PcUpdate.REGULAR",
+         "ap_update": "ApUpdate.REGULAR",
+         "fp_update": "FpUpdate.REGULAR",
+         "opcode": "Opcode.ASSERT_EQ"
+      }
+   },
+   "Instruction 9": {
+      "0x401280007fff7ffd": {
+         "off0": "-3",
+         "off1": "-1",
+         "off2": "0",
+         "imm": "None",
+         "dst_register": "Register.AP",
+         "op0_register": "Register.FP",
+         "op1_addr": "Op1Addr.AP",
+         "res": "Res.OP1",
+         "pc_update": "PcUpdate.REGULAR",
+         "ap_update": "ApUpdate.REGULAR",
+         "fp_update": "FpUpdate.REGULAR",
+         "opcode": "Opcode.ASSERT_EQ"
+      }
+   },
+   "Instruction 10": {
+      "0x4029800080008001": {
+         "off0": "1",
+         "off1": "0",
+         "off2": "0",
+         "imm": "None",
+         "dst_register": "Register.FP",
+         "op0_register": "Register.AP",
+         "op1_addr": "Op1Addr.FP",
+         "res": "Res.ADD",
+         "pc_update": "PcUpdate.REGULAR",
+         "ap_update": "ApUpdate.REGULAR",
+         "fp_update": "FpUpdate.REGULAR",
+         "opcode": "Opcode.ASSERT_EQ"
+      }
+   },
+   "Instruction 11": {
+      "0x402a7fff8000800a": {
+         "off0": "10",
+         "off1": "0",
+         "off2": "-1",
+         "imm": "None",
+         "dst_register": "Register.AP",
+         "op0_register": "Register.FP",
+         "op1_addr": "Op1Addr.FP",
+         "res": "Res.ADD",
+         "pc_update": "PcUpdate.REGULAR",
+         "ap_update": "ApUpdate.REGULAR",
+         "fp_update": "FpUpdate.REGULAR",
+         "opcode": "Opcode.ASSERT_EQ"
+      }
+   },
+   "Instruction 12": {
+      "0x404880037ff98001": {
+         "off0": "1",
+         "off1": "-7",
+         "off2": "3",
+         "imm": "None",
+         "dst_register": "Register.AP",
+         "op0_register": "Register.AP",
+         "op1_addr": "Op1Addr.FP",
+         "res": "Res.MUL",
+         "pc_update": "PcUpdate.REGULAR",
+         "ap_update": "ApUpdate.REGULAR",
+         "fp_update": "FpUpdate.REGULAR",
+         "opcode": "Opcode.ASSERT_EQ"
+      }
+   },
+   "Instruction 13": {
+      "0x404a7fff8000800a": {
+         "off0": "10",
+         "off1": "0",
+         "off2": "-1",
+         "imm": "None",
+         "dst_register": "Register.AP",
+         "op0_register": "Register.FP",
+         "op1_addr": "Op1Addr.FP",
+         "res": "Res.MUL",
+         "pc_update": "PcUpdate.REGULAR",
+         "ap_update": "ApUpdate.REGULAR",
+         "fp_update": "FpUpdate.REGULAR",
+         "opcode": "Opcode.ASSERT_EQ"
+      }
+   },
+   "Instruction 14": {
+      "0x4051800880077ffd": {
+         "off0": "-3",
+         "off1": "7",
+         "off2": "8",
+         "imm": "None",
+         "dst_register": "Register.FP",
+         "op0_register": "Register.AP",
+         "op1_addr": "Op1Addr.AP",
+         "res": "Res.MUL",
+         "pc_update": "PcUpdate.REGULAR",
+         "ap_update": "ApUpdate.REGULAR",
+         "fp_update": "FpUpdate.REGULAR",
+         "opcode": "Opcode.ASSERT_EQ"
+      }
+   },
+   "Instruction 15": {
+      "0x402680018000800a": {
+         "off0": "10",
+         "off1": "0",
+         "off2": "1",
+         "imm": "42",
+         "dst_register": "Register.AP",
+         "op0_register": "Register.FP",
+         "op1_addr": "Op1Addr.IMM",
+         "res": "Res.ADD",
+         "pc_update": "PcUpdate.REGULAR",
+         "ap_update": "ApUpdate.REGULAR",
+         "fp_update": "FpUpdate.REGULAR",
+         "opcode": "Opcode.ASSERT_EQ"
+      }
+   },
+   "Instruction 17": {
+      "0x4801800380028001": {
+         "off0": "1",
+         "off1": "2",
+         "off2": "3",
+         "imm": "None",
+         "dst_register": "Register.FP",
+         "op0_register": "Register.AP",
+         "op1_addr": "Op1Addr.OP0",
+         "res": "Res.OP1",
+         "pc_update": "PcUpdate.REGULAR",
+         "ap_update": "ApUpdate.ADD1",
+         "fp_update": "FpUpdate.REGULAR",
+         "opcode": "Opcode.ASSERT_EQ"
+      }
+   },
+   "Instruction 18": {
+      "0x4002800080008002": {
+         "off0": "2",
+         "off1": "0",
+         "off2": "0",
+         "imm": "None",
+         "dst_register": "Register.AP",
+         "op0_register": "Register.FP",
+         "op1_addr": "Op1Addr.OP0",
+         "res": "Res.OP1",
+         "pc_update": "PcUpdate.REGULAR",
+         "ap_update": "ApUpdate.REGULAR",
+         "fp_update": "FpUpdate.REGULAR",
+         "opcode": "Opcode.ASSERT_EQ"
+      }
+   },
+   "Instruction 19": {
+      "0x480080077ffc8002": {
+         "off0": "2",
+         "off1": "-4",
+         "off2": "7",
+         "imm": "None",
+         "dst_register": "Register.AP",
+         "op0_register": "Register.AP",
+         "op1_addr": "Op1Addr.OP0",
+         "res": "Res.OP1",
+         "pc_update": "PcUpdate.REGULAR",
+         "ap_update": "ApUpdate.ADD1",
+         "fp_update": "FpUpdate.REGULAR",
+         "opcode": "Opcode.ASSERT_EQ"
+      }
+   },
+   "Instruction 20": {
+      "0x480680017fff8000": {
+         "off0": "0",
+         "off1": "-1",
+         "off2": "1",
+         "imm": "11",
+         "dst_register": "Register.AP",
+         "op0_register": "Register.FP",
+         "op1_addr": "Op1Addr.IMM",
+         "res": "Res.OP1",
+         "pc_update": "PcUpdate.REGULAR",
+         "ap_update": "ApUpdate.ADD1",
+         "fp_update": "FpUpdate.REGULAR",
+         "opcode": "Opcode.ASSERT_EQ"
+      }
+   },
+   "Instruction 22": {
+      "0x1104800180018000": {
+         "off0": "0",
+         "off1": "1",
+         "off2": "1",
+         "imm": "3618502788666131213697322783095070105623107215331596699973092056135872020459",
+         "dst_register": "Register.AP",
+         "op0_register": "Register.AP",
+         "op1_addr": "Op1Addr.IMM",
+         "res": "Res.OP1",
+         "pc_update": "PcUpdate.JUMP_REL",
+         "ap_update": "ApUpdate.ADD2",
+         "fp_update": "FpUpdate.AP_PLUS2",
+         "opcode": "Opcode.CALL"
+      }
+   },
+   "Instruction 24": {
+      "0x480680017fff8000": {
+         "off0": "0",
+         "off1": "-1",
+         "off2": "1",
+         "imm": "99999",
+         "dst_register": "Register.AP",
+         "op0_register": "Register.FP",
+         "op1_addr": "Op1Addr.IMM",
+         "res": "Res.OP1",
+         "pc_update": "PcUpdate.REGULAR",
+         "ap_update": "ApUpdate.ADD1",
+         "fp_update": "FpUpdate.REGULAR",
+         "opcode": "Opcode.ASSERT_EQ"
+      }
+   },
+   "Instruction 26": {
+      "0x482480017fff8000": {
+         "off0": "0",
+         "off1": "-1",
+         "off2": "1",
+         "imm": "3618502788666131213697322783095070105623107215331596699973092056135872020381",
+         "dst_register": "Register.AP",
+         "op0_register": "Register.AP",
+         "op1_addr": "Op1Addr.IMM",
+         "res": "Res.ADD",
+         "pc_update": "PcUpdate.REGULAR",
+         "ap_update": "ApUpdate.ADD1",
+         "fp_update": "FpUpdate.REGULAR",
+         "opcode": "Opcode.ASSERT_EQ"
+      }
+   },
+   "Instruction 28": {
+      "0x482480017fff8000": {
+         "off0": "0",
+         "off1": "-1",
+         "off2": "1",
+         "imm": "3618502788666131213697322783095070105623107215331596699973092056135872020381",
+         "dst_register": "Register.AP",
+         "op0_register": "Register.AP",
+         "op1_addr": "Op1Addr.IMM",
+         "res": "Res.ADD",
+         "pc_update": "PcUpdate.REGULAR",
+         "ap_update": "ApUpdate.ADD1",
+         "fp_update": "FpUpdate.REGULAR",
+         "opcode": "Opcode.ASSERT_EQ"
+      }
+   },
+   "Instruction 30": {
+      "0x482480017ffe8000": {
+         "off0": "0",
+         "off1": "-2",
+         "off2": "1",
+         "imm": "3618502788666131213697322783095070105623107215331596699973092056135872020381",
+         "dst_register": "Register.AP",
+         "op0_register": "Register.AP",
+         "op1_addr": "Op1Addr.IMM",
+         "res": "Res.ADD",
+         "pc_update": "PcUpdate.REGULAR",
+         "ap_update": "ApUpdate.ADD1",
+         "fp_update": "FpUpdate.REGULAR",
+         "opcode": "Opcode.ASSERT_EQ"
+      }
+   },
+   "Instruction 32": {
+      "0x482880007ffe8000": {
+         "off0": "0",
+         "off1": "-2",
+         "off2": "0",
+         "imm": "None",
+         "dst_register": "Register.AP",
+         "op0_register": "Register.AP",
+         "op1_addr": "Op1Addr.FP",
+         "res": "Res.ADD",
+         "pc_update": "PcUpdate.REGULAR",
+         "ap_update": "ApUpdate.ADD1",
+         "fp_update": "FpUpdate.REGULAR",
+         "opcode": "Opcode.ASSERT_EQ"
+      }
+   },
+   "Instruction 33": {
+      "0x480680017fff8000": {
+         "off0": "0",
+         "off1": "-1",
+         "off2": "1",
+         "imm": "1234567",
+         "dst_register": "Register.AP",
+         "op0_register": "Register.FP",
+         "op1_addr": "Op1Addr.IMM",
+         "res": "Res.OP1",
+         "pc_update": "PcUpdate.REGULAR",
+         "ap_update": "ApUpdate.ADD1",
+         "fp_update": "FpUpdate.REGULAR",
+         "opcode": "Opcode.ASSERT_EQ"
+      }
+   },
+   "Instruction 35": {
+      "0x482480017fff8000": {
+         "off0": "0",
+         "off1": "-1",
+         "off2": "1",
+         "imm": "3618502788666131213697322783095070105623107215331596699973092056135872020381",
+         "dst_register": "Register.AP",
+         "op0_register": "Register.AP",
+         "op1_addr": "Op1Addr.IMM",
+         "res": "Res.ADD",
+         "pc_update": "PcUpdate.REGULAR",
+         "ap_update": "ApUpdate.ADD1",
+         "fp_update": "FpUpdate.REGULAR",
+         "opcode": "Opcode.ASSERT_EQ"
+      }
+   },
+   "Instruction 37": {
+      "0x484480017fff8000": {
+         "off0": "0",
+         "off1": "-1",
+         "off2": "1",
+         "imm": "100",
+         "dst_register": "Register.AP",
+         "op0_register": "Register.AP",
+         "op1_addr": "Op1Addr.IMM",
+         "res": "Res.MUL",
+         "pc_update": "PcUpdate.REGULAR",
+         "ap_update": "ApUpdate.ADD1",
+         "fp_update": "FpUpdate.REGULAR",
+         "opcode": "Opcode.ASSERT_EQ"
+      }
+   },
+   "Instruction 39": {
+      "0x400080037fff8000": {
+         "off0": "0",
+         "off1": "-1",
+         "off2": "3",
+         "imm": "None",
+         "dst_register": "Register.AP",
+         "op0_register": "Register.AP",
+         "op1_addr": "Op1Addr.OP0",
+         "res": "Res.OP1",
+         "pc_update": "PcUpdate.REGULAR",
+         "ap_update": "ApUpdate.REGULAR",
+         "fp_update": "FpUpdate.REGULAR",
+         "opcode": "Opcode.ASSERT_EQ"
+      }
+   },
+   "Instruction 40": {
+      "0x4002800080008002": {
+         "off0": "2",
+         "off1": "0",
+         "off2": "0",
+         "imm": "None",
+         "dst_register": "Register.AP",
+         "op0_register": "Register.FP",
+         "op1_addr": "Op1Addr.OP0",
+         "res": "Res.OP1",
+         "pc_update": "PcUpdate.REGULAR",
+         "ap_update": "ApUpdate.REGULAR",
+         "fp_update": "FpUpdate.REGULAR",
+         "opcode": "Opcode.ASSERT_EQ"
+      }
+   },
+   "Instruction 41": {
+      "0x400680017fff8000": {
+         "off0": "0",
+         "off1": "-1",
+         "off2": "1",
+         "imm": "1234567",
+         "dst_register": "Register.AP",
+         "op0_register": "Register.FP",
+         "op1_addr": "Op1Addr.IMM",
+         "res": "Res.OP1",
+         "pc_update": "PcUpdate.REGULAR",
+         "ap_update": "ApUpdate.REGULAR",
+         "fp_update": "FpUpdate.REGULAR",
+         "opcode": "Opcode.ASSERT_EQ"
+      }
+   },
+   "Instruction 43": {
+      "0x208b7fff7fff7ffe": {
+         "off0": "-2",
+         "off1": "-1",
+         "off2": "-1",
+         "imm": "None",
+         "dst_register": "Register.FP",
+         "op0_register": "Register.FP",
+         "op1_addr": "Op1Addr.FP",
+         "res": "Res.OP1",
+         "pc_update": "PcUpdate.JUMP",
+         "ap_update": "ApUpdate.REGULAR",
+         "fp_update": "FpUpdate.DST",
+         "opcode": "Opcode.RET"
+      }
+   }
+}
+
+		FUNCTION : __main__.a_func
+
+offset 0:      ASSERT_EQ      [AP], 10       
+offset 0:      ADD            AP, 1          
+offset 2:      RET            
+
+		FUNCTION : __main__.main
+
+offset 3:      ASSERT_EQ      [FP+1], 5      
+offset 5:      ASSERT_EQ      [AP+2], 42     
+offset 7:      ASSERT_EQ      [AP], [FP]     
+offset 7:      ADD            AP, 1          
+offset 8:      ASSERT_EQ      [FP-3], [FP+7] 
+offset 9:      ASSERT_EQ      [AP-3], [AP]   
+offset 10:     ASSERT_EQ      [FP+1], [AP] + [FP]
+offset 11:     ASSERT_EQ      [AP+10], [FP] + [FP-1]
+offset 12:     ASSERT_EQ      [AP+1], [AP-7] * [FP+3]
+offset 13:     ASSERT_EQ      [AP+10], [FP] * [FP-1]
+offset 14:     ASSERT_EQ      [FP-3], [AP+7] * [AP+8]
+offset 15:     ASSERT_EQ      [AP+10], [FP] + 42
+offset 17:     ASSERT_EQ      [FP+1], [[AP+2]+3]
+offset 17:     ADD            AP, 1          
+offset 18:     ASSERT_EQ      [AP+2], [[FP]] 
+offset 19:     ASSERT_EQ      [AP+2], [[AP-4]+7]
+offset 19:     ADD            AP, 1          
+offset 20:     ASSERT_EQ      [AP], 11       
+offset 20:     ADD            AP, 1          
+offset 22:     CALL           0              
+offset 22:     ADD            AP, 2          
+offset 24:     ASSERT_EQ      [AP], 99999    
+offset 24:     ADD            AP, 1          
+offset 26:     ASSERT_EQ      [AP], [AP-1] + 3618502788666131213697322783095070105623107215331596699973092056135872020381
+offset 26:     ADD            AP, 1          
+offset 28:     ASSERT_EQ      [AP], [AP-1] + 3618502788666131213697322783095070105623107215331596699973092056135872020381
+offset 28:     ADD            AP, 1          
+offset 30:     ASSERT_EQ      [AP], [AP-2] + 3618502788666131213697322783095070105623107215331596699973092056135872020381
+offset 30:     ADD            AP, 1          
+offset 32:     ASSERT_EQ      [AP], [AP-2] + [FP]
+offset 32:     ADD            AP, 1          
+offset 33:     ASSERT_EQ      [AP], 1234567  
+offset 33:     ADD            AP, 1          
+offset 35:     ASSERT_EQ      [AP], [AP-1] + 3618502788666131213697322783095070105623107215331596699973092056135872020381
+offset 35:     ADD            AP, 1          
+offset 37:     ASSERT_EQ      [AP], [AP-1] * 100
+offset 37:     ADD            AP, 1          
+offset 39:     ASSERT_EQ      [AP], [[AP-1]+3]
+offset 40:     ASSERT_EQ      [AP+2], [[FP]] 
+offset 41:     ASSERT_EQ      [AP], 1234567  
+offset 43:     RET            

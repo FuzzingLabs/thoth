@@ -2,10 +2,12 @@
 
 import argparse
 import logging
+import graphviz
 
 from __version__ import __version__, __title__
-from disassembler import analyze
-
+from disassembler import *
+from utils import *
+from jsonParser import *
 
 class CairoDisassCommandLine:
     @staticmethod
@@ -23,6 +25,8 @@ class CairoDisassCommandLine:
         c = subparser.add_parser('cairo')
         c.add_argument('-file', metavar='file', type=argparse.FileType('r'), nargs='+', required=True,
                        help='Cairo File')
+        c.add_argument('-vvv',  action='store_true')
+        c.add_argument('-call', action='store_true')
 
         s = subparser.add_parser('starknet')
         s.add_argument('-file', metavar='file', type=argparse.FileType('r'), nargs='+', required=True,
@@ -40,6 +44,17 @@ class CairoDisassCommandLine:
         logging.getLogger().setLevel(logging.INFO)   
         logging.info(f"CairoDisass -- File : {args.file[0].name}")
 
-        analyze(args.file)
-
+        disassJson = parseToJson(args.file)
+        if ("vvv" in vars(args) and args.vvv):
+            print("\n", json.dumps(disassJson, indent=3))
+        headFunction = analyzeGetFunctions(disassJson)
+        while (headFunction):
+            headFunction.disassembleFunction()
+            headFunction.printData()
+            if (headFunction.name == "__main__.main"):
+                if ("call" in vars(args) and args.call):
+                    dot = graphviz.Digraph('CALL FLOW GRAPH', comment='CALL FLOW GRAPH') 
+                    headFunction.cfgFunction(dot)
+                    dot.render(directory='doctest-output', view=True)  
+            headFunction = headFunction.nextFunction
         return 0

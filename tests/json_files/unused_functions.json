@@ -1,0 +1,323 @@
+{
+    "attributes": [],
+    "builtins": [],
+    "data": [
+        "0x1104800180018000",
+        "0x0",
+        "0x208b7fff7fff7ffe",
+        "0x1104800180018000",
+        "0x3",
+        "0x208b7fff7fff7ffe",
+        "0x1104800180018000",
+        "0x800000000000010fffffffffffffffffffffffffffffffffffffffffffffffe",
+        "0x208b7fff7fff7ffe",
+        "0x400680017fff7fff",
+        "0x5",
+        "0x208b7fff7fff7ffe"
+    ],
+    "debug_info": {
+        "file_contents": {},
+        "instruction_locations": {
+            "0": {
+                "accessible_scopes": [
+                    "__main__",
+                    "__main__.a"
+                ],
+                "flow_tracking_data": {
+                    "ap_tracking": {
+                        "group": 0,
+                        "offset": 0
+                    },
+                    "reference_ids": {}
+                },
+                "hints": [],
+                "inst": {
+                    "end_col": 8,
+                    "end_line": 2,
+                    "input_file": {
+                        "filename": "tests/cairo_files/unused_functions.cairo"
+                    },
+                    "start_col": 5,
+                    "start_line": 2
+                }
+            },
+            "2": {
+                "accessible_scopes": [
+                    "__main__",
+                    "__main__.a"
+                ],
+                "flow_tracking_data": {
+                    "ap_tracking": {
+                        "group": 1,
+                        "offset": 0
+                    },
+                    "reference_ids": {}
+                },
+                "hints": [],
+                "inst": {
+                    "end_col": 8,
+                    "end_line": 3,
+                    "input_file": {
+                        "filename": "tests/cairo_files/unused_functions.cairo"
+                    },
+                    "start_col": 5,
+                    "start_line": 3
+                }
+            },
+            "3": {
+                "accessible_scopes": [
+                    "__main__",
+                    "__main__.b"
+                ],
+                "flow_tracking_data": {
+                    "ap_tracking": {
+                        "group": 2,
+                        "offset": 0
+                    },
+                    "reference_ids": {}
+                },
+                "hints": [],
+                "inst": {
+                    "end_col": 8,
+                    "end_line": 7,
+                    "input_file": {
+                        "filename": "tests/cairo_files/unused_functions.cairo"
+                    },
+                    "start_col": 5,
+                    "start_line": 7
+                }
+            },
+            "5": {
+                "accessible_scopes": [
+                    "__main__",
+                    "__main__.b"
+                ],
+                "flow_tracking_data": {
+                    "ap_tracking": {
+                        "group": 3,
+                        "offset": 0
+                    },
+                    "reference_ids": {}
+                },
+                "hints": [],
+                "inst": {
+                    "end_col": 8,
+                    "end_line": 8,
+                    "input_file": {
+                        "filename": "tests/cairo_files/unused_functions.cairo"
+                    },
+                    "start_col": 5,
+                    "start_line": 8
+                }
+            },
+            "6": {
+                "accessible_scopes": [
+                    "__main__",
+                    "__main__.c"
+                ],
+                "flow_tracking_data": {
+                    "ap_tracking": {
+                        "group": 4,
+                        "offset": 0
+                    },
+                    "reference_ids": {}
+                },
+                "hints": [],
+                "inst": {
+                    "end_col": 8,
+                    "end_line": 12,
+                    "input_file": {
+                        "filename": "tests/cairo_files/unused_functions.cairo"
+                    },
+                    "start_col": 5,
+                    "start_line": 12
+                }
+            },
+            "8": {
+                "accessible_scopes": [
+                    "__main__",
+                    "__main__.c"
+                ],
+                "flow_tracking_data": {
+                    "ap_tracking": {
+                        "group": 5,
+                        "offset": 0
+                    },
+                    "reference_ids": {}
+                },
+                "hints": [],
+                "inst": {
+                    "end_col": 8,
+                    "end_line": 13,
+                    "input_file": {
+                        "filename": "tests/cairo_files/unused_functions.cairo"
+                    },
+                    "start_col": 5,
+                    "start_line": 13
+                }
+            },
+            "9": {
+                "accessible_scopes": [
+                    "__main__",
+                    "__main__.main"
+                ],
+                "flow_tracking_data": {
+                    "ap_tracking": {
+                        "group": 6,
+                        "offset": 0
+                    },
+                    "reference_ids": {}
+                },
+                "hints": [],
+                "inst": {
+                    "end_col": 15,
+                    "end_line": 17,
+                    "input_file": {
+                        "filename": "tests/cairo_files/unused_functions.cairo"
+                    },
+                    "start_col": 5,
+                    "start_line": 17
+                }
+            },
+            "11": {
+                "accessible_scopes": [
+                    "__main__",
+                    "__main__.main"
+                ],
+                "flow_tracking_data": {
+                    "ap_tracking": {
+                        "group": 6,
+                        "offset": 0
+                    },
+                    "reference_ids": {}
+                },
+                "hints": [],
+                "inst": {
+                    "end_col": 8,
+                    "end_line": 18,
+                    "input_file": {
+                        "filename": "tests/cairo_files/unused_functions.cairo"
+                    },
+                    "start_col": 5,
+                    "start_line": 18
+                }
+            }
+        }
+    },
+    "hints": {},
+    "identifiers": {
+        "__main__.a": {
+            "decorators": [],
+            "pc": 0,
+            "type": "function"
+        },
+        "__main__.a.Args": {
+            "full_name": "__main__.a.Args",
+            "members": {},
+            "size": 0,
+            "type": "struct"
+        },
+        "__main__.a.ImplicitArgs": {
+            "full_name": "__main__.a.ImplicitArgs",
+            "members": {},
+            "size": 0,
+            "type": "struct"
+        },
+        "__main__.a.Return": {
+            "full_name": "__main__.a.Return",
+            "members": {},
+            "size": 0,
+            "type": "struct"
+        },
+        "__main__.a.SIZEOF_LOCALS": {
+            "type": "const",
+            "value": 0
+        },
+        "__main__.b": {
+            "decorators": [],
+            "pc": 3,
+            "type": "function"
+        },
+        "__main__.b.Args": {
+            "full_name": "__main__.b.Args",
+            "members": {},
+            "size": 0,
+            "type": "struct"
+        },
+        "__main__.b.ImplicitArgs": {
+            "full_name": "__main__.b.ImplicitArgs",
+            "members": {},
+            "size": 0,
+            "type": "struct"
+        },
+        "__main__.b.Return": {
+            "full_name": "__main__.b.Return",
+            "members": {},
+            "size": 0,
+            "type": "struct"
+        },
+        "__main__.b.SIZEOF_LOCALS": {
+            "type": "const",
+            "value": 0
+        },
+        "__main__.c": {
+            "decorators": [],
+            "pc": 6,
+            "type": "function"
+        },
+        "__main__.c.Args": {
+            "full_name": "__main__.c.Args",
+            "members": {},
+            "size": 0,
+            "type": "struct"
+        },
+        "__main__.c.ImplicitArgs": {
+            "full_name": "__main__.c.ImplicitArgs",
+            "members": {},
+            "size": 0,
+            "type": "struct"
+        },
+        "__main__.c.Return": {
+            "full_name": "__main__.c.Return",
+            "members": {},
+            "size": 0,
+            "type": "struct"
+        },
+        "__main__.c.SIZEOF_LOCALS": {
+            "type": "const",
+            "value": 0
+        },
+        "__main__.main": {
+            "decorators": [],
+            "pc": 9,
+            "type": "function"
+        },
+        "__main__.main.Args": {
+            "full_name": "__main__.main.Args",
+            "members": {},
+            "size": 0,
+            "type": "struct"
+        },
+        "__main__.main.ImplicitArgs": {
+            "full_name": "__main__.main.ImplicitArgs",
+            "members": {},
+            "size": 0,
+            "type": "struct"
+        },
+        "__main__.main.Return": {
+            "full_name": "__main__.main.Return",
+            "members": {},
+            "size": 0,
+            "type": "struct"
+        },
+        "__main__.main.SIZEOF_LOCALS": {
+            "type": "const",
+            "value": 0
+        }
+    },
+    "main_scope": "__main__",
+    "prime": "0x800000000000011000000000000000000000000000000000000000000000001",
+    "reference_manager": {
+        "references": []
+    }
+}

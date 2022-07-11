@@ -1,0 +1,686 @@
+{
+    "attributes": [],
+    "builtins": [],
+    "data": [
+        "0x482680017ffd8000",
+        "0x800000000000010fffffffffffffffffffffffffffffffffffffffffffffffe",
+        "0x20680017fff7fff",
+        "0x3",
+        "0x208b7fff7fff7ffe",
+        "0x482680017ffd8000",
+        "0x800000000000011000000000000000000000000000000000000000000000000",
+        "0x1104800180018000",
+        "0x3",
+        "0x208b7fff7fff7ffe",
+        "0x482680017ffd8000",
+        "0x800000000000011000000000000000000000000000000000000000000000000",
+        "0x1104800180018000",
+        "0x800000000000010fffffffffffffffffffffffffffffffffffffffffffffff5",
+        "0x208b7fff7fff7ffe",
+        "0x400680017fff7fff",
+        "0x5",
+        "0x482480017fff8000",
+        "0x800000000000010fffffffffffffffffffffffffffffffffffffffffffffffc",
+        "0x20680017fff7fff",
+        "0x8",
+        "0x480680017fff8000",
+        "0x5",
+        "0x1104800180018000",
+        "0x800000000000010ffffffffffffffffffffffffffffffffffffffffffffffea",
+        "0x10780017fff7fff",
+        "0x6",
+        "0x480680017fff8000",
+        "0x8",
+        "0x1104800180018000",
+        "0x800000000000010ffffffffffffffffffffffffffffffffffffffffffffffee",
+        "0x208b7fff7fff7ffe"
+    ],
+    "debug_info": {
+        "file_contents": {},
+        "instruction_locations": {
+            "0": {
+                "accessible_scopes": [
+                    "__main__",
+                    "__main__.a"
+                ],
+                "flow_tracking_data": {
+                    "ap_tracking": {
+                        "group": 0,
+                        "offset": 0
+                    },
+                    "reference_ids": {
+                        "__main__.a.b": 0
+                    }
+                },
+                "hints": [],
+                "inst": {
+                    "end_col": 14,
+                    "end_line": 2,
+                    "input_file": {
+                        "filename": "tests/cairo_files/indirect_recursion.cairo"
+                    },
+                    "start_col": 8,
+                    "start_line": 2
+                }
+            },
+            "2": {
+                "accessible_scopes": [
+                    "__main__",
+                    "__main__.a"
+                ],
+                "flow_tracking_data": {
+                    "ap_tracking": {
+                        "group": 0,
+                        "offset": 1
+                    },
+                    "reference_ids": {
+                        "__main__.a.__temp0": 1,
+                        "__main__.a.b": 0
+                    }
+                },
+                "hints": [],
+                "inst": {
+                    "end_col": 7,
+                    "end_line": 2,
+                    "input_file": {
+                        "filename": "tests/cairo_files/indirect_recursion.cairo"
+                    },
+                    "start_col": 5,
+                    "start_line": 2
+                }
+            },
+            "4": {
+                "accessible_scopes": [
+                    "__main__",
+                    "__main__.a"
+                ],
+                "flow_tracking_data": {
+                    "ap_tracking": {
+                        "group": 0,
+                        "offset": 1
+                    },
+                    "reference_ids": {
+                        "__main__.a.__temp0": 1,
+                        "__main__.a.b": 0
+                    }
+                },
+                "hints": [],
+                "inst": {
+                    "end_col": 12,
+                    "end_line": 3,
+                    "input_file": {
+                        "filename": "tests/cairo_files/indirect_recursion.cairo"
+                    },
+                    "start_col": 9,
+                    "start_line": 3
+                }
+            },
+            "5": {
+                "accessible_scopes": [
+                    "__main__",
+                    "__main__.a"
+                ],
+                "flow_tracking_data": {
+                    "ap_tracking": {
+                        "group": 0,
+                        "offset": 1
+                    },
+                    "reference_ids": {
+                        "__main__.a.__temp0": 1,
+                        "__main__.a.b": 0
+                    }
+                },
+                "hints": [],
+                "inst": {
+                    "end_col": 14,
+                    "end_line": 5,
+                    "input_file": {
+                        "filename": "tests/cairo_files/indirect_recursion.cairo"
+                    },
+                    "start_col": 11,
+                    "start_line": 5
+                }
+            },
+            "7": {
+                "accessible_scopes": [
+                    "__main__",
+                    "__main__.a"
+                ],
+                "flow_tracking_data": {
+                    "ap_tracking": {
+                        "group": 0,
+                        "offset": 2
+                    },
+                    "reference_ids": {
+                        "__main__.a.__temp0": 1,
+                        "__main__.a.b": 0
+                    }
+                },
+                "hints": [],
+                "inst": {
+                    "end_col": 15,
+                    "end_line": 5,
+                    "input_file": {
+                        "filename": "tests/cairo_files/indirect_recursion.cairo"
+                    },
+                    "start_col": 9,
+                    "start_line": 5
+                }
+            },
+            "9": {
+                "accessible_scopes": [
+                    "__main__",
+                    "__main__.a"
+                ],
+                "flow_tracking_data": {
+                    "ap_tracking": {
+                        "group": 1,
+                        "offset": 0
+                    },
+                    "reference_ids": {
+                        "__main__.a.__temp0": 1,
+                        "__main__.a.b": 0
+                    }
+                },
+                "hints": [],
+                "inst": {
+                    "end_col": 8,
+                    "end_line": 7,
+                    "input_file": {
+                        "filename": "tests/cairo_files/indirect_recursion.cairo"
+                    },
+                    "start_col": 5,
+                    "start_line": 7
+                }
+            },
+            "10": {
+                "accessible_scopes": [
+                    "__main__",
+                    "__main__.c"
+                ],
+                "flow_tracking_data": {
+                    "ap_tracking": {
+                        "group": 2,
+                        "offset": 0
+                    },
+                    "reference_ids": {
+                        "__main__.c.b": 2
+                    }
+                },
+                "hints": [],
+                "inst": {
+                    "end_col": 10,
+                    "end_line": 11,
+                    "input_file": {
+                        "filename": "tests/cairo_files/indirect_recursion.cairo"
+                    },
+                    "start_col": 7,
+                    "start_line": 11
+                }
+            },
+            "12": {
+                "accessible_scopes": [
+                    "__main__",
+                    "__main__.c"
+                ],
+                "flow_tracking_data": {
+                    "ap_tracking": {
+                        "group": 2,
+                        "offset": 1
+                    },
+                    "reference_ids": {
+                        "__main__.c.b": 2
+                    }
+                },
+                "hints": [],
+                "inst": {
+                    "end_col": 11,
+                    "end_line": 11,
+                    "input_file": {
+                        "filename": "tests/cairo_files/indirect_recursion.cairo"
+                    },
+                    "start_col": 5,
+                    "start_line": 11
+                }
+            },
+            "14": {
+                "accessible_scopes": [
+                    "__main__",
+                    "__main__.c"
+                ],
+                "flow_tracking_data": {
+                    "ap_tracking": {
+                        "group": 3,
+                        "offset": 0
+                    },
+                    "reference_ids": {
+                        "__main__.c.b": 2
+                    }
+                },
+                "hints": [],
+                "inst": {
+                    "end_col": 8,
+                    "end_line": 12,
+                    "input_file": {
+                        "filename": "tests/cairo_files/indirect_recursion.cairo"
+                    },
+                    "start_col": 5,
+                    "start_line": 12
+                }
+            },
+            "15": {
+                "accessible_scopes": [
+                    "__main__",
+                    "__main__.main"
+                ],
+                "flow_tracking_data": {
+                    "ap_tracking": {
+                        "group": 4,
+                        "offset": 0
+                    },
+                    "reference_ids": {}
+                },
+                "hints": [],
+                "inst": {
+                    "end_col": 15,
+                    "end_line": 16,
+                    "input_file": {
+                        "filename": "tests/cairo_files/indirect_recursion.cairo"
+                    },
+                    "start_col": 5,
+                    "start_line": 16
+                }
+            },
+            "17": {
+                "accessible_scopes": [
+                    "__main__",
+                    "__main__.main"
+                ],
+                "flow_tracking_data": {
+                    "ap_tracking": {
+                        "group": 4,
+                        "offset": 0
+                    },
+                    "reference_ids": {}
+                },
+                "hints": [],
+                "inst": {
+                    "end_col": 19,
+                    "end_line": 18,
+                    "input_file": {
+                        "filename": "tests/cairo_files/indirect_recursion.cairo"
+                    },
+                    "start_col": 8,
+                    "start_line": 18
+                }
+            },
+            "19": {
+                "accessible_scopes": [
+                    "__main__",
+                    "__main__.main"
+                ],
+                "flow_tracking_data": {
+                    "ap_tracking": {
+                        "group": 4,
+                        "offset": 1
+                    },
+                    "reference_ids": {
+                        "__main__.main.__temp1": 3
+                    }
+                },
+                "hints": [],
+                "inst": {
+                    "end_col": 7,
+                    "end_line": 18,
+                    "input_file": {
+                        "filename": "tests/cairo_files/indirect_recursion.cairo"
+                    },
+                    "start_col": 5,
+                    "start_line": 18
+                }
+            },
+            "21": {
+                "accessible_scopes": [
+                    "__main__",
+                    "__main__.main"
+                ],
+                "flow_tracking_data": {
+                    "ap_tracking": {
+                        "group": 4,
+                        "offset": 1
+                    },
+                    "reference_ids": {
+                        "__main__.main.__temp1": 3
+                    }
+                },
+                "hints": [],
+                "inst": {
+                    "end_col": 12,
+                    "end_line": 19,
+                    "input_file": {
+                        "filename": "tests/cairo_files/indirect_recursion.cairo"
+                    },
+                    "start_col": 11,
+                    "start_line": 19
+                }
+            },
+            "23": {
+                "accessible_scopes": [
+                    "__main__",
+                    "__main__.main"
+                ],
+                "flow_tracking_data": {
+                    "ap_tracking": {
+                        "group": 4,
+                        "offset": 2
+                    },
+                    "reference_ids": {
+                        "__main__.main.__temp1": 3
+                    }
+                },
+                "hints": [],
+                "inst": {
+                    "end_col": 13,
+                    "end_line": 19,
+                    "input_file": {
+                        "filename": "tests/cairo_files/indirect_recursion.cairo"
+                    },
+                    "start_col": 9,
+                    "start_line": 19
+                }
+            },
+            "25": {
+                "accessible_scopes": [
+                    "__main__",
+                    "__main__.main"
+                ],
+                "flow_tracking_data": {
+                    "ap_tracking": {
+                        "group": 5,
+                        "offset": 0
+                    },
+                    "reference_ids": {
+                        "__main__.main.__temp1": 3
+                    }
+                },
+                "hints": [],
+                "inst": {
+                    "end_col": 7,
+                    "end_line": 18,
+                    "input_file": {
+                        "filename": "tests/cairo_files/indirect_recursion.cairo"
+                    },
+                    "start_col": 5,
+                    "start_line": 18
+                }
+            },
+            "27": {
+                "accessible_scopes": [
+                    "__main__",
+                    "__main__.main"
+                ],
+                "flow_tracking_data": {
+                    "ap_tracking": {
+                        "group": 4,
+                        "offset": 1
+                    },
+                    "reference_ids": {
+                        "__main__.main.__temp1": 3
+                    }
+                },
+                "hints": [],
+                "inst": {
+                    "end_col": 12,
+                    "end_line": 21,
+                    "input_file": {
+                        "filename": "tests/cairo_files/indirect_recursion.cairo"
+                    },
+                    "start_col": 11,
+                    "start_line": 21
+                }
+            },
+            "29": {
+                "accessible_scopes": [
+                    "__main__",
+                    "__main__.main"
+                ],
+                "flow_tracking_data": {
+                    "ap_tracking": {
+                        "group": 4,
+                        "offset": 2
+                    },
+                    "reference_ids": {
+                        "__main__.main.__temp1": 3
+                    }
+                },
+                "hints": [],
+                "inst": {
+                    "end_col": 13,
+                    "end_line": 21,
+                    "input_file": {
+                        "filename": "tests/cairo_files/indirect_recursion.cairo"
+                    },
+                    "start_col": 9,
+                    "start_line": 21
+                }
+            },
+            "31": {
+                "accessible_scopes": [
+                    "__main__",
+                    "__main__.main"
+                ],
+                "flow_tracking_data": {
+                    "ap_tracking": {
+                        "group": 7,
+                        "offset": 0
+                    },
+                    "reference_ids": {
+                        "__main__.main.__temp1": 3
+                    }
+                },
+                "hints": [],
+                "inst": {
+                    "end_col": 8,
+                    "end_line": 23,
+                    "input_file": {
+                        "filename": "tests/cairo_files/indirect_recursion.cairo"
+                    },
+                    "start_col": 5,
+                    "start_line": 23
+                }
+            }
+        }
+    },
+    "hints": {},
+    "identifiers": {
+        "__main__.a": {
+            "decorators": [],
+            "pc": 0,
+            "type": "function"
+        },
+        "__main__.a.Args": {
+            "full_name": "__main__.a.Args",
+            "members": {
+                "b": {
+                    "cairo_type": "felt",
+                    "offset": 0
+                }
+            },
+            "size": 1,
+            "type": "struct"
+        },
+        "__main__.a.ImplicitArgs": {
+            "full_name": "__main__.a.ImplicitArgs",
+            "members": {},
+            "size": 0,
+            "type": "struct"
+        },
+        "__main__.a.Return": {
+            "full_name": "__main__.a.Return",
+            "members": {},
+            "size": 0,
+            "type": "struct"
+        },
+        "__main__.a.SIZEOF_LOCALS": {
+            "type": "const",
+            "value": 0
+        },
+        "__main__.a.__temp0": {
+            "cairo_type": "felt",
+            "full_name": "__main__.a.__temp0",
+            "references": [
+                {
+                    "ap_tracking_data": {
+                        "group": 0,
+                        "offset": 1
+                    },
+                    "pc": 2,
+                    "value": "[cast(ap + (-1), felt*)]"
+                }
+            ],
+            "type": "reference"
+        },
+        "__main__.a.b": {
+            "cairo_type": "felt",
+            "full_name": "__main__.a.b",
+            "references": [
+                {
+                    "ap_tracking_data": {
+                        "group": 0,
+                        "offset": 0
+                    },
+                    "pc": 0,
+                    "value": "[cast(fp + (-3), felt*)]"
+                }
+            ],
+            "type": "reference"
+        },
+        "__main__.c": {
+            "decorators": [],
+            "pc": 10,
+            "type": "function"
+        },
+        "__main__.c.Args": {
+            "full_name": "__main__.c.Args",
+            "members": {
+                "b": {
+                    "cairo_type": "felt",
+                    "offset": 0
+                }
+            },
+            "size": 1,
+            "type": "struct"
+        },
+        "__main__.c.ImplicitArgs": {
+            "full_name": "__main__.c.ImplicitArgs",
+            "members": {},
+            "size": 0,
+            "type": "struct"
+        },
+        "__main__.c.Return": {
+            "full_name": "__main__.c.Return",
+            "members": {},
+            "size": 0,
+            "type": "struct"
+        },
+        "__main__.c.SIZEOF_LOCALS": {
+            "type": "const",
+            "value": 0
+        },
+        "__main__.c.b": {
+            "cairo_type": "felt",
+            "full_name": "__main__.c.b",
+            "references": [
+                {
+                    "ap_tracking_data": {
+                        "group": 2,
+                        "offset": 0
+                    },
+                    "pc": 10,
+                    "value": "[cast(fp + (-3), felt*)]"
+                }
+            ],
+            "type": "reference"
+        },
+        "__main__.main": {
+            "decorators": [],
+            "pc": 15,
+            "type": "function"
+        },
+        "__main__.main.Args": {
+            "full_name": "__main__.main.Args",
+            "members": {},
+            "size": 0,
+            "type": "struct"
+        },
+        "__main__.main.ImplicitArgs": {
+            "full_name": "__main__.main.ImplicitArgs",
+            "members": {},
+            "size": 0,
+            "type": "struct"
+        },
+        "__main__.main.Return": {
+            "full_name": "__main__.main.Return",
+            "members": {},
+            "size": 0,
+            "type": "struct"
+        },
+        "__main__.main.SIZEOF_LOCALS": {
+            "type": "const",
+            "value": 0
+        },
+        "__main__.main.__temp1": {
+            "cairo_type": "felt",
+            "full_name": "__main__.main.__temp1",
+            "references": [
+                {
+                    "ap_tracking_data": {
+                        "group": 4,
+                        "offset": 1
+                    },
+                    "pc": 19,
+                    "value": "[cast(ap + (-1), felt*)]"
+                }
+            ],
+            "type": "reference"
+        }
+    },
+    "main_scope": "__main__",
+    "prime": "0x800000000000011000000000000000000000000000000000000000000000001",
+    "reference_manager": {
+        "references": [
+            {
+                "ap_tracking_data": {
+                    "group": 0,
+                    "offset": 0
+                },
+                "pc": 0,
+                "value": "[cast(fp + (-3), felt*)]"
+            },
+            {
+                "ap_tracking_data": {
+                    "group": 0,
+                    "offset": 1
+                },
+                "pc": 2,
+                "value": "[cast(ap + (-1), felt*)]"
+            },
+            {
+                "ap_tracking_data": {
+                    "group": 2,
+                    "offset": 0
+                },
+                "pc": 10,
+                "value": "[cast(fp + (-3), felt*)]"
+            },
+            {
+                "ap_tracking_data": {
+                    "group": 4,
+                    "offset": 1
+                },
+                "pc": 19,
+                "value": "[cast(ap + (-1), felt*)]"
+            }
+        ]
+    }
+}
