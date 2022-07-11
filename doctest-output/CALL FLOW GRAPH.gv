@@ -1,0 +1,15 @@
+// CALL FLOW GRAPH
+digraph "CALL FLOW GRAPH" {
+	20 [label="__main__.main"]
+	0 [label="__main__.a_func"]
+	20 -> 0
+	3 [label="__main__.b_func"]
+	20 -> 3
+	8 [label="__main__.c_func"]
+	3 [label="__main__.b_func"]
+	8 -> 3
+	0 [label="__main__.a_func"]
+	8 -> 0
+	8 -> 8
+	20 -> 8
+}
