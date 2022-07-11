@@ -15,12 +15,15 @@ def decodeToJson(decoded):
         dataDict[key] = value
     return dataDict
 
-def parseToJson(path, contract_type="cairo"):
+def parseToJson(path):
     with path[0] as f:
         json_data = json.load(f)
 
-    data = [int(bytecode, 16) for bytecode in json_data["data"]] if (contract_type == "cairo") else\
-        [int(bytecode, 16) for bytecode in json_data["program"]["data"]] 
+    data = []
+    try :
+        data = [int(bytecode, 16) for bytecode in json_data["data"]]
+    except Exception as e:
+        data = [int(bytecode, 16) for bytecode in json_data["program"]["data"]] 
 
     debugInfo = json_data["debug_info"]
     instructionLocations = debugInfo["instruction_locations"]
