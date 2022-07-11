@@ -58,6 +58,4 @@ def parseToJson(path, contract_type="cairo"):
             bytecodesToJson[actualFunction][key] = {}
             bytecodesToJson[actualFunction][key][hex(data[offset])] = decodeToJson(str(decoded))
             offset += 2
-    
-    print("\n", json.dumps(bytecodesToJson, indent=3))
     return bytecodesToJson
