@@ -54,7 +54,7 @@ class Disassembler:
       if (not function.instructionData):
          function.instructionData = function.disassembleFunction()
       headInstruction = function.instructionData
-      dot.node(function.offsetStart, function.name)
+      #dot.node(function.offsetStart, function.name)
       while (headInstruction):
          if ("CALL" in headInstruction.opcode):
             offset = int(headInstruction.id) - (prime - int(headInstruction.imm))
@@ -69,8 +69,12 @@ class Disassembler:
 
    def printCallFlowGraph(self):
       if (self.dot == None):
-         dot = graphviz.Digraph('CALL FLOW GRAPH', comment='CALL FLOW GRAPH') 
-         self.dot = self.buildCallFlowGraph(dot, self.functions[-1], [])
+         dot = graphviz.Digraph('CALL FLOW GRAPH', comment='CALL FLOW GRAPH')
+         for function in self.functions:
+            dot.node(function.offsetStart, function.name)
+         edgesDone = []
+         for function in self.functions:
+            self.dot = self.buildCallFlowGraph(dot, function, edgesDone)
       self.dot.render(directory='doctest-output', view=True)
       return self.dot
 
@@ -112,9 +116,11 @@ class InstructionData:
    
    def handleNop(self):
       if ("REGULAR" not in self.pcUpdate):
+         ##TODO JNZ OFFSET ?!
          fPrint(f"{self.pcUpdate}", end="")
+         fPrint(self.imm)
       else:
-         fPrint(f"{self.opcode}", end="")
+         fPrint(f"{self.opcode}")
       #newOffset = int(self.id) + int(self.imm)
       #fPrint(f"{newOffset}")
 
@@ -140,6 +146,7 @@ class FunctionData:
       self.decorators = decorators
       self.instructionData = None
       self.nextFunction = None
+      self.entryPoint = False
 
    def disassembleFunction(self):
       instructionList = self.instructionList
