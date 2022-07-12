@@ -17,11 +17,12 @@ def decodeToJson(decoded):
         dataDict[key] = value
     return dataDict
 
-def parseToJson(path):
+def extractData(path):
+    data = []
+    functionOffset = {}
     with path[0] as f:
         json_data = json.load(f)
 
-    data = []
     if ("data" in json_data):
         data = [int(bytecode, 16) for bytecode in json_data["data"]]
         jsonType = "cairo"
@@ -31,9 +32,7 @@ def parseToJson(path):
     else:
         data = [int(bytecode, 16) for bytecode in json_data["bytecode"]]
         jsonType = "get_code"
-    
-    functionOffset = {}
-    
+
     if (jsonType != "get_code"):
         debugInfo = json_data["debug_info"]
         instructionLocations = debugInfo["instruction_locations"]
@@ -54,41 +53,28 @@ def parseToJson(path):
     # tofix : why do we need this ?
     if data[len(data) - 1] != 2345108766317314046:
         data.append(2345108766317314046)
+    return (data, functionOffset)
 
+def parseToJson(path):
+    data, functionOffset = extractData(path)
     size = len(data)
     offset = 0
     bytecodesToJson = {}
     actualFunction = ""
-    id = 0
-    old_id = 0
-
+    incr = 0
     while (offset < size):
-        if (jsonType != "get_code" and str(offset) in functionOffset):
-            actualFunction = functionOffset[str(offset)]
-            bytecodesToJson[actualFunction] = {}
-
-        elif (jsonType == "get_code" and actualFunction not in bytecodesToJson):
-            actualFunction = f"function 0"
+        if ((jsonType != "get_code" and str(offset) in functionOffset) or (jsonType == "get_code" and actualFunction not in bytecodesToJson)):
+            actualFunction = functionOffset[str(offset)] if (jsonType != "get_code") else f"function 0"
             bytecodesToJson[actualFunction] = {}
         try:
-            id += 1
             decoded = decodeInstruction(data[offset])
-            key = str(offset)
-            bytecodesToJson[actualFunction][key] = {}
-            bytecodesToJson[actualFunction][key][hex(data[offset])] = decodeToJson(str(decoded))
-            """if (jsonType == "get_code" and "RET" in bytecodesToJson[actualFunction][key][hex(data[offset])]["opcode"]):
-                old_id = id
-                id += 1"""
-            offset += 1
+            incr = 1
         except AssertionError:
-            old_id += 1
             #l[offset + 1] -> imm value
             decoded = decodeInstruction(data[offset], data[offset + 1])
-            key = str(offset)
-            bytecodesToJson[actualFunction][key] = {}
-            bytecodesToJson[actualFunction][key][hex(data[offset])] = decodeToJson(str(decoded))
-            """if (jsonType == "get_code" and "RET" in bytecodesToJson[actualFunction][key][hex(data[offset])]["opcode"]):
-                old_id = id
-                id += 1 += 1"""
-            offset += 2
+            incr = 2
+        key = str(offset)
+        bytecodesToJson[actualFunction][key] = {}
+        bytecodesToJson[actualFunction][key][hex(data[offset])] = decodeToJson(str(decoded))
+        offset += incr
     return bytecodesToJson
