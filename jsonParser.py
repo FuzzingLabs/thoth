@@ -19,7 +19,7 @@ def decodeToJson(decoded):
         dataDict[key] = value
     return dataDict
 
-def extractRetAndArgs(json_data, functionOffset):
+def extractFunctionPrototype(json_data, functionOffset):
     identifiers = json_data["identifiers"] if ("identifiers" in json_data) else json_data["program"]["identifiers"]
     functionIdentifiers = {}
     args = None
@@ -30,6 +30,7 @@ def extractRetAndArgs(json_data, functionOffset):
         functionIdentifiers[functionName] = {}
         functionIdentifiers[functionName]["args"] = {}
         functionIdentifiers[functionName]["return"] = {}
+        functionIdentifiers[functionName]["decorators"] = []
         if (functionName + ".Args" in identifiers and "members" in identifiers[functionName + ".Args"]):
             args = identifiers[functionName + ".Args"]["members"]
             if (functionName + ".ImplicitArgs" in identifiers and "members" in identifiers[functionName + ".ImplicitArgs"]):
@@ -46,6 +47,8 @@ def extractRetAndArgs(json_data, functionOffset):
                 functionIdentifiers[functionName]["return"][retData["offset"]] = {}
                 functionIdentifiers[functionName]["return"][retData["offset"]][argument] = retData["cairo_type"]
             functionIdentifiers[functionName]["return"] = dict(collections.OrderedDict(sorted(functionIdentifiers[functionName]["return"].items())))
+        if (functionName in identifiers and "decorators" in identifiers[functionName]):
+            functionIdentifiers[functionName]["decorators"] = (identifiers[functionName]["decorators"])
     return functionIdentifiers
 
 def extractData(path):
@@ -71,11 +74,11 @@ def extractData(path):
         ## Get function name and put it in dictionnary with offset as key
         for offset in instructionLocations:
             # Link instruction and offset to a function
-            functionName = instructionLocations[offset]["accessible_scopes"][1]
+            functionName = instructionLocations[offset]["accessible_scopes"][-1]
             if (actualFunction != functionName):
                 functionOffset[offset] = functionName
                 actualFunction = functionName
-        functionIdentifiers = extractRetAndArgs(json_data, functionOffset)
+        functionIdentifiers = extractFunctionPrototype(json_data, functionOffset)
 
     else:
         debugInfo = json_data["abi"]

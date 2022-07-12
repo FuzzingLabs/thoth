@@ -47,7 +47,7 @@ class Disassembler:
          if (function.offsetStart == offset):
             return function
       return None
-    
+
    def buildCallFlowGraph(self, dot, function, edgesDone):
       if (function is None):
          return dot
@@ -60,10 +60,6 @@ class Disassembler:
             offset = int(headInstruction.id) - (prime - int(headInstruction.imm))
             if (offset < 0 ):
                offset = int(headInstruction.id) + int(headInstruction.imm)
-            if ((function.offsetStart, str(offset)) not in edgesDone):
-               print("create new edge " + function.offsetStart + " - " + str(offset))
-            else :
-               print("exist edge " + function.offsetStart + " - " + str(offset))
             if (str(offset) != function.offsetStart and (function.offsetStart, str(offset)) not in edgesDone):
                edgesDone.append((function.offsetStart, str(offset)))
                self.buildCallFlowGraph(dot, self.getFunctionAtOffset(str(offset)), edgesDone)
@@ -74,7 +70,7 @@ class Disassembler:
    def printCallFlowGraph(self):
       if (self.dot == None):
          dot = graphviz.Digraph('CALL FLOW GRAPH', comment='CALL FLOW GRAPH') 
-         self.dot = self.buildCallFlowGraph(dot, self.getFunctionByName("__main__.main"), [])
+         self.dot = self.buildCallFlowGraph(dot, self.functions[-1], [])
       self.dot.render(directory='doctest-output', view=True)
       return self.dot
 
@@ -134,13 +130,14 @@ class InstructionData:
       fPrint(f"{self.opcode}")
 
 class FunctionData:
-   def __init__(self, offsetStart, offsetEnd, name, instructionList, args, ret, analyze=True) -> None:
+   def __init__(self, offsetStart, offsetEnd, name, instructionList, args, ret, decorators, analyze=True) -> None:
       self.offsetStart = offsetStart
       self.offsetEnd = offsetEnd
       self.name = name
       self.instructionList = instructionList
       self.args = args if args != {} else None
       self.ret = ret if ret != {} else None
+      self.decorators = decorators
       self.instructionData = None
       self.nextFunction = None
 
@@ -160,14 +157,17 @@ class FunctionData:
       self.instructionData = head
    
    def getPrototype(self):
-      prototype = f"func {self.name}("
+      prototype = ""
+      for decorator in self.decorators:
+         prototype += f"@{decorator} "
+      prototype += f"func {self.name}("
       if (self.args != None):
          for idarg in self.args:
             if (self.args[idarg] != {}):
                for args in self.args[idarg]:
                   prototype += args
                   prototype +=" : "
-                  prototype += self.args[idarg][args]
+                  prototype += self.args[idarg][args] + " "
                   if (int(idarg) != len(self.args) - 1):
                      prototype += ", "
       prototype += ")"
@@ -180,7 +180,7 @@ class FunctionData:
                   prototype +=" : "
                   prototype += self.ret[idarg][args]
                   if (int(idarg) != len(self.ret) - 1):
-                     prototype += ","
+                     prototype += ", "
                   else:
                      prototype += ")"
       prototype += ":"
