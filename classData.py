@@ -1,11 +1,14 @@
 import imp
 import graphviz
 import re
-from disassembler import analyzeGetFunctions
+from disassembler import analyzeFunctions
 from utils import *
 from jsonParser import *
 
 class Disassembler:
+   """
+   The main object that contains all the data the disassembler and the API need
+   """
    def __init__(self, file):
       self.file = file
       self.functions = []
@@ -14,8 +17,12 @@ class Disassembler:
       self.analyze()
 
    def analyze(self):
+      """
+      Start the analyze of the code by parsing the cairo/starknet/other json.
+      Then it creates every Function class and add it to the Disassembler functions list
+      """
       self.json = parseToJson(self.file)
-      headFunction = analyzeGetFunctions(self.json)
+      headFunction = analyzeFunctions(self.json)
       while (headFunction):
          headFunction.disassembleFunction()
          self.functions.append(headFunction)
@@ -23,6 +30,9 @@ class Disassembler:
       return self.functions
 
    def printDisass(self, functionName=None):
+      """
+      Iterate over every function and print the disassembly
+      """
       if (functionName is None):
          for function in self.functions:
             function.printData()
@@ -34,21 +44,33 @@ class Disassembler:
             print("Error : Function does not exist.")
 
    def dumpJson(self):
+      """
+      Print the JSON that contains the informations about functions/instructions/opcode ...
+      """
       print("\n", json.dumps(self.json, indent=3))
 
    def getFunctionByName(self, functionName):
+      """
+      Return a function if the functionName match
+      """
       for function in self.functions:
          if (functionName == function.name):
             return function
       return None
 
    def getFunctionAtOffset(self, offset):
+      """
+      Return a function if the offset match
+      """
       for function in self.functions:
          if (function.offsetStart == offset):
             return function
       return None
 
    def buildCallFlowGraph(self, dot, function, edgesDone):
+      """
+      Build the edges of a function
+      """
       if (function is None):
          return dot
       if (not function.instructionData):
@@ -68,6 +90,9 @@ class Disassembler:
       return dot
 
    def printCallFlowGraph(self):
+      """
+      Create all the function Node for the CallFlowGraph and call BuildCallFlowGraph to build the edges
+      """
       if (self.dot == None):
          dot = graphviz.Digraph('CALL FLOW GRAPH', comment='CALL FLOW GRAPH')
          for function in self.functions:
@@ -136,6 +161,9 @@ class InstructionData:
       fPrint(f"{self.opcode}")
 
 class FunctionData:
+   """
+   Function Class
+   """
    def __init__(self, offsetStart, offsetEnd, name, instructionList, args, ret, decorators, analyze=True) -> None:
       self.offsetStart = offsetStart
       self.offsetEnd = offsetEnd
@@ -149,6 +177,9 @@ class FunctionData:
       self.entryPoint = False
 
    def disassembleFunction(self):
+      """
+      Create a linked list of the instruction with it datas
+      """
       instructionList = self.instructionList
       head = None
       previous = None
@@ -164,6 +195,9 @@ class FunctionData:
       self.instructionData = head
    
    def getPrototype(self):
+      """
+      Build the string of the prototype
+      """
       prototype = ""
       for decorator in self.decorators:
          prototype += f"@{decorator} "
@@ -194,6 +228,9 @@ class FunctionData:
       return prototype
 
    def printData(self):
+      """
+      Iterate over each instruction and print the disassembly
+      """
       instructionData = self.instructionData
       prototype = self.getPrototype()
       print(f"\n\t\t{prototype}\n")

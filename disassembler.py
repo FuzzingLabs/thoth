@@ -112,7 +112,11 @@ def decodeInstruction(encoding: int, imm: Optional[int] = None) -> Instruction:
         opcode=opcode,
     )
 
-def analyzeGetFunctions(bytecodesToJson):
+
+def analyzeFunctions(bytecodesToJson):
+    """
+    Function that creates a function class and return the first function of the linked list
+    """
     head = None
     previous = None
     for function in bytecodesToJson:

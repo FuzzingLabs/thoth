@@ -7,6 +7,9 @@ from disassembler import decodeInstruction
 jsonType = None
 
 def decodeToJson(decoded):
+    """
+    Split the return of the Decoded Bytecodes to create a dictionnary that contains the informations
+    """
     dataDict = {}
     toParse = re.search(r'\((.*?)\)', decoded).group(1)
     parsed = toParse.split(",")
@@ -20,6 +23,9 @@ def decodeToJson(decoded):
     return dataDict
 
 def extractFunctionPrototype(json_data, functionOffset):
+    """
+    Get the informations about arguments/return/decorators
+    """
     identifiers = json_data["identifiers"] if ("identifiers" in json_data) else json_data["program"]["identifiers"]
     functionIdentifiers = {}
     args = None
@@ -52,6 +58,9 @@ def extractFunctionPrototype(json_data, functionOffset):
     return functionIdentifiers
 
 def extractData(path):
+    """
+    Return the good dictionary that contains the instructions for the Bytecodes and the Identifiers for the return/args informations
+    """
     data = []
     functionOffset = {}
     with path[0] as f:
@@ -95,6 +104,11 @@ def extractData(path):
 
 
 def parseToJson(path):
+    """
+    Get bytecodes and decode it.
+    Also get informations about return values, arguments and decorators
+    Build a generic Json.
+    """
     data, functionOffset, functionIdentifiers = extractData(path)
     size = len(data)
     offset = 0

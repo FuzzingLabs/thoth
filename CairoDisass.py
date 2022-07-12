@@ -14,6 +14,9 @@ from jsonParser import *
 class CairoDisassCommandLine:
     @staticmethod
     def parse_args():
+        """
+        Argument parser for command line
+        """
         parser = argparse.ArgumentParser(
             add_help=False,
             description='Cairo Disassembler',
@@ -34,6 +37,9 @@ class CairoDisassCommandLine:
 
     @classmethod
     def main(cls):
+        """
+        Main function
+        """
         args = cls.parse_args()
         disassembler = Disassembler(args.file)
         if ("vvv" in vars(args) and args.vvv):
