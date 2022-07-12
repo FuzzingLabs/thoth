@@ -24,11 +24,15 @@ class Disassembler:
         if analyze:
             self.analyze()
 
-    def _analyze_functions(self):
+    def analyze(self):
         """
-        Function that creates a function class and return a list of Function
+        Start the analyze of the code by parsing the cairo/starknet/other json.
+        Then it creates every Function class and add it to the Disassembler functions list
         """
-        list_func = []
+        self.json = parseToJson(self.file)
+        
+        self.dump_json()
+
         for function in self.json:
             offset_start = list(self.json[function]["instruction"].keys())[0]
             offset_end = list(self.json[function]["instruction"].keys())[-1]
@@ -37,17 +41,17 @@ class Disassembler:
             args = self.json[function]["data"]["args"]
             ret = self.json[function]["data"]["return"]
             decorators = self.json[function]["data"]["decorators"]
-            list_func.append(Function(offset_start, offset_end, name, instructions, args, ret, decorators))
-        return list_func
 
-    def analyze(self):
-        """
-        Start the analyze of the code by parsing the cairo/starknet/other json.
-        Then it creates every Function class and add it to the Disassembler functions list
-        """
-        self.json = parseToJson(self.file)
-        self.dump_json()
-        self.functions = self._analyze_functions()
+            self.functions.append(
+                Function(offset_start,
+                         offset_end,
+                         name, 
+                         instructions, 
+                         args, 
+                         ret, 
+                         decorators,
+                         entry_point=self.json[function]["data"]["entry_point"]))
+        
         return self.functions
 
     def print(self, func_name=None):
@@ -79,7 +83,7 @@ class Disassembler:
                 return function
         return None
 
-    def get_function_at_offset(self, offset):
+    def get_function_by_offset(self, offset):
         """
         Return a Function if the offset match
         """
@@ -88,40 +92,47 @@ class Disassembler:
                 return function
         return None
 
-    def _generate_call_flow_graph_edges(self, dot, function, edgesDone):
+    def _call_flow_graph_generate_nodes(self):
         """
-        Build the edges of a function
+        Create all the function nodes
         """
-        if (function is None):
-            return dot
 
-        for head_instruction in function.instructions:
-            if ("CALL" in head_instruction.opcode):
-                offset = int(head_instruction.id) - (PRIME - int(head_instruction.imm))
-                if (offset < 0 ):
-                    offset = int(head_instruction.id) + int(head_instruction.imm)
-                if (str(offset) != function.offset_start and (function.offset_start, str(offset)) not in edgesDone):
-                    edgesDone.append((function.offset_start, str(offset)))
-                    self._generate_call_flow_graph_edges(dot, self.get_function_at_offset(str(offset)), edgesDone)
-                    dot.edge(function.offset_start, str(offset))
-        return dot
+        # TODO - add entrypoint info
+        # TODO - add import info
+        for function in self.functions:
+
+            # default shape
+            shape = 'oval'
+
+            # This function is an entrypoint
+            if function.entry_point:
+                shape = 'doubleoctagon'
+
+            self.call_graph.node(function.offset_start,
+                                 label=function.name,
+                                 shape=shape)
+        
 
     def _generate_call_flow_graph(self):
         """
         Create all the function Node for the CallFlowGraph and call _generate_call_flow_graph_edges to build the edges
         """
-        dot = Digraph('CALL FLOW GRAPH', comment='CALL FLOW GRAPH')
+        self.call_graph = Digraph('CALL FLOW GRAPH', comment='CALL FLOW GRAPH')
         
         # First, we create the nodes
-        # TODO - add entrypoint info
-        # TODO - add import info
-        for function in self.functions:
-            dot.node(function.offset_start, function.name)
-        edgesDone = []
+        self._call_flow_graph_generate_nodes()
 
-        # we are creating the edges btw nodes
+        edgesDone = []
+        # build the edges btw function (nodes)
         for function in self.functions:
-            self.call_graph = self._generate_call_flow_graph_edges(dot, function, edgesDone)
+            for instr in function.instructions:
+                if ("CALL" in instr.opcode):
+                    offset = int(instr.id) - (PRIME - int(instr.imm))
+                    if (offset < 0):
+                        offset = int(instr.id) + int(instr.imm)
+                    if (str(offset) != function.offset_start and (function.offset_start, str(offset)) not in edgesDone):
+                        edgesDone.append((function.offset_start, str(offset)))
+                        self.call_graph.edge(function.offset_start, str(offset))
 
 
     def print_call_flow_graph(self, view=True):

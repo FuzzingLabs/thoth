@@ -6,7 +6,7 @@ class Function:
    """
    Function Class
    """
-   def __init__(self, offset_start, offset_end, name, instructions, args, ret, decorators, analyze=True) -> None:
+   def __init__(self, offset_start, offset_end, name, instructions, args, ret, decorators, entry_point=False) -> None:
       self.offset_start = offset_start
       self.offset_end = offset_end
       self.name = name
@@ -15,7 +15,7 @@ class Function:
       self.args = args if args != {} else None
       self.ret = ret if ret != {} else None
       self.decorators = decorators
-      self.entry_point = False
+      self.entry_point = entry_point
 
       self._generate_instruction()
 

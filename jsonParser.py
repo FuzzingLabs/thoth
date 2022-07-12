@@ -31,6 +31,13 @@ def extractFunctionPrototype(json_data, func_offset):
     func_identifiers = {}
     args = None
     ret = None
+
+    # get entry_point offsets
+    entry_points = []
+    entry_points_by_type = json_data["entry_points_by_type"] if ("entry_points_by_type" in json_data) else None
+    for entry_type in entry_points_by_type.values():
+        entry_points += [str(int(entry['offset'], base=16)) for entry in entry_type]
+
     ## Get arguments and return value of function
     for offset in func_offset:
         func_name = func_offset[offset]
@@ -64,8 +71,17 @@ def extractFunctionPrototype(json_data, func_offset):
                 tmp[retData["offset"]] = {}
                 tmp[retData["offset"]][argument] = retData["cairo_type"]
             func_identifiers[func_name]["return"] = dict(collections.OrderedDict(sorted(tmp.items())))
+        
+        # get decorators
         if (func_name in identifiers and "decorators" in identifiers[func_name]):
             func_identifiers[func_name]["decorators"] = (identifiers[func_name]["decorators"])
+
+        # get entry_points
+        if offset in entry_points:
+            func_identifiers[func_name]["entry_point"] = True
+        else:
+            func_identifiers[func_name]["entry_point"] = False
+
     return func_identifiers
 
 def extractData(path):
@@ -99,6 +115,7 @@ def extractData(path):
                 func_offset[offset] = func_name
                 actualFunction = func_name
         func_identifiers = extractFunctionPrototype(json_data, func_offset)
+        print(func_identifiers)
 
     else:
         debugInfo = json_data["abi"]
@@ -143,4 +160,4 @@ def parseToJson(path):
         bytecodesToJson[actualFunction]["instruction"][key] = {}
         bytecodesToJson[actualFunction]["instruction"][key][hex(data[offset])] = decodeToJson(str(decoded))
         offset += incr
-    return bytecodesToJson
+    return bytecodesToJson, 
