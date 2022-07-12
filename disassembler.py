@@ -122,8 +122,10 @@ def analyzeGetFunctions(bytecodesToJson):
         offsetStart = list(bytecodesToJson[function].keys())[0]
         offsetEnd = list(bytecodesToJson[function].keys())[-1]
         name = function
-        instructionList = bytecodesToJson[function]
-        functionClass = FunctionData(offsetStart, offsetEnd, name, instructionList)
+        instructionList = bytecodesToJson[function]["instruction"]
+        args = bytecodesToJson[function]["data"]["args"]
+        ret = bytecodesToJson[function]["data"]["return"]
+        functionClass = FunctionData(offsetStart, offsetEnd, name, instructionList, args, ret)
         fdict.append(functionClass)
         functionClass.dictFunctions = fdict
         if (not head):
