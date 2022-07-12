@@ -1,0 +1,301 @@
+{
+    "attributes": [],
+    "builtins": [
+        "output",
+        "pedersen",
+        "range_check",
+        "ecdsa"
+    ],
+    "data": [
+        "0x208b7fff7fff7ffe"
+    ],
+    "debug_info": {
+        "file_contents": {},
+        "instruction_locations": {
+            "0": {
+                "accessible_scopes": [
+                    "__main__",
+                    "__main__.main"
+                ],
+                "flow_tracking_data": {
+                    "ap_tracking": {
+                        "group": 0,
+                        "offset": 0
+                    },
+                    "reference_ids": {
+                        "__main__.main.ecdsa_ptr": 3,
+                        "__main__.main.output_ptr": 0,
+                        "__main__.main.pedersen_ptr": 1,
+                        "__main__.main.range_check_ptr": 2
+                    }
+                },
+                "hints": [],
+                "inst": {
+                    "end_col": 5,
+                    "end_line": 8,
+                    "input_file": {
+                        "filename": "tests/cairo_files/cairo_all_builtins.cairo"
+                    },
+                    "start_col": 2,
+                    "start_line": 8
+                }
+            }
+        }
+    },
+    "hints": {},
+    "identifiers": {
+        "__main__.HashBuiltin": {
+            "destination": "starkware.cairo.common.cairo_builtins.HashBuiltin",
+            "type": "alias"
+        },
+        "__main__.SignatureBuiltin": {
+            "destination": "starkware.cairo.common.cairo_builtins.SignatureBuiltin",
+            "type": "alias"
+        },
+        "__main__.main": {
+            "decorators": [],
+            "pc": 0,
+            "type": "function"
+        },
+        "__main__.main.Args": {
+            "full_name": "__main__.main.Args",
+            "members": {},
+            "size": 0,
+            "type": "struct"
+        },
+        "__main__.main.ImplicitArgs": {
+            "full_name": "__main__.main.ImplicitArgs",
+            "members": {
+                "ecdsa_ptr": {
+                    "cairo_type": "starkware.cairo.common.cairo_builtins.SignatureBuiltin*",
+                    "offset": 3
+                },
+                "output_ptr": {
+                    "cairo_type": "felt*",
+                    "offset": 0
+                },
+                "pedersen_ptr": {
+                    "cairo_type": "starkware.cairo.common.cairo_builtins.HashBuiltin*",
+                    "offset": 1
+                },
+                "range_check_ptr": {
+                    "cairo_type": "felt",
+                    "offset": 2
+                }
+            },
+            "size": 4,
+            "type": "struct"
+        },
+        "__main__.main.Return": {
+            "full_name": "__main__.main.Return",
+            "members": {},
+            "size": 0,
+            "type": "struct"
+        },
+        "__main__.main.SIZEOF_LOCALS": {
+            "type": "const",
+            "value": 0
+        },
+        "__main__.main.ecdsa_ptr": {
+            "cairo_type": "starkware.cairo.common.cairo_builtins.SignatureBuiltin*",
+            "full_name": "__main__.main.ecdsa_ptr",
+            "references": [
+                {
+                    "ap_tracking_data": {
+                        "group": 0,
+                        "offset": 0
+                    },
+                    "pc": 0,
+                    "value": "[cast(fp + (-3), starkware.cairo.common.cairo_builtins.SignatureBuiltin**)]"
+                }
+            ],
+            "type": "reference"
+        },
+        "__main__.main.output_ptr": {
+            "cairo_type": "felt*",
+            "full_name": "__main__.main.output_ptr",
+            "references": [
+                {
+                    "ap_tracking_data": {
+                        "group": 0,
+                        "offset": 0
+                    },
+                    "pc": 0,
+                    "value": "[cast(fp + (-6), felt**)]"
+                }
+            ],
+            "type": "reference"
+        },
+        "__main__.main.pedersen_ptr": {
+            "cairo_type": "starkware.cairo.common.cairo_builtins.HashBuiltin*",
+            "full_name": "__main__.main.pedersen_ptr",
+            "references": [
+                {
+                    "ap_tracking_data": {
+                        "group": 0,
+                        "offset": 0
+                    },
+                    "pc": 0,
+                    "value": "[cast(fp + (-5), starkware.cairo.common.cairo_builtins.HashBuiltin**)]"
+                }
+            ],
+            "type": "reference"
+        },
+        "__main__.main.range_check_ptr": {
+            "cairo_type": "felt",
+            "full_name": "__main__.main.range_check_ptr",
+            "references": [
+                {
+                    "ap_tracking_data": {
+                        "group": 0,
+                        "offset": 0
+                    },
+                    "pc": 0,
+                    "value": "[cast(fp + (-4), felt*)]"
+                }
+            ],
+            "type": "reference"
+        },
+        "starkware.cairo.common.cairo_builtins.BitwiseBuiltin": {
+            "full_name": "starkware.cairo.common.cairo_builtins.BitwiseBuiltin",
+            "members": {
+                "x": {
+                    "cairo_type": "felt",
+                    "offset": 0
+                },
+                "x_and_y": {
+                    "cairo_type": "felt",
+                    "offset": 2
+                },
+                "x_or_y": {
+                    "cairo_type": "felt",
+                    "offset": 4
+                },
+                "x_xor_y": {
+                    "cairo_type": "felt",
+                    "offset": 3
+                },
+                "y": {
+                    "cairo_type": "felt",
+                    "offset": 1
+                }
+            },
+            "size": 5,
+            "type": "struct"
+        },
+        "starkware.cairo.common.cairo_builtins.EcOpBuiltin": {
+            "full_name": "starkware.cairo.common.cairo_builtins.EcOpBuiltin",
+            "members": {
+                "m": {
+                    "cairo_type": "felt",
+                    "offset": 4
+                },
+                "p": {
+                    "cairo_type": "starkware.cairo.common.ec_point.EcPoint",
+                    "offset": 0
+                },
+                "q": {
+                    "cairo_type": "starkware.cairo.common.ec_point.EcPoint",
+                    "offset": 2
+                },
+                "r": {
+                    "cairo_type": "starkware.cairo.common.ec_point.EcPoint",
+                    "offset": 5
+                }
+            },
+            "size": 7,
+            "type": "struct"
+        },
+        "starkware.cairo.common.cairo_builtins.EcPoint": {
+            "destination": "starkware.cairo.common.ec_point.EcPoint",
+            "type": "alias"
+        },
+        "starkware.cairo.common.cairo_builtins.HashBuiltin": {
+            "full_name": "starkware.cairo.common.cairo_builtins.HashBuiltin",
+            "members": {
+                "result": {
+                    "cairo_type": "felt",
+                    "offset": 2
+                },
+                "x": {
+                    "cairo_type": "felt",
+                    "offset": 0
+                },
+                "y": {
+                    "cairo_type": "felt",
+                    "offset": 1
+                }
+            },
+            "size": 3,
+            "type": "struct"
+        },
+        "starkware.cairo.common.cairo_builtins.SignatureBuiltin": {
+            "full_name": "starkware.cairo.common.cairo_builtins.SignatureBuiltin",
+            "members": {
+                "message": {
+                    "cairo_type": "felt",
+                    "offset": 1
+                },
+                "pub_key": {
+                    "cairo_type": "felt",
+                    "offset": 0
+                }
+            },
+            "size": 2,
+            "type": "struct"
+        },
+        "starkware.cairo.common.ec_point.EcPoint": {
+            "full_name": "starkware.cairo.common.ec_point.EcPoint",
+            "members": {
+                "x": {
+                    "cairo_type": "felt",
+                    "offset": 0
+                },
+                "y": {
+                    "cairo_type": "felt",
+                    "offset": 1
+                }
+            },
+            "size": 2,
+            "type": "struct"
+        }
+    },
+    "main_scope": "__main__",
+    "prime": "0x800000000000011000000000000000000000000000000000000000000000001",
+    "reference_manager": {
+        "references": [
+            {
+                "ap_tracking_data": {
+                    "group": 0,
+                    "offset": 0
+                },
+                "pc": 0,
+                "value": "[cast(fp + (-6), felt**)]"
+            },
+            {
+                "ap_tracking_data": {
+                    "group": 0,
+                    "offset": 0
+                },
+                "pc": 0,
+                "value": "[cast(fp + (-5), starkware.cairo.common.cairo_builtins.HashBuiltin**)]"
+            },
+            {
+                "ap_tracking_data": {
+                    "group": 0,
+                    "offset": 0
+                },
+                "pc": 0,
+                "value": "[cast(fp + (-4), felt*)]"
+            },
+            {
+                "ap_tracking_data": {
+                    "group": 0,
+                    "offset": 0
+                },
+                "pc": 0,
+                "value": "[cast(fp + (-3), starkware.cairo.common.cairo_builtins.SignatureBuiltin**)]"
+            }
+        ]
+    }
+}
