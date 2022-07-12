@@ -10,31 +10,23 @@ class Function:
       self.offset_start = offset_start
       self.offset_end = offset_end
       self.name = name
-      self.instructions = instructions
+      self.instructions_dict = instructions
+      self.instructions = []
       self.args = args if args != {} else None
       self.ret = ret if ret != {} else None
       self.decorators = decorators
-      self.instruction_data = None
-      self.nextFunction = None
       self.entry_point = False
 
-   def disassemble_function(self):
+      self._generate_instruction()
+
+   def _generate_instruction(self):
       """
-      Create a linked list of the instruction with it datas
+      Create a list of the instruction with its datas
       """
-      instructions = self.instructions
-      head = None
-      previous = None
-      instruction_data = None
-      for offset in instructions:
-         for bytecode in instructions[offset]:
-               instruction_data = Instruction(instructions[offset][bytecode], offset)
-         if (not head):
-               head = instruction_data
-         if (previous):
-               previous.nextInstruction = instruction_data
-         previous = instruction_data
-      self.instruction_data = head
+      for offset in self.instructions_dict:
+         for bytecode in self.instructions_dict[offset]:
+               self.instructions.append(Instruction(self.instructions_dict[offset][bytecode], offset))
+      return self.instructions
    
    def get_prototype(self):
       """
@@ -73,9 +65,7 @@ class Function:
       """
       Iterate over each instruction and print the disassembly
       """
-      instruction_data = self.instruction_data
       prototype = self.get_prototype()
       print(f"\n\t\t{prototype}\n")
-      while instruction_data:
-         instruction_data.print()
-         instruction_data = instruction_data.nextInstruction
+      for instr in self.instructions:
+         instr.print()

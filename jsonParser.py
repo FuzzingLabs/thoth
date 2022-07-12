@@ -38,22 +38,32 @@ def extractFunctionPrototype(json_data, func_offset):
         func_identifiers[func_name]["args"] = {}
         func_identifiers[func_name]["return"] = {}
         func_identifiers[func_name]["decorators"] = []
+        
+        # get func args values
         if (func_name + ".Args" in identifiers and "members" in identifiers[func_name + ".Args"]):
             args = identifiers[func_name + ".Args"]["members"]
             if (func_name + ".ImplicitArgs" in identifiers and "members" in identifiers[func_name + ".ImplicitArgs"]):
                 args.update(identifiers[func_name + ".ImplicitArgs"]["members"])
+            
+            tmp = {}
             for argument in args:
                 argsData = identifiers[func_name + ".Args"]["members"][argument]
-                func_identifiers[func_name]["args"][argsData["offset"]] = {}
-                func_identifiers[func_name]["args"][argsData["offset"]][argument] = argsData["cairo_type"]
-            func_identifiers[func_name]["args"] = dict(collections.OrderedDict(sorted(func_identifiers[func_name]["args"].items())))
+                tmp[argsData["offset"]] = {}
+                tmp[argsData["offset"]][argument] = argsData["cairo_type"]
+
+            #print("TODO " + str([arg[1] for arg in sorted(tmp.items())]))
+            func_identifiers[func_name]["args"] = dict(collections.OrderedDict(sorted(tmp.items())))
+        
+        # get func return values
         if (func_name + ".Return" in identifiers and "members" in identifiers[func_name + ".Return"]):
             ret = identifiers[func_name + ".Return"]["members"]
+            
+            tmp = {}
             for argument in ret:
                 retData = identifiers[func_name + ".Return"]["members"][argument]
-                func_identifiers[func_name]["return"][retData["offset"]] = {}
-                func_identifiers[func_name]["return"][retData["offset"]][argument] = retData["cairo_type"]
-            func_identifiers[func_name]["return"] = dict(collections.OrderedDict(sorted(func_identifiers[func_name]["return"].items())))
+                tmp[retData["offset"]] = {}
+                tmp[retData["offset"]][argument] = retData["cairo_type"]
+            func_identifiers[func_name]["return"] = dict(collections.OrderedDict(sorted(tmp.items())))
         if (func_name in identifiers and "decorators" in identifiers[func_name]):
             func_identifiers[func_name]["decorators"] = (identifiers[func_name]["decorators"])
     return func_identifiers

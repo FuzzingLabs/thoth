@@ -117,7 +117,6 @@ class Instruction:
         self.apUpdate = instruction_data.get("ap_update").split("ApUpdate.")[1]
         self.fpUpdate = instruction_data.get("fp_update").split("FpUpdate.")[1]
         self.opcode = instruction_data.get("opcode").split("Opcode.")[1]
-        self.nextInstruction = None
 
     def _handle_assert_eq(self):
         format_print(f"{self.opcode}", end="")
