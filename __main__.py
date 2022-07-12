@@ -23,7 +23,7 @@ def parse_args():
     Argument parser for command line
     """
     parser = argparse.ArgumentParser(
-        add_help=False,
+        add_help=True,
         description='Cairo Disassembler',
         epilog='The exit status is 0 for non-failures and -1 for failures.',
         formatter_class=argparse.ArgumentDefaultsHelpFormatter,
@@ -36,6 +36,7 @@ def parse_args():
     m = parser.add_argument_group('optional arguments')
     m.add_argument('-vvv', '-verbose', '--verbose', action='store_true', help='Print JSON with details of all instructions')
     m.add_argument('-c', '-call', '--call', action='store_true', help='Print call flow graph')
+    m.add_argument('-g', '-cfg', '--cfg', action='store_true', help='Print control flow graph')
 
     return parser.parse_args()
 
@@ -48,11 +49,20 @@ def main():
     args = parse_args()
     disassembler = Disassembler(args.file)
 
-    if ("vvv" in vars(args) and args.vvv):
+    if args.verbose:
         disassembler.dump_json()
-    if ("call" in vars(args) and args.call):
-        disassembler.print_call_flow_graph()
+    
+    # print disassembly code
     disassembler.print()
+    
+    # print call flow graph
+    if args.call:
+        disassembler.print_call_flow_graph()
+
+    # print CFG
+    if args.cfg:
+        disassembler.print_cfg()
+
     return 0
 
 if __name__ == "__main__":

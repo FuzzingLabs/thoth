@@ -18,7 +18,8 @@ class Disassembler:
       self.file = file
       self.functions = []
       self.json = None
-      self.dot = None
+      self.call_graph = None
+      self.cfg = None
 
       if analyze:
          self.analyze()
@@ -133,7 +134,7 @@ class Disassembler:
 
       # we are creating the edges btw nodes
       for function in self.functions:
-         self.dot = self._generate_call_flow_graph_edges(dot, function, edgesDone)
+         self.call_graph = self._generate_call_flow_graph_edges(dot, function, edgesDone)
 
 
    def print_call_flow_graph(self, view=True):
@@ -142,9 +143,17 @@ class Disassembler:
       """
 
       # call flow graph not generated yet
-      if (self.dot == None):
+      if (self.call_graph == None):
          self._generate_call_flow_graph()
 
       # show the call flow graph
-      self.dot.render(directory='doctest-output', view=view)
-      return self.dot
+      self.call_graph.render(directory='doctest-output', view=view)
+      return self.call_graph
+
+   def print_cfg(self):
+      """
+      Print the CFG (Control Flow Graph)
+      """
+
+      print("TODO CFG")
+      raise NotImplementedError

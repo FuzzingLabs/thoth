@@ -100,84 +100,84 @@ def decodeInstruction(encoding: int, imm: Optional[int] = None) -> CairoInstruct
     )
 
 class Instruction:
-   def __init__(self, instruction_data, id):
-      self.id = id
-      self.offDest = instruction_data.get("off0") if instruction_data.get("off0")[0] == '-' else '+' + instruction_data.get("off0")
-      self.offDest = self.offDest if int(self.offDest) != 0 else ""
-      self.off1 = instruction_data.get("off1") if instruction_data.get("off1")[0] == '-' else '+' + instruction_data.get("off1")
-      self.off1 = self.off1 if int(self.off1) != 0 else ""
-      self.off2 = instruction_data.get("off2") if instruction_data.get("off2")[0] == '-' else '+' + instruction_data.get("off2")
-      self.off2 = self.off2 if int(self.off2) != 0 else ""
-      self.imm = instruction_data.get("imm")
-      self.dstRegister = instruction_data.get("dst_register").split("Register.")[1]
-      self.op0Register = instruction_data.get("op0_register").split("Register.")[1]
-      self.op1Addr = instruction_data.get("op1_addr").split("Op1Addr.")[1]
-      self.res = instruction_data.get("res").split("Res.")[1]
-      self.pcUpdate = instruction_data.get("pc_update").split("PcUpdate.")[1]
-      self.apUpdate = instruction_data.get("ap_update").split("ApUpdate.")[1]
-      self.fpUpdate = instruction_data.get("fp_update").split("FpUpdate.")[1]
-      self.opcode = instruction_data.get("opcode").split("Opcode.")[1]
-      self.nextInstruction = None
+    def __init__(self, instruction_data, id):
+        self.id = id
+        self.offDest = instruction_data.get("off0") if instruction_data.get("off0")[0] == '-' else '+' + instruction_data.get("off0")
+        self.offDest = self.offDest if int(self.offDest) != 0 else ""
+        self.off1 = instruction_data.get("off1") if instruction_data.get("off1")[0] == '-' else '+' + instruction_data.get("off1")
+        self.off1 = self.off1 if int(self.off1) != 0 else ""
+        self.off2 = instruction_data.get("off2") if instruction_data.get("off2")[0] == '-' else '+' + instruction_data.get("off2")
+        self.off2 = self.off2 if int(self.off2) != 0 else ""
+        self.imm = instruction_data.get("imm")
+        self.dstRegister = instruction_data.get("dst_register").split("Register.")[1]
+        self.op0Register = instruction_data.get("op0_register").split("Register.")[1]
+        self.op1Addr = instruction_data.get("op1_addr").split("Op1Addr.")[1]
+        self.res = instruction_data.get("res").split("Res.")[1]
+        self.pcUpdate = instruction_data.get("pc_update").split("PcUpdate.")[1]
+        self.apUpdate = instruction_data.get("ap_update").split("ApUpdate.")[1]
+        self.fpUpdate = instruction_data.get("fp_update").split("FpUpdate.")[1]
+        self.opcode = instruction_data.get("opcode").split("Opcode.")[1]
+        self.nextInstruction = None
 
-   def _handle_assert_eq(self):
-      format_print(f"{self.opcode}", end="")
-      if ("OP1" in self.res):
-         if ("IMM" in self.op1Addr):
-               format_print(f"[{self.dstRegister}{self.offDest}], {self.imm}")
-         elif ("OP0" in self.op1Addr):
-               format_print(f"[{self.dstRegister}{self.offDest}], [[{self.op0Register}{self.off1}]{self.off2}]")
-         else:
-               format_print(f"[{self.dstRegister}{self.offDest}], [{self.op1Addr}{self.off2}]") 
-      else:
-         op = OPERATORS[self.res]
-         if ("IMM" not in self.op1Addr):
-               format_print(f"[{self.dstRegister}{self.offDest}], [{self.op0Register}{self.off1}] {op} [{self.op1Addr}{self.off2}]")  
-         else:
-               format_print(f"[{self.dstRegister}{self.offDest}], [{self.op0Register}{self.off1}] {op} {self.imm}")
-   
-   def _handle_nop(self):
-      if ("REGULAR" not in self.pcUpdate):
-         ##TODO JNZ OFFSET ?!
-         format_print(f"{self.pcUpdate}", end="")
-         format_print(self.imm)
-      else:
-         format_print(f"{self.opcode}")
-      #newOffset = int(self.id) + int(self.imm)
-      #format_print(f"{newOffset}")
+    def _handle_assert_eq(self):
+        format_print(f"{self.opcode}", end="")
+        if ("OP1" in self.res):
+            if ("IMM" in self.op1Addr):
+                format_print(f"[{self.dstRegister}{self.offDest}], {self.imm}")
+            elif ("OP0" in self.op1Addr):
+                format_print(f"[{self.dstRegister}{self.offDest}], [[{self.op0Register}{self.off1}]{self.off2}]")
+            else:
+                format_print(f"[{self.dstRegister}{self.offDest}], [{self.op1Addr}{self.off2}]") 
+        else:
+            op = OPERATORS[self.res]
+            if ("IMM" not in self.op1Addr):
+                format_print(f"[{self.dstRegister}{self.offDest}], [{self.op0Register}{self.off1}] {op} [{self.op1Addr}{self.off2}]")  
+            else:
+                format_print(f"[{self.dstRegister}{self.offDest}], [{self.op0Register}{self.off1}] {op} {self.imm}")
 
-   def _handle_call(self):
-      format_print(f"{self.opcode}", end="")
-      offset = int(self.id) - (PRIME - int(self.imm))
-      if (offset < 0):
-         offset = int(self.id) + int(self.imm)
-      format_print(f"{offset}")
-      #format_print(f"{offset}=>{##need to get the function name}")
+    def _handle_nop(self):
+        if ("REGULAR" not in self.pcUpdate):
+            ##TODO JNZ OFFSET ?!
+            format_print(f"{self.pcUpdate}", end="")
+            format_print(self.imm)
+        else:
+            format_print(f"{self.opcode}")
+        #newOffset = int(self.id) + int(self.imm)
+        #format_print(f"{newOffset}")
 
-   def _handle_ret(self):
-      format_print(f"{self.opcode}")
+    def _handle_call(self):
+        format_print(f"{self.opcode}", end="")
+        offset = int(self.id) - (PRIME - int(self.imm))
+        if (offset < 0):
+            offset = int(self.id) + int(self.imm)
+        format_print(f"{offset}")
+        #format_print(f"{offset}=>{##need to get the function name}")
 
-   def print(self):
-      format_print(f"offset {self.id}:", end="")
-      if ("ASSERT_EQ" in self.opcode):
-         self._handle_assert_eq()
+    def _handle_ret(self):
+        format_print(f"{self.opcode}")
 
-      elif ("NOP" in self.opcode):
-         self._handle_nop()
+    def print(self):
+        format_print(f"offset {self.id}:", end="")
+        if ("ASSERT_EQ" in self.opcode):
+            self._handle_assert_eq()
 
-      elif ("CALL" in self.opcode):
-         self._handle_call()
+        elif ("NOP" in self.opcode):
+            self._handle_nop()
 
-      elif ("RET" in self.opcode):
-         self._handle_ret()
+        elif ("CALL" in self.opcode):
+            self._handle_call()
 
-      else:
-         format_print("--TODO--")
-         raise NotImplementedError
+        elif ("RET" in self.opcode):
+            self._handle_ret()
 
-      if ("REGULAR" not in self.apUpdate):
-         op = list(filter(None, re.split(r'(\d+)', self.apUpdate)))
-         APopcode = op[0]
-         APval = op[1] if (len(op) > 1) else self.imm
-         format_print(f"offset {self.id}:", end="")
-         format_print(f"{APopcode}", end="")
-         format_print(f"AP, {APval}")
+        else:
+            format_print("--TODO--")
+            raise NotImplementedError
+
+        if ("REGULAR" not in self.apUpdate):
+            op = list(filter(None, re.split(r'(\d+)', self.apUpdate)))
+            APopcode = op[0]
+            APval = op[1] if (len(op) > 1) else self.imm
+            format_print(f"offset {self.id}:", end="")
+            format_print(f"{APopcode}", end="")
+            format_print(f"AP, {APval}")
