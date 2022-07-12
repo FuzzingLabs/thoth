@@ -1,7 +1,9 @@
 #!/usr/bin/env python3
 
 import argparse
+from dis import disassemble
 import logging
+from classData import Disassembler
 import graphviz
 
 from __version__ import __version__, __title__
@@ -33,23 +35,10 @@ class CairoDisassCommandLine:
     @classmethod
     def main(cls):
         args = cls.parse_args()
-        logging.basicConfig(format='[CairoDisass] %(asctime)s %(levelname)s: %(message)s')
-        handler = logging.StreamHandler()
-        handler.terminator = "\r"
-        logging.getLogger().addHandler(handler)
-        logging.getLogger().setLevel(logging.INFO)   
-        logging.info(f"CairoDisass -- File : {args.file[0].name}")
-        disassJson = parseToJson(args.file)
+        disassembler = Disassembler(args.file)
         if ("vvv" in vars(args) and args.vvv):
-            print("\n", json.dumps(disassJson, indent=3))
-        headFunction = analyzeGetFunctions(disassJson)
-        while (headFunction):
-            headFunction.disassembleFunction()
-            headFunction.printData()
-            if (headFunction.name == "__main__.main"):
-                if ("call" in vars(args) and args.call):
-                    dot = graphviz.Digraph('CALL FLOW GRAPH', comment='CALL FLOW GRAPH') 
-                    headFunction.cfgFunction(dot)
-                    dot.render(directory='doctest-output', view=True)  
-            headFunction = headFunction.nextFunction
+            disassembler.dumpJson()
+        if ("call" in vars(args) and args.call):
+            disassembler.printCallFlowGraph()
+        disassembler.printDisass()
         return 0

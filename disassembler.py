@@ -9,13 +9,11 @@ from starkware.cairo.lang.compiler.instruction import Instruction
 from starkware.cairo.lang.compiler.instruction import decode_instruction_values as CairoDecode
 from starkware.cairo.lang.compiler.instruction_builder import *
 from starkware.cairo.lang.compiler.parser import *
-from classData import FunctionDict, InstructionData
-from classData import FunctionData
+import classData
 import json
 import re
 
 ## Create class Function
-
 
 operator = {"ADD" : "+", "MUL" : "*"}
 prime = (2**251) + (17 * (2**192)) + 1
@@ -117,17 +115,14 @@ def decodeInstruction(encoding: int, imm: Optional[int] = None) -> Instruction:
 def analyzeGetFunctions(bytecodesToJson):
     head = None
     previous = None
-    fdict = FunctionDict()
     for function in bytecodesToJson:
-        offsetStart = list(bytecodesToJson[function].keys())[0]
-        offsetEnd = list(bytecodesToJson[function].keys())[-1]
+        offsetStart = list(bytecodesToJson[function]["instruction"].keys())[0]
+        offsetEnd = list(bytecodesToJson[function]["instruction"].keys())[-1]
         name = function
         instructionList = bytecodesToJson[function]["instruction"]
         args = bytecodesToJson[function]["data"]["args"]
         ret = bytecodesToJson[function]["data"]["return"]
-        functionClass = FunctionData(offsetStart, offsetEnd, name, instructionList, args, ret)
-        fdict.append(functionClass)
-        functionClass.dictFunctions = fdict
+        functionClass = classData.FunctionData(offsetStart, offsetEnd, name, instructionList, args, ret)
         if (not head):
             head = functionClass
         if (previous):

@@ -104,7 +104,6 @@ def parseToJson(path):
             bytecodesToJson[actualFunction] = {}
             bytecodesToJson[actualFunction]["data"] = functionIdentifiers[actualFunction]
             bytecodesToJson[actualFunction]["instruction"] = {}
-            #bytecodesToJson[actualFunction].update(functionIdentifiers[actualFunction])
         try:
             decoded = decodeInstruction(data[offset])
             incr = 1

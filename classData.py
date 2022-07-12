@@ -1,7 +1,83 @@
 import imp
 import graphviz
 import re
+from disassembler import analyzeGetFunctions
 from utils import *
+from jsonParser import *
+
+class Disassembler:
+   def __init__(self, file):
+      self.file = file
+      self.functions = []
+      self.json = None
+      self.dot = None
+      self.analyze()
+
+   def analyze(self):
+      self.json = parseToJson(self.file)
+      headFunction = analyzeGetFunctions(self.json)
+      while (headFunction):
+         headFunction.disassembleFunction()
+         self.functions.append(headFunction)
+         headFunction = headFunction.nextFunction
+      return self.functions
+
+   def printDisass(self, functionName=None):
+      if (functionName is None):
+         for function in self.functions:
+            function.printData()
+      else:
+         function = self.getFunctionByName(functionName)
+         if (function != None):
+            function.printData()
+         else:
+            print("Error : Function does not exist.")
+
+   def dumpJson(self):
+      print("\n", json.dumps(self.json, indent=3))
+
+   def getFunctionByName(self, functionName):
+      for function in self.functions:
+         if (functionName == function.name):
+            return function
+      return None
+
+   def getFunctionAtOffset(self, offset):
+      for function in self.functions:
+         if (function.offsetStart == offset):
+            return function
+      return None
+    
+   def buildCallFlowGraph(self, dot, function, edgesDone):
+      if (function is None):
+         return dot
+      if (not function.instructionData):
+         function.instructionData = function.disassembleFunction()
+      headInstruction = function.instructionData
+      dot.node(function.offsetStart, function.name)
+      while (headInstruction):
+         if ("CALL" in headInstruction.opcode):
+            offset = int(headInstruction.id) - (prime - int(headInstruction.imm))
+            if (offset < 0 ):
+               offset = int(headInstruction.id) + int(headInstruction.imm)
+            if ((function.offsetStart, str(offset)) not in edgesDone):
+               print("create new edge " + function.offsetStart + " - " + str(offset))
+            else :
+               print("exist edge " + function.offsetStart + " - " + str(offset))
+            if (str(offset) != function.offsetStart and (function.offsetStart, str(offset)) not in edgesDone):
+               edgesDone.append((function.offsetStart, str(offset)))
+               self.buildCallFlowGraph(dot, self.getFunctionAtOffset(str(offset)), edgesDone)
+               dot.edge(function.offsetStart, str(offset))
+         headInstruction = headInstruction.nextInstruction
+      return dot
+
+   def printCallFlowGraph(self):
+      if (self.dot == None):
+         dot = graphviz.Digraph('CALL FLOW GRAPH', comment='CALL FLOW GRAPH') 
+         self.dot = self.buildCallFlowGraph(dot, self.getFunctionByName("__main__.main"), [])
+      self.dot.render(directory='doctest-output', view=True)
+      return self.dot
+
 class InstructionData:
    def __init__(self, instructionData, id):
       self.id = id
@@ -49,21 +125,13 @@ class InstructionData:
    def handleCall(self):
       fPrint(f"{self.opcode}", end="")
       offset = int(self.id) - (prime - int(self.imm))
+      if (offset < 0):
+         offset = int(self.id) + int(self.imm)
       fPrint(f"{offset}")
       #fPrint(f"{offset}=>{##need to get the function name}")
 
    def handleRet(self):
       fPrint(f"{self.opcode}")
-      
-class FunctionDict:
-   def __init__(self):
-      self.functions = {}
-   
-   def append(self, functionData):
-      self.functions[functionData.offsetStart] = functionData
-   
-   def getFunctionAtOffset(self, offset):
-      return (self.functions.get(offset))
 
 class FunctionData:
    def __init__(self, offsetStart, offsetEnd, name, instructionList, args, ret, analyze=True) -> None:
@@ -75,7 +143,6 @@ class FunctionData:
       self.ret = ret if ret != {} else None
       self.instructionData = None
       self.nextFunction = None
-      self.dictFunctions = None
 
    def disassembleFunction(self):
       instructionList = self.instructionList
@@ -136,6 +203,7 @@ class FunctionData:
 
          elif ("RET" in instructionData.opcode):
                instructionData.handleRet()
+
          else:
                fPrint("--TODO--")
 
@@ -147,17 +215,3 @@ class FunctionData:
                fPrint(f"{APopcode}", end="")
                fPrint(f"AP, {APval}")
          instructionData = instructionData.nextInstruction
-   
-   def cfgFunction(self, dot):
-      if (not self.instructionData):
-         self.instructionData = self.disassembleFunction()
-      headInstruction = self.instructionData
-      dot.node(self.offsetStart, self.name)
-      while (headInstruction):
-         if ("CALL" in headInstruction.opcode):
-            offset = int(headInstruction.id) - (prime - int(headInstruction.imm))
-            if (str(offset) != self.offsetStart):
-               self.dictFunctions.getFunctionAtOffset(str(offset)).cfgFunction(dot)
-            dot.edge(self.offsetStart, str(offset))
-         headInstruction = headInstruction.nextInstruction
-      
