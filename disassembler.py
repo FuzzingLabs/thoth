@@ -1,136 +1,150 @@
-# ---------------------------------
-# Imports and Costants
-# ---------------------------------
+#!/usr/bin/env python3
 
-from dis import dis
-from sre_constants import ASSERT
-from starkware.cairo.lang.compiler.encode import *
-from starkware.cairo.lang.compiler.instruction import Instruction
-from starkware.cairo.lang.compiler.instruction import decode_instruction_values as CairoDecode
-from starkware.cairo.lang.compiler.instruction_builder import *
-from starkware.cairo.lang.compiler.parser import *
-import classData
 import json
-import re
+from graphviz import Digraph
 
-## Create class Function
+from function import Function
+from utils import format_print, OPERATORS, PRIME
+from jsonParser import *
 
-operator = {"ADD" : "+", "MUL" : "*"}
-prime = (2**251) + (17 * (2**192)) + 1
+class Disassembler:
+   """
+   Main class
 
-def decodeInstruction(encoding: int, imm: Optional[int] = None) -> Instruction:
-    """
-    Given 1 or 2 integers representing an instruction, returns the Instruction.
-    If imm is given for an instruction with no immediate, it will be ignored.
-    """
-    flags, off0_enc, off1_enc, off2_enc = decode_instruction_values(encoding)
+   loads the cairo json (Bytecode + ABI)
+   Analyze and disassemble
+   """
+   def __init__(self, file, analyze=True):
+      self.file = file
+      self.functions = []
+      self.json = None
+      self.dot = None
 
-    # Get dst_register.
-    dst_register = Register.FP if (flags >> DST_REG_BIT) & 1 else Register.AP
+      if analyze:
+         self.analyze()
 
-    # Get op0_register.
-    op0_register = Register.FP if (flags >> OP0_REG_BIT) & 1 else Register.AP
+   def _analyze_functions(self):
+        """
+        Function that creates a function class and return the first function of the linked list
+        """
+        head = None
+        previous = None
+        for function in self.json:
+            offset_start = list(self.json[function]["instruction"].keys())[0]
+            offset_end = list(self.json[function]["instruction"].keys())[-1]
+            name = function
+            instructions = self.json[function]["instruction"]
+            args = self.json[function]["data"]["args"]
+            ret = self.json[function]["data"]["return"]
+            decorators = self.json[function]["data"]["decorators"]
+            functionClass = Function(offset_start, offset_end, name, instructions, args, ret, decorators)
+            if (not head):
+                head = functionClass
+            if (previous):
+                previous.nextFunction = functionClass
+            previous = functionClass
+        return head
 
-    # Get op1.
-    op1_addr = {
-        (1, 0, 0): Instruction.Op1Addr.IMM,
-        (0, 1, 0): Instruction.Op1Addr.AP,
-        (0, 0, 1): Instruction.Op1Addr.FP,
-        (0, 0, 0): Instruction.Op1Addr.OP0,
-    }[(flags >> OP1_IMM_BIT) & 1, (flags >> OP1_AP_BIT) & 1, (flags >> OP1_FP_BIT) & 1]
+   def analyze(self):
+      """
+      Start the analyze of the code by parsing the cairo/starknet/other json.
+      Then it creates every Function class and add it to the Disassembler functions list
+      """
+      self.json = parseToJson(self.file)
+      head_function = self._analyze_functions()
+      while (head_function):
+         head_function.disassemble_function()
+         self.functions.append(head_function)
+         head_function = head_function.nextFunction
+      return self.functions
 
-    if op1_addr is Instruction.Op1Addr.IMM:
-        assert imm is not None, "op1_addr is Op1Addr.IMM, but no immediate given"
-    else:
-        imm = None
+   def print(self, func_name=None):
+      """
+      Iterate over every function and print the disassembly
+      """
+      if (func_name is None):
+         for function in self.functions:
+            function.print()
+      else:
+         function = self.get_function_by_name(func_name)
+         if (function != None):
+            function.print()
+         else:
+            print("Error : Function does not exist.")
 
-    # Get pc_update.
-    pc_update = {
-        (1, 0, 0): Instruction.PcUpdate.JUMP,
-        (0, 1, 0): Instruction.PcUpdate.JUMP_REL,
-        (0, 0, 1): Instruction.PcUpdate.JNZ,
-        (0, 0, 0): Instruction.PcUpdate.REGULAR,
-    }[(flags >> PC_JUMP_ABS_BIT) & 1, (flags >> PC_JUMP_REL_BIT) & 1, (flags >> PC_JNZ_BIT) & 1]
+   def dump_json(self):
+      """
+      Print the JSON that contains the informations about functions/instructions/opcode ...
+      """
+      print("\n", json.dumps(self.json, indent=3))
 
-    # Get res.
-    res = {
-        (1, 0): Instruction.Res.ADD,
-        (0, 1): Instruction.Res.MUL,
-        (0, 0): Instruction.Res.UNCONSTRAINED
-        if pc_update is Instruction.PcUpdate.JNZ
-        else Instruction.Res.OP1,
-    }[(flags >> RES_ADD_BIT) & 1, (flags >> RES_MUL_BIT) & 1]
+   def get_function_by_name(self, func_name):
+      """
+      Return a Function if the func_name match
+      """
+      for function in self.functions:
+         if (func_name == function.name):
+            return function
+      return None
 
-    # JNZ opcode means res must be UNCONSTRAINED.
-    if pc_update is Instruction.PcUpdate.JNZ:
-        assert res is Instruction.Res.UNCONSTRAINED
+   def get_function_at_offset(self, offset):
+      """
+      Return a Function if the offset match
+      """
+      for function in self.functions:
+         if (function.offset_start == offset):
+            return function
+      return None
 
-    # Get ap_update.
-    ap_update = {
-        (1, 0): Instruction.ApUpdate.ADD,
-        (0, 1): Instruction.ApUpdate.ADD1,
-        (0, 0): Instruction.ApUpdate.REGULAR,  # OR ADD2, depending if we have CALL opcode.
-    }[(flags >> AP_ADD_BIT) & 1, (flags >> AP_ADD1_BIT) & 1]
+   def _generate_call_flow_graph_edges(self, dot, function, edgesDone):
+      """
+      Build the edges of a function
+      """
+      if (function is None):
+         return dot
+      if (not function.instruction_data):
+         function.instruction_data = function.disassemble_function()
+      head_instruction = function.instruction_data
+      #dot.node(function.offset_start, function.name)
+      while (head_instruction):
+         if ("CALL" in head_instruction.opcode):
+            offset = int(head_instruction.id) - (PRIME - int(head_instruction.imm))
+            if (offset < 0 ):
+               offset = int(head_instruction.id) + int(head_instruction.imm)
+            if (str(offset) != function.offset_start and (function.offset_start, str(offset)) not in edgesDone):
+               edgesDone.append((function.offset_start, str(offset)))
+               self._generate_call_flow_graph_edges(dot, self.get_function_at_offset(str(offset)), edgesDone)
+               dot.edge(function.offset_start, str(offset))
+         head_instruction = head_instruction.nextInstruction
+      return dot
 
-    # Get opcode.
-    opcode = {
-        (1, 0, 0): Instruction.Opcode.CALL,
-        (0, 1, 0): Instruction.Opcode.RET,
-        (0, 0, 1): Instruction.Opcode.ASSERT_EQ,
-        (0, 0, 0): Instruction.Opcode.NOP,
-    }[
-        (flags >> OPCODE_CALL_BIT) & 1,
-        (flags >> OPCODE_RET_BIT) & 1,
-        (flags >> OPCODE_ASSERT_EQ_BIT) & 1,
-    ]
+   def _generate_call_flow_graph(self):
+      """
+      Create all the function Node for the CallFlowGraph and call _generate_call_flow_graph_edges to build the edges
+      """
+      dot = Digraph('CALL FLOW GRAPH', comment='CALL FLOW GRAPH')
+      
+      # First, we create the nodes
+      # TODO - add entrypoint info
+      # TODO - add import info
+      for function in self.functions:
+         dot.node(function.offset_start, function.name)
+      edgesDone = []
 
-    # CALL opcode means ap_update must be ADD2.
-    if opcode is Instruction.Opcode.CALL:
-        assert ap_update is Instruction.ApUpdate.REGULAR, "CALL must have update_ap is ADD2"
-        ap_update = Instruction.ApUpdate.ADD2
-
-    # Get fp_update.
-    if opcode is Instruction.Opcode.CALL:
-        fp_update = Instruction.FpUpdate.AP_PLUS2
-    elif opcode is Instruction.Opcode.RET:
-        fp_update = Instruction.FpUpdate.DST
-    else:
-        fp_update = Instruction.FpUpdate.REGULAR
-
-    return Instruction(
-        off0=off0_enc - 2 ** (OFFSET_BITS - 1),
-        off1=off1_enc - 2 ** (OFFSET_BITS - 1),
-        off2=off2_enc - 2 ** (OFFSET_BITS - 1),
-        imm=imm,
-        dst_register=dst_register,
-        op0_register=op0_register,
-        op1_addr=op1_addr,
-        res=res,
-        pc_update=pc_update,
-        ap_update=ap_update,
-        fp_update=fp_update,
-        opcode=opcode,
-    )
+      # we are creating the edges btw nodes
+      for function in self.functions:
+         self.dot = self._generate_call_flow_graph_edges(dot, function, edgesDone)
 
 
-def analyzeFunctions(bytecodesToJson):
-    """
-    Function that creates a function class and return the first function of the linked list
-    """
-    head = None
-    previous = None
-    for function in bytecodesToJson:
-        offsetStart = list(bytecodesToJson[function]["instruction"].keys())[0]
-        offsetEnd = list(bytecodesToJson[function]["instruction"].keys())[-1]
-        name = function
-        instructionList = bytecodesToJson[function]["instruction"]
-        args = bytecodesToJson[function]["data"]["args"]
-        ret = bytecodesToJson[function]["data"]["return"]
-        decorators = bytecodesToJson[function]["data"]["decorators"]
-        functionClass = classData.FunctionData(offsetStart, offsetEnd, name, instructionList, args, ret, decorators)
-        if (not head):
-            head = functionClass
-        if (previous):
-            previous.nextFunction = functionClass
-        previous = functionClass
-    return head
+   def print_call_flow_graph(self, view=True):
+      """
+      Print the CallFlowGraph
+      """
+
+      # call flow graph not generated yet
+      if (self.dot == None):
+         self._generate_call_flow_graph()
+
+      # show the call flow graph
+      self.dot.render(directory='doctest-output', view=view)
+      return self.dot
