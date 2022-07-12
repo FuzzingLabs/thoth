@@ -122,7 +122,8 @@ def analyzeGetFunctions(bytecodesToJson):
         instructionList = bytecodesToJson[function]["instruction"]
         args = bytecodesToJson[function]["data"]["args"]
         ret = bytecodesToJson[function]["data"]["return"]
-        functionClass = classData.FunctionData(offsetStart, offsetEnd, name, instructionList, args, ret)
+        decorators = bytecodesToJson[function]["data"]["decorators"]
+        functionClass = classData.FunctionData(offsetStart, offsetEnd, name, instructionList, args, ret, decorators)
         if (not head):
             head = functionClass
         if (previous):
