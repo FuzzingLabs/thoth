@@ -22,25 +22,30 @@ def decodeToJson(decoded):
 def extractRetAndArgs(json_data, functionOffset):
     identifiers = json_data["identifiers"] if ("identifiers" in json_data) else json_data["program"]["identifiers"]
     functionIdentifiers = {}
+    args = None
+    ret = None
     ## Get arguments and return value of function
     for offset in functionOffset:
         functionName = functionOffset[offset]
         functionIdentifiers[functionName] = {}
         functionIdentifiers[functionName]["args"] = {}
         functionIdentifiers[functionName]["return"] = {}
-        args = identifiers[functionName + ".Args"]["members"]
-        args.update(identifiers[functionName + ".ImplicitArgs"]["members"])
-        for argument in args:
-            argsData = identifiers[functionName + ".Args"]["members"][argument]
-            functionIdentifiers[functionName]["args"][argsData["offset"]] = {}
-            functionIdentifiers[functionName]["args"][argsData["offset"]][argument] = argsData["cairo_type"]
-        functionIdentifiers[functionName]["args"] = dict(collections.OrderedDict(sorted(functionIdentifiers[functionName]["args"].items())))
-        ret = identifiers[functionName + ".Return"]["members"]
-        for argument in ret:
-            retData = identifiers[functionName + ".Return"]["members"][argument]
-            functionIdentifiers[functionName]["return"][retData["offset"]] = {}
-            functionIdentifiers[functionName]["return"][retData["offset"]][argument] = retData["cairo_type"]
-        functionIdentifiers[functionName]["return"] = dict(collections.OrderedDict(sorted(functionIdentifiers[functionName]["return"].items())))
+        if (functionName + ".Args" in identifiers and "members" in identifiers[functionName + ".Args"]):
+            args = identifiers[functionName + ".Args"]["members"]
+            if (functionName + ".ImplicitArgs" in identifiers and "members" in identifiers[functionName + ".ImplicitArgs"]):
+                args.update(identifiers[functionName + ".ImplicitArgs"]["members"])
+            for argument in args:
+                argsData = identifiers[functionName + ".Args"]["members"][argument]
+                functionIdentifiers[functionName]["args"][argsData["offset"]] = {}
+                functionIdentifiers[functionName]["args"][argsData["offset"]][argument] = argsData["cairo_type"]
+            functionIdentifiers[functionName]["args"] = dict(collections.OrderedDict(sorted(functionIdentifiers[functionName]["args"].items())))
+        if (functionName + ".Return" in identifiers and "members" in identifiers[functionName + ".Return"]):
+            ret = identifiers[functionName + ".Return"]["members"]
+            for argument in ret:
+                retData = identifiers[functionName + ".Return"]["members"][argument]
+                functionIdentifiers[functionName]["return"][retData["offset"]] = {}
+                functionIdentifiers[functionName]["return"][retData["offset"]][argument] = retData["cairo_type"]
+            functionIdentifiers[functionName]["return"] = dict(collections.OrderedDict(sorted(functionIdentifiers[functionName]["return"].items())))
     return functionIdentifiers
 
 def extractData(path):
