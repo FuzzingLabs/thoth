@@ -39,6 +39,6 @@ class CairoDisassCommandLine:
         if ("vvv" in vars(args) and args.vvv):
             disassembler.dumpJson()
         if ("call" in vars(args) and args.call):
-            disassembler.callFlowGraph()
+            disassembler.printCallFlowGraph()
         disassembler.printDisass()
         return 0

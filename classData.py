@@ -8,7 +8,7 @@ from jsonParser import *
 class Disassembler:
    def __init__(self, file):
       self.file = file
-      self.functions = {}
+      self.functions = []
       self.json = None
       self.dot = None
       self.analyze()
@@ -18,31 +18,39 @@ class Disassembler:
       headFunction = analyzeGetFunctions(self.json)
       while (headFunction):
          headFunction.disassembleFunction()
-         self.functions[headFunction.name] = {}
-         self.functions[headFunction.name]["function"] = headFunction   
-         self.functions[headFunction.name]["offset"] = headFunction.offsetStart
+         self.functions.append(headFunction)
          headFunction = headFunction.nextFunction
       return self.functions
 
    def printDisass(self, functionName=None):
       if (functionName is None):
-         for name in self.functions:
-            self.functions[name]["function"].printData()
+         for function in self.functions:
+            function.printData()
       else:
-         if (functionName in self.functions):
-            self.functions[functionName]["function"].printData()
+         function = self.getFunctionByName(functionName)
+         if (function != None):
+            function.printData()
          else:
             print("Error : Function does not exist.")
 
    def dumpJson(self):
       print("\n", json.dumps(self.json, indent=3))
 
+   def getFunctionByName(self, functionName):
+      for function in self.functions:
+         if (functionName == function.name):
+            return function
+      return None
+
    def getFunctionAtOffset(self, offset):
       for function in self.functions:
-         if (self.functions[function]["offset"] == offset):
-            return self.functions[function]["function"]
+         if (function.offsetStart == offset):
+            return function
+      return None
 
    def buildCallFlowGraph(self, dot, function):
+      if (function is None):
+         return dot
       if (not function.instructionData):
          function.instructionData = function.disassembleFunction()
       headInstruction = function.instructionData
@@ -56,10 +64,10 @@ class Disassembler:
          headInstruction = headInstruction.nextInstruction
       return dot
 
-   def callFlowGraph(self):
+   def printCallFlowGraph(self):
       if (self.dot == None):
          dot = graphviz.Digraph('CALL FLOW GRAPH', comment='CALL FLOW GRAPH') 
-         self.dot = self.buildCallFlowGraph(dot, self.functions["__main__.main"]["function"])
+         self.dot = self.buildCallFlowGraph(dot, self.getFunctionByName("__main__.main"))
       self.dot.render(directory='doctest-output', view=True)
       return self.dot
 
