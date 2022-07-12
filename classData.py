@@ -1,7 +1,68 @@
 import imp
 import graphviz
 import re
+from disassembler import analyzeGetFunctions
 from utils import *
+from jsonParser import *
+
+class Disassembler:
+   def __init__(self, file):
+      self.file = file
+      self.functions = {}
+      self.json = None
+      self.dot = None
+      self.analyze()
+
+   def analyze(self):
+      self.json = parseToJson(self.file)
+      headFunction = analyzeGetFunctions(self.json)
+      while (headFunction):
+         headFunction.disassembleFunction()
+         self.functions[headFunction.name] = {}
+         self.functions[headFunction.name]["function"] = headFunction   
+         self.functions[headFunction.name]["offset"] = headFunction.offsetStart
+         headFunction = headFunction.nextFunction
+      return self.functions
+
+   def printDisass(self, functionName=None):
+      if (functionName is None):
+         for name in self.functions:
+            self.functions[name]["function"].printData()
+      else:
+         if (functionName in self.functions):
+            self.functions[functionName]["function"].printData()
+         else:
+            print("Error : Function does not exist.")
+
+   def dumpJson(self):
+      print("\n", json.dumps(self.json, indent=3))
+
+   def getFunctionAtOffset(self, offset):
+      for function in self.functions:
+         if (self.functions[function]["offset"] == offset):
+            return self.functions[function]["function"]
+
+   def buildCallFlowGraph(self, dot, function):
+      if (not function.instructionData):
+         function.instructionData = function.disassembleFunction()
+      headInstruction = function.instructionData
+      dot.node(function.offsetStart, function.name)
+      while (headInstruction):
+         if ("CALL" in headInstruction.opcode):
+            offset = int(headInstruction.id) - (prime - int(headInstruction.imm))
+            if (str(offset) != function.offsetStart):
+               self.buildCallFlowGraph(dot, self.getFunctionAtOffset(str(offset)))
+            dot.edge(function.offsetStart, str(offset))
+         headInstruction = headInstruction.nextInstruction
+      return dot
+
+   def callFlowGraph(self):
+      if (self.dot == None):
+         dot = graphviz.Digraph('CALL FLOW GRAPH', comment='CALL FLOW GRAPH') 
+         self.dot = self.buildCallFlowGraph(dot, self.functions["__main__.main"]["function"])
+      self.dot.render(directory='doctest-output', view=True)
+      return self.dot
+
 class InstructionData:
    def __init__(self, instructionData, id):
       self.id = id
@@ -54,16 +115,6 @@ class InstructionData:
 
    def handleRet(self):
       fPrint(f"{self.opcode}")
-      
-class FunctionDict:
-   def __init__(self):
-      self.functions = {}
-   
-   def append(self, functionData):
-      self.functions[functionData.offsetStart] = functionData
-   
-   def getFunctionAtOffset(self, offset):
-      return (self.functions.get(offset))
 
 class FunctionData:
    def __init__(self, offsetStart, offsetEnd, name, instructionList, args, ret, analyze=True) -> None:
@@ -75,7 +126,6 @@ class FunctionData:
       self.ret = ret if ret != {} else None
       self.instructionData = None
       self.nextFunction = None
-      self.dictFunctions = None
 
    def disassembleFunction(self):
       instructionList = self.instructionList
@@ -136,6 +186,7 @@ class FunctionData:
 
          elif ("RET" in instructionData.opcode):
                instructionData.handleRet()
+
          else:
                fPrint("--TODO--")
 
@@ -147,17 +198,3 @@ class FunctionData:
                fPrint(f"{APopcode}", end="")
                fPrint(f"AP, {APval}")
          instructionData = instructionData.nextInstruction
-   
-   def cfgFunction(self, dot):
-      if (not self.instructionData):
-         self.instructionData = self.disassembleFunction()
-      headInstruction = self.instructionData
-      dot.node(self.offsetStart, self.name)
-      while (headInstruction):
-         if ("CALL" in headInstruction.opcode):
-            offset = int(headInstruction.id) - (prime - int(headInstruction.imm))
-            if (str(offset) != self.offsetStart):
-               self.dictFunctions.getFunctionAtOffset(str(offset)).cfgFunction(dot)
-            dot.edge(self.offsetStart, str(offset))
-         headInstruction = headInstruction.nextInstruction
-      
