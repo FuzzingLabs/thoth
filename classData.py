@@ -66,11 +66,13 @@ class FunctionDict:
       return (self.functions.get(offset))
 
 class FunctionData:
-   def __init__(self, offsetStart, offsetEnd, name, instructionList, analyze=True) -> None:
+   def __init__(self, offsetStart, offsetEnd, name, instructionList, args, ret, analyze=True) -> None:
       self.offsetStart = offsetStart
       self.offsetEnd = offsetEnd
       self.name = name
       self.instructionList = instructionList
+      self.args = args if args != {} else None
+      self.ret = ret if ret != {} else None
       self.instructionData = None
       self.nextFunction = None
       self.dictFunctions = None
@@ -89,10 +91,38 @@ class FunctionData:
                previous.nextInstruction = instructionData
          previous = instructionData
       self.instructionData = head
+   
+   def getPrototype(self):
+      prototype = f"func {self.name}("
+      if (self.args != None):
+         for idarg in self.args:
+            if (self.args[idarg] != {}):
+               for args in self.args[idarg]:
+                  prototype += args
+                  prototype +=" : "
+                  prototype += self.args[idarg][args]
+                  if (int(idarg) != len(self.args) - 1):
+                     prototype += ", "
+      prototype += ")"
+      if (self.ret != None):
+         prototype += " -> ("
+         for idarg in self.ret:
+            if (self.ret[idarg] != {}):
+               for args in self.ret[idarg]:
+                  prototype += args
+                  prototype +=" : "
+                  prototype += self.ret[idarg][args]
+                  if (int(idarg) != len(self.ret) - 1):
+                     prototype += ","
+                  else:
+                     prototype += ")"
+      prototype += ":"
+      return prototype
 
    def printData(self):
       instructionData = self.instructionData
-      print(f"\n\t\tFUNCTION : {self.name}\n")
+      prototype = self.getPrototype()
+      print(f"\n\t\t{prototype}\n")
       while instructionData:
          fPrint(f"offset {instructionData.id}:", end="")
          if ("ASSERT_EQ" in instructionData.opcode):
