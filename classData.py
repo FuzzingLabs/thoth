@@ -47,8 +47,8 @@ class Disassembler:
          if (function.offsetStart == offset):
             return function
       return None
-
-   def buildCallFlowGraph(self, dot, function):
+    
+   def buildCallFlowGraph(self, dot, function, edgesDone):
       if (function is None):
          return dot
       if (not function.instructionData):
@@ -58,16 +58,23 @@ class Disassembler:
       while (headInstruction):
          if ("CALL" in headInstruction.opcode):
             offset = int(headInstruction.id) - (prime - int(headInstruction.imm))
-            if (str(offset) != function.offsetStart):
-               self.buildCallFlowGraph(dot, self.getFunctionAtOffset(str(offset)))
-            dot.edge(function.offsetStart, str(offset))
+            if (offset < 0 ):
+               offset = int(headInstruction.id) + int(headInstruction.imm)
+            if ((function.offsetStart, str(offset)) not in edgesDone):
+               print("create new edge " + function.offsetStart + " - " + str(offset))
+            else :
+               print("exist edge " + function.offsetStart + " - " + str(offset))
+            if (str(offset) != function.offsetStart and (function.offsetStart, str(offset)) not in edgesDone):
+               edgesDone.append((function.offsetStart, str(offset)))
+               self.buildCallFlowGraph(dot, self.getFunctionAtOffset(str(offset)), edgesDone)
+               dot.edge(function.offsetStart, str(offset))
          headInstruction = headInstruction.nextInstruction
       return dot
 
    def printCallFlowGraph(self):
       if (self.dot == None):
          dot = graphviz.Digraph('CALL FLOW GRAPH', comment='CALL FLOW GRAPH') 
-         self.dot = self.buildCallFlowGraph(dot, self.getFunctionByName("__main__.main"))
+         self.dot = self.buildCallFlowGraph(dot, self.getFunctionByName("__main__.main"), [])
       self.dot.render(directory='doctest-output', view=True)
       return self.dot
 
@@ -118,6 +125,8 @@ class InstructionData:
    def handleCall(self):
       fPrint(f"{self.opcode}", end="")
       offset = int(self.id) - (prime - int(self.imm))
+      if (offset < 0):
+         offset = int(self.id) + int(self.imm)
       fPrint(f"{offset}")
       #fPrint(f"{offset}=>{##need to get the function name}")
 
