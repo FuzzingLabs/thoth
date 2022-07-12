@@ -43,8 +43,11 @@ class CairoDisassCommandLine:
         logging.getLogger().addHandler(handler)
         logging.getLogger().setLevel(logging.INFO)   
         logging.info(f"CairoDisass -- File : {args.file[0].name}")
-
-        disassJson = parseToJson(args.file)
+        disassJson = None
+        if (args.mode == "cairo"):
+            disassJson = parseToJson(args.file)
+        else:
+            disassJson = parseToJson(args.file, "starknet")
         if ("vvv" in vars(args) and args.vvv):
             print("\n", json.dumps(disassJson, indent=3))
         headFunction = analyzeGetFunctions(disassJson)
