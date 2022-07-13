@@ -1,3 +1,4 @@
+import re
 from graphviz import Digraph
 
 class BasicBlock:
@@ -115,7 +116,7 @@ class CFG:
         for bb in self.basicblocks:
             print(f'-- BB {bb.name, len(bb.instructions)} {bb.edges_offset} --')
             for instr in bb.instructions:
-                instr.print()
+                print(instr.print())
             print()
 
     def generate_cfg(self):
@@ -134,8 +135,11 @@ class CFG:
 
             # Create all the basicblock nodes
             shape = 'square'
+            label_instruction = ""
+            for instr in bb.instructions:
+                label_instruction += re.sub('\s+', ' ', instr.print().replace("\n", "\\l"))
             self.dot.node(bb.name,
-                          label=bb.name,
+                          label=label_instruction,
                           shape=shape)
 
             # iterate over edges_offset
@@ -152,5 +156,4 @@ class CFG:
 
     def print(self, view=True):
         self.print_bb()
-        self.dot.render(directory='doctest-output', view=view)
         return self.dot

@@ -2,7 +2,6 @@
 
 import json
 from function import Function
-
 from jsonParser import *
 from callgraph import CallFlowGraph
 from utils import PRIME
@@ -64,7 +63,7 @@ class Disassembler:
                     if (offset < 0):
                         offset = int(inst.id) + int(inst.imm)
                     xref_func = self.get_function_by_offset(str(offset))
-                    print(xref_func)
+                    #print(xref_func)
                     inst.call_xref_func_name = xref_func.name if xref_func != None else None
 
 
@@ -110,8 +109,8 @@ class Disassembler:
         Return a Function if the offset match
         """
         for function in self.functions:
-            print(function.offset_start)
-            print(offset)
+            #print(function.offset_start)
+            #print(offset)
             if (function.offset_start == offset):
                 return function
         return None

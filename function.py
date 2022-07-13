@@ -65,7 +65,7 @@ class Function:
         prototype = self.get_prototype()
         print(f"\n\t{prototype}\n")
         for instr in self.instructions:
-            instr.print()
+            print(instr.print())
 
     def generate_cfg(self):
         self.cfg = CFG(self.name, self.instructions)
@@ -74,7 +74,6 @@ class Function:
         """
         Print the CFG
         """
-
         # call flow graph not generated yet
         if (self.cfg == None):
             self.generate_cfg()
