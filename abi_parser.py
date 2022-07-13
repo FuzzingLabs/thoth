@@ -5,7 +5,7 @@ import re
 import collections
 from instruction import decodeInstruction
 
-jsonType = None
+json_type = None
 
 def decodeToJson(decoded):
     """
@@ -23,7 +23,7 @@ def decodeToJson(decoded):
         dataDict[key] = value
     return dataDict
 
-def extractFunctionPrototype(func_offset, identifiers_data, entry_points_by_type):
+def extract_function_prototype(func_offset, identifiers_data, entry_points_by_type):
     """
     Get the informations about arguments/return/decorators
     """
@@ -71,28 +71,45 @@ def extractFunctionPrototype(func_offset, identifiers_data, entry_points_by_type
 
     return func_identifiers
 
-def extract_bytecode_and_functions(path):
+def detect_type_input_json(json_data):
+    if ("data" in json_data):
+        # compiled with cairo-compile
+        json_type = "cairo"
+    elif ("program" in json_data):
+        # compiled with starknet-compile
+        # or got using `get_full_contract`
+        json_type = "starknet"
+    else:
+        # got using `get_code`
+        json_type = "get_code"
+    return json_type
+
+def extract_bytecode(json_type, json_data):
     """
-    Return the good dictionary that contains the instructions for the Bytecodes and the Identifiers for the return/args informations
+    Return the instructions for the Bytecodes
     """
     bytecode = []
-    func_offset = {}
-    func_identifiers = {}
-    
-    with path[0] as f:
-        json_data = json.load(f)
 
-    if ("data" in json_data):
+    if (json_type == "cairo"):
         bytecode = [int(bytecode, 16) for bytecode in json_data["data"]]
-        jsonType = "cairo"
-    elif ("program" in json_data):
+    elif (json_type == "starknet"):
         bytecode = [int(bytecode, 16) for bytecode in json_data["program"]["data"]] 
-        jsonType = "starknet"
     else:
         bytecode = [int(bytecode, 16) for bytecode in json_data["bytecode"]]
-        jsonType = "get_code"
 
-    if (jsonType != "get_code"):
+    if bytecode[len(bytecode) - 1] != 2345108766317314046:
+        bytecode.append(2345108766317314046)
+    return bytecode
+
+def extract_functions(json_type, json_data):
+    """
+    Return the good dictionary that contains the Identifiers for the return/args informations
+    """
+
+    func_offset = {}
+    func_identifiers = {}
+
+    if (json_type != "get_code"):
         identifiers_data = json_data["identifiers"] if ("identifiers" in json_data) else json_data["program"]["identifiers"]
         entry_points_by_type = json_data["entry_points_by_type"] if ("entry_points_by_type" in json_data) else None
 
@@ -101,7 +118,7 @@ def extract_bytecode_and_functions(path):
             print(key)
             if values["type"] == "function":
                 func_offset[str(values["pc"])] = key
-        func_identifiers = extractFunctionPrototype(func_offset, identifiers_data, entry_points_by_type)
+        func_identifiers = extract_function_prototype(func_offset, identifiers_data, entry_points_by_type)
 
     else:
         debugInfo = json_data["abi"]
@@ -111,9 +128,7 @@ def extract_bytecode_and_functions(path):
                 func_offset[str(id)] = dictionnary["name"]
                 id += 1
     
-    if bytecode[len(bytecode) - 1] != 2345108766317314046:
-        bytecode.append(2345108766317314046)
-    return (bytecode, func_offset, func_identifiers)
+    return (func_offset, func_identifiers)
 
 
 def parseToJson(path):
@@ -122,27 +137,37 @@ def parseToJson(path):
     Also get informations about return values, arguments and decorators
     Build a generic Json.
     """
-    data, func_offset, func_identifiers = extract_bytecode_and_functions(path)
-    size = len(data)
+
+    with path[0] as f:
+        json_data = json.load(f)
+
+        # detect the type of input json
+        json_type = detect_type_input_json(json_data)
+        # get the bytecode data
+        bytecode_data = extract_bytecode(json_type, json_data)
+        # extract function info like offset and name
+        func_offset, func_identifiers = extract_functions(json_type, json_data)
+
+    size = len(bytecode_data)
     offset = 0
     bytecodesToJson = {}
     actualFunction = ""
     incr = 0
     while (offset < size):
-        if ((jsonType != "get_code" and str(offset) in func_offset) or (jsonType == "get_code" and actualFunction not in bytecodesToJson)):
-            actualFunction = func_offset[str(offset)] if (jsonType != "get_code") else f"function 0"
+        if ((json_type != "get_code" and str(offset) in func_offset) or (json_type == "get_code" and actualFunction not in bytecodesToJson)):
+            actualFunction = func_offset[str(offset)] if (json_type != "get_code") else f"function 0"
             bytecodesToJson[actualFunction] = {}
             bytecodesToJson[actualFunction]["data"] = func_identifiers[actualFunction]
             bytecodesToJson[actualFunction]["instruction"] = {}
         try:
-            decoded = decodeInstruction(data[offset])
+            decoded = decodeInstruction(bytecode_data[offset])
             incr = 1
         except AssertionError:
             #l[offset + 1] -> imm value
-            decoded = decodeInstruction(data[offset], data[offset + 1])
+            decoded = decodeInstruction(bytecode_data[offset], bytecode_data[offset + 1])
             incr = 2
         key = str(offset)
         bytecodesToJson[actualFunction]["instruction"][key] = {}
-        bytecodesToJson[actualFunction]["instruction"][key][hex(data[offset])] = decodeToJson(str(decoded))
+        bytecodesToJson[actualFunction]["instruction"][key][hex(bytecode_data[offset])] = decodeToJson(str(decoded))
         offset += incr
     return bytecodesToJson
