@@ -2,10 +2,10 @@
 
 import json
 from function import Function
-from graphviz import Digraph
 from jsonParser import *
 from callgraph import CallFlowGraph
 from utils import PRIME
+from graphviz import Digraph
 
 class Disassembler:
     """
@@ -72,13 +72,18 @@ class Disassembler:
         Iterate over every function and print the disassembly
         """
 
-        # TODO - add func_offset option
-
-        if (func_name is None):
+        # Disassembly for all functions
+        if (func_name is None and func_offset is None):
             for function in self.functions:
                 function.print()
+
+        # func_name or func_offset provided
         else:
-            function = self.get_function_by_name(func_name)
+            if (func_name is not None):
+                function = self.get_function_by_name(func_name)
+            elif (func_offset is not None):
+                function = self.get_function_by_offset(func_offset)
+
             if (function != None):
                 function.print()
             else:
@@ -124,21 +129,28 @@ class Disassembler:
         self.call_graph.print(view)
         return self.call_graph.dot
 
-    def print_cfg(self, func_name=None):
+    def print_cfg(self, func_name=None, func_offset=None, view=True):
         """
         Print the CFG (Control Flow Graph)
         """
 
-        # TODO - add func_offset option
-        # TODO - generate one big cfg for all function if func_name/func_offset not specified
-        dot = Digraph('CFG', comment='CFG')
-        if (func_name is None):
+        # CFG for all functions
+        graph = Digraph(name='All functions')
+        if (func_name is None and func_offset is None):
             for function in self.functions:
-                function.print_cfg(dot)
+                function.generate_cfg()
+                graph.subgraph(function.cfg.dot)
+            graph.render(directory='doctest-output', view=view)
+
+
+        # func_name or func_offset provided
         else:
-            function = self.get_function_by_name(func_name)
+            if (func_name is not None):
+                function = self.get_function_by_name(func_name)
+            elif (func_offset is not None):
+                function = self.get_function_by_offset(func_offset)
+
             if (function != None):
-                function.print_cfg(dot)
+                function.print_cfg()
             else:
                 print("Error : Function does not exist.")
-        dot.render(directory='doctest-output', view=True)

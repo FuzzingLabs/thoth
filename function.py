@@ -67,11 +67,17 @@ class Function:
         for instr in self.instructions:
             print(instr.print())
 
-    def print_cfg(self, dot):
+    def generate_cfg(self):
+        self.cfg = CFG(self.name, self.instructions)
+
+    def print_cfg(self, view=True):
         """
         Print the CFG
         """
         # call flow graph not generated yet
         if (self.cfg == None):
-            self.cfg = CFG(self.instructions, dot)
+            self.generate_cfg()
+
+        # show the call flow graph
+        self.cfg.print(view)
         return self.cfg.dot
