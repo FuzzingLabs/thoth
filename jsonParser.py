@@ -27,11 +27,10 @@ def extractFunctionPrototype(json_data, func_offset):
     """
     Get the informations about arguments/return/decorators
     """
-    identifiers = json_data["identifiers"] if ("identifiers" in json_data) else json_data["program"]["identifiers"]
+    identifiers_data = json_data["identifiers"] if ("identifiers" in json_data) else json_data["program"]["identifiers"]
+    identifiers_name = [".ImplicitArgs", ".Args", ".Return"]
     func_identifiers = {}
-    args = None
-    ret = None
-
+    data = None
     # get entry_point offsets
     entry_points = []
     entry_points_by_type = json_data["entry_points_by_type"] if ("entry_points_by_type" in json_data) else None
@@ -42,49 +41,33 @@ def extractFunctionPrototype(json_data, func_offset):
     ## Get arguments and return value of function
     for offset in func_offset:
         func_name = func_offset[offset]
-        func_identifiers[func_name] = {}
-        func_identifiers[func_name]["args"] = {}
-        func_identifiers[func_name]["return"] = {}
-        func_identifiers[func_name]["decorators"] = []
-        
+        identifiers = func_identifiers[func_name] = {}
+                
         # get func args values
-        if (func_name + ".Args" in identifiers and "members" in identifiers[func_name + ".Args"]):
-            args = identifiers[func_name + ".Args"]["members"]
-            if (func_name + ".ImplicitArgs" in identifiers and "members" in identifiers[func_name + ".ImplicitArgs"]):
-                args.update(identifiers[func_name + ".ImplicitArgs"]["members"])
-            
-            tmp = {}
-            for argument in args:
-                argsData = identifiers[func_name + ".Args"]["members"][argument]
-                tmp[argsData["offset"]] = {}
-                tmp[argsData["offset"]][argument] = argsData["cairo_type"]
+        for identifier_name in identifiers_name:
+            function_identifier = func_name + identifier_name
+            if (function_identifier in identifiers_data and "members" in identifiers_data[function_identifier]):
+                data = identifiers_data[function_identifier]["members"]
+                
+                tmp = {}
+                for argument in data:
+                    retData = identifiers_data[function_identifier]["members"][argument]
+                    tmp[retData["offset"]] = {}
+                    tmp[retData["offset"]][argument] = retData["cairo_type"]
+                identifiers[identifier_name[1:].lower()] = dict(collections.OrderedDict(sorted(tmp.items())))
 
-            #print("TODO " + str([arg[1] for arg in sorted(tmp.items())]))
-            func_identifiers[func_name]["args"] = dict(collections.OrderedDict(sorted(tmp.items())))
-        
-        # get func return values
-        if (func_name + ".Return" in identifiers and "members" in identifiers[func_name + ".Return"]):
-            ret = identifiers[func_name + ".Return"]["members"]
-            
-            tmp = {}
-            for argument in ret:
-                retData = identifiers[func_name + ".Return"]["members"][argument]
-                tmp[retData["offset"]] = {}
-                tmp[retData["offset"]][argument] = retData["cairo_type"]
-            func_identifiers[func_name]["return"] = dict(collections.OrderedDict(sorted(tmp.items())))
-        
         # get decorators
-        if (func_name in identifiers and "decorators" in identifiers[func_name]):
-            func_identifiers[func_name]["decorators"] = (identifiers[func_name]["decorators"])
+        if (func_name in identifiers_data and "decorators" in identifiers_data[func_name]):
+            identifiers["decorators"] = (identifiers_data[func_name]["decorators"])
 
         # get entry_points
         if offset in entry_points:
-            func_identifiers[func_name]["entry_point"] = True
+            identifiers["entry_point"] = True
         # case of cairo file
         elif func_name == "__main__.main":
-            func_identifiers[func_name]["entry_point"] = True
+            identifiers["entry_point"] = True
         else:
-            func_identifiers[func_name]["entry_point"] = False
+            identifiers["entry_point"] = False
 
     return func_identifiers
 
@@ -120,7 +103,6 @@ def extractData(path):
                 func_offset[offset] = func_name
                 actualFunction = func_name
         func_identifiers = extractFunctionPrototype(json_data, func_offset)
-        print(func_identifiers)
 
     else:
         debugInfo = json_data["abi"]
@@ -130,7 +112,6 @@ def extractData(path):
                 func_offset[str(id)] = dictionnary["name"]
                 id += 1
     
-    # tofix : why do we need this ?
     if data[len(data) - 1] != 2345108766317314046:
         data.append(2345108766317314046)
     return (data, func_offset, func_identifiers)
