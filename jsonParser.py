@@ -35,8 +35,9 @@ def extractFunctionPrototype(json_data, func_offset):
     # get entry_point offsets
     entry_points = []
     entry_points_by_type = json_data["entry_points_by_type"] if ("entry_points_by_type" in json_data) else None
-    for entry_type in entry_points_by_type.values():
-        entry_points += [str(int(entry['offset'], base=16)) for entry in entry_type]
+    if entry_points_by_type:
+        for entry_type in entry_points_by_type.values():
+            entry_points += [str(int(entry['offset'], base=16)) for entry in entry_type]
 
     ## Get arguments and return value of function
     for offset in func_offset:
@@ -160,4 +161,4 @@ def parseToJson(path):
         bytecodesToJson[actualFunction]["instruction"][key] = {}
         bytecodesToJson[actualFunction]["instruction"][key][hex(data[offset])] = decodeToJson(str(decoded))
         offset += incr
-    return bytecodesToJson, 
+    return bytecodesToJson

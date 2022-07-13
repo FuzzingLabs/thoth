@@ -1,6 +1,6 @@
 from instruction import Instruction
 from utils import format_print
-
+from cfg import CFG
 
 class Function:
    """
@@ -16,6 +16,7 @@ class Function:
       self.ret = ret if ret != {} else None
       self.decorators = decorators
       self.entry_point = entry_point
+      self.cfg = None
 
       self._generate_instruction()
 
@@ -58,7 +59,6 @@ class Function:
                      prototype += ", "
                   else:
                      prototype += ")"
-      prototype += ":"
       return prototype
 
    def print(self):
@@ -66,6 +66,19 @@ class Function:
       Iterate over each instruction and print the disassembly
       """
       prototype = self.get_prototype()
-      print(f"\n\t\t{prototype}\n")
+      print(f"\n\t{prototype}\n")
       for instr in self.instructions:
          instr.print()
+
+   def print_cfg(self, view=True):
+      """
+      Print the CFG
+      """
+
+      # call flow graph not generated yet
+      if (self.cfg == None):
+         self.cfg = CFG(self.instructions)
+
+      # show the call flow graph
+      self.cfg.print(view)
+      return self.cfg.dot

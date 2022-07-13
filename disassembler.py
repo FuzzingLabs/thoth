@@ -1,11 +1,10 @@
 #!/usr/bin/env python3
 
 import json
-from graphviz import Digraph
-
 from function import Function
-from utils import format_print, OPERATORS, PRIME
+
 from jsonParser import *
+from callgraph import CallGraph
 
 class Disassembler:
     """
@@ -19,7 +18,6 @@ class Disassembler:
         self.functions = []
         self.json = None
         self.call_graph = None
-        self.cfg = None
 
         if analyze:
             self.analyze()
@@ -54,7 +52,7 @@ class Disassembler:
         
         return self.functions
 
-    def print(self, func_name=None):
+    def print_disassembly(self, func_name=None):
         """
         Iterate over every function and print the disassembly
         """
@@ -92,49 +90,7 @@ class Disassembler:
                 return function
         return None
 
-    def _call_flow_graph_generate_nodes(self):
-        """
-        Create all the function nodes
-        """
-
-        # TODO - add entrypoint info
-        # TODO - add import info
-        for function in self.functions:
-
-            # default shape
-            shape = 'oval'
-
-            # This function is an entrypoint
-            if function.entry_point:
-                shape = 'doubleoctagon'
-
-            self.call_graph.node(function.offset_start,
-                                 label=function.name,
-                                 shape=shape)
-        
-
-    def _generate_call_flow_graph(self):
-        """
-        Create all the function Node for the CallFlowGraph and call _generate_call_flow_graph_edges to build the edges
-        """
-        self.call_graph = Digraph('CALL FLOW GRAPH', comment='CALL FLOW GRAPH')
-        
-        # First, we create the nodes
-        self._call_flow_graph_generate_nodes()
-
-        edgesDone = []
-        # build the edges btw function (nodes)
-        for function in self.functions:
-            for instr in function.instructions:
-                if ("CALL" in instr.opcode):
-                    offset = int(instr.id) - (PRIME - int(instr.imm))
-                    if (offset < 0):
-                        offset = int(instr.id) + int(instr.imm)
-                    if (str(offset) != function.offset_start and (function.offset_start, str(offset)) not in edgesDone):
-                        edgesDone.append((function.offset_start, str(offset)))
-                        self.call_graph.edge(function.offset_start, str(offset))
-
-
+    
     def print_call_flow_graph(self, view=True):
         """
         Print the CallFlowGraph
@@ -142,16 +98,25 @@ class Disassembler:
 
         # call flow graph not generated yet
         if (self.call_graph == None):
-            self._generate_call_flow_graph()
+            self.call_graph = CallGraph(self.functions)
 
         # show the call flow graph
-        self.call_graph.render(directory='doctest-output', view=view)
-        return self.call_graph
+        self.call_graph.print(view)
+        return self.call_graph.dot
 
-    def print_cfg(self):
+    def print_cfg(self, func_name=None):
         """
         Print the CFG (Control Flow Graph)
         """
 
-        print("TODO CFG")
-        raise NotImplementedError
+        # TODO - add func_offset option
+
+        if (func_name is None):
+            for function in self.functions:
+                function.print_cfg()
+        else:
+            function = self.get_function_by_name(func_name)
+            if (function != None):
+                function.print_cfg()
+            else:
+                print("Error : Function does not exist.")

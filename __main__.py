@@ -52,8 +52,8 @@ def main():
     if args.verbose:
         disassembler.dump_json()
     
-    # print disassembly code
-    disassembler.print()
+    # print assembly code
+    disassembler.print_disassembly()
     
     # print call flow graph
     if args.call:
