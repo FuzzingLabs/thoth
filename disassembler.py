@@ -2,7 +2,7 @@
 
 import json
 from function import Function
-from jsonParser import *
+from abi_parser import *
 from callgraph import CallFlowGraph
 from utils import PRIME
 from graphviz import Digraph
@@ -154,3 +154,11 @@ class Disassembler:
                 function.print_cfg()
             else:
                 print("Error : Function does not exist.")
+
+    def analytics(self):
+        # TODO
+        # number func
+        # most called function
+        analytics = {}
+        raise NotImplementedError
+        return analytics

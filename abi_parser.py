@@ -23,17 +23,17 @@ def decodeToJson(decoded):
         dataDict[key] = value
     return dataDict
 
-def extractFunctionPrototype(json_data, func_offset):
+def extractFunctionPrototype(func_offset, identifiers_data, entry_points_by_type):
     """
     Get the informations about arguments/return/decorators
     """
-    identifiers_data = json_data["identifiers"] if ("identifiers" in json_data) else json_data["program"]["identifiers"]
+    
     identifiers_name = [".ImplicitArgs", ".Args", ".Return"]
     func_identifiers = {}
     data = None
     # get entry_point offsets
     entry_points = []
-    entry_points_by_type = json_data["entry_points_by_type"] if ("entry_points_by_type" in json_data) else None
+    
     if entry_points_by_type:
         for entry_type in entry_points_by_type.values():
             entry_points += [str(int(entry['offset'], base=16)) for entry in entry_type]
@@ -71,38 +71,37 @@ def extractFunctionPrototype(json_data, func_offset):
 
     return func_identifiers
 
-def extractData(path):
+def extract_bytecode_and_functions(path):
     """
     Return the good dictionary that contains the instructions for the Bytecodes and the Identifiers for the return/args informations
     """
-    data = []
+    bytecode = []
     func_offset = {}
+    func_identifiers = {}
     
     with path[0] as f:
         json_data = json.load(f)
 
     if ("data" in json_data):
-        data = [int(bytecode, 16) for bytecode in json_data["data"]]
+        bytecode = [int(bytecode, 16) for bytecode in json_data["data"]]
         jsonType = "cairo"
     elif ("program" in json_data):
-        data = [int(bytecode, 16) for bytecode in json_data["program"]["data"]] 
+        bytecode = [int(bytecode, 16) for bytecode in json_data["program"]["data"]] 
         jsonType = "starknet"
     else:
-        data = [int(bytecode, 16) for bytecode in json_data["bytecode"]]
+        bytecode = [int(bytecode, 16) for bytecode in json_data["bytecode"]]
         jsonType = "get_code"
 
     if (jsonType != "get_code"):
-        debugInfo = json_data["debug_info"] if ("debug_info" in json_data) else  json_data["program"]["debug_info"]
-        instr_locations = debugInfo["instruction_locations"]
-        actualFunction = ""
+        identifiers_data = json_data["identifiers"] if ("identifiers" in json_data) else json_data["program"]["identifiers"]
+        entry_points_by_type = json_data["entry_points_by_type"] if ("entry_points_by_type" in json_data) else None
+
         ## Get function name and put it in dictionnary with offset as key
-        for offset in instr_locations:
-            # Link instruction and offset to a function
-            func_name = instr_locations[offset]["accessible_scopes"][-1]
-            if (actualFunction != func_name):
-                func_offset[offset] = func_name
-                actualFunction = func_name
-        func_identifiers = extractFunctionPrototype(json_data, func_offset)
+        for key, values in identifiers_data.items():
+            print(key)
+            if values["type"] == "function":
+                func_offset[str(values["pc"])] = key
+        func_identifiers = extractFunctionPrototype(func_offset, identifiers_data, entry_points_by_type)
 
     else:
         debugInfo = json_data["abi"]
@@ -112,9 +111,9 @@ def extractData(path):
                 func_offset[str(id)] = dictionnary["name"]
                 id += 1
     
-    if data[len(data) - 1] != 2345108766317314046:
-        data.append(2345108766317314046)
-    return (data, func_offset, func_identifiers)
+    if bytecode[len(bytecode) - 1] != 2345108766317314046:
+        bytecode.append(2345108766317314046)
+    return (bytecode, func_offset, func_identifiers)
 
 
 def parseToJson(path):
@@ -123,7 +122,7 @@ def parseToJson(path):
     Also get informations about return values, arguments and decorators
     Build a generic Json.
     """
-    data, func_offset, func_identifiers = extractData(path)
+    data, func_offset, func_identifiers = extract_bytecode_and_functions(path)
     size = len(data)
     offset = 0
     bytecodesToJson = {}
