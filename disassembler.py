@@ -38,6 +38,7 @@ class Disassembler:
             name = function
             instructions = self.json[function]["instruction"]
             args = self.json[function]["data"]["args"]
+            implicitargs = self.json[function]["data"]["implicitargs"]
             ret = self.json[function]["data"]["return"]
             decorators = self.json[function]["data"]["decorators"]
 
@@ -46,7 +47,8 @@ class Disassembler:
                          offset_end,
                          name, 
                          instructions, 
-                         args, 
+                         args,
+                         implicitargs,
                          ret, 
                          decorators,
                          entry_point=self.json[function]["data"]["entry_point"]))
