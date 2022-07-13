@@ -15,23 +15,31 @@
         "0x1104800180018000",
         "0x800000000000010fffffffffffffffffffffffffffffffffffffffffffffffc",
         "0x1104800180018000",
-        "0x800000000000010fffffffffffffffffffffffffffffffffffffffffffffff7",
+        "0x800000000000010fffffffffffffffffffffffffffffffffffffffffffffffa",
+        "0x1104800180018000",
+        "0x800000000000010fffffffffffffffffffffffffffffffffffffffffffffff8",
+        "0x1104800180018000",
+        "0x800000000000010fffffffffffffffffffffffffffffffffffffffffffffff6",
+        "0x1104800180018000",
+        "0x800000000000010fffffffffffffffffffffffffffffffffffffffffffffff4",
+        "0x1104800180018000",
+        "0x800000000000010ffffffffffffffffffffffffffffffffffffffffffffffef",
         "0x4051800880077ffd",
         "0x402680018000800a",
         "0x2a",
         "0x1104800180018000",
-        "0x800000000000010fffffffffffffffffffffffffffffffffffffffffffffffa",
+        "0x800000000000010fffffffffffffffffffffffffffffffffffffffffffffff2",
         "0x480680017fff8000",
         "0xa",
         "0x208b7fff7fff7ffe",
         "0x400780017fff8001",
         "0x5",
         "0x1104800180018000",
-        "0x800000000000010ffffffffffffffffffffffffffffffffffffffffffffffeb",
+        "0x800000000000010ffffffffffffffffffffffffffffffffffffffffffffffe3",
         "0x1104800180018000",
-        "0x800000000000010ffffffffffffffffffffffffffffffffffffffffffffffec",
+        "0x800000000000010ffffffffffffffffffffffffffffffffffffffffffffffe4",
         "0x1104800180018000",
-        "0x800000000000010ffffffffffffffffffffffffffffffffffffffffffffffef",
+        "0x800000000000010ffffffffffffffffffffffffffffffffffffffffffffffe7",
         "0x208b7fff7fff7ffe"
     ],
     "debug_info": {
@@ -260,7 +268,7 @@
                 },
                 "hints": [],
                 "inst": {
-                    "end_col": 32,
+                    "end_col": 10,
                     "end_line": 22,
                     "input_file": {
                         "filename": "tests/cairo_files/cairo_test_call_flow_graph.cairo"
@@ -269,7 +277,7 @@
                     "start_line": 22
                 }
             },
-            "13": {
+            "14": {
                 "accessible_scopes": [
                     "__main__",
                     "__main__.c_func"
@@ -277,7 +285,111 @@
                 "flow_tracking_data": {
                     "ap_tracking": {
                         "group": 2,
-                        "offset": 6
+                        "offset": 9
+                    },
+                    "reference_ids": {
+                        "__main__.c_func.x": 5,
+                        "__main__.c_func.zzz": 4
+                    }
+                },
+                "hints": [],
+                "inst": {
+                    "end_col": 10,
+                    "end_line": 23,
+                    "input_file": {
+                        "filename": "tests/cairo_files/cairo_test_call_flow_graph.cairo"
+                    },
+                    "start_col": 2,
+                    "start_line": 23
+                }
+            },
+            "16": {
+                "accessible_scopes": [
+                    "__main__",
+                    "__main__.c_func"
+                ],
+                "flow_tracking_data": {
+                    "ap_tracking": {
+                        "group": 2,
+                        "offset": 12
+                    },
+                    "reference_ids": {
+                        "__main__.c_func.x": 5,
+                        "__main__.c_func.zzz": 4
+                    }
+                },
+                "hints": [],
+                "inst": {
+                    "end_col": 10,
+                    "end_line": 24,
+                    "input_file": {
+                        "filename": "tests/cairo_files/cairo_test_call_flow_graph.cairo"
+                    },
+                    "start_col": 2,
+                    "start_line": 24
+                }
+            },
+            "18": {
+                "accessible_scopes": [
+                    "__main__",
+                    "__main__.c_func"
+                ],
+                "flow_tracking_data": {
+                    "ap_tracking": {
+                        "group": 2,
+                        "offset": 15
+                    },
+                    "reference_ids": {
+                        "__main__.c_func.x": 5,
+                        "__main__.c_func.zzz": 4
+                    }
+                },
+                "hints": [],
+                "inst": {
+                    "end_col": 10,
+                    "end_line": 25,
+                    "input_file": {
+                        "filename": "tests/cairo_files/cairo_test_call_flow_graph.cairo"
+                    },
+                    "start_col": 2,
+                    "start_line": 25
+                }
+            },
+            "20": {
+                "accessible_scopes": [
+                    "__main__",
+                    "__main__.c_func"
+                ],
+                "flow_tracking_data": {
+                    "ap_tracking": {
+                        "group": 2,
+                        "offset": 18
+                    },
+                    "reference_ids": {
+                        "__main__.c_func.x": 5,
+                        "__main__.c_func.zzz": 4
+                    }
+                },
+                "hints": [],
+                "inst": {
+                    "end_col": 32,
+                    "end_line": 26,
+                    "input_file": {
+                        "filename": "tests/cairo_files/cairo_test_call_flow_graph.cairo"
+                    },
+                    "start_col": 2,
+                    "start_line": 26
+                }
+            },
+            "21": {
+                "accessible_scopes": [
+                    "__main__",
+                    "__main__.c_func"
+                ],
+                "flow_tracking_data": {
+                    "ap_tracking": {
+                        "group": 2,
+                        "offset": 18
                     },
                     "reference_ids": {
                         "__main__.c_func.x": 5,
@@ -287,15 +399,15 @@
                 "hints": [],
                 "inst": {
                     "end_col": 23,
-                    "end_line": 23,
+                    "end_line": 27,
                     "input_file": {
                         "filename": "tests/cairo_files/cairo_test_call_flow_graph.cairo"
                     },
                     "start_col": 2,
-                    "start_line": 23
+                    "start_line": 27
                 }
             },
-            "15": {
+            "23": {
                 "accessible_scopes": [
                     "__main__",
                     "__main__.c_func"
@@ -303,7 +415,7 @@
                 "flow_tracking_data": {
                     "ap_tracking": {
                         "group": 2,
-                        "offset": 6
+                        "offset": 18
                     },
                     "reference_ids": {
                         "__main__.c_func.x": 5,
@@ -313,15 +425,15 @@
                 "hints": [],
                 "inst": {
                     "end_col": 13,
-                    "end_line": 24,
+                    "end_line": 28,
                     "input_file": {
                         "filename": "tests/cairo_files/cairo_test_call_flow_graph.cairo"
                     },
                     "start_col": 5,
-                    "start_line": 24
+                    "start_line": 28
                 }
             },
-            "17": {
+            "25": {
                 "accessible_scopes": [
                     "__main__",
                     "__main__.c_func"
@@ -346,12 +458,12 @@
                     "parent_location": [
                         {
                             "end_col": 10,
-                            "end_line": 25,
+                            "end_line": 29,
                             "input_file": {
                                 "filename": "tests/cairo_files/cairo_test_call_flow_graph.cairo"
                             },
                             "start_col": 9,
-                            "start_line": 25
+                            "start_line": 29
                         },
                         "While expanding the reference 'x' in:"
                     ],
@@ -359,7 +471,7 @@
                     "start_line": 19
                 }
             },
-            "19": {
+            "27": {
                 "accessible_scopes": [
                     "__main__",
                     "__main__.c_func"
@@ -377,15 +489,15 @@
                 "hints": [],
                 "inst": {
                     "end_col": 11,
-                    "end_line": 25,
+                    "end_line": 29,
                     "input_file": {
                         "filename": "tests/cairo_files/cairo_test_call_flow_graph.cairo"
                     },
                     "start_col": 2,
-                    "start_line": 25
+                    "start_line": 29
                 }
             },
-            "20": {
+            "28": {
                 "accessible_scopes": [
                     "__main__",
                     "__main__.main"
@@ -402,15 +514,15 @@
                 "hints": [],
                 "inst": {
                     "end_col": 14,
-                    "end_line": 30,
+                    "end_line": 34,
                     "input_file": {
                         "filename": "tests/cairo_files/cairo_test_call_flow_graph.cairo"
                     },
                     "start_col": 2,
-                    "start_line": 30
+                    "start_line": 34
                 }
             },
-            "22": {
+            "30": {
                 "accessible_scopes": [
                     "__main__",
                     "__main__.main"
@@ -427,15 +539,15 @@
                 "hints": [],
                 "inst": {
                     "end_col": 10,
-                    "end_line": 31,
+                    "end_line": 35,
                     "input_file": {
                         "filename": "tests/cairo_files/cairo_test_call_flow_graph.cairo"
                     },
                     "start_col": 2,
-                    "start_line": 31
+                    "start_line": 35
                 }
             },
-            "24": {
+            "32": {
                 "accessible_scopes": [
                     "__main__",
                     "__main__.main"
@@ -453,15 +565,15 @@
                 "hints": [],
                 "inst": {
                     "end_col": 10,
-                    "end_line": 33,
+                    "end_line": 37,
                     "input_file": {
                         "filename": "tests/cairo_files/cairo_test_call_flow_graph.cairo"
                     },
                     "start_col": 2,
-                    "start_line": 33
+                    "start_line": 37
                 }
             },
-            "26": {
+            "34": {
                 "accessible_scopes": [
                     "__main__",
                     "__main__.main"
@@ -479,15 +591,15 @@
                 "hints": [],
                 "inst": {
                     "end_col": 10,
-                    "end_line": 34,
+                    "end_line": 38,
                     "input_file": {
                         "filename": "tests/cairo_files/cairo_test_call_flow_graph.cairo"
                     },
                     "start_col": 2,
-                    "start_line": 34
+                    "start_line": 38
                 }
             },
-            "28": {
+            "36": {
                 "accessible_scopes": [
                     "__main__",
                     "__main__.main"
@@ -505,12 +617,12 @@
                 "hints": [],
                 "inst": {
                     "end_col": 5,
-                    "end_line": 35,
+                    "end_line": 39,
                     "input_file": {
                         "filename": "tests/cairo_files/cairo_test_call_flow_graph.cairo"
                     },
                     "start_col": 2,
-                    "start_line": 35
+                    "start_line": 39
                 }
             }
         }
@@ -535,15 +647,8 @@
             "type": "struct"
         },
         "__main__.a_func.Return": {
-            "full_name": "__main__.a_func.Return",
-            "members": {
-                "x": {
-                    "cairo_type": "felt",
-                    "offset": 0
-                }
-            },
-            "size": 1,
-            "type": "struct"
+            "cairo_type": "(x : felt)",
+            "type": "type_definition"
         },
         "__main__.a_func.SIZEOF_LOCALS": {
             "type": "const",
@@ -597,15 +702,8 @@
             "type": "struct"
         },
         "__main__.b_func.Return": {
-            "full_name": "__main__.b_func.Return",
-            "members": {
-                "x": {
-                    "cairo_type": "felt",
-                    "offset": 0
-                }
-            },
-            "size": 1,
-            "type": "struct"
+            "cairo_type": "(x : felt)",
+            "type": "type_definition"
         },
         "__main__.b_func.SIZEOF_LOCALS": {
             "type": "const",
@@ -659,15 +757,8 @@
             "type": "struct"
         },
         "__main__.c_func.Return": {
-            "full_name": "__main__.c_func.Return",
-            "members": {
-                "x": {
-                    "cairo_type": "felt",
-                    "offset": 0
-                }
-            },
-            "size": 1,
-            "type": "struct"
+            "cairo_type": "(x : felt)",
+            "type": "type_definition"
         },
         "__main__.c_func.SIZEOF_LOCALS": {
             "type": "const",
@@ -705,7 +796,7 @@
         },
         "__main__.main": {
             "decorators": [],
-            "pc": 20,
+            "pc": 28,
             "type": "function"
         },
         "__main__.main.Args": {
@@ -726,10 +817,8 @@
             "type": "struct"
         },
         "__main__.main.Return": {
-            "full_name": "__main__.main.Return",
-            "members": {},
-            "size": 0,
-            "type": "struct"
+            "cairo_type": "()",
+            "type": "type_definition"
         },
         "__main__.main.SIZEOF_LOCALS": {
             "type": "const",
@@ -744,7 +833,7 @@
                         "group": 4,
                         "offset": 0
                     },
-                    "pc": 20,
+                    "pc": 28,
                     "value": "[cast(fp + (-3), felt**)]"
                 }
             ],
@@ -759,7 +848,7 @@
                         "group": 4,
                         "offset": 3
                     },
-                    "pc": 24,
+                    "pc": 32,
                     "value": "cast(222222222222222222222222, felt)"
                 }
             ],
@@ -823,7 +912,7 @@
                     "group": 4,
                     "offset": 0
                 },
-                "pc": 20,
+                "pc": 28,
                 "value": "[cast(fp + (-3), felt**)]"
             },
             {
@@ -831,7 +920,7 @@
                     "group": 4,
                     "offset": 3
                 },
-                "pc": 24,
+                "pc": 32,
                 "value": "cast(222222222222222222222222, felt)"
             }
         ]

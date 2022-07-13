@@ -1,3 +1,4 @@
+from cProfile import label
 from graphviz import Digraph
 from utils import PRIME
 
@@ -45,7 +46,7 @@ class CallFlowGraph:
         self._call_flow_graph_generate_nodes(functions)
 
         # TODO - issue #13 - count same edges
-        edgesDone = []
+        edges = []
         
         # build the edges btw function (nodes)
         for function in functions:
@@ -54,9 +55,16 @@ class CallFlowGraph:
                     offset = int(instr.id) - (PRIME - int(instr.imm))
                     if (offset < 0):
                         offset = int(instr.id) + int(instr.imm)
-                    if (function.offset_start, str(offset)) not in edgesDone:
-                        edgesDone.append((function.offset_start, str(offset)))
-                        self.dot.edge(function.offset_start, str(offset))
+                    edges.append((function.offset_start, str(offset)))
+
+        while (len(edges) > 0):
+            if (edges.count(edges[0]) > 1):
+                self.dot.edge(edges[0][0], edges[0][1], label=str(edges.count(edges[0])))
+            else:
+                self.dot.edge(edges[0][0], edges[0][1])
+            edges = list(filter(lambda x: x != edges[0], edges))
+
+
 
 
     def print(self, view=True):
