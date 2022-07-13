@@ -120,69 +120,74 @@ class Instruction:
         self.call_xref_func_name = None
 
     def _handle_assert_eq(self):
-        format_print(f"{self.opcode}", end="")
+        disass_str = ""
+        disass_str += format_print(f"{self.opcode}", end="")
         if ("OP1" in self.res):
             if ("IMM" in self.op1Addr):
-                format_print(f"[{self.dstRegister}{self.offDest}], {self.imm}")
+                disass_str += format_print(f"[{self.dstRegister}{self.offDest}], {self.imm}")
             elif ("OP0" in self.op1Addr):
-                format_print(f"[{self.dstRegister}{self.offDest}], [[{self.op0Register}{self.off1}]{self.off2}]")
+                disass_str += format_print(f"[{self.dstRegister}{self.offDest}], [[{self.op0Register}{self.off1}]{self.off2}]")
             else:
-                format_print(f"[{self.dstRegister}{self.offDest}], [{self.op1Addr}{self.off2}]") 
+                disass_str += format_print(f"[{self.dstRegister}{self.offDest}], [{self.op1Addr}{self.off2}]") 
         else:
             op = OPERATORS[self.res]
             if ("IMM" not in self.op1Addr):
-                format_print(f"[{self.dstRegister}{self.offDest}], [{self.op0Register}{self.off1}] {op} [{self.op1Addr}{self.off2}]")  
+                disass_str += format_print(f"[{self.dstRegister}{self.offDest}], [{self.op0Register}{self.off1}] {op} [{self.op1Addr}{self.off2}]")  
             else:
-                format_print(f"[{self.dstRegister}{self.offDest}], [{self.op0Register}{self.off1}] {op} {self.imm}")
+                disass_str += format_print(f"[{self.dstRegister}{self.offDest}], [{self.op0Register}{self.off1}] {op} {self.imm}")
+        return disass_str
 
     def _handle_nop(self):
+        disass_str = ""
         if ("REGULAR" not in self.pcUpdate):
-            ##TODO JNZ OFFSET ?!
-            format_print(f"{self.pcUpdate}", end="")
-            format_print(self.imm)
+            disass_str += format_print(f"{self.pcUpdate}", end="")
+            disass_str += format_print(self.imm)
         else:
-            format_print(f"{self.opcode}")
+            disass_str += format_print(f"{self.opcode}")
+        return disass_str
         #newOffset = int(self.id) + int(self.imm)
         #format_print(f"{newOffset}")
 
     def _handle_call(self):
-        format_print(f"{self.opcode}", end="")
+        disass_str = ""
+        disass_str += format_print(f"{self.opcode}", end="")
         offset = int(self.id) - (PRIME - int(self.imm))
         if (offset < 0):
-            offset = int(self.id) + int(self.imm)
-        #format_print(f"{offset}=>{##need to get the function name}")
-        
+            offset = int(self.id) + int(self.imm)        
         # print reference function
         if self.call_xref_func_name != None:
-            format_print(f"{offset} \t# {self.call_xref_func_name}")
+            disass_str += format_print(f"{offset} \t# {self.call_xref_func_name}")
         else:
-            format_print(f"{offset}")
+            disass_str += format_print(f"{offset}")
+        return disass_str
 
     def _handle_ret(self):
-        format_print(f"{self.opcode}")
+        return format_print(f"{self.opcode}")
 
     def print(self):
-        format_print(f"offset {self.id}:", end="")
+        disass_str = ""
+        disass_str += format_print(f"offset {self.id}:", end="")
         if ("ASSERT_EQ" in self.opcode):
-            self._handle_assert_eq()
+            disass_str += self._handle_assert_eq()
 
         elif ("NOP" in self.opcode):
-            self._handle_nop()
+            disass_str += self._handle_nop()
 
         elif ("CALL" in self.opcode):
-            self._handle_call()
+            disass_str += self._handle_call()
 
         elif ("RET" in self.opcode):
-            self._handle_ret()
+            disass_str += self._handle_ret()
 
         else:
-            format_print("--TODO--")
+            disass_str += format_print("--TODO--")
             raise NotImplementedError
 
         if ("REGULAR" not in self.apUpdate):
             op = list(filter(None, re.split(r'(\d+)', self.apUpdate)))
             APopcode = op[0]
             APval = op[1] if (len(op) > 1) else self.imm
-            format_print(f"offset {self.id}:", end="")
-            format_print(f"{APopcode}", end="")
-            format_print(f"AP, {APval}")
+            disass_str += format_print(f"offset {self.id}:", end="")
+            disass_str += format_print(f"{APopcode}", end="")
+            disass_str += format_print(f"AP, {APval}")
+        return disass_str

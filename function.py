@@ -65,17 +65,13 @@ class Function:
         prototype = self.get_prototype()
         print(f"\n\t{prototype}\n")
         for instr in self.instructions:
-            instr.print()
+            print(instr.print())
 
-    def print_cfg(self, view=True):
+    def print_cfg(self, dot):
         """
         Print the CFG
         """
-
         # call flow graph not generated yet
         if (self.cfg == None):
-            self.cfg = CFG(self.instructions)
-
-        # show the call flow graph
-        self.cfg.print(view)
+            self.cfg = CFG(self.instructions, dot)
         return self.cfg.dot

@@ -1,5 +1,4 @@
-from graphviz import Digraph
-
+import re
 class BasicBlock:
     """
     BasicBlock Class
@@ -30,8 +29,8 @@ class CFG:
 
     Create a Control Flow Graph per Function
     """
-    def __init__(self, instructions):
-        self.dot = None
+    def __init__(self, instructions, dot):
+        self.dot = dot
         self.basicblocks = []
 
         self._generate_basicblocks(instructions)
@@ -113,15 +112,13 @@ class CFG:
         for bb in self.basicblocks:
             print(f'-- BB {bb.name, len(bb.instructions)} {bb.edges_offset} --')
             for instr in bb.instructions:
-                instr.print()
+                print(instr.print())
             print()
 
     def generate_cfg(self):
         """
         Create the basicblock nodes and the edges
-        """
-        self.dot = Digraph('CFG', comment='CFG')
-        
+        """        
         # get all bb offset
         bb_offsets = [bb.start_offset for bb in self.basicblocks]
 
@@ -130,8 +127,11 @@ class CFG:
 
             # Create all the basicblock nodes
             shape = 'square'
+            label_instruction = ""
+            for instr in bb.instructions:
+                label_instruction += re.sub('\s+', ' ', instr.print().replace("\n", "\\n"))
             self.dot.node(bb.name,
-                          label=bb.name,
+                          label=label_instruction,
                           shape=shape)
 
             # iterate over edges_offset
@@ -145,5 +145,4 @@ class CFG:
 
     def print(self, view=True):
         self.print_bb()
-        self.dot.render(directory='doctest-output', view=view)
         return self.dot

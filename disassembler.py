@@ -2,7 +2,7 @@
 
 import json
 from function import Function
-
+from graphviz import Digraph
 from jsonParser import *
 from callgraph import CallFlowGraph
 from utils import PRIME
@@ -63,7 +63,7 @@ class Disassembler:
                     if (offset < 0):
                         offset = int(inst.id) + int(inst.imm)
                     xref_func = self.get_function_by_offset(str(offset))
-                    print(xref_func)
+                    #print(xref_func)
                     inst.call_xref_func_name = xref_func.name if xref_func != None else None
 
 
@@ -104,8 +104,8 @@ class Disassembler:
         Return a Function if the offset match
         """
         for function in self.functions:
-            print(function.offset_start)
-            print(offset)
+            #print(function.offset_start)
+            #print(offset)
             if (function.offset_start == offset):
                 return function
         return None
@@ -131,13 +131,14 @@ class Disassembler:
 
         # TODO - add func_offset option
         # TODO - generate one big cfg for all function if func_name/func_offset not specified
-
+        dot = Digraph('CFG', comment='CFG')
         if (func_name is None):
             for function in self.functions:
-                function.print_cfg()
+                function.print_cfg(dot)
         else:
             function = self.get_function_by_name(func_name)
             if (function != None):
-                function.print_cfg()
+                function.print_cfg(dot)
             else:
                 print("Error : Function does not exist.")
+        dot.render(directory='doctest-output', view=True)
