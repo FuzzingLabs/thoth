@@ -1,0 +1,439 @@
+{
+    "attributes": [],
+    "builtins": [],
+    "data": [
+        "0x480a7ffd7fff8000",
+        "0x208b7fff7fff7ffe",
+        "0x482a7ffd7ffc8000",
+        "0x208b7fff7fff7ffe",
+        "0x480680017fff8000",
+        "0x1",
+        "0x1104800180018000",
+        "0x800000000000010fffffffffffffffffffffffffffffffffffffffffffffffb",
+        "0x480680017fff8000",
+        "0x1",
+        "0x480680017fff8000",
+        "0x2",
+        "0x1104800180018000",
+        "0x800000000000010fffffffffffffffffffffffffffffffffffffffffffffff7",
+        "0x208b7fff7fff7ffe"
+    ],
+    "debug_info": {
+        "file_contents": {},
+        "instruction_locations": {
+            "0": {
+                "accessible_scopes": [
+                    "__main__",
+                    "__main__.a"
+                ],
+                "flow_tracking_data": {
+                    "ap_tracking": {
+                        "group": 0,
+                        "offset": 0
+                    },
+                    "reference_ids": {
+                        "__main__.a.arg": 0
+                    }
+                },
+                "hints": [],
+                "inst": {
+                    "end_col": 18,
+                    "end_line": 2,
+                    "input_file": {
+                        "filename": "tests/cairo_files/cairo_call_function_assign_param_by_name.cairo"
+                    },
+                    "start_col": 2,
+                    "start_line": 2
+                }
+            },
+            "1": {
+                "accessible_scopes": [
+                    "__main__",
+                    "__main__.a"
+                ],
+                "flow_tracking_data": {
+                    "ap_tracking": {
+                        "group": 0,
+                        "offset": 1
+                    },
+                    "reference_ids": {
+                        "__main__.a.arg": 0
+                    }
+                },
+                "hints": [],
+                "inst": {
+                    "end_col": 5,
+                    "end_line": 3,
+                    "input_file": {
+                        "filename": "tests/cairo_files/cairo_call_function_assign_param_by_name.cairo"
+                    },
+                    "start_col": 2,
+                    "start_line": 3
+                }
+            },
+            "2": {
+                "accessible_scopes": [
+                    "__main__",
+                    "__main__.b"
+                ],
+                "flow_tracking_data": {
+                    "ap_tracking": {
+                        "group": 1,
+                        "offset": 0
+                    },
+                    "reference_ids": {
+                        "__main__.b.first_arg": 1,
+                        "__main__.b.second_arg": 2
+                    }
+                },
+                "hints": [],
+                "inst": {
+                    "end_col": 37,
+                    "end_line": 7,
+                    "input_file": {
+                        "filename": "tests/cairo_files/cairo_call_function_assign_param_by_name.cairo"
+                    },
+                    "start_col": 2,
+                    "start_line": 7
+                }
+            },
+            "3": {
+                "accessible_scopes": [
+                    "__main__",
+                    "__main__.b"
+                ],
+                "flow_tracking_data": {
+                    "ap_tracking": {
+                        "group": 1,
+                        "offset": 1
+                    },
+                    "reference_ids": {
+                        "__main__.b.first_arg": 1,
+                        "__main__.b.second_arg": 2
+                    }
+                },
+                "hints": [],
+                "inst": {
+                    "end_col": 5,
+                    "end_line": 8,
+                    "input_file": {
+                        "filename": "tests/cairo_files/cairo_call_function_assign_param_by_name.cairo"
+                    },
+                    "start_col": 2,
+                    "start_line": 8
+                }
+            },
+            "4": {
+                "accessible_scopes": [
+                    "__main__",
+                    "__main__.main"
+                ],
+                "flow_tracking_data": {
+                    "ap_tracking": {
+                        "group": 2,
+                        "offset": 0
+                    },
+                    "reference_ids": {}
+                },
+                "hints": [],
+                "inst": {
+                    "end_col": 12,
+                    "end_line": 12,
+                    "input_file": {
+                        "filename": "tests/cairo_files/cairo_call_function_assign_param_by_name.cairo"
+                    },
+                    "start_col": 11,
+                    "start_line": 12
+                }
+            },
+            "6": {
+                "accessible_scopes": [
+                    "__main__",
+                    "__main__.main"
+                ],
+                "flow_tracking_data": {
+                    "ap_tracking": {
+                        "group": 2,
+                        "offset": 1
+                    },
+                    "reference_ids": {}
+                },
+                "hints": [],
+                "inst": {
+                    "end_col": 13,
+                    "end_line": 12,
+                    "input_file": {
+                        "filename": "tests/cairo_files/cairo_call_function_assign_param_by_name.cairo"
+                    },
+                    "start_col": 5,
+                    "start_line": 12
+                }
+            },
+            "8": {
+                "accessible_scopes": [
+                    "__main__",
+                    "__main__.main"
+                ],
+                "flow_tracking_data": {
+                    "ap_tracking": {
+                        "group": 2,
+                        "offset": 4
+                    },
+                    "reference_ids": {}
+                },
+                "hints": [],
+                "inst": {
+                    "end_col": 18,
+                    "end_line": 13,
+                    "input_file": {
+                        "filename": "tests/cairo_files/cairo_call_function_assign_param_by_name.cairo"
+                    },
+                    "start_col": 17,
+                    "start_line": 13
+                }
+            },
+            "10": {
+                "accessible_scopes": [
+                    "__main__",
+                    "__main__.main"
+                ],
+                "flow_tracking_data": {
+                    "ap_tracking": {
+                        "group": 2,
+                        "offset": 5
+                    },
+                    "reference_ids": {}
+                },
+                "hints": [],
+                "inst": {
+                    "end_col": 32,
+                    "end_line": 13,
+                    "input_file": {
+                        "filename": "tests/cairo_files/cairo_call_function_assign_param_by_name.cairo"
+                    },
+                    "start_col": 31,
+                    "start_line": 13
+                }
+            },
+            "12": {
+                "accessible_scopes": [
+                    "__main__",
+                    "__main__.main"
+                ],
+                "flow_tracking_data": {
+                    "ap_tracking": {
+                        "group": 2,
+                        "offset": 6
+                    },
+                    "reference_ids": {}
+                },
+                "hints": [],
+                "inst": {
+                    "end_col": 33,
+                    "end_line": 13,
+                    "input_file": {
+                        "filename": "tests/cairo_files/cairo_call_function_assign_param_by_name.cairo"
+                    },
+                    "start_col": 5,
+                    "start_line": 13
+                }
+            },
+            "14": {
+                "accessible_scopes": [
+                    "__main__",
+                    "__main__.main"
+                ],
+                "flow_tracking_data": {
+                    "ap_tracking": {
+                        "group": 2,
+                        "offset": 9
+                    },
+                    "reference_ids": {}
+                },
+                "hints": [],
+                "inst": {
+                    "end_col": 14,
+                    "end_line": 15,
+                    "input_file": {
+                        "filename": "tests/cairo_files/cairo_call_function_assign_param_by_name.cairo"
+                    },
+                    "start_col": 5,
+                    "start_line": 15
+                }
+            }
+        }
+    },
+    "hints": {},
+    "identifiers": {
+        "__main__.a": {
+            "decorators": [],
+            "pc": 0,
+            "type": "function"
+        },
+        "__main__.a.Args": {
+            "full_name": "__main__.a.Args",
+            "members": {
+                "arg": {
+                    "cairo_type": "felt",
+                    "offset": 0
+                }
+            },
+            "size": 1,
+            "type": "struct"
+        },
+        "__main__.a.ImplicitArgs": {
+            "full_name": "__main__.a.ImplicitArgs",
+            "members": {},
+            "size": 0,
+            "type": "struct"
+        },
+        "__main__.a.Return": {
+            "full_name": "__main__.a.Return",
+            "members": {},
+            "size": 0,
+            "type": "struct"
+        },
+        "__main__.a.SIZEOF_LOCALS": {
+            "type": "const",
+            "value": 0
+        },
+        "__main__.a.arg": {
+            "cairo_type": "felt",
+            "full_name": "__main__.a.arg",
+            "references": [
+                {
+                    "ap_tracking_data": {
+                        "group": 0,
+                        "offset": 0
+                    },
+                    "pc": 0,
+                    "value": "[cast(fp + (-3), felt*)]"
+                }
+            ],
+            "type": "reference"
+        },
+        "__main__.b": {
+            "decorators": [],
+            "pc": 2,
+            "type": "function"
+        },
+        "__main__.b.Args": {
+            "full_name": "__main__.b.Args",
+            "members": {
+                "first_arg": {
+                    "cairo_type": "felt",
+                    "offset": 0
+                },
+                "second_arg": {
+                    "cairo_type": "felt",
+                    "offset": 1
+                }
+            },
+            "size": 2,
+            "type": "struct"
+        },
+        "__main__.b.ImplicitArgs": {
+            "full_name": "__main__.b.ImplicitArgs",
+            "members": {},
+            "size": 0,
+            "type": "struct"
+        },
+        "__main__.b.Return": {
+            "full_name": "__main__.b.Return",
+            "members": {},
+            "size": 0,
+            "type": "struct"
+        },
+        "__main__.b.SIZEOF_LOCALS": {
+            "type": "const",
+            "value": 0
+        },
+        "__main__.b.first_arg": {
+            "cairo_type": "felt",
+            "full_name": "__main__.b.first_arg",
+            "references": [
+                {
+                    "ap_tracking_data": {
+                        "group": 1,
+                        "offset": 0
+                    },
+                    "pc": 2,
+                    "value": "[cast(fp + (-4), felt*)]"
+                }
+            ],
+            "type": "reference"
+        },
+        "__main__.b.second_arg": {
+            "cairo_type": "felt",
+            "full_name": "__main__.b.second_arg",
+            "references": [
+                {
+                    "ap_tracking_data": {
+                        "group": 1,
+                        "offset": 0
+                    },
+                    "pc": 2,
+                    "value": "[cast(fp + (-3), felt*)]"
+                }
+            ],
+            "type": "reference"
+        },
+        "__main__.main": {
+            "decorators": [],
+            "pc": 4,
+            "type": "function"
+        },
+        "__main__.main.Args": {
+            "full_name": "__main__.main.Args",
+            "members": {},
+            "size": 0,
+            "type": "struct"
+        },
+        "__main__.main.ImplicitArgs": {
+            "full_name": "__main__.main.ImplicitArgs",
+            "members": {},
+            "size": 0,
+            "type": "struct"
+        },
+        "__main__.main.Return": {
+            "full_name": "__main__.main.Return",
+            "members": {},
+            "size": 0,
+            "type": "struct"
+        },
+        "__main__.main.SIZEOF_LOCALS": {
+            "type": "const",
+            "value": 0
+        }
+    },
+    "main_scope": "__main__",
+    "prime": "0x800000000000011000000000000000000000000000000000000000000000001",
+    "reference_manager": {
+        "references": [
+            {
+                "ap_tracking_data": {
+                    "group": 0,
+                    "offset": 0
+                },
+                "pc": 0,
+                "value": "[cast(fp + (-3), felt*)]"
+            },
+            {
+                "ap_tracking_data": {
+                    "group": 1,
+                    "offset": 0
+                },
+                "pc": 2,
+                "value": "[cast(fp + (-4), felt*)]"
+            },
+            {
+                "ap_tracking_data": {
+                    "group": 1,
+                    "offset": 0
+                },
+                "pc": 2,
+                "value": "[cast(fp + (-3), felt*)]"
+            }
+        ]
+    }
+}
