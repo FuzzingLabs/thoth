@@ -41,6 +41,8 @@ class Disassembler:
             ret = self.json[function]["data"]["return"]
             decorators = self.json[function]["data"]["decorators"]
 
+            # 
+            
             self.functions.append(
                 Function(offset_start,
                          offset_end,
@@ -49,7 +51,9 @@ class Disassembler:
                          args, 
                          ret, 
                          decorators,
-                         entry_point=self.json[function]["data"]["entry_point"]))
+                         entry_point=self.json[function]["data"]["entry_point"],
+                         is_import=not name.startswith('__'))
+            )
 
         # we can now analyze all the CALL to find the corresponding function
         for func in self.functions:

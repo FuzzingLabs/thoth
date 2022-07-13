@@ -94,6 +94,7 @@ def extractData(path):
     """
     data = []
     func_offset = {}
+    
     with path[0] as f:
         json_data = json.load(f)
 
