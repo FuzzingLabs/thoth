@@ -80,6 +80,9 @@ def extractFunctionPrototype(json_data, func_offset):
         # get entry_points
         if offset in entry_points:
             func_identifiers[func_name]["entry_point"] = True
+        # case of cairo file
+        elif func_name == "__main__.main":
+            func_identifiers[func_name]["entry_point"] = True
         else:
             func_identifiers[func_name]["entry_point"] = False
 
