@@ -24,16 +24,25 @@ class CallFlowGraph:
 
             for function in functions:
 
-                # default shape
+                # default values
                 shape = 'oval'
+                color = ''
+                style = 'solid'
 
                 # This function is an entrypoint
                 if function.entry_point:
                     shape = 'doubleoctagon'
 
+                # this func is an import
+                if function.is_import:
+                    style='filled'
+                    color='lightcoral'
+
                 self.dot.node(function.offset_start,
                                      label=function.name,
-                                     shape=shape)
+                                     shape=shape,
+                                     style=style,
+                                     color=color)
         
 
     def _generate_call_flow_graph(self, functions):
