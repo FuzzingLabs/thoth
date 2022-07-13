@@ -4,7 +4,7 @@ import json
 from function import Function
 
 from jsonParser import *
-from callgraph import CallGraph
+from callgraph import CallFlowGraph
 
 class Disassembler:
     """
@@ -49,13 +49,14 @@ class Disassembler:
                          ret, 
                          decorators,
                          entry_point=self.json[function]["data"]["entry_point"]))
-        
-        return self.functions
 
-    def print_disassembly(self, func_name=None):
+    def print_disassembly(self, func_name=None, func_offset=None):
         """
         Iterate over every function and print the disassembly
         """
+
+        # TODO - add func_offset option
+
         if (func_name is None):
             for function in self.functions:
                 function.print()
@@ -98,7 +99,7 @@ class Disassembler:
 
         # call flow graph not generated yet
         if (self.call_graph == None):
-            self.call_graph = CallGraph(self.functions)
+            self.call_graph = CallFlowGraph(self.functions)
 
         # show the call flow graph
         self.call_graph.print(view)
@@ -110,6 +111,7 @@ class Disassembler:
         """
 
         # TODO - add func_offset option
+        # TODO - generate one big cfg for all function if func_name/func_offset not specified
 
         if (func_name is None):
             for function in self.functions:

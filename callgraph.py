@@ -1,14 +1,15 @@
 from graphviz import Digraph
 from utils import PRIME
 
-class CallGraph:
+class CallFlowGraph:
     """
-    CallGraph class
+    CallFlowGraph class
 
     Create a call flow graph for the all contract
     """
     def __init__(self, functions):
         self.dot = None
+
         self._generate_call_flow_graph(functions)
 
 
@@ -18,6 +19,8 @@ class CallGraph:
             """
 
             # TODO - add import info
+            # TODO - add decorator info (color shape)
+
             for function in functions:
 
                 # default shape
@@ -41,7 +44,9 @@ class CallGraph:
         # First, we create the nodes
         self._call_flow_graph_generate_nodes(functions)
 
+        # TODO - issue #13 - count same edges
         edgesDone = []
+        
         # build the edges btw function (nodes)
         for function in functions:
             for instr in function.instructions:
