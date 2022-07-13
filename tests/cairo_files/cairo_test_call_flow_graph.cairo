@@ -18,6 +18,10 @@ func c_func { } ( ) -> (x : felt):
 	let zzz = 111111111111111111
 	let x = 10
 	b_func()
+	b_func()
+	b_func()
+	b_func()
+	b_func()
 	a_func()
 	[fp - 3] = [ap + 7] * [ap + 8]
 	[ap + 10] = [fp] + 42
