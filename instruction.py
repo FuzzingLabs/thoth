@@ -121,7 +121,7 @@ class Instruction:
 
     def _handle_assert_eq(self):
         disass_str = ""
-        disass_str += format_print(f"{self.opcode}", end="")
+        disass_str += format_print(f"{self.opcode}")
         if ("OP1" in self.res):
             if ("IMM" in self.op1Addr):
                 disass_str += format_print(f"[{self.dstRegister}{self.offDest}], {self.imm}")
@@ -140,7 +140,7 @@ class Instruction:
     def _handle_nop(self):
         disass_str = ""
         if ("REGULAR" not in self.pcUpdate):
-            disass_str += format_print(f"{self.pcUpdate}", end="")
+            disass_str += format_print(f"{self.pcUpdate}")
             disass_str += format_print(self.imm)
         else:
             disass_str += format_print(f"{self.opcode}")
@@ -150,7 +150,7 @@ class Instruction:
 
     def _handle_call(self):
         disass_str = ""
-        disass_str += format_print(f"{self.opcode}", end="")
+        disass_str += format_print(f"{self.opcode}")
         offset = int(self.id) - (PRIME - int(self.imm))
         if (offset < 0):
             offset = int(self.id) + int(self.imm)        
@@ -166,7 +166,7 @@ class Instruction:
 
     def print(self):
         disass_str = ""
-        disass_str += format_print(f"offset {self.id}:", end="")
+        disass_str += format_print(f"\noffset {self.id}:")
         if ("ASSERT_EQ" in self.opcode):
             disass_str += self._handle_assert_eq()
 
@@ -187,7 +187,7 @@ class Instruction:
             op = list(filter(None, re.split(r'(\d+)', self.apUpdate)))
             APopcode = op[0]
             APval = op[1] if (len(op) > 1) else self.imm
-            disass_str += format_print(f"offset {self.id}:", end="")
-            disass_str += format_print(f"{APopcode}", end="")
+            disass_str += format_print(f"\noffset {self.id}:")
+            disass_str += format_print(f"{APopcode}")
             disass_str += format_print(f"AP, {APval}")
         return disass_str

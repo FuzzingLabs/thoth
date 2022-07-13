@@ -63,9 +63,10 @@ class Function:
         Iterate over each instruction and print the disassembly
         """
         prototype = self.get_prototype()
-        print(f"\n\t{prototype}\n")
+        print(f"\n\t{prototype}")
         for instr in self.instructions:
-            print(instr.print())
+            print(instr.print(), end="")
+        print()
 
     def generate_cfg(self):
         self.cfg = CFG(self.name, self.instructions)

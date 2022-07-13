@@ -139,7 +139,7 @@ class CFG:
             for instr in bb.instructions:
                 label_instruction += re.sub('\s+', ' ', instr.print().replace("\n", "\\l"))
             self.dot.node(bb.name,
-                          label=label_instruction,
+                          label=label_instruction + "\\l",
                           shape=shape)
 
             # iterate over edges_offset
