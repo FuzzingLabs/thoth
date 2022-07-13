@@ -41,8 +41,6 @@ class Disassembler:
             ret = self.json[function]["data"]["return"]
             decorators = self.json[function]["data"]["decorators"]
 
-            # 
-            
             self.functions.append(
                 Function(offset_start,
                          offset_end,

@@ -24,9 +24,6 @@ class CallFlowGraph:
 
             for function in functions:
 
-                print(function.decorators)
-                print(function.is_import)
-
                 # default values
                 shape = 'oval'
                 color = ''
