@@ -49,7 +49,7 @@ class CallGraph:
                     offset = int(instr.id) - (PRIME - int(instr.imm))
                     if (offset < 0):
                         offset = int(instr.id) + int(instr.imm)
-                    if (str(offset) != function.offset_start and (function.offset_start, str(offset)) not in edgesDone):
+                    if (function.offset_start, str(offset)) not in edgesDone:
                         edgesDone.append((function.offset_start, str(offset)))
                         self.dot.edge(function.offset_start, str(offset))
 
