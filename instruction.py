@@ -100,7 +100,7 @@ def decodeInstruction(encoding: int, imm: Optional[int] = None) -> CairoInstruct
     )
 
 class Instruction:
-    def __init__(self, instruction_data, id):
+    def __init__(self, id, instruction_data):
         self.id = id
         self.offDest = instruction_data.get("off0") if instruction_data.get("off0")[0] == '-' else '+' + instruction_data.get("off0")
         self.offDest = self.offDest if int(self.offDest) != 0 else ""
@@ -117,6 +117,7 @@ class Instruction:
         self.apUpdate = instruction_data.get("ap_update").split("ApUpdate.")[1]
         self.fpUpdate = instruction_data.get("fp_update").split("FpUpdate.")[1]
         self.opcode = instruction_data.get("opcode").split("Opcode.")[1]
+        self.call_xref_func_name = None
 
     def _handle_assert_eq(self):
         format_print(f"{self.opcode}", end="")
@@ -149,8 +150,13 @@ class Instruction:
         offset = int(self.id) - (PRIME - int(self.imm))
         if (offset < 0):
             offset = int(self.id) + int(self.imm)
-        format_print(f"{offset}")
         #format_print(f"{offset}=>{##need to get the function name}")
+        
+        # print reference function
+        if self.call_xref_func_name != None:
+            format_print(f"{offset} \t# {self.call_xref_func_name}")
+        else:
+            format_print(f"{offset}")
 
     def _handle_ret(self):
         format_print(f"{self.opcode}")

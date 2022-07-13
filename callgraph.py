@@ -45,7 +45,6 @@ class CallFlowGraph:
         # First, we create the nodes
         self._call_flow_graph_generate_nodes(functions)
 
-        # TODO - issue #13 - count same edges
         edges = []
         
         # build the edges btw function (nodes)
@@ -63,8 +62,6 @@ class CallFlowGraph:
             else:
                 self.dot.edge(edges[0][0], edges[0][1])
             edges = list(filter(lambda x: x != edges[0], edges))
-
-
 
 
     def print(self, view=True):

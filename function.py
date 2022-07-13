@@ -26,7 +26,7 @@ class Function:
         """
         for offset in self.instructions_dict:
             for bytecode in self.instructions_dict[offset]:
-                    self.instructions.append(Instruction(self.instructions_dict[offset][bytecode], offset))
+                    self.instructions.append(Instruction(offset, self.instructions_dict[offset][bytecode]))
         return self.instructions
     
     def get_prototype(self):

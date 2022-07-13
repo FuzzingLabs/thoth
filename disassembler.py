@@ -5,6 +5,7 @@ from function import Function
 
 from jsonParser import *
 from callgraph import CallFlowGraph
+from utils import PRIME
 
 class Disassembler:
     """
@@ -50,6 +51,18 @@ class Disassembler:
                          decorators,
                          entry_point=self.json[function]["data"]["entry_point"]))
 
+        # we can now analyze all the CALL to find the corresponding function
+        for func in self.functions:
+            for inst in func.instructions:
+                if ("CALL" in inst.opcode):
+                    offset = int(inst.id) - (PRIME - int(inst.imm))
+                    if (offset < 0):
+                        offset = int(inst.id) + int(inst.imm)
+                    xref_func = self.get_function_by_offset(str(offset))
+                    print(xref_func)
+                    inst.call_xref_func_name = xref_func.name if xref_func != None else None
+
+
     def print_disassembly(self, func_name=None, func_offset=None):
         """
         Iterate over every function and print the disassembly
@@ -87,6 +100,8 @@ class Disassembler:
         Return a Function if the offset match
         """
         for function in self.functions:
+            print(function.offset_start)
+            print(offset)
             if (function.offset_start == offset):
                 return function
         return None
