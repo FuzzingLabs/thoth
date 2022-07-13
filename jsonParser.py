@@ -1,8 +1,9 @@
-from dis import Instruction
+#!/usr/bin/env python3
+
 import json
 import re
 import collections
-from disassembler import decodeInstruction
+from instruction import decodeInstruction
 
 jsonType = None
 
@@ -22,47 +23,74 @@ def decodeToJson(decoded):
         dataDict[key] = value
     return dataDict
 
-def extractFunctionPrototype(json_data, functionOffset):
+def extractFunctionPrototype(json_data, func_offset):
     """
     Get the informations about arguments/return/decorators
     """
     identifiers = json_data["identifiers"] if ("identifiers" in json_data) else json_data["program"]["identifiers"]
-    functionIdentifiers = {}
+    func_identifiers = {}
     args = None
     ret = None
+
+    # get entry_point offsets
+    entry_points = []
+    entry_points_by_type = json_data["entry_points_by_type"] if ("entry_points_by_type" in json_data) else None
+    if entry_points_by_type:
+        for entry_type in entry_points_by_type.values():
+            entry_points += [str(int(entry['offset'], base=16)) for entry in entry_type]
+
     ## Get arguments and return value of function
-    for offset in functionOffset:
-        functionName = functionOffset[offset]
-        functionIdentifiers[functionName] = {}
-        functionIdentifiers[functionName]["args"] = {}
-        functionIdentifiers[functionName]["return"] = {}
-        functionIdentifiers[functionName]["decorators"] = []
-        if (functionName + ".Args" in identifiers and "members" in identifiers[functionName + ".Args"]):
-            args = identifiers[functionName + ".Args"]["members"]
-            if (functionName + ".ImplicitArgs" in identifiers and "members" in identifiers[functionName + ".ImplicitArgs"]):
-                args.update(identifiers[functionName + ".ImplicitArgs"]["members"])
+    for offset in func_offset:
+        func_name = func_offset[offset]
+        func_identifiers[func_name] = {}
+        func_identifiers[func_name]["args"] = {}
+        func_identifiers[func_name]["return"] = {}
+        func_identifiers[func_name]["decorators"] = []
+        
+        # get func args values
+        if (func_name + ".Args" in identifiers and "members" in identifiers[func_name + ".Args"]):
+            args = identifiers[func_name + ".Args"]["members"]
+            if (func_name + ".ImplicitArgs" in identifiers and "members" in identifiers[func_name + ".ImplicitArgs"]):
+                args.update(identifiers[func_name + ".ImplicitArgs"]["members"])
+            
+            tmp = {}
             for argument in args:
-                argsData = identifiers[functionName + ".Args"]["members"][argument]
-                functionIdentifiers[functionName]["args"][argsData["offset"]] = {}
-                functionIdentifiers[functionName]["args"][argsData["offset"]][argument] = argsData["cairo_type"]
-            functionIdentifiers[functionName]["args"] = dict(collections.OrderedDict(sorted(functionIdentifiers[functionName]["args"].items())))
-        if (functionName + ".Return" in identifiers and "members" in identifiers[functionName + ".Return"]):
-            ret = identifiers[functionName + ".Return"]["members"]
+                argsData = identifiers[func_name + ".Args"]["members"][argument]
+                tmp[argsData["offset"]] = {}
+                tmp[argsData["offset"]][argument] = argsData["cairo_type"]
+
+            #print("TODO " + str([arg[1] for arg in sorted(tmp.items())]))
+            func_identifiers[func_name]["args"] = dict(collections.OrderedDict(sorted(tmp.items())))
+        
+        # get func return values
+        if (func_name + ".Return" in identifiers and "members" in identifiers[func_name + ".Return"]):
+            ret = identifiers[func_name + ".Return"]["members"]
+            
+            tmp = {}
             for argument in ret:
-                retData = identifiers[functionName + ".Return"]["members"][argument]
-                functionIdentifiers[functionName]["return"][retData["offset"]] = {}
-                functionIdentifiers[functionName]["return"][retData["offset"]][argument] = retData["cairo_type"]
-            functionIdentifiers[functionName]["return"] = dict(collections.OrderedDict(sorted(functionIdentifiers[functionName]["return"].items())))
-        if (functionName in identifiers and "decorators" in identifiers[functionName]):
-            functionIdentifiers[functionName]["decorators"] = (identifiers[functionName]["decorators"])
-    return functionIdentifiers
+                retData = identifiers[func_name + ".Return"]["members"][argument]
+                tmp[retData["offset"]] = {}
+                tmp[retData["offset"]][argument] = retData["cairo_type"]
+            func_identifiers[func_name]["return"] = dict(collections.OrderedDict(sorted(tmp.items())))
+        
+        # get decorators
+        if (func_name in identifiers and "decorators" in identifiers[func_name]):
+            func_identifiers[func_name]["decorators"] = (identifiers[func_name]["decorators"])
+
+        # get entry_points
+        if offset in entry_points:
+            func_identifiers[func_name]["entry_point"] = True
+        else:
+            func_identifiers[func_name]["entry_point"] = False
+
+    return func_identifiers
 
 def extractData(path):
     """
     Return the good dictionary that contains the instructions for the Bytecodes and the Identifiers for the return/args informations
     """
     data = []
-    functionOffset = {}
+    func_offset = {}
     with path[0] as f:
         json_data = json.load(f)
 
@@ -78,29 +106,30 @@ def extractData(path):
 
     if (jsonType != "get_code"):
         debugInfo = json_data["debug_info"] if ("debug_info" in json_data) else  json_data["program"]["debug_info"]
-        instructionLocations = debugInfo["instruction_locations"]
+        instr_locations = debugInfo["instruction_locations"]
         actualFunction = ""
         ## Get function name and put it in dictionnary with offset as key
-        for offset in instructionLocations:
+        for offset in instr_locations:
             # Link instruction and offset to a function
-            functionName = instructionLocations[offset]["accessible_scopes"][-1]
-            if (actualFunction != functionName):
-                functionOffset[offset] = functionName
-                actualFunction = functionName
-        functionIdentifiers = extractFunctionPrototype(json_data, functionOffset)
+            func_name = instr_locations[offset]["accessible_scopes"][-1]
+            if (actualFunction != func_name):
+                func_offset[offset] = func_name
+                actualFunction = func_name
+        func_identifiers = extractFunctionPrototype(json_data, func_offset)
+        print(func_identifiers)
 
     else:
         debugInfo = json_data["abi"]
         id = 0
         for dictionnary in debugInfo:
             if (dictionnary["type"] == "event" or dictionnary["type"] == "function"):
-                functionOffset[str(id)] = dictionnary["name"]
+                func_offset[str(id)] = dictionnary["name"]
                 id += 1
     
     # tofix : why do we need this ?
     if data[len(data) - 1] != 2345108766317314046:
         data.append(2345108766317314046)
-    return (data, functionOffset, functionIdentifiers)
+    return (data, func_offset, func_identifiers)
 
 
 def parseToJson(path):
@@ -109,17 +138,17 @@ def parseToJson(path):
     Also get informations about return values, arguments and decorators
     Build a generic Json.
     """
-    data, functionOffset, functionIdentifiers = extractData(path)
+    data, func_offset, func_identifiers = extractData(path)
     size = len(data)
     offset = 0
     bytecodesToJson = {}
     actualFunction = ""
     incr = 0
     while (offset < size):
-        if ((jsonType != "get_code" and str(offset) in functionOffset) or (jsonType == "get_code" and actualFunction not in bytecodesToJson)):
-            actualFunction = functionOffset[str(offset)] if (jsonType != "get_code") else f"function 0"
+        if ((jsonType != "get_code" and str(offset) in func_offset) or (jsonType == "get_code" and actualFunction not in bytecodesToJson)):
+            actualFunction = func_offset[str(offset)] if (jsonType != "get_code") else f"function 0"
             bytecodesToJson[actualFunction] = {}
-            bytecodesToJson[actualFunction]["data"] = functionIdentifiers[actualFunction]
+            bytecodesToJson[actualFunction]["data"] = func_identifiers[actualFunction]
             bytecodesToJson[actualFunction]["instruction"] = {}
         try:
             decoded = decodeInstruction(data[offset])
