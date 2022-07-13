@@ -30,9 +30,11 @@ class CFG:
 
     Create a Control Flow Graph per Function
     """
-    def __init__(self, instructions):
+    def __init__(self, func_name, instructions):
         self.dot = None
+        self.func_name = func_name
         self.basicblocks = []
+        self.name = f'CFG {self.func_name}'
 
         self._generate_basicblocks(instructions)
         self.generate_cfg()
@@ -120,7 +122,9 @@ class CFG:
         """
         Create the basicblock nodes and the edges
         """
-        self.dot = Digraph('CFG', comment='CFG')
+        cluster_name = 'cluster_' + self.name
+        self.dot = Digraph(cluster_name, comment=self.name)
+        self.dot.attr(label=self.name)
         
         # get all bb offset
         bb_offsets = [bb.start_offset for bb in self.basicblocks]
@@ -136,12 +140,15 @@ class CFG:
 
             # iterate over edges_offset
             for offset in bb.edges_offset:
+                color='green'
+                if offset is bb.edges_offset[-1]:
+                    color='red'
 
                 # we check that we are not creating an edge 
                 # to an offset that is not a bb start offset
                 # TODO - support weird `jmp rel 7` type
                 if offset in bb_offsets:
-                    self.dot.edge(format_bb_name(bb.start_offset), format_bb_name(offset))
+                    self.dot.edge(format_bb_name(bb.start_offset), format_bb_name(offset), color=color)
 
     def print(self, view=True):
         self.print_bb()

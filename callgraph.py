@@ -50,7 +50,8 @@ class CallFlowGraph:
         Create all the function Node for the CallFlowGraph and call _generate_call_flow_graph_edges to build the edges
         """
         self.dot = Digraph('CALL FLOW GRAPH', comment='CALL FLOW GRAPH')
-        
+        # self.dot.attr(rankdir='LR')
+
         # First, we create the nodes
         self._call_flow_graph_generate_nodes(functions)
 

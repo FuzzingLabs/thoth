@@ -6,6 +6,7 @@ from function import Function
 from jsonParser import *
 from callgraph import CallFlowGraph
 from utils import PRIME
+from graphviz import Digraph
 
 class Disassembler:
     """
@@ -72,9 +73,11 @@ class Disassembler:
         Iterate over every function and print the disassembly
         """
 
+        # Disassembly for all functions
         if (func_name is None and func_offset is None):
             for function in self.functions:
                 function.print()
+
         # func_name or func_offset provided
         else:
             if (func_name is not None):
@@ -127,18 +130,19 @@ class Disassembler:
         self.call_graph.print(view)
         return self.call_graph.dot
 
-    def print_cfg(self, func_name=None, func_offset=None):
+    def print_cfg(self, func_name=None, func_offset=None, view=True):
         """
         Print the CFG (Control Flow Graph)
         """
 
-        # TODO - generate one big cfg for all function if func_name/func_offset not specified
-
         # CFG for all functions
+        graph = Digraph(name='All functions')
         if (func_name is None and func_offset is None):
             for function in self.functions:
-                function.print_cfg()
-                # TODO
+                function.generate_cfg()
+                graph.subgraph(function.cfg.dot)
+            graph.render(directory='doctest-output', view=view)
+
 
         # func_name or func_offset provided
         else:
