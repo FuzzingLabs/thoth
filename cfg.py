@@ -129,7 +129,7 @@ class CFG:
             shape = 'square'
             label_instruction = ""
             for instr in bb.instructions:
-                label_instruction += re.sub('\s+', ' ', instr.print().replace("\n", "\\n"))
+                label_instruction += re.sub('\s+', ' ', instr.print().replace("\n", "\\l"))
             self.dot.node(bb.name,
                           label=label_instruction,
                           shape=shape)
