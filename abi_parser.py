@@ -115,7 +115,6 @@ def extract_functions(json_type, json_data):
 
         ## Get function name and put it in dictionnary with offset as key
         for key, values in identifiers_data.items():
-            print(key)
             if values["type"] == "function":
                 func_offset[str(values["pc"])] = key
         func_identifiers = extract_function_prototype(func_offset, identifiers_data, entry_points_by_type)
@@ -130,23 +129,41 @@ def extract_functions(json_type, json_data):
     
     return (func_offset, func_identifiers)
 
+def extract_struct(json_type, json_data):
+    """
+    Return a dictionnary that contains all the struct
+    """
 
-def parseToJson(path):
+    struct_identifiers = {}
+
+    if (json_type != "get_code"):
+        identifiers_data = json_data["identifiers"] if ("identifiers" in json_data) else json_data["program"]["identifiers"]
+
+        ## Get function name and put it in dictionnary with offset as key
+        for key, values in identifiers_data.items():
+            if values["type"] == "struct":
+                tmp = {}
+                for attribut in values["members"]:
+                    tmp[values["members"][attribut]["offset"]] = {}
+                    tmp[values["members"][attribut]["offset"]]["attribut"] = attribut
+                    tmp[values["members"][attribut]["offset"]]["cairo_type"] = values["members"][attribut]["cairo_type"]
+                struct_identifiers[key] = dict(collections.OrderedDict(sorted(tmp.items())))
+    return struct_identifiers
+
+
+def parseToJson(json_data, json_type):
     """
     Get bytecodes and decode it.
     Also get informations about return values, arguments and decorators
     Build a generic Json.
     """
 
-    with path[0] as f:
-        json_data = json.load(f)
 
-        # detect the type of input json
-        json_type = detect_type_input_json(json_data)
-        # get the bytecode data
-        bytecode_data = extract_bytecode(json_type, json_data)
-        # extract function info like offset and name
-        func_offset, func_identifiers = extract_functions(json_type, json_data)
+    # get the bytecode data
+    bytecode_data = extract_bytecode(json_type, json_data)
+    # extract function info like offset and name
+    func_offset, func_identifiers = extract_functions(json_type, json_data)
+    # extract struct info
 
     size = len(bytecode_data)
     offset = 0

@@ -17,6 +17,7 @@ class Disassembler:
     def __init__(self, file, analyze=True):
         self.file = file
         self.functions = []
+        self.structs = None
         self.json = None
         self.call_graph = None
 
@@ -28,9 +29,16 @@ class Disassembler:
         Start the analyze of the code by parsing the cairo/starknet/other json.
         Then it creates every Function class and add it to the Disassembler functions list
         """
-        self.json = parseToJson(self.file)
+        json_data = ""
+        with self.file[0] as f:
+            json_data = json.load(f)
         
-        self.dump_json()
+        if (json_data is None or json_data == ""):
+            exit(1)
+        json_type = detect_type_input_json(json_data)
+        self.json = parseToJson(json_data, json_type)
+        self.structs = extract_struct(json_type, json_data)
+        #self.dump_json()
 
         for function in self.json:
             offset_start = list(self.json[function]["instruction"].keys())[0]
@@ -71,7 +79,9 @@ class Disassembler:
         """
         Iterate over every function and print the disassembly
         """
-
+        print("_" * 100)
+        print(self.print_structs())
+        print("_" * 100)
         # Disassembly for all functions
         if (func_name is None and func_offset is None):
             for function in self.functions:
@@ -88,6 +98,15 @@ class Disassembler:
                 function.print()
             else:
                 print("Error : Function does not exist.")
+
+    def print_structs(self):
+        struct_str = ""
+        for struct in self.structs:
+            struct_str += "\n\t struct: " + struct + "\n"
+            for attribut in self.structs[struct]:
+                struct_str += "\t    " + self.structs[struct][attribut]["attribut"]
+                struct_str += "   : " + self.structs[struct][attribut]["cairo_type"] + "\n"
+        return struct_str
 
     def dump_json(self):
         """
