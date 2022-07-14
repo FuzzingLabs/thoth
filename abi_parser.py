@@ -155,7 +155,7 @@ def extract_builtins(json_type, json_data):
     if (json_type == "cairo"):
         builtins = [builtin for builtin in json_data["builtins"]]
     elif (json_type == "starknet"):
-        builtins = [int(bytecode, 16) for bytecode in json_data["program"]["builtins"]] 
+        builtins = [builtin for builtin in json_data["program"]["builtins"]] 
     else:
        builtins = []
     return builtins
