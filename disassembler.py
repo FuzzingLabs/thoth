@@ -19,6 +19,7 @@ class Disassembler:
         self.functions = []
         self.structs = None
         self.json = None
+        self.builtins = []
         self.call_graph = None
 
         if analyze:
@@ -38,6 +39,7 @@ class Disassembler:
         json_type = detect_type_input_json(json_data)
         self.json = parseToJson(json_data, json_type)
         self.structs = extract_struct(json_type, json_data)
+        self.builtins = extract_builtins(json_type, json_data)
         #self.dump_json()
 
         for function in self.json:
@@ -79,6 +81,9 @@ class Disassembler:
         """
         Iterate over every function and print the disassembly
         """
+        if (self.builtins != []):
+            print("_" * 100)
+        print(self.print_builtins())
         print("_" * 100)
         print(self.print_structs())
         print("_" * 100)
@@ -107,6 +112,13 @@ class Disassembler:
                 struct_str += "\t    " + self.structs[struct][attribut]["attribut"]
                 struct_str += "   : " + self.structs[struct][attribut]["cairo_type"] + "\n"
         return struct_str
+
+    def print_builtins(self):
+        builtins_str = ""
+        if (self.builtins != []):
+            builtins_str += "\n%builtins "
+            return builtins_str + ' '.join(self.builtins)
+        return builtins_str
 
     def dump_json(self):
         """
