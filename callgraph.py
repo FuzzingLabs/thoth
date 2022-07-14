@@ -1,6 +1,6 @@
 from cProfile import label
 from graphviz import Digraph
-from utils import PRIME
+from utils import *
 
 class CallFlowGraph:
     """
@@ -49,7 +49,7 @@ class CallFlowGraph:
         """
         Create all the function Node for the CallFlowGraph and call _generate_call_flow_graph_edges to build the edges
         """
-        self.dot = Digraph('CALL FLOW GRAPH', comment='CALL FLOW GRAPH')
+        self.dot = Digraph('CALL FLOW GRAPH', comment='CALL FLOW GRAPH', node_attr=NODE_ATTR, graph_attr=GRAPH_ATTR, edge_attr=EDGE_ATTR)
         self.dot.attr(rankdir='LR')
 
         # First, we create the nodes

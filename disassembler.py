@@ -4,8 +4,9 @@ import json
 from function import Function
 from abi_parser import *
 from callgraph import CallFlowGraph
-from utils import PRIME
+from utils import *
 from graphviz import Digraph
+from graphviz import Source
 
 class Disassembler:
     """
@@ -166,11 +167,36 @@ class Disassembler:
         """
 
         # CFG for all functions
-        graph = Digraph(name='All functions')
+
+        graph = Digraph(name='All functions', node_attr=NODE_ATTR, graph_attr=GRAPH_ATTR, edge_attr=EDGE_ATTR)
         if (func_name is None and func_offset is None):
             for function in self.functions:
                 function.generate_cfg()
                 graph.subgraph(function.cfg.dot)
+            """temp =	graph [
+                            label = "Basic git concepts and operations\n\n"
+                            labelloc = t
+                            fontname = "Helvetica,Arial,sans-serif"
+                            fontsize = 20
+                            layout = dot
+                            rankdir = LR
+                            newrank = true
+                        ]
+                        node [
+                            style=filled
+                            shape=rect
+                            pencolor="#00000044" // frames color
+                            fontname="Helvetica,Arial,sans-serif"
+                            shape=plaintext
+                        ]
+                        edge [
+                            arrowsize=0.5
+                            fontname="Helvetica,Arial,sans-serif"
+                            labeldistance=3
+                            labelfontcolor="#00000080"
+                            penwidth=2
+                            style=dotted
+                        ]+ graph"""
             graph.render(directory='doctest-output', view=view)
 
 
