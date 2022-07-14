@@ -1,4 +1,4 @@
-%builtins output pedersen range_check ecdsa bitwise
+%builtins pedersen range_check ecdsa bitwise
 
 # there is from foo import *
 
