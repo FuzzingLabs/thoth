@@ -150,6 +150,15 @@ def extract_struct(json_type, json_data):
                 struct_identifiers[key] = dict(collections.OrderedDict(sorted(tmp.items())))
     return struct_identifiers
 
+def extract_builtins(json_type, json_data):
+    builtins = []
+    if (json_type == "cairo"):
+        builtins = [builtin for builtin in json_data["builtins"]]
+    elif (json_type == "starknet"):
+        builtins = [int(bytecode, 16) for bytecode in json_data["program"]["builtins"]] 
+    else:
+       builtins = []
+    return builtins
 
 def parseToJson(json_data, json_type):
     """
@@ -157,13 +166,10 @@ def parseToJson(json_data, json_type):
     Also get informations about return values, arguments and decorators
     Build a generic Json.
     """
-
-
     # get the bytecode data
     bytecode_data = extract_bytecode(json_type, json_data)
     # extract function info like offset and name
     func_offset, func_identifiers = extract_functions(json_type, json_data)
-    # extract struct info
 
     size = len(bytecode_data)
     offset = 0
