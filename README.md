@@ -36,3 +36,7 @@ python3 __main__.py cairo -file tests/json_files/if_negative.json
 ```sh
 python3 tests/regression_test.py
 ```
+
+## License
+
+Thoth is licensed and distributed under the AGPLv3 license. [Contact us](mailto:contact@fuzzinglabs.com) if you're looking for an exception to the terms.
