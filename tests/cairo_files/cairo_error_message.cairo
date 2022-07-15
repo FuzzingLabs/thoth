@@ -7,7 +7,7 @@ func main{range_check_ptr}():
     [ap] = -1; ap++
 
     with_attr error_message(
-            "    ERROR: The gievn [ap-1] must be less than 60!"):
+            "    ERROR: The given [ap-1] must be less than 60!"):
         assert_le([ap-1], -2)
     end
 
@@ -15,7 +15,7 @@ func main{range_check_ptr}():
     [ap] = -1; ap++
 
     with_attr error_message(
-            "    ERROR: The gievn [ap-1] must be positive!"):
+            "    ERROR: The given [ap-1] must be positive!"):
         assert_nn([ap-1])
     end
     

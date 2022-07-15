@@ -167,7 +167,10 @@ class Disassembler:
         """
 
         # CFG for all functions
-        graph = Digraph(name='CFG (all functions)', node_attr=NODE_ATTR, graph_attr=GRAPH_ATTR, edge_attr=EDGE_ATTR)
+        graph = Digraph(name='CFG (all functions)',
+                        node_attr=CFG_NODE_ATTR,
+                        graph_attr=CFG_GRAPH_ATTR,
+                        edge_attr=CFG_EDGE_ATTR)
 
         if (func_name is None and func_offset is None):
             for function in self.functions:

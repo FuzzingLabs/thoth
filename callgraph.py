@@ -31,12 +31,14 @@ class CallFlowGraph:
 
                 # This function is an entrypoint
                 if function.entry_point:
-                    shape = 'doubleoctagon'
+                    shape=CALLGRAPH_ENTRYPOINT['shape']
+                    style=CALLGRAPH_ENTRYPOINT['style']
+                    color=CALLGRAPH_ENTRYPOINT['color']
 
                 # this func is an import
                 if function.is_import:
-                    style='filled'
-                    color='lightcoral'
+                    style=CALLGRAPH_IMPORT['style']
+                    color=CALLGRAPH_IMPORT['color']
 
                 self.dot.node(function.offset_start,
                                      label=function.name,
@@ -49,7 +51,11 @@ class CallFlowGraph:
         """
         Create all the function Node for the CallFlowGraph and call _generate_call_flow_graph_edges to build the edges
         """
-        self.dot = Digraph('Call flow graph', comment='Call flow graph', node_attr=NODE_ATTR, graph_attr=GRAPH_ATTR, edge_attr=EDGE_ATTR)
+        self.dot = Digraph('Call flow graph',
+                           comment='Call flow graph',
+                           node_attr=CALLGRAPH_NODE_ATTR,
+                           graph_attr=CALLGRAPH_GRAPH_ATTR,
+                           edge_attr=CALLGRAPH_EDGE_ATTR)
 
         # First, we create the nodes
         self._call_flow_graph_generate_nodes(functions)
