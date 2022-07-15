@@ -1,2 +1,4 @@
 cairo-lang
 graphviz
+networkx
+matplotlib
