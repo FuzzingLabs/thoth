@@ -192,9 +192,20 @@ class Disassembler:
                 print("Error : Function does not exist.")
 
     def analytics(self):
-        # TODO
-        # number func
-        # most called function
         analytics = {}
-        raise NotImplementedError
+        analytics["functions"] = str(len(self.functions))
+        analytics["builtins"] = str(len(self.builtins))
+        analytics["decorators"] = []
+        call = 0
+        entry_point = ""
+        for function in self.functions:
+            if (function.entry_point):
+                entry_point = function.name
+            for instruction in function.instructions:
+                if (instruction.opcode == "CALL"):
+                    call += 1
+            analytics["decorators"] += function.decorators
+        analytics["call_nbr"] = str(call)
+        analytics["entry_point"] = entry_point
+        #print(json.dumps(analytics, indent=3))
         return analytics
