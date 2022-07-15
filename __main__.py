@@ -37,6 +37,7 @@ def parse_args():
     m.add_argument('-vvv', '-verbose', '--verbose', action='store_true', help='Print JSON with details of all instructions')
     m.add_argument('-c', '-call', '--call', action='store_true', help='Print call flow graph')
     m.add_argument('-g', '-cfg', '--cfg', action='store_true', help='Print control flow graph')
+    m.add_argument('-a', '-analytics', '--analytics', action='store_true', help='Dump a Json file containing debug information')
 
     return parser.parse_args()
 
@@ -62,6 +63,9 @@ def main():
     # print CFG
     if args.cfg:
         disassembler.print_cfg()
+
+    if args.analytics:
+        disassembler.analytics()
 
     return 0
 
