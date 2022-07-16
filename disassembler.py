@@ -1,12 +1,13 @@
 #!/usr/bin/env python3
 
+import sys
 import json
-from function import Function
-from abi_parser import *
+from graphviz import Digraph
+
+from abi_parser import detect_type_input_json, parse_to_json, extract_struct, extract_builtins
 from callgraph import CallFlowGraph
 from utils import field_element_repr, PRIME, CFG_NODE_ATTR, CFG_GRAPH_ATTR, CFG_EDGE_ATTR
-from graphviz import Digraph
-from graphviz import Source
+from function import Function
 
 class Disassembler:
     """
@@ -34,15 +35,15 @@ class Disassembler:
         json_data = ""
         with self.file[0] as f:
             json_data = json.load(f)
-        
+
         # Check the file is OK
         if (json_data is None or json_data == ""):
             print("Error: The provided JSON is empty")
-            exit(1)
+            sys.exit(1)
 
         # Start parsing the json to extract interesting info
         json_type = detect_type_input_json(json_data)
-        self.json = parseToJson(json_data, json_type)
+        self.json = parse_to_json(json_data, json_type)
         self.structs = extract_struct(json_type, json_data)
         self.builtins = extract_builtins(json_type, json_data)
         # self.dump_json()
@@ -61,11 +62,11 @@ class Disassembler:
             self.functions.append(
                 Function(offset_start,
                          offset_end,
-                         name, 
-                         instructions, 
+                         name,
+                         instructions,
                          args,
                          implicitargs,
-                         ret, 
+                         ret,
                          decorators,
                          entry_point=self.json[function]["data"]["entry_point"],
                          is_import=not name.startswith('__'))
@@ -77,16 +78,16 @@ class Disassembler:
                 # Only for direct call
                 if inst.is_call_direct():
                     offset = int(inst.id) - int(field_element_repr(int(inst.imm), PRIME))
-                    if (offset < 0):
+                    if offset < 0:
                         offset = int(inst.id) + int(inst.imm)
                     xref_func = self.get_function_by_offset(str(offset))
-                    inst.call_xref_func_name = xref_func.name if xref_func != None else None
+                    inst.call_xref_func_name = xref_func.name if xref_func is not None else None
 
     def print_disassembly(self, func_name=None, func_offset=None):
         """
         Iterate over every function and print the disassembly
         """
-        if (self.builtins != []):
+        if self.builtins != []:
             print("_" * 75)
         print(self.print_builtins())
         print("_" * 75)
@@ -99,17 +100,17 @@ class Disassembler:
 
         # func_name or func_offset provided
         else:
-            if (func_name is not None):
+            if func_name is not None:
                 function = self.get_function_by_name(func_name)
-            elif (func_offset is not None):
+            elif func_offset is not None:
                 function = self.get_function_by_offset(func_offset)
 
             # Print the function
-            if (function != None):
+            if function is not None:
                 function.print()
             else:
                 print("Error: Function does not exist.")
-                exit(1)
+                sys.exit(1)
 
     def print_structs(self):
         """
@@ -128,8 +129,8 @@ class Disassembler:
         Print the builtins
         """
         builtins_str = ""
-        if (self.builtins != []):
-            builtins_str += "\n%builtins "
+        if self.builtins != []:
+            builtins_str += "\n\t %builtins "
             return builtins_str + ' '.join(self.builtins)
         return builtins_str
 
@@ -144,7 +145,7 @@ class Disassembler:
         Return a Function if the func_name match
         """
         for function in self.functions:
-            if (func_name == function.name):
+            if func_name == function.name:
                 return function
         return None
 
@@ -153,17 +154,17 @@ class Disassembler:
         Return a Function if the offset match
         """
         for function in self.functions:
-            if (function.offset_start == offset):
+            if function.offset_start == offset:
                 return function
         return None
 
-    
+
     def print_call_flow_graph(self, view=True):
         """
         Print the CallFlowGraph
         """
         # The CallFlowGraph is not generated yet
-        if (self.call_graph == None):
+        if self.call_graph is None:
             self.call_graph = CallFlowGraph(self.functions)
 
         # Show/Render the CallFlowGraph
@@ -190,12 +191,12 @@ class Disassembler:
 
         # Only `func_name` or `func_offset` will be in the graph
         else:
-            if (func_name is not None):
+            if func_name is not None:
                 function = self.get_function_by_name(func_name)
-            elif (func_offset is not None):
+            elif func_offset is not None:
                 function = self.get_function_by_offset(func_offset)
 
-            if (function != None):
+            if function is not None:
                 function.print_cfg()
             else:
                 print("Error : Function does not exist.")
@@ -212,10 +213,10 @@ class Disassembler:
         call = 0
         entry_point = ""
         for function in self.functions:
-            if (function.entry_point):
+            if function.entry_point:
                 entry_point = function.name
             for instruction in function.instructions:
-                if (instruction.opcode == "CALL"):
+                if instruction.opcode == "CALL":
                     call += 1
             analytics["decorators"] += function.decorators
         analytics["call_nbr"] = str(call)

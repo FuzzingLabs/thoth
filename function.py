@@ -1,5 +1,4 @@
 from instruction import Instruction
-from utils import format_print
 from cfg import CFG
 
 class Function:
@@ -28,9 +27,9 @@ class Function:
         """
         for offset in self.instructions_dict:
             for bytecode in self.instructions_dict[offset]:
-                    self.instructions.append(Instruction(offset, self.instructions_dict[offset][bytecode]))
+                self.instructions.append(Instruction(offset, self.instructions_dict[offset][bytecode]))
         return self.instructions
-    
+
     def get_prototype(self):
         """
         Build the string of the prototype
@@ -40,20 +39,20 @@ class Function:
             prototype += f"@{decorator} "
         prototype += f"func {self.name}"
         datas = [("implicitargs", self.implicitargs), ("args", self.args), ("ret", self.ret)]
-        
+
         for data in datas:
             data_name = data[0]
             data_content = data[1]
-            prototype += " -> (" if data_name == "ret" and data_content != None \
+            prototype += " -> (" if data_name == "ret" and data_content is not None \
                         else "(" if data_name == "args" \
                         else "{" if data_name == "implicitargs" \
                         else ""
-            if (data_content != None):
+            if data_content is not None:
                 for idarg in data_content:
-                    if (data_content[idarg] != {}):
+                    if data_content[idarg] != {}:
                         for args in data_content[idarg]:
                             prototype += args + " : " + data_content[idarg][args] + " "
-                            if (int(idarg) != len(data_content) - 1):
+                            if int(idarg) != len(data_content) - 1:
                                 prototype += ", "
             prototype += ")" if data_name == "args" else "}" if data_name == "implicitargs" else ""
         return prototype
@@ -79,7 +78,7 @@ class Function:
         Print the CFG
         """
         # The CFG is not generated yet
-        if (self.cfg == None):
+        if self.cfg is None:
             self.generate_cfg()
 
         # Show/Render the CFG

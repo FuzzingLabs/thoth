@@ -1,4 +1,3 @@
-from cProfile import label
 from graphviz import Digraph
 from utils import field_element_repr, PRIME, CALLGRAPH_ENTRYPOINT, CALLGRAPH_IMPORT, CALLGRAPH_INDIRECT_CALL, CALLGRAPH_NODE_ATTR, CALLGRAPH_GRAPH_ATTR, CALLGRAPH_EDGE_ATTR
 
@@ -47,7 +46,7 @@ class CallFlowGraph:
                                  shape=shape,
                                  style=style,
                                  color=color)
-        
+
 
     def _generate_call_flow_graph(self, functions):
         """
@@ -69,9 +68,9 @@ class CallFlowGraph:
             for inst in function.instructions:
                 if inst.is_call_direct():
                     # direct CALL to a fonction
-                    if inst.call_xref_func_name != None:
+                    if inst.call_xref_func_name is not None:
                         offset = int(inst.id) - int(field_element_repr(int(inst.imm), PRIME))
-                        if (offset < 0):
+                        if offset < 0:
                             offset = int(inst.id) + int(inst.imm)
                         edges.append((function.offset_start, offset))
                     else:
@@ -83,9 +82,9 @@ class CallFlowGraph:
                     pass
 
         # Create the edges inside the dot
-        while (len(edges) > 0):
+        while len(edges) > 0:
             # Multiple edges are the same
-            if (edges.count(edges[0]) > 1):
+            if edges.count(edges[0]) > 1:
                 self.dot.edge(str(edges[0][0]), str(edges[0][1]), label=str(edges.count(edges[0])))
             # Unique edge
             else:

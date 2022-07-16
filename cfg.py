@@ -52,7 +52,7 @@ class CFG:
         """
         Generate the internal list of BasicBlock
         """
-        list_bb = list()
+        list_bb = []
         last_func_instr = instructions[-1]
         new_bb = True
         current_bb = None
@@ -64,15 +64,14 @@ class CFG:
             if new_bb:
                 current_bb = BasicBlock(instr)
                 new_bb = False
-            
+
             current_bb.instructions.append(instr)
 
             # Direct CALL
             if instr.is_call_direct():
                 # CALL direct to function
                 pass
-                # relative CALL to label
-                # TODO
+                # TODO - relative CALL to label
                 pass
 
             # Indirect CALL
@@ -86,34 +85,34 @@ class CFG:
                 current_bb.end_offset = instr.id
                 list_bb.append(current_bb)
                 new_bb = True
-                
+
             # Jump to instr offset + instr.imm
-            elif ("JUMP_REL" in instr.pcUpdate):
+            elif "JUMP_REL" in instr.pcUpdate:
                 if ("CALL" not in instr.opcode):
                     current_bb.end_instr = instr
                     current_bb.end_offset = instr.id
                     list_bb.append(current_bb)
                     current_bb.edges_offset.append(str(int(instr.id) + int(instr.imm)))
                     new_bb = True
-                    
+
             # Jump to instr offset + instr.imm
-            elif ("JUMP" in instr.pcUpdate):
+            elif "JUMP" in instr.pcUpdate:
                 current_bb.end_instr = instr
                 current_bb.end_offset = instr.id
                 current_bb.edges_offset.append(str(int(instr.id) + int(instr.imm)))
                 list_bb.append(current_bb)
                 new_bb = True
-                
+
             # Jump to instr offset + instr.imm
             # or instr offset + 2
-            elif ("JNZ" in instr.pcUpdate):
+            elif "JNZ" in instr.pcUpdate:
                 current_bb.end_instr = instr
                 current_bb.end_offset = instr.id
                 current_bb.edges_offset.append(str(int(instr.id) + int(instr.imm)))
                 current_bb.edges_offset.append(str(int(instr.id) + int(2)))
                 list_bb.append(current_bb)
                 new_bb = True
-                
+
             else:
                 # Should never happen
                 # all function finish by RET
@@ -124,8 +123,6 @@ class CFG:
         # TODO - how to handle if we have `jmp rel` to the middle of other basicblock
         # ex: tests/json_files/cairo_jmp.json
 
-        current_bb.end_instr = instr
-        current_bb.end_offset = instr.id
         self.set_basicblocks(list_bb)
 
     def print_bb(self):
@@ -134,9 +131,9 @@ class CFG:
         """
         # TODO - issue #45
         print()
-        for bb in self.basicblocks:
-            print(f'-- BB {bb.name, len(bb.instructions)} {bb.edges_offset} --')
-            for instr in bb.instructions:
+        for block in self.basicblocks:
+            print(f'-- BB {block.name, len(block.instructions)} {block.edges_offset} --')
+            for instr in block.instructions:
                 print(instr.print())
             print()
 
@@ -148,33 +145,33 @@ class CFG:
         cluster_name = 'cluster_' + self.name
         self.dot = Digraph(cluster_name, comment=self.name)
         self.dot.attr(label=self.name)
-        
+
         # Find all the basicblocks offsets
-        bb_offsets = [bb.start_offset for bb in self.basicblocks]
+        bb_offsets = [b.start_offset for b in self.basicblocks]
 
         # Build the edges btw basicblocks
-        for bb in self.basicblocks:
+        for block in self.basicblocks:
 
             # Create all the basicblock nodes
             shape = 'square'
             label_instruction = ""
-            for instr in bb.instructions:
+            for instr in block.instructions:
                 label_instruction += re.sub('\s+', ' ', instr.print().replace("\n", "\\l"))
-            self.dot.node(bb.name,
+            self.dot.node(block.name,
                           label=label_instruction + "\\l",
                           shape=shape)
 
             # Iterate over edges_offset
-            for offset in bb.edges_offset:
+            for offset in block.edges_offset:
                 color='green'
-                if offset is bb.edges_offset[-1]:
+                if offset is block.edges_offset[-1]:
                     color='red'
 
-                # We check that we are not creating an edge 
-                # to an offset that is not a bb start offset
+                # We check that we are not creating an edge
+                # to an offset that is not a block start offset
                 # TODO - issue #43
                 if offset in bb_offsets:
-                    self.dot.edge(format_bb_name(bb.start_offset), format_bb_name(offset), color=color)
+                    self.dot.edge(format_bb_name(block.start_offset), format_bb_name(offset), color=color)
 
     def print(self, view=True):
         """

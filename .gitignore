@@ -1,3 +1,7 @@
+# Project custom
+output-callgraph/
+output-cfg/
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
