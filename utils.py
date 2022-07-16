@@ -1,10 +1,12 @@
-OPERATORS = {"ADD" : "+", "MUL" : "*"}
+# Default prime value
 PRIME = (2**251) + (17 * (2**192)) + 1
 
+# Graphical stuff for the CFG's dot
 CFG_NODE_ATTR = {'style' : 'filled, solid', 'shape' : 'rect, plaintext', 'color' : "gray95", 'fontname' : "Helvetica,Arial,sans-serif"}
 CFG_GRAPH_ATTR = {'overlap':'scale', 'fontname' : "Helvetica,Arial,sans-serif", 'fontsize' : '20', 'layout' : 'dot', 'newrank' : 'true'}
 CFG_EDGE_ATTR = {'arrowsize':'0.5', 'fontname':"Helvetica,Arial,sans-serif", 'labeldistance':'3', 'labelfontcolor':"#00000080", 'penwidth':'2'}
 
+# Graphical stuff for the CallFlowGraph's dot
 CALLGRAPH_ENTRYPOINT = {'shape' : 'doubleoctagon', 'style' : 'filled', 'color' : 'darkolivegreen1'}
 CALLGRAPH_IMPORT = {'style' : 'filled', 'color' : 'lightcoral'}
 CALLGRAPH_INDIRECT_CALL = {'style' : 'dashed'}
@@ -14,9 +16,13 @@ CALLGRAPH_GRAPH_ATTR = {'fontname' : "Helvetica,Arial,sans-serif", 'fontsize' : 
 CALLGRAPH_EDGE_ATTR = {'arrowsize':'0.5', 'fontname':"Helvetica,Arial,sans-serif", 'labeldistance':'3', 'labelfontcolor':"#00000080", 'penwidth':'2'}
 
 def format_print(data, end=""):
+    """
+    Format the print
+    """
     spaces = " " * 15
     return data + spaces[len(data):] + end
 
+# Copy from cairo-lang
 # https://github.com/starkware-libs/cairo-lang/blob/167b28bcd940fd25ea3816204fa882a0b0a49603/src/starkware/cairo/lang/tracer/tracer_data.py#L261-L273
 def field_element_repr(val: int, prime: int) -> str:
     """

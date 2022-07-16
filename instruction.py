@@ -3,7 +3,7 @@ import re
 from starkware.cairo.lang.compiler.encode import *
 from starkware.cairo.lang.compiler.instruction import Instruction as CairoInstruction
 
-from utils import format_print, OPERATORS, PRIME, field_element_repr
+from utils import format_print, PRIME, field_element_repr
 
 def decode_instruction(encoding: int, imm: Optional[int] = None) -> CairoInstruction:
     """
@@ -120,15 +120,29 @@ class Instruction:
         self.call_xref_func_name = None
 
     def is_call_indirect(self):
+        """
+        This instruction is an Indirect CALL
+        """
         return ("CALL" == self.opcode) and (self.imm == 'None')
 
     def is_call_direct(self):
+        """
+        This instruction is a Direct CALL
+        """
         return ("CALL" == self.opcode) and (self.imm != 'None')
 
     def is_return(self):
+        """
+        This instruction is a RET
+        """
         return ("RET" == self.opcode)
 
     def _handle_assert_eq(self):
+        """
+        Handle ASSERT_EQ opcode
+        """
+        OPERATORS = {"ADD" : "+", "MUL" : "*"}
+
         disass_str = ""
         disass_str += format_print(f"{self.opcode}")
         if ("OP1" in self.res):
@@ -147,6 +161,9 @@ class Instruction:
         return disass_str
 
     def _handle_nop(self):
+        """
+        Handle NOP opcode
+        """
         disass_str = ""
         if ("REGULAR" not in self.pcUpdate):
             disass_str += format_print(f"{self.pcUpdate}")
@@ -154,14 +171,15 @@ class Instruction:
         else:
             disass_str += format_print(f"{self.opcode}")
         return disass_str
-        #newOffset = int(self.id) + int(self.imm)
-        #format_print(f"{newOffset}")
 
     def _handle_call(self):
+        """
+        Handle Direct CALL, Indirect CALL and Relative CALL
+        """
         disass_str = ""
         disass_str += format_print(f"{self.opcode}")
 
-        # direct CALL or relative CALL
+        # Direct CALL or Relative CALL
         if self.is_call_direct():
             offset = int(self.id) - int(field_element_repr(int(self.imm), PRIME))
             if (offset < 0):
@@ -175,7 +193,7 @@ class Instruction:
                 offset = int(self.id) + int(field_element_repr(int(self.imm), PRIME))
                 disass_str += format_print(f"rel ({offset})")
 
-        # indirect CALL
+        # Indirect CALL
         # e.g. call rel [fp + 4]
         elif self.is_call_indirect():
             disass_str += format_print(f"rel [{self.op1Addr}{self.off2}]")
@@ -185,9 +203,15 @@ class Instruction:
         return disass_str
 
     def _handle_ret(self):
+        """
+        Handle the RET opcode
+        """
         return format_print(f"{self.opcode}")
 
     def print(self):
+        """
+        Print the instruction
+        """
         disass_str = ""
         disass_str += format_print(f"\noffset {self.id}:")
         if ("ASSERT_EQ" in self.opcode):
@@ -203,8 +227,8 @@ class Instruction:
             disass_str += self._handle_ret()
 
         else:
-            disass_str += format_print("--TODO--")
-            raise NotImplementedError
+            # Should never happen - Unknown opcode
+            raise AssertionError
 
         if ("REGULAR" not in self.apUpdate):
             op = list(filter(None, re.split(r'(\d+)', self.apUpdate)))

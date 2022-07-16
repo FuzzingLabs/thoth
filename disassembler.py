@@ -35,14 +35,19 @@ class Disassembler:
         with self.file[0] as f:
             json_data = json.load(f)
         
+        # Check the file is OK
         if (json_data is None or json_data == ""):
+            print("Error: The provided JSON is empty")
             exit(1)
+
+        # Start parsing the json to extract interesting info
         json_type = detect_type_input_json(json_data)
         self.json = parseToJson(json_data, json_type)
         self.structs = extract_struct(json_type, json_data)
         self.builtins = extract_builtins(json_type, json_data)
-        #self.dump_json()
+        # self.dump_json()
 
+        # Create the list of Functions
         for function in self.json:
             offset_start = list(self.json[function]["instruction"].keys())[0]
             offset_end = list(self.json[function]["instruction"].keys())[-1]
@@ -66,10 +71,10 @@ class Disassembler:
                          is_import=not name.startswith('__'))
             )
 
-        # we can now analyze all the CALL to find the corresponding function
+        # Analyze all the CALL to find the corresponding function
         for func in self.functions:
             for inst in func.instructions:
-                # only for direct call
+                # Only for direct call
                 if inst.is_call_direct():
                     offset = int(inst.id) - int(field_element_repr(int(inst.imm), PRIME))
                     if (offset < 0):
@@ -82,11 +87,11 @@ class Disassembler:
         Iterate over every function and print the disassembly
         """
         if (self.builtins != []):
-            print("_" * 50)
+            print("_" * 75)
         print(self.print_builtins())
-        print("_" * 50)
+        print("_" * 75)
         print(self.print_structs())
-        print("_" * 50)
+        print("_" * 75)
         # Disassembly for all functions
         if (func_name is None and func_offset is None):
             for function in self.functions:
@@ -99,12 +104,17 @@ class Disassembler:
             elif (func_offset is not None):
                 function = self.get_function_by_offset(func_offset)
 
+            # Print the function
             if (function != None):
                 function.print()
             else:
-                print("Error : Function does not exist.")
+                print("Error: Function does not exist.")
+                exit(1)
 
     def print_structs(self):
+        """
+        Print the structures
+        """
         struct_str = ""
         for struct in self.structs:
             struct_str += "\n\t struct: " + struct + "\n"
@@ -114,6 +124,9 @@ class Disassembler:
         return struct_str
 
     def print_builtins(self):
+        """
+        Print the builtins
+        """
         builtins_str = ""
         if (self.builtins != []):
             builtins_str += "\n%builtins "
@@ -140,8 +153,6 @@ class Disassembler:
         Return a Function if the offset match
         """
         for function in self.functions:
-            #print(function.offset_start)
-            #print(offset)
             if (function.offset_start == offset):
                 return function
         return None
@@ -151,12 +162,11 @@ class Disassembler:
         """
         Print the CallFlowGraph
         """
-
-        # call flow graph not generated yet
+        # The CallFlowGraph is not generated yet
         if (self.call_graph == None):
             self.call_graph = CallFlowGraph(self.functions)
 
-        # show the call flow graph
+        # Show/Render the CallFlowGraph
         self.call_graph.print(view)
         return self.call_graph.dot
 
@@ -164,13 +174,13 @@ class Disassembler:
         """
         Print the CFG (Control Flow Graph)
         """
-
-        # CFG for all functions
+        # Create a dot graph
         graph = Digraph(name='CFG (all functions)',
                         node_attr=CFG_NODE_ATTR,
                         graph_attr=CFG_GRAPH_ATTR,
                         edge_attr=CFG_EDGE_ATTR)
 
+        # The graph will contains all functions
         if (func_name is None and func_offset is None):
             for function in self.functions:
                 function.generate_cfg()
@@ -178,7 +188,7 @@ class Disassembler:
             graph.render(directory='output-cfg', view=view)
 
 
-        # func_name or func_offset provided
+        # Only `func_name` or `func_offset` will be in the graph
         else:
             if (func_name is not None):
                 function = self.get_function_by_name(func_name)
@@ -191,6 +201,10 @@ class Disassembler:
                 print("Error : Function does not exist.")
 
     def analytics(self):
+        """
+        Print some interesting metrics
+        (Useful for tests as well)
+        """
         analytics = {}
         analytics["functions"] = str(len(self.functions))
         analytics["builtins"] = str(len(self.builtins))

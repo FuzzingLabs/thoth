@@ -69,16 +69,19 @@ class Function:
         print()
 
     def generate_cfg(self):
+        """
+        Generate the CFG of the function
+        """
         self.cfg = CFG(self.name, self.instructions)
 
     def print_cfg(self, view=True):
         """
         Print the CFG
         """
-        # call flow graph not generated yet
+        # The CFG is not generated yet
         if (self.cfg == None):
             self.generate_cfg()
 
-        # show the call flow graph
+        # Show/Render the CFG
         self.cfg.print(view)
         return self.cfg.dot

@@ -6,7 +6,7 @@ class CallFlowGraph:
     """
     CallFlowGraph class
 
-    Create a call flow graph for the all contract
+    Create a call flow graph for the contract
     """
     def __init__(self, functions):
         self.dot = None
@@ -14,47 +14,46 @@ class CallFlowGraph:
 
 
     def _call_flow_graph_generate_nodes(self, functions):
-            """
-            Create all the function nodes
-            """
+        """
+        Create all the function nodes
+        """
+        # TODO - issue #44
 
-            # TODO - add decorator info (color shape)
+        for function in functions:
 
-            for function in functions:
+            # Default values
+            shape = 'oval'
+            color = ''
+            style = 'solid'
 
-                # default values
-                shape = 'oval'
-                color = ''
-                style = 'solid'
+            # This function is an entrypoint
+            if function.entry_point:
+                shape=CALLGRAPH_ENTRYPOINT['shape']
+                style=CALLGRAPH_ENTRYPOINT['style']
+                color=CALLGRAPH_ENTRYPOINT['color']
 
-                # This function is an entrypoint
-                if function.entry_point:
-                    shape=CALLGRAPH_ENTRYPOINT['shape']
-                    style=CALLGRAPH_ENTRYPOINT['style']
-                    color=CALLGRAPH_ENTRYPOINT['color']
+            # This function is an import
+            if function.is_import:
+                style=CALLGRAPH_IMPORT['style']
+                color=CALLGRAPH_IMPORT['color']
 
-                # this func is an import
-                if function.is_import:
-                    style=CALLGRAPH_IMPORT['style']
-                    color=CALLGRAPH_IMPORT['color']
+            # Search if this function is doing indirect_calls
+            if any(inst.is_call_indirect() for inst in function.instructions):
+                style=CALLGRAPH_INDIRECT_CALL['style']
 
-                # Search if this function is doing indirect_calls
-                is_doing_indirect_call = any(inst.is_call_indirect() for inst in function.instructions)
-
-                if is_doing_indirect_call:
-                    style=CALLGRAPH_INDIRECT_CALL['style']
-
-                self.dot.node(function.offset_start,
-                                     label=function.name,
-                                     shape=shape,
-                                     style=style,
-                                     color=color)
+            # Create the function node
+            self.dot.node(function.offset_start,
+                                 label=function.name,
+                                 shape=shape,
+                                 style=style,
+                                 color=color)
         
 
     def _generate_call_flow_graph(self, functions):
         """
         Create all the function Node for the CallFlowGraph and call _generate_call_flow_graph_edges to build the edges
         """
+        # Create the directed graph
         self.dot = Digraph('Call flow graph',
                            comment='Call flow graph',
                            node_attr=CALLGRAPH_NODE_ATTR,
@@ -65,8 +64,7 @@ class CallFlowGraph:
         self._call_flow_graph_generate_nodes(functions)
 
         edges = []
-        
-        # build the edges btw function (nodes)
+        # Build the edges btw functions (nodes)
         for function in functions:
             for inst in function.instructions:
                 if inst.is_call_direct():
@@ -84,14 +82,20 @@ class CallFlowGraph:
                     # we can't create any edges without evaluating the stack
                     pass
 
+        # Create the edges inside the dot
         while (len(edges) > 0):
+            # Multiple edges are the same
             if (edges.count(edges[0]) > 1):
                 self.dot.edge(str(edges[0][0]), str(edges[0][1]), label=str(edges.count(edges[0])))
+            # Unique edge
             else:
                 self.dot.edge(str(edges[0][0]), str(edges[0][1]))
             edges = list(filter(lambda x: x != edges[0], edges))
 
 
     def print(self, view=True):
+        """
+        Render the CallFlowGraph
+        """
         self.dot.render(directory='output-callgraph', view=view)
         return self.dot

@@ -103,16 +103,15 @@ def extract_bytecode(json_type, json_data):
     elif (json_type == "get_code"):
         bytecode = [int(bytecode, 16) for bytecode in json_data["bytecode"]]
     else:
-        # should never be triggered
-        raise NotImplementedError
+        # Should never be triggered
+        raise AssertionError
 
     if len(bytecode) == 0:
+        # TODO - issue #39
         print("Sorry, no bytecode found (maybe it's a contract interface?)")
         print("Otherwise please open an issue")
-        exit()
+        exit(1)
 
-    #if bytecode[len(bytecode) - 1] != 2345108766317314046:
-    #    bytecode.append(2345108766317314046)
     return bytecode
 
 def extract_functions(json_type, json_data):
@@ -136,7 +135,7 @@ def extract_functions(json_type, json_data):
     else:
         print("Sorry, json retrieve using `get_code` is not supported yet")
         print("Please consider using `get_full_contract` instead")
-        exit()
+        exit(1)
         #debugInfo = json_data["abi"]
         #id = 0
         #for dictionnary in debugInfo:
@@ -168,7 +167,6 @@ def extract_struct(json_type, json_data):
     return struct_identifiers
 
 def extract_builtins(json_type, json_data):
-    builtins = []
     if (json_type == "cairo"):
         builtins = [builtin for builtin in json_data["builtins"]]
     elif (json_type == "starknet"):
@@ -183,6 +181,7 @@ def parseToJson(json_data, json_type):
     Also get informations about return values, arguments and decorators
     Build a generic Json.
     """
+
     # get the bytecode data
     bytecode_data = extract_bytecode(json_type, json_data)
     # extract function info like offset and name

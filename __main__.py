@@ -64,6 +64,7 @@ def main():
     if args.cfg:
         disassembler.print_cfg()
 
+    # print analytics
     if args.analytics:
         disassembler.analytics()
 

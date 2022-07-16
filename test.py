@@ -6,11 +6,17 @@ from disassembler import Disassembler
 class TestDisassembler(unittest.TestCase):
     
     def test_all_files_tested(self):
+        """
+        Check that all the json files have been analyzed manually and added here
+        """
         all_test = glob.glob("./tests/json_files/*")
         number_of_tests = len([method for method in dir(TestDisassembler) if method.startswith('test_')])
         self.assertEqual(len(all_test), number_of_tests - 1)
     
     def test_cairo_return(self):
+        """
+        Check if the disassembler is working well
+        """
         file = open("./tests/json_files/cairo_return.json", "r")
         disassembler = Disassembler([file])
         analytics = disassembler.analytics()
@@ -19,18 +25,6 @@ class TestDisassembler(unittest.TestCase):
         self.assertEqual(analytics["builtins"], "0")
         self.assertEqual(analytics["decorators"], [])
         self.assertEqual(analytics["call_nbr"], "2")
-        
-    def test_FILENAME(self):
-        """
-            Open the file
-            create the disassembler object
-            get the analytics
-            compare
-        """
-        file = open("./tests/json_files/cairo_return.json", "r")
-        disassembler = Disassembler([file])
-        analytics = disassembler.analytics()
-
 
 if __name__ == '__main__':
     unittest.main()
