@@ -7,6 +7,7 @@ CFG_EDGE_ATTR = {'arrowsize':'0.5', 'fontname':"Helvetica,Arial,sans-serif", 'la
 
 CALLGRAPH_ENTRYPOINT = {'shape' : 'doubleoctagon', 'style' : 'filled', 'color' : 'darkolivegreen1'}
 CALLGRAPH_IMPORT = {'style' : 'filled', 'color' : 'lightcoral'}
+CALLGRAPH_INDIRECT_CALL = {'style' : 'dashed'}
 
 CALLGRAPH_NODE_ATTR = {'style' : 'filled','shape' : 'rect', 'pencolor' : "#00000044", 'fontname' : "Helvetica,Arial,sans-serif", 'shape' : 'plaintext'}
 CALLGRAPH_GRAPH_ATTR = {'fontname' : "Helvetica,Arial,sans-serif", 'fontsize' : '20', 'layout' : 'dot', 'rankdir' : 'LR', 'newrank' : 'true'}
@@ -15,3 +16,18 @@ CALLGRAPH_EDGE_ATTR = {'arrowsize':'0.5', 'fontname':"Helvetica,Arial,sans-serif
 def format_print(data, end=""):
     spaces = " " * 15
     return data + spaces[len(data):] + end
+
+# https://github.com/starkware-libs/cairo-lang/blob/167b28bcd940fd25ea3816204fa882a0b0a49603/src/starkware/cairo/lang/tracer/tracer_data.py#L261-L273
+def field_element_repr(val: int, prime: int) -> str:
+    """
+    Converts a field element (given as int) to a decimal/hex string according to its size.
+    """
+    # Shift val to the range (-prime // 2, prime // 2).
+    shifted_val = (val + prime // 2) % prime - (prime // 2)
+    # If shifted_val is small, use decimal representation.
+    if abs(shifted_val) < 2**40:
+        return str(shifted_val)
+    # Otherwise, use hex representation (allowing a sign if the number is close to prime).
+    if abs(shifted_val) < 2**100:
+        return hex(shifted_val)
+    return hex(val)

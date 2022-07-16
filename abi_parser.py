@@ -3,7 +3,7 @@
 import json
 import re
 import collections
-from instruction import decodeInstruction
+from instruction import decode_instruction
 
 json_type = None
 
@@ -45,6 +45,8 @@ def extract_function_prototype(func_offset, identifiers_data, entry_points_by_ty
                 
         # get func args values
         for identifier_name in identifiers_name:
+            # first create the identifier_name even if content will be empty
+            identifiers[identifier_name[1:].lower()] = {}
             function_identifier = func_name + identifier_name
             if (function_identifier in identifiers_data and "members" in identifiers_data[function_identifier]):
                 data = identifiers_data[function_identifier]["members"]
@@ -79,9 +81,13 @@ def detect_type_input_json(json_data):
         # compiled with starknet-compile
         # or got using `get_full_contract`
         json_type = "starknet"
-    else:
+    elif ("bytecode" in json_data):
         # got using `get_code`
         json_type = "get_code"
+    else:
+        # should never be triggered
+        raise NotImplementedError
+
     return json_type
 
 def extract_bytecode(json_type, json_data):
@@ -94,8 +100,16 @@ def extract_bytecode(json_type, json_data):
         bytecode = [int(bytecode, 16) for bytecode in json_data["data"]]
     elif (json_type == "starknet"):
         bytecode = [int(bytecode, 16) for bytecode in json_data["program"]["data"]] 
-    else:
+    elif (json_type == "get_code"):
         bytecode = [int(bytecode, 16) for bytecode in json_data["bytecode"]]
+    else:
+        # should never be triggered
+        raise NotImplementedError
+
+    if len(bytecode) == 0:
+        print("Sorry, no bytecode found (maybe it's a contract interface?)")
+        print("Otherwise please open an issue")
+        exit()
 
     if bytecode[len(bytecode) - 1] != 2345108766317314046:
         bytecode.append(2345108766317314046)
@@ -120,12 +134,15 @@ def extract_functions(json_type, json_data):
         func_identifiers = extract_function_prototype(func_offset, identifiers_data, entry_points_by_type)
 
     else:
-        debugInfo = json_data["abi"]
-        id = 0
-        for dictionnary in debugInfo:
-            if (dictionnary["type"] == "event" or dictionnary["type"] == "function"):
-                func_offset[str(id)] = dictionnary["name"]
-                id += 1
+        print("Sorry, json retrieve using `get_code` is not supported yet")
+        print("Please consider using `get_full_contract` instead")
+        exit()
+        #debugInfo = json_data["abi"]
+        #id = 0
+        #for dictionnary in debugInfo:
+        #    if (dictionnary["type"] == "event" or dictionnary["type"] == "function"):
+        #        func_offset[str(id)] = dictionnary["name"]
+        #        id += 1
     
     return (func_offset, func_identifiers)
 
@@ -183,11 +200,11 @@ def parseToJson(json_data, json_type):
             bytecodesToJson[actualFunction]["data"] = func_identifiers[actualFunction]
             bytecodesToJson[actualFunction]["instruction"] = {}
         try:
-            decoded = decodeInstruction(bytecode_data[offset])
+            decoded = decode_instruction(bytecode_data[offset])
             incr = 1
         except AssertionError:
             #l[offset + 1] -> imm value
-            decoded = decodeInstruction(bytecode_data[offset], bytecode_data[offset + 1])
+            decoded = decode_instruction(bytecode_data[offset], bytecode_data[offset + 1])
             incr = 2
         key = str(offset)
         bytecodesToJson[actualFunction]["instruction"][key] = {}

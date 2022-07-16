@@ -4,7 +4,7 @@ import json
 from function import Function
 from abi_parser import *
 from callgraph import CallFlowGraph
-from utils import *
+from utils import field_element_repr, PRIME, CFG_NODE_ATTR, CFG_GRAPH_ATTR, CFG_EDGE_ATTR
 from graphviz import Digraph
 from graphviz import Source
 
@@ -69,14 +69,13 @@ class Disassembler:
         # we can now analyze all the CALL to find the corresponding function
         for func in self.functions:
             for inst in func.instructions:
-                if ("CALL" in inst.opcode):
-                    offset = int(inst.id) - (PRIME - int(inst.imm))
+                # only for direct call
+                if inst.is_call_direct():
+                    offset = int(inst.id) - int(field_element_repr(int(inst.imm), PRIME))
                     if (offset < 0):
                         offset = int(inst.id) + int(inst.imm)
                     xref_func = self.get_function_by_offset(str(offset))
-                    #print(xref_func)
                     inst.call_xref_func_name = xref_func.name if xref_func != None else None
-
 
     def print_disassembly(self, func_name=None, func_offset=None):
         """

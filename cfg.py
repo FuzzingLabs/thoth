@@ -62,8 +62,21 @@ class CFG:
             
             current_bb.instructions.append(instr)
 
+            # direct CALL
+            if instr.is_call_direct():
+                # CALL direct to function
+                pass
+                # CALL direct to label
+                # TODO
+                pass
+
+            # indirect CALL
+            elif instr.is_call_indirect():
+                # Not interesting for the CFG
+                pass
+
             # Return - Stop the execution
-            if ("RET" in instr.opcode):
+            elif instr.is_return():
                 current_bb.end_instr = instr
                 current_bb.end_offset = instr.id
                 list_bb.append(current_bb)
