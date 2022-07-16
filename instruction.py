@@ -1,11 +1,12 @@
 import re
 
-from utils import format_print, PRIME, field_element_repr
+from utils import format_print, field_element_repr
 
 class Instruction:
-    def __init__(self, inst_id, instruction_data):
+    def __init__(self, inst_id, instruction_data, prime):
         self.id = inst_id
         self.instruction_data = instruction_data
+        self.prime = prime
         self.offDest = instruction_data.get("off0") if instruction_data.get("off0")[0] == '-' else '+' + instruction_data.get("off0")
         self.offDest = self.offDest if int(self.offDest) != 0 else ""
         self.off1 = instruction_data.get("off1") if instruction_data.get("off1")[0] == '-' else '+' + instruction_data.get("off1")
@@ -21,7 +22,15 @@ class Instruction:
         self.apUpdate = instruction_data.get("ap_update").split("ApUpdate.")[1]
         self.fpUpdate = instruction_data.get("fp_update").split("FpUpdate.")[1]
         self.opcode = instruction_data.get("opcode").split("Opcode.")[1]
+        # Specific values
         self.call_xref_func_name = None
+        self.call_offset = self._find_call_offset()
+
+    def _find_call_offset(self):
+        if self.is_call_direct():
+            return int(self.id) + int(field_element_repr(int(self.imm), self.prime))
+        else:
+            None
 
     def dump(self):
         print(self.instruction_data)
@@ -54,7 +63,7 @@ class Instruction:
         disass_str += format_print(f"{self.opcode}")
         if "OP1" in self.res:
             if "IMM" in self.op1Addr:
-                disass_str += format_print(f"[{self.dstRegister}{self.offDest}], {field_element_repr(int(self.imm), PRIME)}")
+                disass_str += format_print(f"[{self.dstRegister}{self.offDest}], {field_element_repr(int(self.imm), self.prime)}")
             elif "OP0" in self.op1Addr:
                 disass_str += format_print(f"[{self.dstRegister}{self.offDest}], [[{self.op0Register}{self.off1}]{self.off2}]")
             else:
@@ -64,7 +73,7 @@ class Instruction:
             if "IMM" not in self.op1Addr:
                 disass_str += format_print(f"[{self.dstRegister}{self.offDest}], [{self.op0Register}{self.off1}] {op} [{self.op1Addr}{self.off2}]")
             else:
-                disass_str += format_print(f"[{self.dstRegister}{self.offDest}], [{self.op0Register}{self.off1}] {op} {field_element_repr(int(self.imm), PRIME)}")
+                disass_str += format_print(f"[{self.dstRegister}{self.offDest}], [{self.op0Register}{self.off1}] {op} {field_element_repr(int(self.imm), self.prime)}")
         return disass_str
 
     def _handle_nop(self):
@@ -74,7 +83,7 @@ class Instruction:
         disass_str = ""
         if "REGULAR" not in self.pcUpdate:
             disass_str += format_print(f"{self.pcUpdate}")
-            disass_str += format_print(field_element_repr(int(self.imm), PRIME))
+            disass_str += format_print(field_element_repr(int(self.imm), self.prime))
         else:
             disass_str += format_print(f"{self.opcode}")
         return disass_str
@@ -88,16 +97,13 @@ class Instruction:
 
         # Direct CALL or Relative CALL
         if self.is_call_direct():
-            offset = int(self.id) - int(field_element_repr(int(self.imm), PRIME))
-            if offset < 0:
-                offset = int(self.id) + int(field_element_repr(int(self.imm), PRIME))
+            offset = int(self.id) + int(field_element_repr(int(self.imm), self.prime))
             # direct CALL to a fonction
-            if self.call_xref_func_name != None:
+            if self.call_xref_func_name is not None:
                 disass_str += format_print(f"{offset} \t# {self.call_xref_func_name}")
             # relative CALL to a label
             # e.g. call rel (123)
             else:
-                offset = int(self.id) + int(field_element_repr(int(self.imm), PRIME))
                 disass_str += format_print(f"rel ({offset})")
 
         # Indirect CALL
@@ -140,7 +146,7 @@ class Instruction:
         if "REGULAR" not in self.apUpdate:
             op = list(filter(None, re.split(r'(\d+)', self.apUpdate)))
             APopcode = op[0]
-            APval = op[1] if (len(op) > 1) else int(field_element_repr(int(self.imm), PRIME))
+            APval = op[1] if (len(op) > 1) else int(field_element_repr(int(self.imm), self.prime))
             disass_str += format_print(f"\noffset {self.id}:")
             disass_str += format_print(f"{APopcode}")
             disass_str += format_print(f"AP, {APval}")

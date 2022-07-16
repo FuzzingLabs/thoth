@@ -1,6 +1,3 @@
-# Default prime value
-PRIME = (2**251) + (17 * (2**192)) + 1
-
 # Graphical stuff for the CFG's dot
 CFG_NODE_ATTR = {'style' : 'filled, solid', 'shape' : 'rect, plaintext', 'color' : "gray95", 'fontname' : "Helvetica,Arial,sans-serif"}
 CFG_GRAPH_ATTR = {'overlap':'scale', 'fontname' : "Helvetica,Arial,sans-serif", 'fontsize' : '20', 'layout' : 'dot', 'newrank' : 'true'}

@@ -5,7 +5,8 @@ class Function:
     """
     Function Class
     """
-    def __init__(self, offset_start, offset_end, name, instructions, args,  implicitargs,ret, decorators, is_import=False, entry_point=False) -> None:
+    def __init__(self, prime, offset_start, offset_end, name, instructions, args,  implicitargs, ret, decorators, is_import=False, entry_point=False) -> None:
+        self.prime = prime
         self.offset_start = offset_start
         self.offset_end = offset_end
         self.name = name
@@ -27,7 +28,7 @@ class Function:
         """
         for offset in self.instructions_dict:
             for bytecode in self.instructions_dict[offset]:
-                self.instructions.append(Instruction(offset, self.instructions_dict[offset][bytecode]))
+                self.instructions.append(Instruction(offset, self.instructions_dict[offset][bytecode], self.prime))
         return self.instructions
 
     def get_prototype(self):

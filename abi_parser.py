@@ -93,6 +93,16 @@ def detect_type_input_json(json_data):
         raise NotImplementedError
     return json_type
 
+def extract_prime(json_type, json_data):
+    if json_type == "cairo":
+        prime = int(json_data["prime"], 16)
+    elif json_type == "starknet":
+        prime = int(json_data["program"]["prime"], 16)
+    elif json_type == "get_code":
+        prime = None
+
+    return prime
+
 
 def extract_bytecode(json_type, json_data):
     """

@@ -4,10 +4,13 @@ import sys
 import json
 from graphviz import Digraph
 
-from abi_parser import detect_type_input_json, parse_to_json, extract_struct, extract_builtins
+from abi_parser import detect_type_input_json, parse_to_json, extract_struct, extract_builtins, extract_prime
 from callgraph import CallFlowGraph
-from utils import field_element_repr, PRIME, CFG_NODE_ATTR, CFG_GRAPH_ATTR, CFG_EDGE_ATTR
+from utils import field_element_repr, CFG_NODE_ATTR, CFG_GRAPH_ATTR, CFG_EDGE_ATTR
 from function import Function
+
+# Default prime value
+DEFAULT_PRIME = (2**251) + (17 * (2**192)) + 1
 
 class Disassembler:
     """
@@ -23,6 +26,7 @@ class Disassembler:
         self.json = None
         self.builtins = []
         self.call_graph = None
+        self.prime = None
 
         if analyze:
             self.analyze()
@@ -46,6 +50,7 @@ class Disassembler:
         self.json = parse_to_json(json_data, json_type)
         self.structs = extract_struct(json_type, json_data)
         self.builtins = extract_builtins(json_type, json_data)
+        self.prime = extract_prime(json_type, json_data) if not None else DEFAULT_PRIME
         # self.dump_json()
 
         # Create the list of Functions
@@ -60,7 +65,8 @@ class Disassembler:
             decorators = self.json[function]["data"]["decorators"]
 
             self.functions.append(
-                Function(offset_start,
+                Function(self.prime,
+                         offset_start,
                          offset_end,
                          name,
                          instructions,
@@ -77,10 +83,7 @@ class Disassembler:
             for inst in func.instructions:
                 # Only for direct call
                 if inst.is_call_direct():
-                    offset = int(inst.id) - int(field_element_repr(int(inst.imm), PRIME))
-                    if offset < 0:
-                        offset = int(inst.id) + int(inst.imm)
-                    xref_func = self.get_function_by_offset(str(offset))
+                    xref_func = self.get_function_by_offset(str(inst.call_offset))
                     inst.call_xref_func_name = xref_func.name if xref_func is not None else None
 
     def print_disassembly(self, func_name=None, func_offset=None):
