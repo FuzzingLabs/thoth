@@ -66,7 +66,7 @@ class CFG:
             if instr.is_call_direct():
                 # CALL direct to function
                 pass
-                # CALL direct to label
+                # relative CALL to label
                 # TODO
                 pass
 

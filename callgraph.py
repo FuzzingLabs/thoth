@@ -75,10 +75,10 @@ class CallFlowGraph:
                         offset = int(inst.id) - int(field_element_repr(int(inst.imm), PRIME))
                         if (offset < 0):
                             offset = int(inst.id) + int(inst.imm)
+                        edges.append((function.offset_start, offset))
                     else:
                         # relative CALL
-                        offset = int(inst.id) + int(field_element_repr(int(inst.imm), PRIME))
-                    edges.append((function.offset_start, offset))
+                        pass
                 elif inst.is_call_indirect():
                     # indirect call
                     # we can't create any edges without evaluating the stack

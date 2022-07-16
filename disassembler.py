@@ -82,11 +82,11 @@ class Disassembler:
         Iterate over every function and print the disassembly
         """
         if (self.builtins != []):
-            print("_" * 100)
+            print("_" * 50)
         print(self.print_builtins())
-        print("_" * 100)
+        print("_" * 50)
         print(self.print_structs())
-        print("_" * 100)
+        print("_" * 50)
         # Disassembly for all functions
         if (func_name is None and func_offset is None):
             for function in self.functions:

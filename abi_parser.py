@@ -111,8 +111,8 @@ def extract_bytecode(json_type, json_data):
         print("Otherwise please open an issue")
         exit()
 
-    if bytecode[len(bytecode) - 1] != 2345108766317314046:
-        bytecode.append(2345108766317314046)
+    #if bytecode[len(bytecode) - 1] != 2345108766317314046:
+    #    bytecode.append(2345108766317314046)
     return bytecode
 
 def extract_functions(json_type, json_data):
