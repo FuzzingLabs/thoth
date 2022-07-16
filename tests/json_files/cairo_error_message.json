@@ -17,7 +17,7 @@
             },
             "name": "error_message",
             "start_pc": 11,
-            "value": "    ERROR: The gievn [ap-1] must be less than 60!"
+            "value": "    ERROR: The given [ap-1] must be less than 60!"
         },
         {
             "accessible_scopes": [
@@ -36,7 +36,7 @@
             },
             "name": "error_message",
             "start_pc": 19,
-            "value": "    ERROR: The gievn [ap-1] must be positive!"
+            "value": "    ERROR: The given [ap-1] must be positive!"
         }
     ],
     "builtins": [
