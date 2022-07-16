@@ -10,7 +10,6 @@ class CallFlowGraph:
     """
     def __init__(self, functions):
         self.dot = None
-
         self._generate_call_flow_graph(functions)
 
 
