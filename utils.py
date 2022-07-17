@@ -4,7 +4,7 @@ CFG_GRAPH_ATTR = {'overlap':'scale', 'fontname' : "Helvetica,Arial,sans-serif", 
 CFG_EDGE_ATTR = {'arrowsize':'0.5', 'fontname':"Helvetica,Arial,sans-serif", 'labeldistance':'3', 'labelfontcolor':"#00000080", 'penwidth':'2'}
 
 # Graphical stuff for the CallFlowGraph's dot
-CALLGRAPH_ENTRYPOINT = {'shape' : 'doubleoctagon', 'style' : 'filled', 'color' : 'darkolivegreen1'}
+CALLGRAPH_ENTRYPOINT = {'shape' : 'doubleoctagon', 'style' : 'filled', 'color' : 'lightgreen'}
 CALLGRAPH_IMPORT = {'style' : 'filled', 'color' : 'lightcoral'}
 CALLGRAPH_INDIRECT_CALL = {'style' : 'dashed'}
 
