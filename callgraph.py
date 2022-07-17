@@ -1,14 +1,14 @@
 from graphviz import Digraph
-from utils import field_element_repr, CALLGRAPH_ENTRYPOINT, CALLGRAPH_IMPORT, CALLGRAPH_INDIRECT_CALL, CALLGRAPH_NODE_ATTR, CALLGRAPH_GRAPH_ATTR, CALLGRAPH_EDGE_ATTR
-
+from utils import field_element_repr, CALLGRAPH_CONFIG, CALLGRAPH_NODE_ATTR, CALLGRAPH_GRAPH_ATTR, CALLGRAPH_EDGE_ATTR
 class CallFlowGraph:
     """
     CallFlowGraph class
 
     Create a call flow graph for the contract
     """
-    def __init__(self, functions):
+    def __init__(self, functions, config=CALLGRAPH_CONFIG):
         self.dot = None
+        self.config = config
         self._generate_call_flow_graph(functions)
 
 
@@ -16,36 +16,73 @@ class CallFlowGraph:
         """
         Create all the function nodes
         """
-        # TODO - issue #44
+        # TODO - issue #47
 
         for function in functions:
 
             # Default values
-            shape = 'oval'
-            color = ''
-            style = 'solid'
+            shape = self.config['default']['shape']
+            color = self.config['default']['color']
+            style = self.config['default']['style']
+            fillcolor=self.config['default']['fillcolor']
+
+            label=function.name
 
             # This function is an entrypoint
             if function.entry_point:
-                shape=CALLGRAPH_ENTRYPOINT['shape']
-                style=CALLGRAPH_ENTRYPOINT['style']
-                color=CALLGRAPH_ENTRYPOINT['color']
+                shape=self.config['entrypoint']['shape']
+                style=self.config['entrypoint']['style']
 
+            # Node color selection by priority
             # This function is an import
             if function.is_import:
-                style=CALLGRAPH_IMPORT['style']
-                color=CALLGRAPH_IMPORT['color']
+                style=self.config['import']['style']
+                fillcolor=self.config['import']['fillcolor']
+
+            elif 'constructor' in function.decorators:
+                style=self.config['constructor']['style']
+                fillcolor=self.config['constructor']['fillcolor']
+
+            elif 'l1_handler' in function.decorators:
+                style=self.config['l1_handler']['style']
+                fillcolor=self.config['l1_handler']['fillcolor']
+
+            elif 'external' in function.decorators:
+                style=self.config['external']['style']
+                fillcolor=self.config['external']['fillcolor']
+
+            elif 'view' in function.decorators:
+                style=self.config['view']['style']
+                fillcolor=self.config['view']['fillcolor']
+
+            elif 'raw_input' in function.decorators:
+                style=self.config['raw_input']['style']
+                fillcolor=self.config['raw_input']['fillcolor']
+
+            elif 'raw_output' in function.decorators:
+                style=self.config['raw_output']['style']
+                fillcolor=self.config['raw_output']['fillcolor']
+
+            elif 'known_ap_change' in function.decorators:
+                style=self.config['known_ap_change']['style']
+                fillcolor=self.config['known_ap_change']['fillcolor']
 
             # Search if this function is doing indirect_calls
             if any(inst.is_call_indirect() for inst in function.instructions):
-                style=CALLGRAPH_INDIRECT_CALL['style']
+                label+=' **'
+
+            # Add decorator below the function name
+            if function.decorators != []:
+                label+=f'\\l{str(function.decorators)}'
+
 
             # Create the function node
             self.dot.node(function.offset_start,
-                                 label=function.name,
+                                 label=label,
                                  shape=shape,
                                  style=style,
-                                 color=color)
+                                 color=color,
+                                 fillcolor=fillcolor)
 
 
     def _generate_call_flow_graph(self, functions):
