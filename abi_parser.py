@@ -4,7 +4,7 @@ import collections
 import re
 import sys
 
-from starkware.cairo.lang.compiler.encode import decode_instruction
+from cairo_instruction import decode_instruction
 
 def decode_to_json(decoded):
     """
