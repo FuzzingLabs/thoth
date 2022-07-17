@@ -96,8 +96,16 @@ class Disassembler:
         print("_" * 75)
         print(self.print_structs())
         print("_" * 75)
+
+        if self.functions == []:
+            print()
+            print("No bytecode/functions found (maybe it's a contract interface?)")
+            print("Otherwise please open an issue, Thanks!")
+            print()
+            sys.exit(1)
+
         # Disassembly for all functions
-        if (func_name is None and func_offset is None):
+        elif (func_name is None and func_offset is None):
             for function in self.functions:
                 function.print()
 

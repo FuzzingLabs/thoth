@@ -121,12 +121,6 @@ def extract_bytecode(json_type, json_data):
         # Should never be triggered
         raise AssertionError
 
-    if len(bytecode) == 0:
-        # TODO - issue #39
-        print("Sorry, no bytecode found (maybe it's a contract interface?)")
-        print("Otherwise please open an issue")
-        sys.exit(1)
-
     return bytecode
 
 
