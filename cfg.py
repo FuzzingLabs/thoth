@@ -1,10 +1,12 @@
 import re
 from graphviz import Digraph
 
+
 class BasicBlock:
     """
     BasicBlock Class
     """
+
     def __init__(self, start_instr):
         self.start_instr = start_instr
         self.start_offset = self.start_instr.id
@@ -22,8 +24,10 @@ class BasicBlock:
         # TODO - replace by instr code
         return format_bb_name(self.start_offset)
 
+
 def format_bb_name(instr_offset):
-    return f'bb_{instr_offset}'
+    return f"bb_{instr_offset}"
+
 
 class CFG:
     """
@@ -31,22 +35,21 @@ class CFG:
 
     Create a Control Flow Graph per Function
     """
+
     def __init__(self, func_name, instructions):
         self.dot = None
         self.func_name = func_name
         self.basicblocks = []
-        self.name = f'CFG {self.func_name}'
+        self.name = f"CFG {self.func_name}"
 
         self._generate_basicblocks(instructions)
         self.generate_cfg()
-
 
     def set_basicblocks(self, bbs):
         """
         Setter for the list of BasicBlock
         """
         self.basicblocks = bbs
-
 
     def _generate_basicblocks(self, instructions):
         """
@@ -56,7 +59,6 @@ class CFG:
         last_func_instr = instructions[-1]
         new_bb = True
         current_bb = None
-
 
         for instr in instructions:
 
@@ -88,7 +90,7 @@ class CFG:
 
             # Jump to instr offset + instr.imm
             elif "JUMP_REL" in instr.pcUpdate:
-                if ("CALL" not in instr.opcode):
+                if "CALL" not in instr.opcode:
                     current_bb.end_instr = instr
                     current_bb.end_offset = instr.id
                     list_bb.append(current_bb)
@@ -119,7 +121,6 @@ class CFG:
                 if instr is last_func_instr:
                     raise AssertionError
 
-
         # TODO - how to handle if we have `jmp rel` to the middle of other basicblock
         # ex: tests/json_files/cairo_jmp.json
 
@@ -132,7 +133,9 @@ class CFG:
         # TODO - issue #45
         print()
         for block in self.basicblocks:
-            print(f'-- BB {block.name, len(block.instructions)} {block.edges_offset} --')
+            print(
+                f"-- BB {block.name, len(block.instructions)} {block.edges_offset} --"
+            )
             for instr in block.instructions:
                 print(instr.print())
             print()
@@ -142,7 +145,7 @@ class CFG:
         Create the basicblock nodes and the edges
         """
         # Create the directed graph
-        cluster_name = 'cluster_' + self.name
+        cluster_name = "cluster_" + self.name
         self.dot = Digraph(cluster_name, comment=self.name)
         self.dot.attr(label=self.name)
 
@@ -153,25 +156,29 @@ class CFG:
         for block in self.basicblocks:
 
             # Create all the basicblock nodes
-            shape = 'square'
+            shape = "square"
             label_instruction = ""
             for instr in block.instructions:
-                label_instruction += re.sub('\s+', ' ', instr.print().replace("\n", "\\l"))
-            self.dot.node(block.name,
-                          label=label_instruction + "\\l",
-                          shape=shape)
+                label_instruction += re.sub(
+                    "\s+", " ", instr.print().replace("\n", "\\l")
+                )
+            self.dot.node(block.name, label=label_instruction + "\\l", shape=shape)
 
             # Iterate over edges_offset
             for offset in block.edges_offset:
-                color='green'
+                color = "green"
                 if offset is block.edges_offset[-1]:
-                    color='red'
+                    color = "red"
 
                 # We check that we are not creating an edge
                 # to an offset that is not a block start offset
                 # TODO - issue #43
                 if offset in bb_offsets:
-                    self.dot.edge(format_bb_name(block.start_offset), format_bb_name(offset), color=color)
+                    self.dot.edge(
+                        format_bb_name(block.start_offset),
+                        format_bb_name(offset),
+                        color=color,
+                    )
 
     def print(self, view=True):
         """

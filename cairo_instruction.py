@@ -120,10 +120,12 @@ def decode_instruction_values(encoded_instruction):
     """
     Returns a tuple (flags, off0, off1, off2) according to the given encoded instruction.
     """
-    assert 0 <= encoded_instruction < 2 ** (3 * OFFSET_BITS + N_FLAGS), "Unsupported instruction."
-    off0 = encoded_instruction & (2 ** OFFSET_BITS - 1)
-    off1 = (encoded_instruction >> OFFSET_BITS) & (2 ** OFFSET_BITS - 1)
-    off2 = (encoded_instruction >> (2 * OFFSET_BITS)) & (2 ** OFFSET_BITS - 1)
+    assert (
+        0 <= encoded_instruction < 2 ** (3 * OFFSET_BITS + N_FLAGS)
+    ), "Unsupported instruction."
+    off0 = encoded_instruction & (2**OFFSET_BITS - 1)
+    off1 = (encoded_instruction >> OFFSET_BITS) & (2**OFFSET_BITS - 1)
+    off2 = (encoded_instruction >> (2 * OFFSET_BITS)) & (2**OFFSET_BITS - 1)
     flags_val = encoded_instruction >> (3 * OFFSET_BITS)
     return flags_val, off0, off1, off2
 
@@ -178,7 +180,11 @@ def decode_instruction(encoding: int, imm: Optional[int] = None) -> Instruction:
         (0, 1, 0): Instruction.PcUpdate.JUMP_REL,
         (0, 0, 1): Instruction.PcUpdate.JNZ,
         (0, 0, 0): Instruction.PcUpdate.REGULAR,
-    }[(flags >> PC_JUMP_ABS_BIT) & 1, (flags >> PC_JUMP_REL_BIT) & 1, (flags >> PC_JNZ_BIT) & 1]
+    }[
+        (flags >> PC_JUMP_ABS_BIT) & 1,
+        (flags >> PC_JUMP_REL_BIT) & 1,
+        (flags >> PC_JNZ_BIT) & 1,
+    ]
 
     # Get res.
     res = {
@@ -197,7 +203,10 @@ def decode_instruction(encoding: int, imm: Optional[int] = None) -> Instruction:
     ap_update = {
         (1, 0): Instruction.ApUpdate.ADD,
         (0, 1): Instruction.ApUpdate.ADD1,
-        (0, 0): Instruction.ApUpdate.REGULAR,  # OR ADD2, depending if we have CALL opcode.
+        (
+            0,
+            0,
+        ): Instruction.ApUpdate.REGULAR,  # OR ADD2, depending if we have CALL opcode.
     }[(flags >> AP_ADD_BIT) & 1, (flags >> AP_ADD1_BIT) & 1]
 
     # Get opcode.
@@ -214,7 +223,9 @@ def decode_instruction(encoding: int, imm: Optional[int] = None) -> Instruction:
 
     # CALL opcode means ap_update must be ADD2.
     if opcode is Instruction.Opcode.CALL:
-        assert ap_update is Instruction.ApUpdate.REGULAR, "CALL must have update_ap is ADD2"
+        assert (
+            ap_update is Instruction.ApUpdate.REGULAR
+        ), "CALL must have update_ap is ADD2"
         ap_update = Instruction.ApUpdate.ADD2
 
     # Get fp_update.
