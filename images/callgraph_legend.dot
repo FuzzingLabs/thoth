@@ -1,0 +1,15 @@
+// Call flow graph
+digraph call_graph_legend {
+	graph [fontname="Helvetica,Arial,sans-serif" fontsize=20 layout=dot newrank=true rankdir=LR]
+	node [fontname="Helvetica,Arial,sans-serif" pencolor="#00000044" shape="rect, plaintext" style=filled]
+	edge [arrowsize=0.5 fontname="Helvetica,Arial,sans-serif" labeldistance=3 labelfontcolor="#00000080" penwidth=2]
+	0 [label="entrypoint" color="" fillcolor=white shape=doubleoctagon style=filled]
+	1 [label="a" color="" fillcolor=white shape=oval style=solid]
+	2 [label="b" color="" fillcolor=white shape=oval style=solid]
+	3 [label="constructor\l['decorator#1', 'decorator#2']" color="" fillcolor=violet shape=oval style=filled]
+	4 [label="import" color="" fillcolor=lightcoral shape=oval style=filled]
+	5 [label="l1_handler" color="" fillcolor=lightskyblue shape=oval style=filled]
+	6 [label="external" color="" fillcolor=lightgreen shape=oval style=filled]
+	7 [label="view" color="" fillcolor=orange shape=oval style=filled]
+	1 -> 2 [label=" is calling "]
+}
