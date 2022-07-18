@@ -1,7 +1,5 @@
 import re
 
-from pyparsing import col
-
 from utils import field_element_repr
 import utils
 
