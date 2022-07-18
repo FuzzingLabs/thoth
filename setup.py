@@ -3,7 +3,7 @@ from setuptools import setup
 setup(
     name="Thoth",
     version="0.1.0",
-    description="Cairo language disassembler",
+    description="Cairo/Starknet bytecode disassembler",
     url="https://github.com/shuds13/pyexample",
     author="FuzzingLabs",
     author_email="contact@fuzzinglabs.com",
