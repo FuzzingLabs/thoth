@@ -4,7 +4,7 @@ setup(
     name="Thoth",
     version="0.1.0",
     description="Cairo/Starknet bytecode disassembler",
-    url="https://github.com/shuds13/pyexample",
+    url="https://github.com/FuzzingLabs/thoth",
     author="FuzzingLabs",
     author_email="contact@fuzzinglabs.com",
     license="AGPL-3.0",
