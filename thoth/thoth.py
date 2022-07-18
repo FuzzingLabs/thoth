@@ -92,7 +92,7 @@ def main():
 
     # print analytics
     if args.analytics:
-        disassembler.analytics()
+        print(disassembler.analytics())
 
     return 0
 

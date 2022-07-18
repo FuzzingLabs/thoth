@@ -66,30 +66,6 @@ For a specific output format:
 thoth -f tests/json_files/cairo_array_sum.json -cfg -format [pdf/svg/png]
 ```
 
-## Get analytics
-```sh
-thoth -f tests/json_files/cairo_array_sum.json -analytics
-```
-
-# Cairo/Starknet Compilation
-
-```sh
-cairo-compile tests/cairo_files/if_negative.cairo --output tests/json_files/if_negative.json
-
-starknet-compile the_contract.cairo  --output contract_compiled.json  --abi contract_abi.json
-```
-
-## run the bytecode
-```sh
-cairo-run --program=tests/json_files/if_negative.json --print_output --layout=small
-```
-
-to see the offset and the bytecode :
-
-```sh
-cairo-run --program=tests/json_files/if_negative.json --print_memory 
-```
-
 # License
 
 Thoth is licensed and distributed under the AGPLv3 license. [Contact us](mailto:contact@fuzzinglabs.com) if you're looking for an exception to the terms.
