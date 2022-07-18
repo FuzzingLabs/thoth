@@ -5,53 +5,53 @@ Thoth is a Cairo/starknet bytecode disassembler written in Python 3.
 ## Installation
 
 ```sh
-python3 -m pip install .
+pip install .
 ```
 
 ## Run disassembler
 
 ```sh
-python3 -m thoth -f FILENAME
+thoth -f FILENAME
 ```
 
 To get a pretty version:
 
 ```sh
-python3 -m thoth -f FILENAME -color
+thoth -f FILENAME -color
 ```
 
 To get a verbose version with more details about decoded bytecodes:
 ```sh
-python3 -m thoth -f FILENAME -vvv
+thoth -f FILENAME -vvv
 ```
 
 ## Get analytics
 ```sh
-python3 -m thoth -f FILENAME -analytics
+thoth -f FILENAME -analytics
 ```
 
 ## Print CFG 
 
 ```sh
-python3 -m thoth -f FILENAME -cfg
+thoth -f FILENAME -cfg
 ```
 For a specific function:
 ```sh
-python3 -m thoth -f FILENAME -cfg -function FUNCTION_NAME
+thoth -f FILENAME -cfg -function FUNCTION_NAME
 ```
 For a specific output format:
 ```sh
-python3 -m thoth -f FILENAME -cfg -format [pdf/svg/png]
+thoth -f FILENAME -cfg -format [pdf/svg/png]
 ```
 
 ## Print Call Flow Graph 
 
 ```sh
-python3 -m thoth -f FILENAME -call
+thoth -f FILENAME -call
 ```
 For a specific output format:
 ```sh
-python3 -m thoth -f FILENAME -call -format [pdf/svg/png]
+thoth -f FILENAME -call -format [pdf/svg/png]
 ```
 
 # Cairo/Starknet Compilation

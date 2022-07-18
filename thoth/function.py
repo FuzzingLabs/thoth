@@ -92,7 +92,7 @@ class Function:
         Iterate over each instruction and print the disassembly
         """
         prototype = self.get_prototype()
-        print(f"\n\t{utils.color.BEIGE + prototype + utils.color.ENDC}")
+        print(f"\n\t{utils.color.BLUE + prototype + utils.color.ENDC}")
         for instr in self.instructions:
             print(instr.print(), end="")
         print()
