@@ -8,3 +8,8 @@ const const_2 = 123456789
 func get_constants() -> (number_1 : felt, number_2 : felt):
     return (const_1, const_2)
 end
+
+@view
+func get_constant1() -> (number_1 : felt):
+    return (const_1)
+end
