@@ -2,7 +2,6 @@
 
 import sys
 import json
-from turtle import color
 import utils
 from graphviz import Digraph
 
