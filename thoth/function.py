@@ -84,7 +84,7 @@ class Function:
                             prototype += args + " : " + data_content[idarg][args]
                             if int(idarg) != len(data_content) - 1:
                                 prototype += ", "
-            prototype += ")" if (data_name == "ret" or data_name == "args") else "}" if data_name == "implicitargs" else ""
+            prototype += ")" if (data_name == "args" or (data_name == "ret" and data_content is not None)) else "}" if data_name == "implicitargs" else ""
         return prototype
 
     def print(self):

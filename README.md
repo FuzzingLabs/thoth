@@ -8,50 +8,93 @@ Thoth is a Cairo/starknet bytecode disassembler written in Python 3.
 pip install .
 ```
 
-## Run disassembler
+## Disassemble a Cairo file
 
 ```sh
-thoth -f FILENAME
+thoth -f tests/json_files/cairo_array_sum.json
+
+___________________________________________________________________________
+
+	 %builtins output
+___________________________________________________________________________
+
+	 struct: __main__.array_sum.Args
+	    arr   : felt*
+	    size   : felt
+
+	[...]
+___________________________________________________________________________
+
+	func starkware.cairo.common.alloc.alloc{}() -> (ptr : felt*)
+
+offset 0:          NOP                 
+offset 0:          ADD                 AP, 1                # memory[ap] = segments.add()
+offset 2:          RET                 
+
+	func starkware.cairo.common.serialize.serialize_word{output_ptr : felt*}(word : felt))
+
+offset 3:          ASSERT_EQ           [FP-3], [[FP-4]]    
+offset 4:          ASSERT_EQ           [AP], [FP-4] + 1    
+offset 4:          ADD                 AP, 1               
+offset 6:          RET                 
+...
 ```
 
-To get a pretty version:
+To get a pretty colored version:
 
 ```sh
-thoth -f FILENAME -color
+thoth -f tests/json_files/cairo_array_sum.json -color
 ```
+<p align="center">
+	<img src="/images/thoth_disas_color.png" height="300px"/>
+</p>
 
 To get a verbose version with more details about decoded bytecodes:
 ```sh
-thoth -f FILENAME -vvv
-```
-
-## Get analytics
-```sh
-thoth -f FILENAME -analytics
-```
-
-## Print CFG 
-
-```sh
-thoth -f FILENAME -cfg
-```
-For a specific function:
-```sh
-thoth -f FILENAME -cfg -function FUNCTION_NAME
-```
-For a specific output format:
-```sh
-thoth -f FILENAME -cfg -format [pdf/svg/png]
+thoth -f tests/json_files/cairo_array_sum.json -vvv
 ```
 
 ## Print Call Flow Graph 
 
 ```sh
-thoth -f FILENAME -call
+thoth -f tests/json_files/cairo_array_sum.json -call
+```
+Example of a more complexe callgraph [here](images/starknet_get_full_contract_l2_dai_bridge.gv.png).
+
+<p align="center">
+	<img src="/images/thoth_callgraph_simple.png" height="300px"/>
+</p>
+
+Legend: TODO
+
+
+For a specific output format:
+```sh
+thoth -f tests/json_files/cairo_array_sum.json -call -format [pdf/svg/png]
+```
+
+## Print CFG 
+
+```sh
+thoth -f tests/json_files/cairo_array_sum.json -cfg
+```
+
+<p align="center">
+	<img src="/images/cairo_array_sum.gv.png" height="300px"/>
+</p>
+
+For a specific function:
+```sh
+thoth -f tests/json_files/cairo_array_sum.json -cfg -function FUNCTION_NAME
 ```
 For a specific output format:
 ```sh
-thoth -f FILENAME -call -format [pdf/svg/png]
+thoth -f tests/json_files/cairo_array_sum.json -cfg -format [pdf/svg/png]
+```
+
+## Get analytics
+```sh
+thoth -f tests/json_files/cairo_array_sum.json -analytics
 ```
 
 # Cairo/Starknet Compilation
@@ -62,7 +105,6 @@ cairo-compile tests/cairo_files/if_negative.cairo --output tests/json_files/if_n
 starknet-compile the_contract.cairo  --output contract_compiled.json  --abi contract_abi.json
 ```
 
-
 ## run the bytecode
 ```sh
 cairo-run --program=tests/json_files/if_negative.json --print_output --layout=small
@@ -72,11 +114,6 @@ to see the offset and the bytecode :
 
 ```sh
 cairo-run --program=tests/json_files/if_negative.json --print_memory 
-```
-
-# Run testsuit
-```sh
-python3 tests/test.py
 ```
 
 # License

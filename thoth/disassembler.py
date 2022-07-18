@@ -251,9 +251,7 @@ class Disassembler:
         # Only `func_name` or `func_offset` will be in the graph
         else:
             if func_name is not None:
-                print("gg")
                 function = self.get_function_by_name(func_name)
-                print(function)
             elif func_offset is not None:
                 function = self.get_function_by_offset(func_offset)
 
