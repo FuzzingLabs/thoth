@@ -5,7 +5,11 @@ Thoth is a Cairo/starknet bytecode disassembler written in Python 3.
 ## Installation
 
 ```sh
+git clone https://github.com/FuzzingLabs/thoth && cd thoth
+
 pip install .
+
+thoth -h
 ```
 
 ## Disassemble a Cairo file
@@ -67,7 +71,7 @@ For a specific output format:
 thoth -f tests/json_files/cairo_array_sum.json -cfg -format [pdf/svg/png]
 ```
 
-# How to find a Cairo/Starknet compiler JSON file
+## How to find a Cairo/Starknet compiler JSON file
 
 Thoth support cairo and starknet compiler json generated after compilation using `cairo-compile` or `starknet-compile`. Thoth support also the json returned by: `starknet get_full_contract`.
 
