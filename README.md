@@ -12,32 +12,6 @@ pip install .
 
 ```sh
 thoth -f tests/json_files/cairo_array_sum.json
-
-___________________________________________________________________________
-
-	 %builtins output
-___________________________________________________________________________
-
-	 struct: __main__.array_sum.Args
-	    arr   : felt*
-	    size   : felt
-
-	[...]
-___________________________________________________________________________
-
-	func starkware.cairo.common.alloc.alloc{}() -> (ptr : felt*)
-
-offset 0:          NOP                 
-offset 0:          ADD                 AP, 1                # memory[ap] = segments.add()
-offset 2:          RET                 
-
-	func starkware.cairo.common.serialize.serialize_word{output_ptr : felt*}(word : felt))
-
-offset 3:          ASSERT_EQ           [FP-3], [[FP-4]]    
-offset 4:          ASSERT_EQ           [AP], [FP-4] + 1    
-offset 4:          ADD                 AP, 1               
-offset 6:          RET                 
-...
 ```
 
 To get a pretty colored version:
@@ -46,7 +20,7 @@ To get a pretty colored version:
 thoth -f tests/json_files/cairo_array_sum.json -color
 ```
 <p align="center">
-	<img src="/images/thoth_disas_color.png" height="300px"/>
+	<img src="/images/thoth_disas_color.png"/>
 </p>
 
 To get a verbose version with more details about decoded bytecodes:
@@ -62,7 +36,7 @@ thoth -f tests/json_files/cairo_array_sum.json -call
 Example of a more complexe callgraph [here](images/starknet_get_full_contract_l2_dai_bridge.gv.png).
 
 <p align="center">
-	<img src="/images/thoth_callgraph_simple.png" height="300px"/>
+	<img src="/images/thoth_callgraph_simple.png"/>
 </p>
 
 Legend: TODO
@@ -80,7 +54,7 @@ thoth -f tests/json_files/cairo_array_sum.json -cfg
 ```
 
 <p align="center">
-	<img src="/images/cairo_array_sum.gv.png" height="300px"/>
+	<img src="/images/cairo_array_sum.gv.png"/>
 </p>
 
 For a specific function:
