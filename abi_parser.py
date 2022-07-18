@@ -3,7 +3,6 @@
 import collections
 import re
 import sys
-
 from cairo_instruction import decode_instruction
 
 def decode_to_json(decoded):
@@ -20,7 +19,6 @@ def decode_to_json(decoded):
             value = data.split("=")[1].strip()
         data_dict[key] = value
     return data_dict
-
 
 def extract_function_prototype(func_offset, identifiers_data, entry_points_by_type):
     """
@@ -76,7 +74,6 @@ def extract_function_prototype(func_offset, identifiers_data, entry_points_by_ty
 
     return func_identifiers
 
-
 def detect_type_input_json(json_data):
     if "data" in json_data:
         # Compiled with cairo-compile
@@ -103,7 +100,6 @@ def extract_prime(json_type, json_data):
 
     return prime
 
-
 def extract_bytecode(json_type, json_data):
     """
     Return the instructions for the Bytecodes
@@ -122,7 +118,6 @@ def extract_bytecode(json_type, json_data):
         raise AssertionError
 
     return bytecode
-
 
 def extract_functions(json_type, json_data):
     """
@@ -149,15 +144,8 @@ def extract_functions(json_type, json_data):
         print("Sorry, json retrieve using `get_code` is not supported yet")
         print("Please consider using `get_full_contract` instead")
         sys.exit(1)
-        # debugInfo = json_data["abi"]
-        # id = 0
-        # for dictionnary in debugInfo:
-        #    if (dictionnary["type"] == "event" or dictionnary["type"] == "function"):
-        #        func_offset[str(id)] = dictionnary["name"]
-        #        id += 1
 
     return (func_offset, func_identifiers)
-
 
 def extract_structs(json_type, json_data):
     """
@@ -182,7 +170,6 @@ def extract_structs(json_type, json_data):
                 struct_identifiers[key] = dict(
                     collections.OrderedDict(sorted(tmp.items())))
     return struct_identifiers
-
 
 def extract_builtins(json_type, json_data):
     """
@@ -211,7 +198,6 @@ def extract_events(json_type, json_data):
     else:
         pass
     return events
-
 
 def parse_to_json(json_data, json_type):
     """
