@@ -61,10 +61,15 @@ For a specific function:
 ```sh
 thoth -f tests/json_files/cairo_array_sum.json -cfg -function FUNCTION_NAME
 ```
+
 For a specific output format:
 ```sh
 thoth -f tests/json_files/cairo_array_sum.json -cfg -format [pdf/svg/png]
 ```
+
+# How to find a Cairo/Starknet compiler JSON file
+
+Thoth support cairo and starknet compiler json generated after compilation using `cairo-compile` or `starknet-compile`. Thoth support also the json returned by: `starknet get_full_contract`.
 
 # License
 
