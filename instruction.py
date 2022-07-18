@@ -1,5 +1,7 @@
 import re
 
+from pyparsing import col
+
 from utils import field_element_repr
 import utils
 
@@ -23,6 +25,8 @@ class Instruction:
         self.apUpdate = instruction_data.get("ap_update").split("ApUpdate.")[1]
         self.fpUpdate = instruction_data.get("fp_update").split("FpUpdate.")[1]
         self.opcode = instruction_data.get("opcode").split("Opcode.")[1]
+        self.ref = None
+        self.hint = None
         # Specific values
         self.call_xref_func_name = None
         self.call_offset = self._find_call_offset()
@@ -101,7 +105,8 @@ class Instruction:
             offset = int(self.id) + int(field_element_repr(int(self.imm), self.prime))
             # direct CALL to a fonction
             if self.call_xref_func_name is not None:
-                disass_str += self.print_instruction(f"{offset} \t# {self.call_xref_func_name}", color=utils.color.BLUE)
+                disass_str += self.print_instruction(f"{offset}",)
+                disass_str += self.print_instruction(f"# {self.call_xref_func_name}", color=utils.color.BEIGE)
             # relative CALL to a label
             # e.g. call rel (123)
             else:
@@ -152,11 +157,16 @@ class Instruction:
             disass_str += self.print_instruction(f"{APopcode}", color=utils.color.YELLOW)
             disass_str += self.print_instruction(f"AP, {APval}")
             
+        if (self.ref):
+            disass_str += self.print_instruction(f"# {self.ref}", color=utils.color.BEIGE)
+        if (self.hint):
+            disass_str += self.print_instruction(f"# {self.hint}", color=utils.color.BEIGE)
+             
         return disass_str
 
     def print_instruction(self, data, color="", end=""):
         """
         Format the print
         """
-        spaces = " " * 15
+        spaces = " " * 20
         return color + data + utils.color.ENDC +  spaces[len(data):] + end

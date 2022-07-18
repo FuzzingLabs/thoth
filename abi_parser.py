@@ -3,7 +3,6 @@
 import collections
 import re
 import sys
-
 from cairo_instruction import decode_instruction
 
 def decode_to_json(decoded):
@@ -21,6 +20,21 @@ def decode_to_json(decoded):
         data_dict[key] = value
     return data_dict
 
+def detect_type_input_json(json_data):
+    if "data" in json_data:
+        # Compiled with cairo-compile
+        json_type = "cairo"
+    elif "program" in json_data:
+        # Compiled with starknet-compile
+        # or got using `get_full_contract`
+        json_type = "starknet"
+    elif "bytecode" in json_data:
+        # Retrive using `get_code`
+        json_type = "get_code"
+    else:
+        # should never be triggered
+        raise NotImplementedError
+    return json_type
 
 def extract_function_prototype(func_offset, identifiers_data, entry_points_by_type):
     """
@@ -76,23 +90,6 @@ def extract_function_prototype(func_offset, identifiers_data, entry_points_by_ty
 
     return func_identifiers
 
-
-def detect_type_input_json(json_data):
-    if "data" in json_data:
-        # Compiled with cairo-compile
-        json_type = "cairo"
-    elif "program" in json_data:
-        # Compiled with starknet-compile
-        # or got using `get_full_contract`
-        json_type = "starknet"
-    elif "bytecode" in json_data:
-        # Retrive using `get_code`
-        json_type = "get_code"
-    else:
-        # should never be triggered
-        raise NotImplementedError
-    return json_type
-
 def extract_prime(json_type, json_data):
     if json_type == "cairo":
         prime = int(json_data["prime"], 16)
@@ -102,7 +99,6 @@ def extract_prime(json_type, json_data):
         prime = None
 
     return prime
-
 
 def extract_bytecode(json_type, json_data):
     """
@@ -122,7 +118,6 @@ def extract_bytecode(json_type, json_data):
         raise AssertionError
 
     return bytecode
-
 
 def extract_functions(json_type, json_data):
     """
@@ -149,15 +144,8 @@ def extract_functions(json_type, json_data):
         print("Sorry, json retrieve using `get_code` is not supported yet")
         print("Please consider using `get_full_contract` instead")
         sys.exit(1)
-        # debugInfo = json_data["abi"]
-        # id = 0
-        # for dictionnary in debugInfo:
-        #    if (dictionnary["type"] == "event" or dictionnary["type"] == "function"):
-        #        func_offset[str(id)] = dictionnary["name"]
-        #        id += 1
 
     return (func_offset, func_identifiers)
-
 
 def extract_structs(json_type, json_data):
     """
@@ -182,7 +170,6 @@ def extract_structs(json_type, json_data):
                 struct_identifiers[key] = dict(
                     collections.OrderedDict(sorted(tmp.items())))
     return struct_identifiers
-
 
 def extract_builtins(json_type, json_data):
     """
@@ -212,6 +199,31 @@ def extract_events(json_type, json_data):
         pass
     return events
 
+def extract_hints(json_type, json_data):
+    hints_identifiers = {}
+    if json_type != "get_code":
+        instruction_data = json_data["hints"] if (
+            "hints" in json_data) else json_data["program"]["hints"]
+        # Get function name and put it in dictionnary with offset as key
+        for key, values in instruction_data.items():
+            for data in values :
+                if "code" in data:
+                    hints_identifiers[str(key)] = data["code"]
+        hints_identifiers = dict(collections.OrderedDict(sorted(hints_identifiers.items())))
+    return hints_identifiers
+
+def extract_references(json_type, json_data):
+    references_identifiers = {}
+    if json_type != "get_code":
+        identifiers_data = json_data["identifiers"] if (
+            "identifiers" in json_data) else json_data["program"]["identifiers"]
+        # Get function name and put it in dictionnary with offset as key
+        for key, values in identifiers_data.items():
+            if values["type"] == "reference":
+                for ref in values["references"]:
+                    references_identifiers[str(ref["pc"])] = str(ref["value"])
+        references_identifiers = dict(collections.OrderedDict(sorted(references_identifiers.items())))
+    return references_identifiers
 
 def parse_to_json(json_data, json_type):
     """
@@ -224,7 +236,6 @@ def parse_to_json(json_data, json_type):
     bytecode_data = extract_bytecode(json_type, json_data)
     # extract function info like offset and name
     func_offset, func_identifiers = extract_functions(json_type, json_data)
-
     size = len(bytecode_data)
     offset = 0
     bytecodes_to_json = {}
