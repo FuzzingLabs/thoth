@@ -1,12 +1,29 @@
-import utils
-from instruction import Instruction
-from cfg import CFG
+#!/usr/bin/env python3
+
+import thoth.utils as utils
+from .instruction import Instruction
+from .cfg import CFG
+
 
 class Function:
     """
     Function Class
     """
-    def __init__(self, prime, offset_start, offset_end, name, instructions, args,  implicitargs, ret, decorators, is_import=False, entry_point=False) -> None:
+
+    def __init__(
+        self,
+        prime,
+        offset_start,
+        offset_end,
+        name,
+        instructions,
+        args,
+        implicitargs,
+        ret,
+        decorators,
+        is_import=False,
+        entry_point=False,
+    ) -> None:
         self.prime = prime
         self.offset_start = offset_start
         self.offset_end = offset_end
@@ -29,7 +46,11 @@ class Function:
         """
         for offset in self.instructions_dict:
             for bytecode in self.instructions_dict[offset]:
-                self.instructions.append(Instruction(offset, self.instructions_dict[offset][bytecode], self.prime))
+                self.instructions.append(
+                    Instruction(
+                        offset, self.instructions_dict[offset][bytecode], self.prime
+                    )
+                )
         return self.instructions
 
     def get_prototype(self):
@@ -40,15 +61,24 @@ class Function:
         for decorator in self.decorators:
             prototype += f"@{decorator} "
         prototype += f"func {self.name}"
-        datas = [("implicitargs", self.implicitargs), ("args", self.args), ("ret", self.ret)]
+        datas = [
+            ("implicitargs", self.implicitargs),
+            ("args", self.args),
+            ("ret", self.ret),
+        ]
 
         for data in datas:
             data_name = data[0]
             data_content = data[1]
-            prototype += " -> (" if data_name == "ret" and data_content is not None \
-                        else "(" if data_name == "args" \
-                        else "{" if data_name == "implicitargs" \
-                        else ""
+            prototype += (
+                " -> ("
+                if data_name == "ret" and data_content is not None
+                else "("
+                if data_name == "args"
+                else "{"
+                if data_name == "implicitargs"
+                else ""
+            )
             if data_content is not None:
                 for idarg in data_content:
                     if data_content[idarg] != {}:
@@ -56,7 +86,13 @@ class Function:
                             prototype += args + " : " + data_content[idarg][args]
                             if int(idarg) != len(data_content) - 1:
                                 prototype += ", "
-            prototype += ")" if (data_name == "ret" or data_name == "args") else "}" if data_name == "implicitargs" else ""
+            prototype += (
+                ")"
+                if data_name == "args"
+                else "}"
+                if data_name == "implicitargs"
+                else ""
+            )
         return prototype
 
     def print(self):

@@ -3,16 +3,20 @@ import glob
 
 from disassembler import Disassembler
 
+
 class TestDisassembler(unittest.TestCase):
     """
     Testing class
     """
+
     def test_all_files_tested(self):
         """
         Check that all the json files have been analyzed manually and added in tests
         """
         all_test = glob.glob("./tests/json_files/*")
-        number_of_tests = len([method for method in dir(TestDisassembler) if method.startswith('test_')])
+        number_of_tests = len(
+            [method for method in dir(TestDisassembler) if method.startswith("test_")]
+        )
         self.assertEqual(len(all_test), number_of_tests - 1)
 
     def test_cairo_return(self):
@@ -28,5 +32,6 @@ class TestDisassembler(unittest.TestCase):
         self.assertEqual(analytics["decorators"], [])
         self.assertEqual(analytics["call_nbr"], "2")
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     unittest.main()
