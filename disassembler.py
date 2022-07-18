@@ -170,28 +170,28 @@ class Disassembler:
         return None
 
 
-    def print_call_flow_graph(self, view=True):
+    def print_call_flow_graph(self, filename, view=True, format="pdf"):
         """
         Print the CallFlowGraph
         """
         # The CallFlowGraph is not generated yet
         if self.call_graph is None:
-            self.call_graph = CallFlowGraph(self.functions)
+            self.call_graph = CallFlowGraph(self.functions, filename=filename, format=format)
 
         # Show/Render the CallFlowGraph
         self.call_graph.print(view)
         return self.call_graph.dot
 
-    def print_cfg(self, func_name=None, func_offset=None, view=True):
+    def print_cfg(self, filename, format="pdf", func_name=None, func_offset=None, view=True):
         """
         Print the CFG (Control Flow Graph)
         """
         # Create a dot graph
-        graph = Digraph(name='CFG (all functions)',
+        graph = Digraph(name=filename,
                         node_attr=CFG_NODE_ATTR,
                         graph_attr=CFG_GRAPH_ATTR,
                         edge_attr=CFG_EDGE_ATTR)
-
+        graph.format = format
         # The graph will contains all functions
         if (func_name is None and func_offset is None):
             for function in self.functions:
