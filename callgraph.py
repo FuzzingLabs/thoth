@@ -6,9 +6,11 @@ class CallFlowGraph:
 
     Create a call flow graph for the contract
     """
-    def __init__(self, functions, config=CALLGRAPH_CONFIG):
+    def __init__(self, functions, format, filename, config=CALLGRAPH_CONFIG):
         self.dot = None
         self.config = config
+        self.format = format
+        self.filename = filename
         self._generate_call_flow_graph(functions)
 
 
@@ -90,12 +92,12 @@ class CallFlowGraph:
         Create the complete CallFlowGraph's dot
         """
         # Create the directed graph
-        self.dot = Digraph('Call flow graph',
+        self.dot = Digraph(self.filename,
                            comment='Call flow graph',
                            node_attr=CALLGRAPH_NODE_ATTR,
                            graph_attr=CALLGRAPH_GRAPH_ATTR,
                            edge_attr=CALLGRAPH_EDGE_ATTR)
-
+        self.dot.format = self.format
         # First, we create the nodes
         self._call_flow_graph_generate_nodes(functions)
 
