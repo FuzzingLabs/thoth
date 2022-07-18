@@ -148,10 +148,10 @@ class Disassembler:
         """
         events_str = ""
         for event_name, data in self.events.items():
-            events_str += "\n\t event: " + event_name + "\n"
+            events_str += "\n\t event: " + utils.color.BEIGE + event_name + utils.color.ENDC + "\n"
             for attribut in data:
-                events_str += "\t    " + attribut["name"]
-                events_str += "   : " + attribut["type"] + "\n"
+                events_str += "\t    " + utils.color.GREEN + attribut["name"] + utils.color.ENDC
+                events_str += "   : " + utils.color.YELLOW + attribut["type"] + utils.color.ENDC + "\n"
         return events_str
 
     def print_builtins(self):
@@ -161,7 +161,7 @@ class Disassembler:
         builtins_str = ""
         if self.builtins != []:
             builtins_str += "\n\t %builtins "
-            return builtins_str + utils.color.YELLOW + ' '.join(self.builtins) + utils.color.ENDC
+            return builtins_str + utils.color.RED + ' '.join(self.builtins) + utils.color.ENDC
         return builtins_str
 
     def dump_json(self):
