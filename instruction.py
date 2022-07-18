@@ -105,8 +105,8 @@ class Instruction:
             offset = int(self.id) + int(field_element_repr(int(self.imm), self.prime))
             # direct CALL to a fonction
             if self.call_xref_func_name is not None:
-                disass_str += self.print_instruction(f"{offset}",)
-                disass_str += self.print_instruction(f"# {self.call_xref_func_name}", color=utils.color.BEIGE)
+                disass_str += self.print_instruction(f"{offset}", color=utils.color.CYAN)
+                disass_str += self.print_instruction(f" # {self.call_xref_func_name}", color=utils.color.CYAN)
             # relative CALL to a label
             # e.g. call rel (123)
             else:
@@ -148,6 +148,13 @@ class Instruction:
         else:
             # Should never happen - Unknown opcode
             raise AssertionError
+            
+        if self.hint and self.ref:
+            disass_str += self.print_instruction(f" # {self.hint} | {self.ref}", color=utils.color.BEIGE)
+        elif self.hint:
+            disass_str += self.print_instruction(f" # {self.hint}", color=utils.color.BEIGE)
+        elif self.ref:
+            disass_str += self.print_instruction(f" # {self.ref}", color=utils.color.BEIGE)
 
         if "REGULAR" not in self.apUpdate:
             op = list(filter(None, re.split(r'(\d+)', self.apUpdate)))
@@ -156,12 +163,7 @@ class Instruction:
             disass_str += self.print_instruction(f"\noffset {self.id}:", color=utils.color.HEADER)
             disass_str += self.print_instruction(f"{APopcode}", color=utils.color.YELLOW)
             disass_str += self.print_instruction(f"AP, {APval}")
-            
-        if (self.ref):
-            disass_str += self.print_instruction(f"# {self.ref}", color=utils.color.BEIGE)
-        if (self.hint):
-            disass_str += self.print_instruction(f"# {self.hint}", color=utils.color.BEIGE)
-             
+
         return disass_str
 
     def print_instruction(self, data, color="", end=""):
