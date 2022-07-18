@@ -1,4 +1,4 @@
-# Thoth, a cairo_disassembler
+# Thoth
 
 Thoth is a Cairo/starknet bytecode disassembler written in Python 3.
 
