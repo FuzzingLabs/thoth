@@ -1,4 +1,5 @@
 # Graphical stuff for the CFG's dot
+
 CFG_NODE_ATTR = {'style' : 'filled, solid', 'shape' : 'rect, plaintext', 'color' : "gray95", 'fontname' : "Helvetica,Arial,sans-serif"}
 CFG_GRAPH_ATTR = {'overlap':'scale', 'fontname' : "Helvetica,Arial,sans-serif", 'fontsize' : '20', 'layout' : 'dot', 'newrank' : 'true'}
 CFG_EDGE_ATTR = {'arrowsize':'0.5', 'fontname':"Helvetica,Arial,sans-serif", 'labeldistance':'3', 'labelfontcolor':"#00000080", 'penwidth':'2'}
@@ -52,12 +53,22 @@ CALLGRAPH_NODE_ATTR = {'style' : 'filled', 'shape' : 'rect, plaintext', 'pencolo
 CALLGRAPH_GRAPH_ATTR = {'fontname' : "Helvetica,Arial,sans-serif", 'fontsize' : '20', 'layout' : 'dot', 'rankdir' : 'LR', 'newrank' : 'true'}
 CALLGRAPH_EDGE_ATTR = {'arrowsize':'0.5', 'fontname':"Helvetica,Arial,sans-serif", 'labeldistance':'3', 'labelfontcolor':"#00000080", 'penwidth':'2'}
 
-def format_print(data, end=""):
-    """
-    Format the print
-    """
-    spaces = " " * 15
-    return data + spaces[len(data):] + end
+class bcolors:
+    def __init__(self, color=False):
+        self.HEADER = '\033[95m' if color else ''
+        self.BLUE = '\033[94m' if color else ''
+        self.CYAN = '\033[96m' if color else ''
+        self.GREEN = '\033[92m' if color else ''
+        self.YELLOW = '\033[93m' if color else ''
+        self.RED = '\033[91m' if color else ''
+        self.ENDC = '\033[0m' if color else ''
+        self.BOLD = '\033[1m' if color else ''
+        self.BEIGE  = '\033[36m' if color else ''
+        self.UNDERLINE = '\033[4m' if color else ''
+
+def globals():
+    global color
+    color = bcolors()
 
 # Copy from cairo-lang
 # https://github.com/starkware-libs/cairo-lang/blob/167b28bcd940fd25ea3816204fa882a0b0a49603/src/starkware/cairo/lang/tracer/tracer_data.py#L261-L273

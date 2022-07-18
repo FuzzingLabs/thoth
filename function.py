@@ -1,3 +1,4 @@
+import utils
 from instruction import Instruction
 from cfg import CFG
 
@@ -63,7 +64,7 @@ class Function:
         Iterate over each instruction and print the disassembly
         """
         prototype = self.get_prototype()
-        print(f"\n\t{prototype}")
+        print(f"\n\t{utils.color.BEIGE + prototype + utils.color.ENDC}")
         for instr in self.instructions:
             print(instr.print(), end="")
         print()
