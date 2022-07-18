@@ -2,11 +2,13 @@
 
 import sys
 import json
+from turtle import color
+import utils
 from graphviz import Digraph
 
 from abi_parser import detect_type_input_json, parse_to_json, extract_events, extract_structs, extract_builtins, extract_prime
 from callgraph import CallFlowGraph
-from utils import field_element_repr, CFG_NODE_ATTR, CFG_GRAPH_ATTR, CFG_EDGE_ATTR
+from utils import CFG_NODE_ATTR, CFG_GRAPH_ATTR, CFG_EDGE_ATTR
 from function import Function
 
 # Default prime value
@@ -135,10 +137,10 @@ class Disassembler:
         """
         struct_str = ""
         for struct in self.structs:
-            struct_str += "\n\t struct: " + struct + "\n"
+            struct_str += "\n\t struct: " + utils.color.BEIGE + struct + utils.color.ENDC + "\n"
             for attribut in self.structs[struct]:
-                struct_str += "\t    " + self.structs[struct][attribut]["attribut"]
-                struct_str += "   : " + self.structs[struct][attribut]["cairo_type"] + "\n"
+                struct_str += "\t    " + utils.color.GREEN + self.structs[struct][attribut]["attribut"] + utils.color.ENDC
+                struct_str += "   : " + utils.color.YELLOW + self.structs[struct][attribut]["cairo_type"] + utils.color.ENDC + "\n"
         return struct_str
 
     def print_events(self):
@@ -160,7 +162,7 @@ class Disassembler:
         builtins_str = ""
         if self.builtins != []:
             builtins_str += "\n\t %builtins "
-            return builtins_str + ' '.join(self.builtins)
+            return builtins_str + utils.color.YELLOW + ' '.join(self.builtins) + utils.color.ENDC
         return builtins_str
 
     def dump_json(self):
@@ -186,7 +188,6 @@ class Disassembler:
             if function.offset_start == offset:
                 return function
         return None
-
 
     def print_call_flow_graph(self, filename, view=True, format="pdf"):
         """
