@@ -2,25 +2,8 @@
 
 import argparse
 import os
-from disassembler import Disassembler
-import utils
-
-__title__ = "CairoDisass"
-__version__ = "1.0.0"
-# __license__ = 'MPL 2.0'
-__description__ = "Cairo disassembler"
-__keywords__ = "Cairo disassembler"
-__author__ = "FuzzingLabs"
-__author_email__ = "contact@fuzzinglabs.com"
-__maintainer__ = "FuzzingLabs Team"
-__maintainer_email__ = "contact@fuzzinglabs.com"
-__url__ = "https://github.com/FuzzingLabs/cairo_disassembler"
-__project_urls__ = {
-    "Bug Tracker": "https://github.com/FuzzingLabs/cairo_disassembler/issues"
-}
-__download_url__ = (
-    "https://github.com/FuzzingLabs/cairo_disassembler/tarball/" + __version__
-)
+import thoth.utils as utils
+from .disassembler import Disassembler
 
 
 def parse_args():
@@ -32,7 +15,6 @@ def parse_args():
         description="Cairo Disassembler",
         epilog="The exit status is 0 for non-failures and -1 for failures.",
         formatter_class=argparse.ArgumentDefaultsHelpFormatter,
-        prog=__title__,
     )
 
     c = parser.add_argument_group("mandatory arguments")

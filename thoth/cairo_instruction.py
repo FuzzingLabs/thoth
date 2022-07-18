@@ -1,3 +1,5 @@
+#!/usr/bin/env python3
+
 # https://github.com/starkware-libs/cairo-lang/blob/4e233516f52477ad158bc81a86ec2760471c1b65/src/starkware/cairo/lang/compiler/instruction.py
 
 import dataclasses

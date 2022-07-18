@@ -1,9 +1,8 @@
+#!/usr/bin/env python3
+
 import re
-
-from pyparsing import col
-
-from utils import field_element_repr
-import utils
+from .utils import field_element_repr
+import thoth.utils as utils
 
 
 class Instruction:

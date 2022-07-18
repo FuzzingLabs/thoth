@@ -2,10 +2,9 @@
 
 import sys
 import json
-import utils
+import thoth.utils as utils
 from graphviz import Digraph
-
-from abi_parser import (
+from .abi_parser import (
     detect_type_input_json,
     extract_hints,
     parse_to_json,
@@ -15,12 +14,9 @@ from abi_parser import (
     extract_prime,
     extract_references,
 )
-from callgraph import CallFlowGraph
-from utils import CFG_NODE_ATTR, CFG_GRAPH_ATTR, CFG_EDGE_ATTR
-from function import Function
-
-# Default prime value
-DEFAULT_PRIME = (2**251) + (17 * (2**192)) + 1
+from .callgraph import CallFlowGraph
+from .utils import CFG_NODE_ATTR, CFG_GRAPH_ATTR, CFG_EDGE_ATTR, DEFAULT_PRIME
+from .function import Function
 
 
 class Disassembler:

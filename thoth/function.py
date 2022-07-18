@@ -1,6 +1,8 @@
-import utils
-from instruction import Instruction
-from cfg import CFG
+#!/usr/bin/env python3
+
+import thoth.utils as utils
+from .instruction import Instruction
+from .cfg import CFG
 
 
 class Function:
