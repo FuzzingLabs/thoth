@@ -53,10 +53,10 @@ class Function:
                 for idarg in data_content:
                     if data_content[idarg] != {}:
                         for args in data_content[idarg]:
-                            prototype += args + " : " + data_content[idarg][args] + " "
+                            prototype += args + " : " + data_content[idarg][args]
                             if int(idarg) != len(data_content) - 1:
                                 prototype += ", "
-            prototype += ")" if data_name == "args" else "}" if data_name == "implicitargs" else ""
+            prototype += ")" if (data_name == "ret" or data_name == "args") else "}" if data_name == "implicitargs" else ""
         return prototype
 
     def print(self):
