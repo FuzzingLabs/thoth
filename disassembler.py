@@ -5,7 +5,7 @@ import json
 import utils
 from graphviz import Digraph
 
-from abi_parser import detect_type_input_json, parse_to_json, extract_events, extract_structs, extract_builtins, extract_prime
+from abi_parser import detect_type_input_json, extract_hints, parse_to_json, extract_events, extract_structs, extract_builtins, extract_prime, extract_references
 from callgraph import CallFlowGraph
 from utils import CFG_NODE_ATTR, CFG_GRAPH_ATTR, CFG_EDGE_ATTR
 from function import Function
@@ -53,6 +53,8 @@ class Disassembler:
         self.builtins = extract_builtins(json_type, json_data)
         self.structs = extract_structs(json_type, json_data)
         self.events = extract_events(json_type, json_data)
+        self.references = extract_references(json_type, json_data)
+        self.hints = extract_hints(json_type, json_data)
         self.prime = extract_prime(json_type, json_data) if not None else DEFAULT_PRIME
         # self.dump_json()
 
@@ -81,13 +83,17 @@ class Disassembler:
                          is_import=not name.startswith('__'))
             )
 
-        # Analyze all the CALL to find the corresponding function
+        # Analyze all the CALL to find the corresponding function, also set the references and hints to their instructions
         for func in self.functions:
             for inst in func.instructions:
                 # Only for direct call
                 if inst.is_call_direct():
                     xref_func = self.get_function_by_offset(str(inst.call_offset))
                     inst.call_xref_func_name = xref_func.name if xref_func is not None else None
+                if (inst.id in self.references):
+                    inst.ref = self.references[inst.id]
+                if (inst.id in self.hints):
+                    inst.hint = self.hints[inst.id]
 
     def print_disassembly(self, func_name=None, func_offset=None):
         """
