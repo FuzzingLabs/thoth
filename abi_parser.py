@@ -159,7 +159,7 @@ def extract_functions(json_type, json_data):
     return (func_offset, func_identifiers)
 
 
-def extract_struct(json_type, json_data):
+def extract_structs(json_type, json_data):
     """
     Return a dictionnary that contains all the struct
     """
@@ -186,7 +186,7 @@ def extract_struct(json_type, json_data):
 
 def extract_builtins(json_type, json_data):
     """
-    Return a dictionnary that contains all the builtins
+    Return a list that contains all the builtins
     """
     if json_type == "cairo":
         builtins = json_data["builtins"]
@@ -195,6 +195,22 @@ def extract_builtins(json_type, json_data):
     else:
         builtins = []
     return builtins
+
+def extract_events(json_type, json_data):
+    """
+    Return a dictionnary that contains all the event functions
+    """
+    events = {}
+    if json_type == "cairo":
+        # no events in cairo
+        pass
+    if json_type == "starknet":
+        for entry in json_data["abi"]:
+            if entry['type'] == 'event':
+                events[entry['name']] = entry['data']
+    else:
+        pass
+    return events
 
 
 def parse_to_json(json_data, json_type):

@@ -4,7 +4,7 @@ import sys
 import json
 from graphviz import Digraph
 
-from abi_parser import detect_type_input_json, parse_to_json, extract_struct, extract_builtins, extract_prime
+from abi_parser import detect_type_input_json, parse_to_json, extract_events, extract_structs, extract_builtins, extract_prime
 from callgraph import CallFlowGraph
 from utils import field_element_repr, CFG_NODE_ATTR, CFG_GRAPH_ATTR, CFG_EDGE_ATTR
 from function import Function
@@ -21,10 +21,11 @@ class Disassembler:
     """
     def __init__(self, file, analyze=True):
         self.file = file
-        self.functions = []
-        self.structs = None
         self.json = None
+        self.functions = []
         self.builtins = []
+        self.structs = {}
+        self.events = {}
         self.call_graph = None
         self.prime = None
 
@@ -48,8 +49,9 @@ class Disassembler:
         # Start parsing the json to extract interesting info
         json_type = detect_type_input_json(json_data)
         self.json = parse_to_json(json_data, json_type)
-        self.structs = extract_struct(json_type, json_data)
         self.builtins = extract_builtins(json_type, json_data)
+        self.structs = extract_structs(json_type, json_data)
+        self.events = extract_events(json_type, json_data)
         self.prime = extract_prime(json_type, json_data) if not None else DEFAULT_PRIME
         # self.dump_json()
 
@@ -92,9 +94,13 @@ class Disassembler:
         """
         if self.builtins != []:
             print("_" * 75)
-        print(self.print_builtins())
-        print("_" * 75)
-        print(self.print_structs())
+            print(self.print_builtins())
+        if self.structs != {}:
+            print("_" * 75)
+            print(self.print_structs())
+        if self.events != {}:
+            print("_" * 75)
+            print(self.print_events())
         print("_" * 75)
 
         if self.functions == []:
@@ -134,6 +140,18 @@ class Disassembler:
                 struct_str += "\t    " + self.structs[struct][attribut]["attribut"]
                 struct_str += "   : " + self.structs[struct][attribut]["cairo_type"] + "\n"
         return struct_str
+
+    def print_events(self):
+        """
+        Print the events
+        """
+        events_str = ""
+        for event_name, data in self.events.items():
+            events_str += "\n\t event: " + event_name + "\n"
+            for attribut in data:
+                events_str += "\t    " + attribut["name"]
+                events_str += "   : " + attribut["type"] + "\n"
+        return events_str
 
     def print_builtins(self):
         """
