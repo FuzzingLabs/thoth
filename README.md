@@ -2,28 +2,6 @@
 
 Thoth is a Cairo/starknet bytecode disassembler written in Python 3.
 
-
-# Cairo/Starknet compilation
-
-```sh
-cairo-compile tests/cairo_files/if_negative.cairo --output tests/json_files/if_negative.json
-
-starknet-compile the_contract.cairo  --output contract_compiled.json  --abi contract_abi.json
-```
-
-
-## run the bytecode
-```sh
-cairo-run --program=tests/json_files/if_negative.json --print_output --layout=small
-```
-
-to see the offset and the bytecode :
-
-```sh
-cairo-run --program=tests/json_files/if_negative.json --print_memory 
-```
-
-# How to use Thoth
 ## Installation
 
 ```sh
@@ -74,6 +52,26 @@ python3 -m thoth -f FILENAME -call
 For a specific output format:
 ```sh
 python3 -m thoth -f FILENAME -call -format [pdf/svg/png]
+```
+
+# Cairo/Starknet Compilation
+
+```sh
+cairo-compile tests/cairo_files/if_negative.cairo --output tests/json_files/if_negative.json
+
+starknet-compile the_contract.cairo  --output contract_compiled.json  --abi contract_abi.json
+```
+
+
+## run the bytecode
+```sh
+cairo-run --program=tests/json_files/if_negative.json --print_output --layout=small
+```
+
+to see the offset and the bytecode :
+
+```sh
+cairo-run --program=tests/json_files/if_negative.json --print_memory 
 ```
 
 # Run testsuit

@@ -1,7 +1,7 @@
 import unittest
 import glob
 
-from disassembler import Disassembler
+from thoth.disassembler import Disassembler
 
 
 class TestDisassembler(unittest.TestCase):

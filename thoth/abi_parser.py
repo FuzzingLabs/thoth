@@ -72,9 +72,7 @@ def extract_function_prototype(func_offset, identifiers_data, entry_points_by_ty
 
                 tmp = {}
                 for argument in data:
-                    ret_data = identifiers_data[function_identifier]["members"][
-                        argument
-                    ]
+                    ret_data = identifiers_data[function_identifier]["members"][argument]
                     tmp[ret_data["offset"]] = {}
                     tmp[ret_data["offset"]][argument] = ret_data["cairo_type"]
                 identifiers[identifier_name[1:].lower()] = dict(
@@ -82,10 +80,7 @@ def extract_function_prototype(func_offset, identifiers_data, entry_points_by_ty
                 )
 
         # get decorators
-        if (
-            func_name in identifiers_data
-            and "decorators" in identifiers_data[func_name]
-        ):
+        if func_name in identifiers_data and "decorators" in identifiers_data[func_name]:
             identifiers["decorators"] = identifiers_data[func_name]["decorators"]
 
         # get entry_points
@@ -145,9 +140,7 @@ def extract_functions(json_type, json_data):
             else json_data["program"]["identifiers"]
         )
         entry_points_by_type = (
-            json_data["entry_points_by_type"]
-            if ("entry_points_by_type" in json_data)
-            else None
+            json_data["entry_points_by_type"] if ("entry_points_by_type" in json_data) else None
         )
 
         # Get function name and put it in dictionnary with offset as key
@@ -186,12 +179,10 @@ def extract_structs(json_type, json_data):
                 for attribut in values["members"]:
                     tmp[values["members"][attribut]["offset"]] = {}
                     tmp[values["members"][attribut]["offset"]]["attribut"] = attribut
-                    tmp[values["members"][attribut]["offset"]]["cairo_type"] = values[
-                        "members"
-                    ][attribut]["cairo_type"]
-                struct_identifiers[key] = dict(
-                    collections.OrderedDict(sorted(tmp.items()))
-                )
+                    tmp[values["members"][attribut]["offset"]]["cairo_type"] = values["members"][
+                        attribut
+                    ]["cairo_type"]
+                struct_identifiers[key] = dict(collections.OrderedDict(sorted(tmp.items())))
     return struct_identifiers
 
 
@@ -229,18 +220,14 @@ def extract_hints(json_type, json_data):
     hints_identifiers = {}
     if json_type != "get_code":
         instruction_data = (
-            json_data["hints"]
-            if ("hints" in json_data)
-            else json_data["program"]["hints"]
+            json_data["hints"] if ("hints" in json_data) else json_data["program"]["hints"]
         )
         # Get function name and put it in dictionnary with offset as key
         for key, values in instruction_data.items():
             for data in values:
                 if "code" in data:
                     hints_identifiers[str(key)] = data["code"]
-        hints_identifiers = dict(
-            collections.OrderedDict(sorted(hints_identifiers.items()))
-        )
+        hints_identifiers = dict(collections.OrderedDict(sorted(hints_identifiers.items())))
     return hints_identifiers
 
 
@@ -253,7 +240,7 @@ def extract_references(json_type, json_data):
             else json_data["program"]["identifiers"]
         )
         # Get function name and put it in dictionnary with offset as key
-        for key, values in identifiers_data.items():
+        for _, values in identifiers_data.items():
             if values["type"] == "reference":
                 for ref in values["references"]:
                     references_identifiers[str(ref["pc"])] = str(ref["value"])
@@ -287,18 +274,14 @@ def parse_to_json(json_data, json_type):
                 func_offset[str(offset)] if (json_type != "get_code") else "function 0"
             )
             bytecodes_to_json[actual_function] = {}
-            bytecodes_to_json[actual_function]["data"] = func_identifiers[
-                actual_function
-            ]
+            bytecodes_to_json[actual_function]["data"] = func_identifiers[actual_function]
             bytecodes_to_json[actual_function]["instruction"] = {}
         try:
             decoded = decode_instruction(bytecode_data[offset])
             incr = 1
         except AssertionError:
             # l[offset + 1] -> imm value
-            decoded = decode_instruction(
-                bytecode_data[offset], bytecode_data[offset + 1]
-            )
+            decoded = decode_instruction(bytecode_data[offset], bytecode_data[offset + 1])
             incr = 2
         key = str(offset)
         bytecodes_to_json[actual_function]["instruction"][key] = {}

@@ -132,9 +132,7 @@ class CallFlowGraph:
         while len(edges) > 0:
             # Multiple edges are the same
             if edges.count(edges[0]) > 1:
-                self.dot.edge(
-                    str(edges[0][0]), str(edges[0][1]), label=str(edges.count(edges[0]))
-                )
+                self.dot.edge(str(edges[0][0]), str(edges[0][1]), label=str(edges.count(edges[0])))
             # Unique edge
             else:
                 self.dot.edge(str(edges[0][0]), str(edges[0][1]))

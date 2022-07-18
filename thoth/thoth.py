@@ -2,7 +2,7 @@
 
 import argparse
 import os
-import thoth.utils as utils
+from thoth import utils
 from .disassembler import Disassembler
 
 
@@ -37,12 +37,8 @@ def parse_args():
         action="store_true",
         help="Print JSON with details of all instructions",
     )
-    m.add_argument(
-        "-c", "-call", "--call", action="store_true", help="Print call flow graph"
-    )
-    m.add_argument(
-        "-g", "-cfg", "--cfg", action="store_true", help="Print control flow graph"
-    )
+    m.add_argument("-c", "-call", "--call", action="store_true", help="Print call flow graph")
+    m.add_argument("-g", "-cfg", "--cfg", action="store_true", help="Print control flow graph")
     m.add_argument(
         "-format",
         "--format",
@@ -51,9 +47,7 @@ def parse_args():
         choices=["pdf", "png", "svg"],
         help="Format of the graphs",
     )
-    m.add_argument(
-        "-color", "--color", action="store_true", help="Print disassembler with color"
-    )
+    m.add_argument("-color", "--color", action="store_true", help="Print disassembler with color")
     m.add_argument(
         "-function",
         "--function",
@@ -94,9 +88,7 @@ def main():
 
     # print CFG
     if args.cfg:
-        disassembler.print_cfg(
-            filename=filename, format=format, func_name=args.function
-        )
+        disassembler.print_cfg(filename=filename, format=format, func_name=args.function)
 
     # print analytics
     if args.analytics:

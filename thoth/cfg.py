@@ -135,9 +135,7 @@ class CFG:
         # TODO - issue #45
         print()
         for block in self.basicblocks:
-            print(
-                f"-- BB {block.name, len(block.instructions)} {block.edges_offset} --"
-            )
+            print(f"-- BB {block.name, len(block.instructions)} {block.edges_offset} --")
             for instr in block.instructions:
                 print(instr.print())
             print()
@@ -161,9 +159,7 @@ class CFG:
             shape = "square"
             label_instruction = ""
             for instr in block.instructions:
-                label_instruction += re.sub(
-                    "\s+", " ", instr.print().replace("\n", "\\l")
-                )
+                label_instruction += re.sub("\s+", " ", instr.print().replace("\n", "\\l"))
             self.dot.node(block.name, label=label_instruction + "\\l", shape=shape)
 
             # Iterate over edges_offset
