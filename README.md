@@ -1,10 +1,9 @@
-# cairo_disassembler
+# Thoth
 
-Development: Cairo Bytecode Disassembler
-Expected features: Bytecode to instructions, CFG graph, Call graph, Analytics 
+Thoth is a Cairo/starknet bytecode disassembler written in Python 3.
 
 
-## Compilation
+# Cairo/Starknet compilation
 
 ```sh
 cairo-compile tests/cairo_files/if_negative.cairo --output tests/json_files/if_negative.json
@@ -24,19 +23,64 @@ to see the offset and the bytecode :
 cairo-run --program=tests/json_files/if_negative.json --print_memory 
 ```
 
-# Run disassembler
-
-Temporary, the disassembler is not a python package, the first release should be a package to install with pip.
+# How to use Thoth
+## Installation
 
 ```sh
-python3 __main__.py cairo -file tests/json_files/if_negative.json
+python3 -m pip install .
+```
+
+## Run disassembler
+
+```sh
+python3 -m thoth -f FILENAME
+```
+
+To get a pretty version:
+
+```sh
+python3 -m thoth -f FILENAME -color
+```
+
+To get a verbose version with more details about decoded bytecodes:
+```sh
+python3 -m thoth -f FILENAME -vvv
+```
+
+## Get analytics
+```sh
+python3 -m thoth -f FILENAME -analytics
+```
+
+## Print CFG 
+
+```sh
+python3 -m thoth -f FILENAME -cfg
+```
+For a specific function:
+```sh
+python3 -m thoth -f FILENAME -cfg -function FUNCTION_NAME
+```
+For a specific output format:
+```sh
+python3 -m thoth -f FILENAME -cfg -format [pdf/svg/png]
+```
+
+## Print Call Flow Graph 
+
+```sh
+python3 -m thoth -f FILENAME -call
+```
+For a specific output format:
+```sh
+python3 -m thoth -f FILENAME -call -format [pdf/svg/png]
 ```
 
 # Run testsuit
 ```sh
-python3 tests/regression_test.py
+python3 tests/test.py
 ```
 
-## License
+# License
 
 Thoth is licensed and distributed under the AGPLv3 license. [Contact us](mailto:contact@fuzzinglabs.com) if you're looking for an exception to the terms.

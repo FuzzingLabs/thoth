@@ -2,16 +2,22 @@
 
 import sys
 import json
-import utils
+import thoth.utils as utils
 from graphviz import Digraph
+from .abi_parser import (
+    detect_type_input_json,
+    extract_hints,
+    parse_to_json,
+    extract_events,
+    extract_structs,
+    extract_builtins,
+    extract_prime,
+    extract_references,
+)
+from .callgraph import CallFlowGraph
+from .utils import CFG_NODE_ATTR, CFG_GRAPH_ATTR, CFG_EDGE_ATTR, DEFAULT_PRIME
+from .function import Function
 
-from abi_parser import detect_type_input_json, extract_hints, parse_to_json, extract_events, extract_structs, extract_builtins, extract_prime, extract_references
-from callgraph import CallFlowGraph
-from utils import CFG_NODE_ATTR, CFG_GRAPH_ATTR, CFG_EDGE_ATTR
-from function import Function
-
-# Default prime value
-DEFAULT_PRIME = (2**251) + (17 * (2**192)) + 1
 
 class Disassembler:
     """
@@ -20,6 +26,7 @@ class Disassembler:
     loads the cairo json (Bytecode + ABI)
     Analyze and disassemble
     """
+
     def __init__(self, file, analyze=True):
         self.file = file
         self.json = None
@@ -43,7 +50,7 @@ class Disassembler:
             json_data = json.load(f)
 
         # Check the file is OK
-        if (json_data is None or json_data == ""):
+        if json_data is None or json_data == "":
             print("Error: The provided JSON is empty")
             sys.exit(1)
 
@@ -70,17 +77,19 @@ class Disassembler:
             decorators = self.json[function]["data"]["decorators"]
 
             self.functions.append(
-                Function(self.prime,
-                         offset_start,
-                         offset_end,
-                         name,
-                         instructions,
-                         args,
-                         implicitargs,
-                         ret,
-                         decorators,
-                         entry_point=self.json[function]["data"]["entry_point"],
-                         is_import=not name.startswith('__'))
+                Function(
+                    self.prime,
+                    offset_start,
+                    offset_end,
+                    name,
+                    instructions,
+                    args,
+                    implicitargs,
+                    ret,
+                    decorators,
+                    entry_point=self.json[function]["data"]["entry_point"],
+                    is_import=not name.startswith("__"),
+                )
             )
 
         # Analyze all the CALL to find the corresponding function, also set the references and hints to their instructions
@@ -89,10 +98,12 @@ class Disassembler:
                 # Only for direct call
                 if inst.is_call_direct():
                     xref_func = self.get_function_by_offset(str(inst.call_offset))
-                    inst.call_xref_func_name = xref_func.name if xref_func is not None else None
-                if (inst.id in self.references):
+                    inst.call_xref_func_name = (
+                        xref_func.name if xref_func is not None else None
+                    )
+                if inst.id in self.references:
                     inst.ref = self.references[inst.id]
-                if (inst.id in self.hints):
+                if inst.id in self.hints:
                     inst.hint = self.hints[inst.id]
 
     def print_disassembly(self, func_name=None, func_offset=None):
@@ -118,7 +129,7 @@ class Disassembler:
             sys.exit(1)
 
         # Disassembly for all functions
-        elif (func_name is None and func_offset is None):
+        elif func_name is None and func_offset is None:
             for function in self.functions:
                 function.print()
 
@@ -142,10 +153,23 @@ class Disassembler:
         """
         struct_str = ""
         for struct in self.structs:
-            struct_str += "\n\t struct: " + utils.color.BEIGE + struct + utils.color.ENDC + "\n"
+            struct_str += (
+                "\n\t struct: " + utils.color.BEIGE + struct + utils.color.ENDC + "\n"
+            )
             for attribut in self.structs[struct]:
-                struct_str += "\t    " + utils.color.GREEN + self.structs[struct][attribut]["attribut"] + utils.color.ENDC
-                struct_str += "   : " + utils.color.YELLOW + self.structs[struct][attribut]["cairo_type"] + utils.color.ENDC + "\n"
+                struct_str += (
+                    "\t    "
+                    + utils.color.GREEN
+                    + self.structs[struct][attribut]["attribut"]
+                    + utils.color.ENDC
+                )
+                struct_str += (
+                    "   : "
+                    + utils.color.YELLOW
+                    + self.structs[struct][attribut]["cairo_type"]
+                    + utils.color.ENDC
+                    + "\n"
+                )
         return struct_str
 
     def print_events(self):
@@ -154,10 +178,24 @@ class Disassembler:
         """
         events_str = ""
         for event_name, data in self.events.items():
-            events_str += "\n\t event: " + utils.color.BEIGE + event_name + utils.color.ENDC + "\n"
+            events_str += (
+                "\n\t event: "
+                + utils.color.BEIGE
+                + event_name
+                + utils.color.ENDC
+                + "\n"
+            )
             for attribut in data:
-                events_str += "\t    " + utils.color.GREEN + attribut["name"] + utils.color.ENDC
-                events_str += "   : " + utils.color.YELLOW + attribut["type"] + utils.color.ENDC + "\n"
+                events_str += (
+                    "\t    " + utils.color.GREEN + attribut["name"] + utils.color.ENDC
+                )
+                events_str += (
+                    "   : "
+                    + utils.color.YELLOW
+                    + attribut["type"]
+                    + utils.color.ENDC
+                    + "\n"
+                )
         return events_str
 
     def print_builtins(self):
@@ -167,7 +205,12 @@ class Disassembler:
         builtins_str = ""
         if self.builtins != []:
             builtins_str += "\n\t %builtins "
-            return builtins_str + utils.color.RED + ' '.join(self.builtins) + utils.color.ENDC
+            return (
+                builtins_str
+                + utils.color.RED
+                + " ".join(self.builtins)
+                + utils.color.ENDC
+            )
         return builtins_str
 
     def dump_json(self):
@@ -200,29 +243,34 @@ class Disassembler:
         """
         # The CallFlowGraph is not generated yet
         if self.call_graph is None:
-            self.call_graph = CallFlowGraph(self.functions, filename=filename, format=format)
+            self.call_graph = CallFlowGraph(
+                self.functions, filename=filename, format=format
+            )
 
         # Show/Render the CallFlowGraph
         self.call_graph.print(view)
         return self.call_graph.dot
 
-    def print_cfg(self, filename, format="pdf", func_name=None, func_offset=None, view=True):
+    def print_cfg(
+        self, filename, format="pdf", func_name=None, func_offset=None, view=True
+    ):
         """
         Print the CFG (Control Flow Graph)
         """
         # Create a dot graph
-        graph = Digraph(name=filename,
-                        node_attr=CFG_NODE_ATTR,
-                        graph_attr=CFG_GRAPH_ATTR,
-                        edge_attr=CFG_EDGE_ATTR)
+        graph = Digraph(
+            name=filename,
+            node_attr=CFG_NODE_ATTR,
+            graph_attr=CFG_GRAPH_ATTR,
+            edge_attr=CFG_EDGE_ATTR,
+        )
         graph.format = format
         # The graph will contains all functions
-        if (func_name is None and func_offset is None):
+        if func_name is None and func_offset is None:
             for function in self.functions:
                 function.generate_cfg()
                 graph.subgraph(function.cfg.dot)
-            graph.render(directory='output-cfg', view=view)
-
+            graph.render(directory="output-cfg", view=view)
 
         # Only `func_name` or `func_offset` will be in the graph
         else:
@@ -236,7 +284,7 @@ class Disassembler:
             if function is not None:
                 function.generate_cfg()
                 graph.subgraph(function.cfg.dot)
-                graph.render(directory='output-cfg', view=view)
+                graph.render(directory="output-cfg", view=view)
             else:
                 print("Error : Function does not exist.")
 
@@ -259,5 +307,5 @@ class Disassembler:
                     call += 1
             analytics["decorators"] += function.decorators
         analytics["call_nbr"] = str(call)
-        #print(json.dumps(analytics, indent=3))
+        # print(json.dumps(analytics, indent=3))
         return analytics
