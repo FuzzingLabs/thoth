@@ -22,7 +22,7 @@ class TestDisassembler(unittest.TestCase):
         with open("./tests/json_files/cairo_return.json", "r") as file:
             disassembler = Disassembler([file])
         analytics = disassembler.analytics()
-        self.assertEqual(analytics["entry_point"], "__main__.main")
+        self.assertEqual(analytics["entry_point"], ["__main__.main"])
         self.assertEqual(analytics["functions"], "2")
         self.assertEqual(analytics["builtins"], "0")
         self.assertEqual(analytics["decorators"], [])

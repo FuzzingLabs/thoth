@@ -222,15 +222,14 @@ class Disassembler:
         analytics["builtins"] = str(len(self.builtins))
         analytics["decorators"] = []
         call = 0
-        entry_point = ""
+        analytics["entry_point"] = []
         for function in self.functions:
             if function.entry_point:
-                entry_point = function.name
+                analytics["entry_point"].append(function.name)
             for instruction in function.instructions:
                 if instruction.opcode == "CALL":
                     call += 1
             analytics["decorators"] += function.decorators
         analytics["call_nbr"] = str(call)
-        analytics["entry_point"] = entry_point
         #print(json.dumps(analytics, indent=3))
         return analytics
