@@ -40,6 +40,7 @@ def parse_args():
     m.add_argument('-g', '-cfg', '--cfg', action='store_true', help='Print control flow graph')
     m.add_argument('-format', '--format', metavar="Format of the output file [png-svg-pdf]", nargs='?', choices=['pdf', 'png', 'svg'], help='Format of the graphs')
     m.add_argument('-color', '--color', action='store_true', help='Print disassembler with color')
+    m.add_argument('-function', '--function', type=str, required=False, help='Print disassembler with color')
     m.add_argument('-a', '-analytics', '--analytics', action='store_true', help='Dump a Json file containing debug information')
 
     return parser.parse_args()
@@ -67,7 +68,7 @@ def main():
 
     # print CFG
     if (args.cfg):
-        disassembler.print_cfg(filename=filename, format=format)
+        disassembler.print_cfg(filename=filename, format=format, func_name=args.function)
 
     # print analytics
     if args.analytics:
