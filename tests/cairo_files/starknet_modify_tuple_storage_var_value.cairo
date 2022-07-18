@@ -17,7 +17,7 @@ func modify_my_tuple_storage_var{
         value_2 : felt,
         value_3 : felt
     ):
-    # The tuple is declared with round brackets.
+    
     my_tuple_storage_var.write((value_1, value_2, value_3))
     return ()
 end
