@@ -2,7 +2,7 @@
 
 import re
 from .utils import field_element_repr
-import thoth.utils as utils
+from thoth import utils
 
 
 class Instruction:
@@ -109,16 +109,12 @@ class Instruction:
         """
         disass_str = ""
         if "REGULAR" not in self.pcUpdate:
-            disass_str += self.print_instruction(
-                f"{self.pcUpdate}", color=utils.color.RED
-            )
+            disass_str += self.print_instruction(f"{self.pcUpdate}", color=utils.color.RED)
             disass_str += self.print_instruction(
                 field_element_repr(int(self.imm), self.prime), utils.color.BLUE
             )
         else:
-            disass_str += self.print_instruction(
-                f"{self.opcode}", color=utils.color.RED
-            )
+            disass_str += self.print_instruction(f"{self.opcode}", color=utils.color.RED)
         return disass_str
 
     def _handle_call(self):
@@ -142,9 +138,7 @@ class Instruction:
             # relative CALL to a label
             # e.g. call rel (123)
             else:
-                disass_str += self.print_instruction(
-                    f"rel ({offset})", color=utils.color.BLUE
-                )
+                disass_str += self.print_instruction(f"rel ({offset})", color=utils.color.BLUE)
 
         # Indirect CALL
         # e.g. call rel [fp + 4]
@@ -168,9 +162,7 @@ class Instruction:
         Print the instruction
         """
         disass_str = ""
-        disass_str += self.print_instruction(
-            f"\noffset {self.id}:", color=utils.color.HEADER
-        )
+        disass_str += self.print_instruction(f"\noffset {self.id}:", color=utils.color.HEADER)
         if "ASSERT_EQ" in self.opcode:
             disass_str += self._handle_assert_eq()
 
@@ -192,38 +184,17 @@ class Instruction:
                 f" # {self.hint} | {self.ref}", color=utils.color.BEIGE
             )
         elif self.hint:
-            disass_str += self.print_instruction(
-                f" # {self.hint}", color=utils.color.BEIGE
-            )
+            disass_str += self.print_instruction(f" # {self.hint}", color=utils.color.BEIGE)
         elif self.ref:
-            disass_str += self.print_instruction(
-                f" # {self.ref}", color=utils.color.BEIGE
-            )
+            disass_str += self.print_instruction(f" # {self.ref}", color=utils.color.BEIGE)
 
         if "REGULAR" not in self.apUpdate:
             op = list(filter(None, re.split(r"(\d+)", self.apUpdate)))
             APopcode = op[0]
-            APval = (
-                op[1]
-                if (len(op) > 1)
-                else int(field_element_repr(int(self.imm), self.prime))
-            )
-            disass_str += self.print_instruction(
-                f"\noffset {self.id}:", color=utils.color.HEADER
-            )
-            disass_str += self.print_instruction(
-                f"{APopcode}", color=utils.color.YELLOW
-            )
+            APval = op[1] if (len(op) > 1) else int(field_element_repr(int(self.imm), self.prime))
+            disass_str += self.print_instruction(f"\noffset {self.id}:", color=utils.color.HEADER)
+            disass_str += self.print_instruction(f"{APopcode}", color=utils.color.YELLOW)
             disass_str += self.print_instruction(f"AP, {APval}")
-
-        if self.ref:
-            disass_str += self.print_instruction(
-                f"# {self.ref}", color=utils.color.BEIGE
-            )
-        if self.hint:
-            disass_str += self.print_instruction(
-                f"# {self.hint}", color=utils.color.BEIGE
-            )
 
         return disass_str
 

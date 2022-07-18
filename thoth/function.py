@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-import thoth.utils as utils
+from thoth import utils
 from .instruction import Instruction
 from .cfg import CFG
 
@@ -47,9 +47,7 @@ class Function:
         for offset in self.instructions_dict:
             for bytecode in self.instructions_dict[offset]:
                 self.instructions.append(
-                    Instruction(
-                        offset, self.instructions_dict[offset][bytecode], self.prime
-                    )
+                    Instruction(offset, self.instructions_dict[offset][bytecode], self.prime)
                 )
         return self.instructions
 
@@ -86,13 +84,7 @@ class Function:
                             prototype += args + " : " + data_content[idarg][args]
                             if int(idarg) != len(data_content) - 1:
                                 prototype += ", "
-            prototype += (
-                ")"
-                if data_name == "args"
-                else "}"
-                if data_name == "implicitargs"
-                else ""
-            )
+            prototype += ")" if data_name == "args" else "}" if data_name == "implicitargs" else ""
         return prototype
 
     def print(self):
