@@ -186,13 +186,19 @@ class Instruction:
         else:
             # Should never happen - Unknown opcode
             raise AssertionError
-            
+
         if self.hint and self.ref:
-            disass_str += self.print_instruction(f" # {self.hint} | {self.ref}", color=utils.color.BEIGE)
+            disass_str += self.print_instruction(
+                f" # {self.hint} | {self.ref}", color=utils.color.BEIGE
+            )
         elif self.hint:
-            disass_str += self.print_instruction(f" # {self.hint}", color=utils.color.BEIGE)
+            disass_str += self.print_instruction(
+                f" # {self.hint}", color=utils.color.BEIGE
+            )
         elif self.ref:
-            disass_str += self.print_instruction(f" # {self.ref}", color=utils.color.BEIGE)
+            disass_str += self.print_instruction(
+                f" # {self.ref}", color=utils.color.BEIGE
+            )
 
         if "REGULAR" not in self.apUpdate:
             op = list(filter(None, re.split(r"(\d+)", self.apUpdate)))
@@ -210,7 +216,6 @@ class Instruction:
             )
             disass_str += self.print_instruction(f"AP, {APval}")
 
-<<<<<<< HEAD:thoth/instruction.py
         if self.ref:
             disass_str += self.print_instruction(
                 f"# {self.ref}", color=utils.color.BEIGE
@@ -220,8 +225,6 @@ class Instruction:
                 f"# {self.hint}", color=utils.color.BEIGE
             )
 
-=======
->>>>>>> 4fe87e74d42917f51a7ccdf9d6229a0359e960a8:instruction.py
         return disass_str
 
     def print_instruction(self, data, color="", end=""):
@@ -229,8 +232,4 @@ class Instruction:
         Format the print
         """
         spaces = " " * 20
-<<<<<<< HEAD:thoth/instruction.py
         return color + data + utils.color.ENDC + spaces[len(data) :] + end
-=======
-        return color + data + utils.color.ENDC +  spaces[len(data):] + end
->>>>>>> 4fe87e74d42917f51a7ccdf9d6229a0359e960a8:instruction.py
