@@ -1,0 +1,4377 @@
+{
+    "abi": [],
+    "entry_points_by_type": {
+        "CONSTRUCTOR": [],
+        "EXTERNAL": [],
+        "L1_HANDLER": []
+    },
+    "program": {
+        "attributes": [],
+        "builtins": [
+            "bitwise"
+        ],
+        "data": [
+            "0x400380007ffb7ffc",
+            "0x400380017ffb7ffd",
+            "0x482680017ffb8000",
+            "0x5",
+            "0x480280027ffb8000",
+            "0x480280037ffb8000",
+            "0x480280047ffb8000",
+            "0x208b7fff7fff7ffe",
+            "0x400380007ffb7ffc",
+            "0x400380017ffb7ffd",
+            "0x482680017ffb8000",
+            "0x5",
+            "0x480280027ffb8000",
+            "0x208b7fff7fff7ffe",
+            "0x400380007ffb7ffc",
+            "0x400380017ffb7ffd",
+            "0x482680017ffb8000",
+            "0x5",
+            "0x480280037ffb8000",
+            "0x208b7fff7fff7ffe",
+            "0x400380007ffb7ffc",
+            "0x400380017ffb7ffd",
+            "0x482680017ffb8000",
+            "0x5",
+            "0x480280047ffb8000",
+            "0x208b7fff7fff7ffe",
+            "0x480680017fff8000",
+            "0xc",
+            "0x400680017fff7fff",
+            "0xc",
+            "0x480680017fff8000",
+            "0xc",
+            "0x400680017fff7fff",
+            "0xc",
+            "0x480680017fff8000",
+            "0xa",
+            "0x400680017fff7fff",
+            "0xa",
+            "0x480680017fff8000",
+            "0xa",
+            "0x400680017fff7fff",
+            "0xa",
+            "0x480a7ffd7fff8000",
+            "0x480680017fff8000",
+            "0xc",
+            "0x480680017fff8000",
+            "0xa",
+            "0x1104800180018000",
+            "0x800000000000010ffffffffffffffffffffffffffffffffffffffffffffffda",
+            "0x400680017fff7fff",
+            "0x8",
+            "0x48127ffe7fff8000",
+            "0x480680017fff8000",
+            "0xc",
+            "0x480680017fff8000",
+            "0xa",
+            "0x1104800180018000",
+            "0x800000000000010ffffffffffffffffffffffffffffffffffffffffffffffd7",
+            "0x400680017fff7fff",
+            "0x6",
+            "0x48127ffe7fff8000",
+            "0x480680017fff8000",
+            "0xc",
+            "0x480680017fff8000",
+            "0xa",
+            "0x1104800180018000",
+            "0x800000000000010ffffffffffffffffffffffffffffffffffffffffffffffd4",
+            "0x400680017fff7fff",
+            "0xe",
+            "0x48127ffe7fff8000",
+            "0x480680017fff8000",
+            "0xc",
+            "0x480680017fff8000",
+            "0xa",
+            "0x1104800180018000",
+            "0x800000000000010ffffffffffffffffffffffffffffffffffffffffffffffb7",
+            "0x40127fe87fff7ffd",
+            "0x40127fef7fff7ffe",
+            "0x40127ff67fff7fff",
+            "0x48127ffc7fff8000",
+            "0x480680017fff8000",
+            "0x400000000000000000000000000000000000000000000000000000000000000",
+            "0x480680017fff8000",
+            "0x8",
+            "0x1104800180018000",
+            "0x800000000000010ffffffffffffffffffffffffffffffffffffffffffffffc1",
+            "0x400680017fff7fff",
+            "0x400000000000000000000000000000000000000000000000000000000000008",
+            "0x48127ffe7fff8000",
+            "0x208b7fff7fff7ffe"
+        ],
+        "debug_info": {
+            "file_contents": {},
+            "instruction_locations": {
+                "0": {
+                    "accessible_scopes": [
+                        "starkware.cairo.common.bitwise",
+                        "starkware.cairo.common.bitwise.bitwise_operations"
+                    ],
+                    "flow_tracking_data": {
+                        "ap_tracking": {
+                            "group": 0,
+                            "offset": 0
+                        },
+                        "reference_ids": {
+                            "starkware.cairo.common.bitwise.bitwise_operations.bitwise_ptr": 2,
+                            "starkware.cairo.common.bitwise.bitwise_operations.x": 0,
+                            "starkware.cairo.common.bitwise.bitwise_operations.y": 1
+                        }
+                    },
+                    "hints": [],
+                    "inst": {
+                        "end_col": 22,
+                        "end_line": 19,
+                        "input_file": {
+                            "filename": "/home/seb/cairo_venv/lib/python3.8/site-packages/starkware/cairo/common/bitwise.cairo"
+                        },
+                        "start_col": 5,
+                        "start_line": 19
+                    }
+                },
+                "1": {
+                    "accessible_scopes": [
+                        "starkware.cairo.common.bitwise",
+                        "starkware.cairo.common.bitwise.bitwise_operations"
+                    ],
+                    "flow_tracking_data": {
+                        "ap_tracking": {
+                            "group": 0,
+                            "offset": 0
+                        },
+                        "reference_ids": {
+                            "starkware.cairo.common.bitwise.bitwise_operations.bitwise_ptr": 2,
+                            "starkware.cairo.common.bitwise.bitwise_operations.x": 0,
+                            "starkware.cairo.common.bitwise.bitwise_operations.y": 1
+                        }
+                    },
+                    "hints": [],
+                    "inst": {
+                        "end_col": 22,
+                        "end_line": 20,
+                        "input_file": {
+                            "filename": "/home/seb/cairo_venv/lib/python3.8/site-packages/starkware/cairo/common/bitwise.cairo"
+                        },
+                        "start_col": 5,
+                        "start_line": 20
+                    }
+                },
+                "2": {
+                    "accessible_scopes": [
+                        "starkware.cairo.common.bitwise",
+                        "starkware.cairo.common.bitwise.bitwise_operations"
+                    ],
+                    "flow_tracking_data": {
+                        "ap_tracking": {
+                            "group": 0,
+                            "offset": 0
+                        },
+                        "reference_ids": {
+                            "starkware.cairo.common.bitwise.bitwise_operations.bitwise_ptr": 6,
+                            "starkware.cairo.common.bitwise.bitwise_operations.x": 0,
+                            "starkware.cairo.common.bitwise.bitwise_operations.x_and_y": 3,
+                            "starkware.cairo.common.bitwise.bitwise_operations.x_or_y": 5,
+                            "starkware.cairo.common.bitwise.bitwise_operations.x_xor_y": 4,
+                            "starkware.cairo.common.bitwise.bitwise_operations.y": 1
+                        }
+                    },
+                    "hints": [],
+                    "inst": {
+                        "end_col": 56,
+                        "end_line": 24,
+                        "input_file": {
+                            "filename": "/home/seb/cairo_venv/lib/python3.8/site-packages/starkware/cairo/common/bitwise.cairo"
+                        },
+                        "parent_location": [
+                            {
+                                "end_col": 54,
+                                "end_line": 16,
+                                "input_file": {
+                                    "filename": "/home/seb/cairo_venv/lib/python3.8/site-packages/starkware/cairo/common/bitwise.cairo"
+                                },
+                                "parent_location": [
+                                    {
+                                        "end_col": 61,
+                                        "end_line": 25,
+                                        "input_file": {
+                                            "filename": "/home/seb/cairo_venv/lib/python3.8/site-packages/starkware/cairo/common/bitwise.cairo"
+                                        },
+                                        "start_col": 5,
+                                        "start_line": 25
+                                    },
+                                    "While trying to retrieve the implicit argument 'bitwise_ptr' in:"
+                                ],
+                                "start_col": 25,
+                                "start_line": 16
+                            },
+                            "While expanding the reference 'bitwise_ptr' in:"
+                        ],
+                        "start_col": 23,
+                        "start_line": 24
+                    }
+                },
+                "4": {
+                    "accessible_scopes": [
+                        "starkware.cairo.common.bitwise",
+                        "starkware.cairo.common.bitwise.bitwise_operations"
+                    ],
+                    "flow_tracking_data": {
+                        "ap_tracking": {
+                            "group": 0,
+                            "offset": 1
+                        },
+                        "reference_ids": {
+                            "starkware.cairo.common.bitwise.bitwise_operations.bitwise_ptr": 6,
+                            "starkware.cairo.common.bitwise.bitwise_operations.x": 0,
+                            "starkware.cairo.common.bitwise.bitwise_operations.x_and_y": 3,
+                            "starkware.cairo.common.bitwise.bitwise_operations.x_or_y": 5,
+                            "starkware.cairo.common.bitwise.bitwise_operations.x_xor_y": 4,
+                            "starkware.cairo.common.bitwise.bitwise_operations.y": 1
+                        }
+                    },
+                    "hints": [],
+                    "inst": {
+                        "end_col": 38,
+                        "end_line": 21,
+                        "input_file": {
+                            "filename": "/home/seb/cairo_venv/lib/python3.8/site-packages/starkware/cairo/common/bitwise.cairo"
+                        },
+                        "parent_location": [
+                            {
+                                "end_col": 28,
+                                "end_line": 25,
+                                "input_file": {
+                                    "filename": "/home/seb/cairo_venv/lib/python3.8/site-packages/starkware/cairo/common/bitwise.cairo"
+                                },
+                                "start_col": 21,
+                                "start_line": 25
+                            },
+                            "While expanding the reference 'x_and_y' in:"
+                        ],
+                        "start_col": 19,
+                        "start_line": 21
+                    }
+                },
+                "5": {
+                    "accessible_scopes": [
+                        "starkware.cairo.common.bitwise",
+                        "starkware.cairo.common.bitwise.bitwise_operations"
+                    ],
+                    "flow_tracking_data": {
+                        "ap_tracking": {
+                            "group": 0,
+                            "offset": 2
+                        },
+                        "reference_ids": {
+                            "starkware.cairo.common.bitwise.bitwise_operations.bitwise_ptr": 6,
+                            "starkware.cairo.common.bitwise.bitwise_operations.x": 0,
+                            "starkware.cairo.common.bitwise.bitwise_operations.x_and_y": 3,
+                            "starkware.cairo.common.bitwise.bitwise_operations.x_or_y": 5,
+                            "starkware.cairo.common.bitwise.bitwise_operations.x_xor_y": 4,
+                            "starkware.cairo.common.bitwise.bitwise_operations.y": 1
+                        }
+                    },
+                    "hints": [],
+                    "inst": {
+                        "end_col": 38,
+                        "end_line": 22,
+                        "input_file": {
+                            "filename": "/home/seb/cairo_venv/lib/python3.8/site-packages/starkware/cairo/common/bitwise.cairo"
+                        },
+                        "parent_location": [
+                            {
+                                "end_col": 45,
+                                "end_line": 25,
+                                "input_file": {
+                                    "filename": "/home/seb/cairo_venv/lib/python3.8/site-packages/starkware/cairo/common/bitwise.cairo"
+                                },
+                                "start_col": 38,
+                                "start_line": 25
+                            },
+                            "While expanding the reference 'x_xor_y' in:"
+                        ],
+                        "start_col": 19,
+                        "start_line": 22
+                    }
+                },
+                "6": {
+                    "accessible_scopes": [
+                        "starkware.cairo.common.bitwise",
+                        "starkware.cairo.common.bitwise.bitwise_operations"
+                    ],
+                    "flow_tracking_data": {
+                        "ap_tracking": {
+                            "group": 0,
+                            "offset": 3
+                        },
+                        "reference_ids": {
+                            "starkware.cairo.common.bitwise.bitwise_operations.bitwise_ptr": 6,
+                            "starkware.cairo.common.bitwise.bitwise_operations.x": 0,
+                            "starkware.cairo.common.bitwise.bitwise_operations.x_and_y": 3,
+                            "starkware.cairo.common.bitwise.bitwise_operations.x_or_y": 5,
+                            "starkware.cairo.common.bitwise.bitwise_operations.x_xor_y": 4,
+                            "starkware.cairo.common.bitwise.bitwise_operations.y": 1
+                        }
+                    },
+                    "hints": [],
+                    "inst": {
+                        "end_col": 36,
+                        "end_line": 23,
+                        "input_file": {
+                            "filename": "/home/seb/cairo_venv/lib/python3.8/site-packages/starkware/cairo/common/bitwise.cairo"
+                        },
+                        "parent_location": [
+                            {
+                                "end_col": 60,
+                                "end_line": 25,
+                                "input_file": {
+                                    "filename": "/home/seb/cairo_venv/lib/python3.8/site-packages/starkware/cairo/common/bitwise.cairo"
+                                },
+                                "start_col": 54,
+                                "start_line": 25
+                            },
+                            "While expanding the reference 'x_or_y' in:"
+                        ],
+                        "start_col": 18,
+                        "start_line": 23
+                    }
+                },
+                "7": {
+                    "accessible_scopes": [
+                        "starkware.cairo.common.bitwise",
+                        "starkware.cairo.common.bitwise.bitwise_operations"
+                    ],
+                    "flow_tracking_data": {
+                        "ap_tracking": {
+                            "group": 0,
+                            "offset": 4
+                        },
+                        "reference_ids": {
+                            "starkware.cairo.common.bitwise.bitwise_operations.bitwise_ptr": 6,
+                            "starkware.cairo.common.bitwise.bitwise_operations.x": 0,
+                            "starkware.cairo.common.bitwise.bitwise_operations.x_and_y": 3,
+                            "starkware.cairo.common.bitwise.bitwise_operations.x_or_y": 5,
+                            "starkware.cairo.common.bitwise.bitwise_operations.x_xor_y": 4,
+                            "starkware.cairo.common.bitwise.bitwise_operations.y": 1
+                        }
+                    },
+                    "hints": [],
+                    "inst": {
+                        "end_col": 61,
+                        "end_line": 25,
+                        "input_file": {
+                            "filename": "/home/seb/cairo_venv/lib/python3.8/site-packages/starkware/cairo/common/bitwise.cairo"
+                        },
+                        "start_col": 5,
+                        "start_line": 25
+                    }
+                },
+                "8": {
+                    "accessible_scopes": [
+                        "starkware.cairo.common.bitwise",
+                        "starkware.cairo.common.bitwise.bitwise_and"
+                    ],
+                    "flow_tracking_data": {
+                        "ap_tracking": {
+                            "group": 1,
+                            "offset": 0
+                        },
+                        "reference_ids": {
+                            "starkware.cairo.common.bitwise.bitwise_and.bitwise_ptr": 9,
+                            "starkware.cairo.common.bitwise.bitwise_and.x": 7,
+                            "starkware.cairo.common.bitwise.bitwise_and.y": 8
+                        }
+                    },
+                    "hints": [],
+                    "inst": {
+                        "end_col": 22,
+                        "end_line": 38,
+                        "input_file": {
+                            "filename": "/home/seb/cairo_venv/lib/python3.8/site-packages/starkware/cairo/common/bitwise.cairo"
+                        },
+                        "start_col": 5,
+                        "start_line": 38
+                    }
+                },
+                "9": {
+                    "accessible_scopes": [
+                        "starkware.cairo.common.bitwise",
+                        "starkware.cairo.common.bitwise.bitwise_and"
+                    ],
+                    "flow_tracking_data": {
+                        "ap_tracking": {
+                            "group": 1,
+                            "offset": 0
+                        },
+                        "reference_ids": {
+                            "starkware.cairo.common.bitwise.bitwise_and.bitwise_ptr": 9,
+                            "starkware.cairo.common.bitwise.bitwise_and.x": 7,
+                            "starkware.cairo.common.bitwise.bitwise_and.y": 8
+                        }
+                    },
+                    "hints": [],
+                    "inst": {
+                        "end_col": 22,
+                        "end_line": 39,
+                        "input_file": {
+                            "filename": "/home/seb/cairo_venv/lib/python3.8/site-packages/starkware/cairo/common/bitwise.cairo"
+                        },
+                        "start_col": 5,
+                        "start_line": 39
+                    }
+                },
+                "10": {
+                    "accessible_scopes": [
+                        "starkware.cairo.common.bitwise",
+                        "starkware.cairo.common.bitwise.bitwise_and"
+                    ],
+                    "flow_tracking_data": {
+                        "ap_tracking": {
+                            "group": 1,
+                            "offset": 0
+                        },
+                        "reference_ids": {
+                            "starkware.cairo.common.bitwise.bitwise_and.bitwise_ptr": 13,
+                            "starkware.cairo.common.bitwise.bitwise_and.x": 7,
+                            "starkware.cairo.common.bitwise.bitwise_and.x_and_y": 10,
+                            "starkware.cairo.common.bitwise.bitwise_and.x_or_y": 12,
+                            "starkware.cairo.common.bitwise.bitwise_and.x_xor_y": 11,
+                            "starkware.cairo.common.bitwise.bitwise_and.y": 8
+                        }
+                    },
+                    "hints": [],
+                    "inst": {
+                        "end_col": 56,
+                        "end_line": 43,
+                        "input_file": {
+                            "filename": "/home/seb/cairo_venv/lib/python3.8/site-packages/starkware/cairo/common/bitwise.cairo"
+                        },
+                        "parent_location": [
+                            {
+                                "end_col": 47,
+                                "end_line": 37,
+                                "input_file": {
+                                    "filename": "/home/seb/cairo_venv/lib/python3.8/site-packages/starkware/cairo/common/bitwise.cairo"
+                                },
+                                "parent_location": [
+                                    {
+                                        "end_col": 29,
+                                        "end_line": 44,
+                                        "input_file": {
+                                            "filename": "/home/seb/cairo_venv/lib/python3.8/site-packages/starkware/cairo/common/bitwise.cairo"
+                                        },
+                                        "start_col": 5,
+                                        "start_line": 44
+                                    },
+                                    "While trying to retrieve the implicit argument 'bitwise_ptr' in:"
+                                ],
+                                "start_col": 18,
+                                "start_line": 37
+                            },
+                            "While expanding the reference 'bitwise_ptr' in:"
+                        ],
+                        "start_col": 23,
+                        "start_line": 43
+                    }
+                },
+                "12": {
+                    "accessible_scopes": [
+                        "starkware.cairo.common.bitwise",
+                        "starkware.cairo.common.bitwise.bitwise_and"
+                    ],
+                    "flow_tracking_data": {
+                        "ap_tracking": {
+                            "group": 1,
+                            "offset": 1
+                        },
+                        "reference_ids": {
+                            "starkware.cairo.common.bitwise.bitwise_and.bitwise_ptr": 13,
+                            "starkware.cairo.common.bitwise.bitwise_and.x": 7,
+                            "starkware.cairo.common.bitwise.bitwise_and.x_and_y": 10,
+                            "starkware.cairo.common.bitwise.bitwise_and.x_or_y": 12,
+                            "starkware.cairo.common.bitwise.bitwise_and.x_xor_y": 11,
+                            "starkware.cairo.common.bitwise.bitwise_and.y": 8
+                        }
+                    },
+                    "hints": [],
+                    "inst": {
+                        "end_col": 38,
+                        "end_line": 40,
+                        "input_file": {
+                            "filename": "/home/seb/cairo_venv/lib/python3.8/site-packages/starkware/cairo/common/bitwise.cairo"
+                        },
+                        "parent_location": [
+                            {
+                                "end_col": 28,
+                                "end_line": 44,
+                                "input_file": {
+                                    "filename": "/home/seb/cairo_venv/lib/python3.8/site-packages/starkware/cairo/common/bitwise.cairo"
+                                },
+                                "start_col": 21,
+                                "start_line": 44
+                            },
+                            "While expanding the reference 'x_and_y' in:"
+                        ],
+                        "start_col": 19,
+                        "start_line": 40
+                    }
+                },
+                "13": {
+                    "accessible_scopes": [
+                        "starkware.cairo.common.bitwise",
+                        "starkware.cairo.common.bitwise.bitwise_and"
+                    ],
+                    "flow_tracking_data": {
+                        "ap_tracking": {
+                            "group": 1,
+                            "offset": 2
+                        },
+                        "reference_ids": {
+                            "starkware.cairo.common.bitwise.bitwise_and.bitwise_ptr": 13,
+                            "starkware.cairo.common.bitwise.bitwise_and.x": 7,
+                            "starkware.cairo.common.bitwise.bitwise_and.x_and_y": 10,
+                            "starkware.cairo.common.bitwise.bitwise_and.x_or_y": 12,
+                            "starkware.cairo.common.bitwise.bitwise_and.x_xor_y": 11,
+                            "starkware.cairo.common.bitwise.bitwise_and.y": 8
+                        }
+                    },
+                    "hints": [],
+                    "inst": {
+                        "end_col": 29,
+                        "end_line": 44,
+                        "input_file": {
+                            "filename": "/home/seb/cairo_venv/lib/python3.8/site-packages/starkware/cairo/common/bitwise.cairo"
+                        },
+                        "start_col": 5,
+                        "start_line": 44
+                    }
+                },
+                "14": {
+                    "accessible_scopes": [
+                        "starkware.cairo.common.bitwise",
+                        "starkware.cairo.common.bitwise.bitwise_xor"
+                    ],
+                    "flow_tracking_data": {
+                        "ap_tracking": {
+                            "group": 2,
+                            "offset": 0
+                        },
+                        "reference_ids": {
+                            "starkware.cairo.common.bitwise.bitwise_xor.bitwise_ptr": 16,
+                            "starkware.cairo.common.bitwise.bitwise_xor.x": 14,
+                            "starkware.cairo.common.bitwise.bitwise_xor.y": 15
+                        }
+                    },
+                    "hints": [],
+                    "inst": {
+                        "end_col": 22,
+                        "end_line": 57,
+                        "input_file": {
+                            "filename": "/home/seb/cairo_venv/lib/python3.8/site-packages/starkware/cairo/common/bitwise.cairo"
+                        },
+                        "start_col": 5,
+                        "start_line": 57
+                    }
+                },
+                "15": {
+                    "accessible_scopes": [
+                        "starkware.cairo.common.bitwise",
+                        "starkware.cairo.common.bitwise.bitwise_xor"
+                    ],
+                    "flow_tracking_data": {
+                        "ap_tracking": {
+                            "group": 2,
+                            "offset": 0
+                        },
+                        "reference_ids": {
+                            "starkware.cairo.common.bitwise.bitwise_xor.bitwise_ptr": 16,
+                            "starkware.cairo.common.bitwise.bitwise_xor.x": 14,
+                            "starkware.cairo.common.bitwise.bitwise_xor.y": 15
+                        }
+                    },
+                    "hints": [],
+                    "inst": {
+                        "end_col": 22,
+                        "end_line": 58,
+                        "input_file": {
+                            "filename": "/home/seb/cairo_venv/lib/python3.8/site-packages/starkware/cairo/common/bitwise.cairo"
+                        },
+                        "start_col": 5,
+                        "start_line": 58
+                    }
+                },
+                "16": {
+                    "accessible_scopes": [
+                        "starkware.cairo.common.bitwise",
+                        "starkware.cairo.common.bitwise.bitwise_xor"
+                    ],
+                    "flow_tracking_data": {
+                        "ap_tracking": {
+                            "group": 2,
+                            "offset": 0
+                        },
+                        "reference_ids": {
+                            "starkware.cairo.common.bitwise.bitwise_xor.bitwise_ptr": 20,
+                            "starkware.cairo.common.bitwise.bitwise_xor.x": 14,
+                            "starkware.cairo.common.bitwise.bitwise_xor.x_and_y": 17,
+                            "starkware.cairo.common.bitwise.bitwise_xor.x_or_y": 19,
+                            "starkware.cairo.common.bitwise.bitwise_xor.x_xor_y": 18,
+                            "starkware.cairo.common.bitwise.bitwise_xor.y": 15
+                        }
+                    },
+                    "hints": [],
+                    "inst": {
+                        "end_col": 56,
+                        "end_line": 62,
+                        "input_file": {
+                            "filename": "/home/seb/cairo_venv/lib/python3.8/site-packages/starkware/cairo/common/bitwise.cairo"
+                        },
+                        "parent_location": [
+                            {
+                                "end_col": 47,
+                                "end_line": 56,
+                                "input_file": {
+                                    "filename": "/home/seb/cairo_venv/lib/python3.8/site-packages/starkware/cairo/common/bitwise.cairo"
+                                },
+                                "parent_location": [
+                                    {
+                                        "end_col": 29,
+                                        "end_line": 63,
+                                        "input_file": {
+                                            "filename": "/home/seb/cairo_venv/lib/python3.8/site-packages/starkware/cairo/common/bitwise.cairo"
+                                        },
+                                        "start_col": 5,
+                                        "start_line": 63
+                                    },
+                                    "While trying to retrieve the implicit argument 'bitwise_ptr' in:"
+                                ],
+                                "start_col": 18,
+                                "start_line": 56
+                            },
+                            "While expanding the reference 'bitwise_ptr' in:"
+                        ],
+                        "start_col": 23,
+                        "start_line": 62
+                    }
+                },
+                "18": {
+                    "accessible_scopes": [
+                        "starkware.cairo.common.bitwise",
+                        "starkware.cairo.common.bitwise.bitwise_xor"
+                    ],
+                    "flow_tracking_data": {
+                        "ap_tracking": {
+                            "group": 2,
+                            "offset": 1
+                        },
+                        "reference_ids": {
+                            "starkware.cairo.common.bitwise.bitwise_xor.bitwise_ptr": 20,
+                            "starkware.cairo.common.bitwise.bitwise_xor.x": 14,
+                            "starkware.cairo.common.bitwise.bitwise_xor.x_and_y": 17,
+                            "starkware.cairo.common.bitwise.bitwise_xor.x_or_y": 19,
+                            "starkware.cairo.common.bitwise.bitwise_xor.x_xor_y": 18,
+                            "starkware.cairo.common.bitwise.bitwise_xor.y": 15
+                        }
+                    },
+                    "hints": [],
+                    "inst": {
+                        "end_col": 38,
+                        "end_line": 60,
+                        "input_file": {
+                            "filename": "/home/seb/cairo_venv/lib/python3.8/site-packages/starkware/cairo/common/bitwise.cairo"
+                        },
+                        "parent_location": [
+                            {
+                                "end_col": 28,
+                                "end_line": 63,
+                                "input_file": {
+                                    "filename": "/home/seb/cairo_venv/lib/python3.8/site-packages/starkware/cairo/common/bitwise.cairo"
+                                },
+                                "start_col": 21,
+                                "start_line": 63
+                            },
+                            "While expanding the reference 'x_xor_y' in:"
+                        ],
+                        "start_col": 19,
+                        "start_line": 60
+                    }
+                },
+                "19": {
+                    "accessible_scopes": [
+                        "starkware.cairo.common.bitwise",
+                        "starkware.cairo.common.bitwise.bitwise_xor"
+                    ],
+                    "flow_tracking_data": {
+                        "ap_tracking": {
+                            "group": 2,
+                            "offset": 2
+                        },
+                        "reference_ids": {
+                            "starkware.cairo.common.bitwise.bitwise_xor.bitwise_ptr": 20,
+                            "starkware.cairo.common.bitwise.bitwise_xor.x": 14,
+                            "starkware.cairo.common.bitwise.bitwise_xor.x_and_y": 17,
+                            "starkware.cairo.common.bitwise.bitwise_xor.x_or_y": 19,
+                            "starkware.cairo.common.bitwise.bitwise_xor.x_xor_y": 18,
+                            "starkware.cairo.common.bitwise.bitwise_xor.y": 15
+                        }
+                    },
+                    "hints": [],
+                    "inst": {
+                        "end_col": 29,
+                        "end_line": 63,
+                        "input_file": {
+                            "filename": "/home/seb/cairo_venv/lib/python3.8/site-packages/starkware/cairo/common/bitwise.cairo"
+                        },
+                        "start_col": 5,
+                        "start_line": 63
+                    }
+                },
+                "20": {
+                    "accessible_scopes": [
+                        "starkware.cairo.common.bitwise",
+                        "starkware.cairo.common.bitwise.bitwise_or"
+                    ],
+                    "flow_tracking_data": {
+                        "ap_tracking": {
+                            "group": 3,
+                            "offset": 0
+                        },
+                        "reference_ids": {
+                            "starkware.cairo.common.bitwise.bitwise_or.bitwise_ptr": 23,
+                            "starkware.cairo.common.bitwise.bitwise_or.x": 21,
+                            "starkware.cairo.common.bitwise.bitwise_or.y": 22
+                        }
+                    },
+                    "hints": [],
+                    "inst": {
+                        "end_col": 22,
+                        "end_line": 76,
+                        "input_file": {
+                            "filename": "/home/seb/cairo_venv/lib/python3.8/site-packages/starkware/cairo/common/bitwise.cairo"
+                        },
+                        "start_col": 5,
+                        "start_line": 76
+                    }
+                },
+                "21": {
+                    "accessible_scopes": [
+                        "starkware.cairo.common.bitwise",
+                        "starkware.cairo.common.bitwise.bitwise_or"
+                    ],
+                    "flow_tracking_data": {
+                        "ap_tracking": {
+                            "group": 3,
+                            "offset": 0
+                        },
+                        "reference_ids": {
+                            "starkware.cairo.common.bitwise.bitwise_or.bitwise_ptr": 23,
+                            "starkware.cairo.common.bitwise.bitwise_or.x": 21,
+                            "starkware.cairo.common.bitwise.bitwise_or.y": 22
+                        }
+                    },
+                    "hints": [],
+                    "inst": {
+                        "end_col": 22,
+                        "end_line": 77,
+                        "input_file": {
+                            "filename": "/home/seb/cairo_venv/lib/python3.8/site-packages/starkware/cairo/common/bitwise.cairo"
+                        },
+                        "start_col": 5,
+                        "start_line": 77
+                    }
+                },
+                "22": {
+                    "accessible_scopes": [
+                        "starkware.cairo.common.bitwise",
+                        "starkware.cairo.common.bitwise.bitwise_or"
+                    ],
+                    "flow_tracking_data": {
+                        "ap_tracking": {
+                            "group": 3,
+                            "offset": 0
+                        },
+                        "reference_ids": {
+                            "starkware.cairo.common.bitwise.bitwise_or.bitwise_ptr": 27,
+                            "starkware.cairo.common.bitwise.bitwise_or.x": 21,
+                            "starkware.cairo.common.bitwise.bitwise_or.x_and_y": 24,
+                            "starkware.cairo.common.bitwise.bitwise_or.x_or_y": 26,
+                            "starkware.cairo.common.bitwise.bitwise_or.x_xor_y": 25,
+                            "starkware.cairo.common.bitwise.bitwise_or.y": 22
+                        }
+                    },
+                    "hints": [],
+                    "inst": {
+                        "end_col": 56,
+                        "end_line": 81,
+                        "input_file": {
+                            "filename": "/home/seb/cairo_venv/lib/python3.8/site-packages/starkware/cairo/common/bitwise.cairo"
+                        },
+                        "parent_location": [
+                            {
+                                "end_col": 46,
+                                "end_line": 75,
+                                "input_file": {
+                                    "filename": "/home/seb/cairo_venv/lib/python3.8/site-packages/starkware/cairo/common/bitwise.cairo"
+                                },
+                                "parent_location": [
+                                    {
+                                        "end_col": 27,
+                                        "end_line": 82,
+                                        "input_file": {
+                                            "filename": "/home/seb/cairo_venv/lib/python3.8/site-packages/starkware/cairo/common/bitwise.cairo"
+                                        },
+                                        "start_col": 5,
+                                        "start_line": 82
+                                    },
+                                    "While trying to retrieve the implicit argument 'bitwise_ptr' in:"
+                                ],
+                                "start_col": 17,
+                                "start_line": 75
+                            },
+                            "While expanding the reference 'bitwise_ptr' in:"
+                        ],
+                        "start_col": 23,
+                        "start_line": 81
+                    }
+                },
+                "24": {
+                    "accessible_scopes": [
+                        "starkware.cairo.common.bitwise",
+                        "starkware.cairo.common.bitwise.bitwise_or"
+                    ],
+                    "flow_tracking_data": {
+                        "ap_tracking": {
+                            "group": 3,
+                            "offset": 1
+                        },
+                        "reference_ids": {
+                            "starkware.cairo.common.bitwise.bitwise_or.bitwise_ptr": 27,
+                            "starkware.cairo.common.bitwise.bitwise_or.x": 21,
+                            "starkware.cairo.common.bitwise.bitwise_or.x_and_y": 24,
+                            "starkware.cairo.common.bitwise.bitwise_or.x_or_y": 26,
+                            "starkware.cairo.common.bitwise.bitwise_or.x_xor_y": 25,
+                            "starkware.cairo.common.bitwise.bitwise_or.y": 22
+                        }
+                    },
+                    "hints": [],
+                    "inst": {
+                        "end_col": 36,
+                        "end_line": 80,
+                        "input_file": {
+                            "filename": "/home/seb/cairo_venv/lib/python3.8/site-packages/starkware/cairo/common/bitwise.cairo"
+                        },
+                        "parent_location": [
+                            {
+                                "end_col": 26,
+                                "end_line": 82,
+                                "input_file": {
+                                    "filename": "/home/seb/cairo_venv/lib/python3.8/site-packages/starkware/cairo/common/bitwise.cairo"
+                                },
+                                "start_col": 20,
+                                "start_line": 82
+                            },
+                            "While expanding the reference 'x_or_y' in:"
+                        ],
+                        "start_col": 18,
+                        "start_line": 80
+                    }
+                },
+                "25": {
+                    "accessible_scopes": [
+                        "starkware.cairo.common.bitwise",
+                        "starkware.cairo.common.bitwise.bitwise_or"
+                    ],
+                    "flow_tracking_data": {
+                        "ap_tracking": {
+                            "group": 3,
+                            "offset": 2
+                        },
+                        "reference_ids": {
+                            "starkware.cairo.common.bitwise.bitwise_or.bitwise_ptr": 27,
+                            "starkware.cairo.common.bitwise.bitwise_or.x": 21,
+                            "starkware.cairo.common.bitwise.bitwise_or.x_and_y": 24,
+                            "starkware.cairo.common.bitwise.bitwise_or.x_or_y": 26,
+                            "starkware.cairo.common.bitwise.bitwise_or.x_xor_y": 25,
+                            "starkware.cairo.common.bitwise.bitwise_or.y": 22
+                        }
+                    },
+                    "hints": [],
+                    "inst": {
+                        "end_col": 27,
+                        "end_line": 82,
+                        "input_file": {
+                            "filename": "/home/seb/cairo_venv/lib/python3.8/site-packages/starkware/cairo/common/bitwise.cairo"
+                        },
+                        "start_col": 5,
+                        "start_line": 82
+                    }
+                },
+                "26": {
+                    "accessible_scopes": [
+                        "__main__",
+                        "__main__.main"
+                    ],
+                    "flow_tracking_data": {
+                        "ap_tracking": {
+                            "group": 4,
+                            "offset": 0
+                        },
+                        "reference_ids": {
+                            "__main__.main.a": 29,
+                            "__main__.main.bitwise_ptr": 28
+                        }
+                    },
+                    "hints": [],
+                    "inst": {
+                        "end_col": 45,
+                        "end_line": 10,
+                        "input_file": {
+                            "filename": "tests/cairo_files/cairo_bitwise.cairo"
+                        },
+                        "start_col": 16,
+                        "start_line": 10
+                    }
+                },
+                "28": {
+                    "accessible_scopes": [
+                        "__main__",
+                        "__main__.main"
+                    ],
+                    "flow_tracking_data": {
+                        "ap_tracking": {
+                            "group": 4,
+                            "offset": 1
+                        },
+                        "reference_ids": {
+                            "__main__.main.__temp0": 30,
+                            "__main__.main.a": 29,
+                            "__main__.main.bitwise_ptr": 28
+                        }
+                    },
+                    "hints": [],
+                    "inst": {
+                        "end_col": 45,
+                        "end_line": 10,
+                        "input_file": {
+                            "filename": "tests/cairo_files/cairo_bitwise.cairo"
+                        },
+                        "start_col": 5,
+                        "start_line": 10
+                    }
+                },
+                "30": {
+                    "accessible_scopes": [
+                        "__main__",
+                        "__main__.main"
+                    ],
+                    "flow_tracking_data": {
+                        "ap_tracking": {
+                            "group": 4,
+                            "offset": 1
+                        },
+                        "reference_ids": {
+                            "__main__.main.__temp0": 30,
+                            "__main__.main.a": 29,
+                            "__main__.main.bitwise_ptr": 28
+                        }
+                    },
+                    "hints": [],
+                    "inst": {
+                        "end_col": 18,
+                        "end_line": 11,
+                        "input_file": {
+                            "filename": "tests/cairo_files/cairo_bitwise.cairo"
+                        },
+                        "start_col": 16,
+                        "start_line": 11
+                    }
+                },
+                "32": {
+                    "accessible_scopes": [
+                        "__main__",
+                        "__main__.main"
+                    ],
+                    "flow_tracking_data": {
+                        "ap_tracking": {
+                            "group": 4,
+                            "offset": 2
+                        },
+                        "reference_ids": {
+                            "__main__.main.__temp0": 30,
+                            "__main__.main.__temp1": 31,
+                            "__main__.main.a": 29,
+                            "__main__.main.bitwise_ptr": 28
+                        }
+                    },
+                    "hints": [],
+                    "inst": {
+                        "end_col": 18,
+                        "end_line": 11,
+                        "input_file": {
+                            "filename": "tests/cairo_files/cairo_bitwise.cairo"
+                        },
+                        "start_col": 5,
+                        "start_line": 11
+                    }
+                },
+                "34": {
+                    "accessible_scopes": [
+                        "__main__",
+                        "__main__.main"
+                    ],
+                    "flow_tracking_data": {
+                        "ap_tracking": {
+                            "group": 4,
+                            "offset": 2
+                        },
+                        "reference_ids": {
+                            "__main__.main.__temp0": 30,
+                            "__main__.main.__temp1": 31,
+                            "__main__.main.a": 29,
+                            "__main__.main.b": 32,
+                            "__main__.main.bitwise_ptr": 28
+                        }
+                    },
+                    "hints": [],
+                    "inst": {
+                        "end_col": 45,
+                        "end_line": 14,
+                        "input_file": {
+                            "filename": "tests/cairo_files/cairo_bitwise.cairo"
+                        },
+                        "start_col": 16,
+                        "start_line": 14
+                    }
+                },
+                "36": {
+                    "accessible_scopes": [
+                        "__main__",
+                        "__main__.main"
+                    ],
+                    "flow_tracking_data": {
+                        "ap_tracking": {
+                            "group": 4,
+                            "offset": 3
+                        },
+                        "reference_ids": {
+                            "__main__.main.__temp0": 30,
+                            "__main__.main.__temp1": 31,
+                            "__main__.main.__temp2": 33,
+                            "__main__.main.a": 29,
+                            "__main__.main.b": 32,
+                            "__main__.main.bitwise_ptr": 28
+                        }
+                    },
+                    "hints": [],
+                    "inst": {
+                        "end_col": 45,
+                        "end_line": 14,
+                        "input_file": {
+                            "filename": "tests/cairo_files/cairo_bitwise.cairo"
+                        },
+                        "start_col": 5,
+                        "start_line": 14
+                    }
+                },
+                "38": {
+                    "accessible_scopes": [
+                        "__main__",
+                        "__main__.main"
+                    ],
+                    "flow_tracking_data": {
+                        "ap_tracking": {
+                            "group": 4,
+                            "offset": 3
+                        },
+                        "reference_ids": {
+                            "__main__.main.__temp0": 30,
+                            "__main__.main.__temp1": 31,
+                            "__main__.main.__temp2": 33,
+                            "__main__.main.a": 29,
+                            "__main__.main.b": 32,
+                            "__main__.main.bitwise_ptr": 28
+                        }
+                    },
+                    "hints": [],
+                    "inst": {
+                        "end_col": 18,
+                        "end_line": 15,
+                        "input_file": {
+                            "filename": "tests/cairo_files/cairo_bitwise.cairo"
+                        },
+                        "start_col": 16,
+                        "start_line": 15
+                    }
+                },
+                "40": {
+                    "accessible_scopes": [
+                        "__main__",
+                        "__main__.main"
+                    ],
+                    "flow_tracking_data": {
+                        "ap_tracking": {
+                            "group": 4,
+                            "offset": 4
+                        },
+                        "reference_ids": {
+                            "__main__.main.__temp0": 30,
+                            "__main__.main.__temp1": 31,
+                            "__main__.main.__temp2": 33,
+                            "__main__.main.__temp3": 34,
+                            "__main__.main.a": 29,
+                            "__main__.main.b": 32,
+                            "__main__.main.bitwise_ptr": 28
+                        }
+                    },
+                    "hints": [],
+                    "inst": {
+                        "end_col": 18,
+                        "end_line": 15,
+                        "input_file": {
+                            "filename": "tests/cairo_files/cairo_bitwise.cairo"
+                        },
+                        "start_col": 5,
+                        "start_line": 15
+                    }
+                },
+                "42": {
+                    "accessible_scopes": [
+                        "__main__",
+                        "__main__.main"
+                    ],
+                    "flow_tracking_data": {
+                        "ap_tracking": {
+                            "group": 4,
+                            "offset": 4
+                        },
+                        "reference_ids": {
+                            "__main__.main.__temp0": 30,
+                            "__main__.main.__temp1": 31,
+                            "__main__.main.__temp2": 33,
+                            "__main__.main.__temp3": 34,
+                            "__main__.main.a": 29,
+                            "__main__.main.b": 32,
+                            "__main__.main.bitwise_ptr": 28
+                        }
+                    },
+                    "hints": [],
+                    "inst": {
+                        "end_col": 39,
+                        "end_line": 8,
+                        "input_file": {
+                            "filename": "tests/cairo_files/cairo_bitwise.cairo"
+                        },
+                        "parent_location": [
+                            {
+                                "end_col": 47,
+                                "end_line": 37,
+                                "input_file": {
+                                    "filename": "/home/seb/cairo_venv/lib/python3.8/site-packages/starkware/cairo/common/bitwise.cairo"
+                                },
+                                "parent_location": [
+                                    {
+                                        "end_col": 38,
+                                        "end_line": 17,
+                                        "input_file": {
+                                            "filename": "tests/cairo_files/cairo_bitwise.cairo"
+                                        },
+                                        "start_col": 21,
+                                        "start_line": 17
+                                    },
+                                    "While trying to retrieve the implicit argument 'bitwise_ptr' in:"
+                                ],
+                                "start_col": 18,
+                                "start_line": 37
+                            },
+                            "While expanding the reference 'bitwise_ptr' in:"
+                        ],
+                        "start_col": 11,
+                        "start_line": 8
+                    }
+                },
+                "43": {
+                    "accessible_scopes": [
+                        "__main__",
+                        "__main__.main"
+                    ],
+                    "flow_tracking_data": {
+                        "ap_tracking": {
+                            "group": 4,
+                            "offset": 5
+                        },
+                        "reference_ids": {
+                            "__main__.main.__temp0": 30,
+                            "__main__.main.__temp1": 31,
+                            "__main__.main.__temp2": 33,
+                            "__main__.main.__temp3": 34,
+                            "__main__.main.a": 29,
+                            "__main__.main.b": 32,
+                            "__main__.main.bitwise_ptr": 28
+                        }
+                    },
+                    "hints": [],
+                    "inst": {
+                        "end_col": 54,
+                        "end_line": 9,
+                        "input_file": {
+                            "filename": "tests/cairo_files/cairo_bitwise.cairo"
+                        },
+                        "parent_location": [
+                            {
+                                "end_col": 34,
+                                "end_line": 17,
+                                "input_file": {
+                                    "filename": "tests/cairo_files/cairo_bitwise.cairo"
+                                },
+                                "start_col": 33,
+                                "start_line": 17
+                            },
+                            "While expanding the reference 'a' in:"
+                        ],
+                        "start_col": 13,
+                        "start_line": 9
+                    }
+                },
+                "45": {
+                    "accessible_scopes": [
+                        "__main__",
+                        "__main__.main"
+                    ],
+                    "flow_tracking_data": {
+                        "ap_tracking": {
+                            "group": 4,
+                            "offset": 6
+                        },
+                        "reference_ids": {
+                            "__main__.main.__temp0": 30,
+                            "__main__.main.__temp1": 31,
+                            "__main__.main.__temp2": 33,
+                            "__main__.main.__temp3": 34,
+                            "__main__.main.a": 29,
+                            "__main__.main.b": 32,
+                            "__main__.main.bitwise_ptr": 28
+                        }
+                    },
+                    "hints": [],
+                    "inst": {
+                        "end_col": 54,
+                        "end_line": 13,
+                        "input_file": {
+                            "filename": "tests/cairo_files/cairo_bitwise.cairo"
+                        },
+                        "parent_location": [
+                            {
+                                "end_col": 37,
+                                "end_line": 17,
+                                "input_file": {
+                                    "filename": "tests/cairo_files/cairo_bitwise.cairo"
+                                },
+                                "start_col": 36,
+                                "start_line": 17
+                            },
+                            "While expanding the reference 'b' in:"
+                        ],
+                        "start_col": 13,
+                        "start_line": 13
+                    }
+                },
+                "47": {
+                    "accessible_scopes": [
+                        "__main__",
+                        "__main__.main"
+                    ],
+                    "flow_tracking_data": {
+                        "ap_tracking": {
+                            "group": 4,
+                            "offset": 7
+                        },
+                        "reference_ids": {
+                            "__main__.main.__temp0": 30,
+                            "__main__.main.__temp1": 31,
+                            "__main__.main.__temp2": 33,
+                            "__main__.main.__temp3": 34,
+                            "__main__.main.a": 29,
+                            "__main__.main.b": 32,
+                            "__main__.main.bitwise_ptr": 28
+                        }
+                    },
+                    "hints": [],
+                    "inst": {
+                        "end_col": 38,
+                        "end_line": 17,
+                        "input_file": {
+                            "filename": "tests/cairo_files/cairo_bitwise.cairo"
+                        },
+                        "start_col": 21,
+                        "start_line": 17
+                    }
+                },
+                "49": {
+                    "accessible_scopes": [
+                        "__main__",
+                        "__main__.main"
+                    ],
+                    "flow_tracking_data": {
+                        "ap_tracking": {
+                            "group": 4,
+                            "offset": 11
+                        },
+                        "reference_ids": {
+                            "__main__.main.__temp0": 30,
+                            "__main__.main.__temp1": 31,
+                            "__main__.main.__temp2": 33,
+                            "__main__.main.__temp3": 34,
+                            "__main__.main.a": 29,
+                            "__main__.main.a_and_b": 36,
+                            "__main__.main.b": 32,
+                            "__main__.main.bitwise_ptr": 35
+                        }
+                    },
+                    "hints": [],
+                    "inst": {
+                        "end_col": 63,
+                        "end_line": 18,
+                        "input_file": {
+                            "filename": "tests/cairo_files/cairo_bitwise.cairo"
+                        },
+                        "start_col": 5,
+                        "start_line": 18
+                    }
+                },
+                "51": {
+                    "accessible_scopes": [
+                        "__main__",
+                        "__main__.main"
+                    ],
+                    "flow_tracking_data": {
+                        "ap_tracking": {
+                            "group": 4,
+                            "offset": 11
+                        },
+                        "reference_ids": {
+                            "__main__.main.__temp0": 30,
+                            "__main__.main.__temp1": 31,
+                            "__main__.main.__temp2": 33,
+                            "__main__.main.__temp3": 34,
+                            "__main__.main.a": 29,
+                            "__main__.main.a_and_b": 36,
+                            "__main__.main.b": 32,
+                            "__main__.main.bitwise_ptr": 35
+                        }
+                    },
+                    "hints": [],
+                    "inst": {
+                        "end_col": 47,
+                        "end_line": 37,
+                        "input_file": {
+                            "filename": "/home/seb/cairo_venv/lib/python3.8/site-packages/starkware/cairo/common/bitwise.cairo"
+                        },
+                        "parent_location": [
+                            {
+                                "end_col": 38,
+                                "end_line": 17,
+                                "input_file": {
+                                    "filename": "tests/cairo_files/cairo_bitwise.cairo"
+                                },
+                                "parent_location": [
+                                    {
+                                        "end_col": 47,
+                                        "end_line": 56,
+                                        "input_file": {
+                                            "filename": "/home/seb/cairo_venv/lib/python3.8/site-packages/starkware/cairo/common/bitwise.cairo"
+                                        },
+                                        "parent_location": [
+                                            {
+                                                "end_col": 38,
+                                                "end_line": 20,
+                                                "input_file": {
+                                                    "filename": "tests/cairo_files/cairo_bitwise.cairo"
+                                                },
+                                                "start_col": 21,
+                                                "start_line": 20
+                                            },
+                                            "While trying to retrieve the implicit argument 'bitwise_ptr' in:"
+                                        ],
+                                        "start_col": 18,
+                                        "start_line": 56
+                                    },
+                                    "While expanding the reference 'bitwise_ptr' in:"
+                                ],
+                                "start_col": 21,
+                                "start_line": 17
+                            },
+                            "While trying to update the implicit return value 'bitwise_ptr' in:"
+                        ],
+                        "start_col": 18,
+                        "start_line": 37
+                    }
+                },
+                "52": {
+                    "accessible_scopes": [
+                        "__main__",
+                        "__main__.main"
+                    ],
+                    "flow_tracking_data": {
+                        "ap_tracking": {
+                            "group": 4,
+                            "offset": 12
+                        },
+                        "reference_ids": {
+                            "__main__.main.__temp0": 30,
+                            "__main__.main.__temp1": 31,
+                            "__main__.main.__temp2": 33,
+                            "__main__.main.__temp3": 34,
+                            "__main__.main.a": 29,
+                            "__main__.main.a_and_b": 36,
+                            "__main__.main.b": 32,
+                            "__main__.main.bitwise_ptr": 35
+                        }
+                    },
+                    "hints": [],
+                    "inst": {
+                        "end_col": 54,
+                        "end_line": 9,
+                        "input_file": {
+                            "filename": "tests/cairo_files/cairo_bitwise.cairo"
+                        },
+                        "parent_location": [
+                            {
+                                "end_col": 34,
+                                "end_line": 20,
+                                "input_file": {
+                                    "filename": "tests/cairo_files/cairo_bitwise.cairo"
+                                },
+                                "start_col": 33,
+                                "start_line": 20
+                            },
+                            "While expanding the reference 'a' in:"
+                        ],
+                        "start_col": 13,
+                        "start_line": 9
+                    }
+                },
+                "54": {
+                    "accessible_scopes": [
+                        "__main__",
+                        "__main__.main"
+                    ],
+                    "flow_tracking_data": {
+                        "ap_tracking": {
+                            "group": 4,
+                            "offset": 13
+                        },
+                        "reference_ids": {
+                            "__main__.main.__temp0": 30,
+                            "__main__.main.__temp1": 31,
+                            "__main__.main.__temp2": 33,
+                            "__main__.main.__temp3": 34,
+                            "__main__.main.a": 29,
+                            "__main__.main.a_and_b": 36,
+                            "__main__.main.b": 32,
+                            "__main__.main.bitwise_ptr": 35
+                        }
+                    },
+                    "hints": [],
+                    "inst": {
+                        "end_col": 54,
+                        "end_line": 13,
+                        "input_file": {
+                            "filename": "tests/cairo_files/cairo_bitwise.cairo"
+                        },
+                        "parent_location": [
+                            {
+                                "end_col": 37,
+                                "end_line": 20,
+                                "input_file": {
+                                    "filename": "tests/cairo_files/cairo_bitwise.cairo"
+                                },
+                                "start_col": 36,
+                                "start_line": 20
+                            },
+                            "While expanding the reference 'b' in:"
+                        ],
+                        "start_col": 13,
+                        "start_line": 13
+                    }
+                },
+                "56": {
+                    "accessible_scopes": [
+                        "__main__",
+                        "__main__.main"
+                    ],
+                    "flow_tracking_data": {
+                        "ap_tracking": {
+                            "group": 4,
+                            "offset": 14
+                        },
+                        "reference_ids": {
+                            "__main__.main.__temp0": 30,
+                            "__main__.main.__temp1": 31,
+                            "__main__.main.__temp2": 33,
+                            "__main__.main.__temp3": 34,
+                            "__main__.main.a": 29,
+                            "__main__.main.a_and_b": 36,
+                            "__main__.main.b": 32,
+                            "__main__.main.bitwise_ptr": 35
+                        }
+                    },
+                    "hints": [],
+                    "inst": {
+                        "end_col": 38,
+                        "end_line": 20,
+                        "input_file": {
+                            "filename": "tests/cairo_files/cairo_bitwise.cairo"
+                        },
+                        "start_col": 21,
+                        "start_line": 20
+                    }
+                },
+                "58": {
+                    "accessible_scopes": [
+                        "__main__",
+                        "__main__.main"
+                    ],
+                    "flow_tracking_data": {
+                        "ap_tracking": {
+                            "group": 4,
+                            "offset": 18
+                        },
+                        "reference_ids": {
+                            "__main__.main.__temp0": 30,
+                            "__main__.main.__temp1": 31,
+                            "__main__.main.__temp2": 33,
+                            "__main__.main.__temp3": 34,
+                            "__main__.main.a": 29,
+                            "__main__.main.a_and_b": 36,
+                            "__main__.main.a_xor_b": 38,
+                            "__main__.main.b": 32,
+                            "__main__.main.bitwise_ptr": 37
+                        }
+                    },
+                    "hints": [],
+                    "inst": {
+                        "end_col": 63,
+                        "end_line": 21,
+                        "input_file": {
+                            "filename": "tests/cairo_files/cairo_bitwise.cairo"
+                        },
+                        "start_col": 5,
+                        "start_line": 21
+                    }
+                },
+                "60": {
+                    "accessible_scopes": [
+                        "__main__",
+                        "__main__.main"
+                    ],
+                    "flow_tracking_data": {
+                        "ap_tracking": {
+                            "group": 4,
+                            "offset": 18
+                        },
+                        "reference_ids": {
+                            "__main__.main.__temp0": 30,
+                            "__main__.main.__temp1": 31,
+                            "__main__.main.__temp2": 33,
+                            "__main__.main.__temp3": 34,
+                            "__main__.main.a": 29,
+                            "__main__.main.a_and_b": 36,
+                            "__main__.main.a_xor_b": 38,
+                            "__main__.main.b": 32,
+                            "__main__.main.bitwise_ptr": 37
+                        }
+                    },
+                    "hints": [],
+                    "inst": {
+                        "end_col": 47,
+                        "end_line": 56,
+                        "input_file": {
+                            "filename": "/home/seb/cairo_venv/lib/python3.8/site-packages/starkware/cairo/common/bitwise.cairo"
+                        },
+                        "parent_location": [
+                            {
+                                "end_col": 38,
+                                "end_line": 20,
+                                "input_file": {
+                                    "filename": "tests/cairo_files/cairo_bitwise.cairo"
+                                },
+                                "parent_location": [
+                                    {
+                                        "end_col": 46,
+                                        "end_line": 75,
+                                        "input_file": {
+                                            "filename": "/home/seb/cairo_venv/lib/python3.8/site-packages/starkware/cairo/common/bitwise.cairo"
+                                        },
+                                        "parent_location": [
+                                            {
+                                                "end_col": 36,
+                                                "end_line": 23,
+                                                "input_file": {
+                                                    "filename": "tests/cairo_files/cairo_bitwise.cairo"
+                                                },
+                                                "start_col": 20,
+                                                "start_line": 23
+                                            },
+                                            "While trying to retrieve the implicit argument 'bitwise_ptr' in:"
+                                        ],
+                                        "start_col": 17,
+                                        "start_line": 75
+                                    },
+                                    "While expanding the reference 'bitwise_ptr' in:"
+                                ],
+                                "start_col": 21,
+                                "start_line": 20
+                            },
+                            "While trying to update the implicit return value 'bitwise_ptr' in:"
+                        ],
+                        "start_col": 18,
+                        "start_line": 56
+                    }
+                },
+                "61": {
+                    "accessible_scopes": [
+                        "__main__",
+                        "__main__.main"
+                    ],
+                    "flow_tracking_data": {
+                        "ap_tracking": {
+                            "group": 4,
+                            "offset": 19
+                        },
+                        "reference_ids": {
+                            "__main__.main.__temp0": 30,
+                            "__main__.main.__temp1": 31,
+                            "__main__.main.__temp2": 33,
+                            "__main__.main.__temp3": 34,
+                            "__main__.main.a": 29,
+                            "__main__.main.a_and_b": 36,
+                            "__main__.main.a_xor_b": 38,
+                            "__main__.main.b": 32,
+                            "__main__.main.bitwise_ptr": 37
+                        }
+                    },
+                    "hints": [],
+                    "inst": {
+                        "end_col": 54,
+                        "end_line": 9,
+                        "input_file": {
+                            "filename": "tests/cairo_files/cairo_bitwise.cairo"
+                        },
+                        "parent_location": [
+                            {
+                                "end_col": 32,
+                                "end_line": 23,
+                                "input_file": {
+                                    "filename": "tests/cairo_files/cairo_bitwise.cairo"
+                                },
+                                "start_col": 31,
+                                "start_line": 23
+                            },
+                            "While expanding the reference 'a' in:"
+                        ],
+                        "start_col": 13,
+                        "start_line": 9
+                    }
+                },
+                "63": {
+                    "accessible_scopes": [
+                        "__main__",
+                        "__main__.main"
+                    ],
+                    "flow_tracking_data": {
+                        "ap_tracking": {
+                            "group": 4,
+                            "offset": 20
+                        },
+                        "reference_ids": {
+                            "__main__.main.__temp0": 30,
+                            "__main__.main.__temp1": 31,
+                            "__main__.main.__temp2": 33,
+                            "__main__.main.__temp3": 34,
+                            "__main__.main.a": 29,
+                            "__main__.main.a_and_b": 36,
+                            "__main__.main.a_xor_b": 38,
+                            "__main__.main.b": 32,
+                            "__main__.main.bitwise_ptr": 37
+                        }
+                    },
+                    "hints": [],
+                    "inst": {
+                        "end_col": 54,
+                        "end_line": 13,
+                        "input_file": {
+                            "filename": "tests/cairo_files/cairo_bitwise.cairo"
+                        },
+                        "parent_location": [
+                            {
+                                "end_col": 35,
+                                "end_line": 23,
+                                "input_file": {
+                                    "filename": "tests/cairo_files/cairo_bitwise.cairo"
+                                },
+                                "start_col": 34,
+                                "start_line": 23
+                            },
+                            "While expanding the reference 'b' in:"
+                        ],
+                        "start_col": 13,
+                        "start_line": 13
+                    }
+                },
+                "65": {
+                    "accessible_scopes": [
+                        "__main__",
+                        "__main__.main"
+                    ],
+                    "flow_tracking_data": {
+                        "ap_tracking": {
+                            "group": 4,
+                            "offset": 21
+                        },
+                        "reference_ids": {
+                            "__main__.main.__temp0": 30,
+                            "__main__.main.__temp1": 31,
+                            "__main__.main.__temp2": 33,
+                            "__main__.main.__temp3": 34,
+                            "__main__.main.a": 29,
+                            "__main__.main.a_and_b": 36,
+                            "__main__.main.a_xor_b": 38,
+                            "__main__.main.b": 32,
+                            "__main__.main.bitwise_ptr": 37
+                        }
+                    },
+                    "hints": [],
+                    "inst": {
+                        "end_col": 36,
+                        "end_line": 23,
+                        "input_file": {
+                            "filename": "tests/cairo_files/cairo_bitwise.cairo"
+                        },
+                        "start_col": 20,
+                        "start_line": 23
+                    }
+                },
+                "67": {
+                    "accessible_scopes": [
+                        "__main__",
+                        "__main__.main"
+                    ],
+                    "flow_tracking_data": {
+                        "ap_tracking": {
+                            "group": 4,
+                            "offset": 25
+                        },
+                        "reference_ids": {
+                            "__main__.main.__temp0": 30,
+                            "__main__.main.__temp1": 31,
+                            "__main__.main.__temp2": 33,
+                            "__main__.main.__temp3": 34,
+                            "__main__.main.a": 29,
+                            "__main__.main.a_and_b": 36,
+                            "__main__.main.a_or_b": 40,
+                            "__main__.main.a_xor_b": 38,
+                            "__main__.main.b": 32,
+                            "__main__.main.bitwise_ptr": 39
+                        }
+                    },
+                    "hints": [],
+                    "inst": {
+                        "end_col": 62,
+                        "end_line": 24,
+                        "input_file": {
+                            "filename": "tests/cairo_files/cairo_bitwise.cairo"
+                        },
+                        "start_col": 5,
+                        "start_line": 24
+                    }
+                },
+                "69": {
+                    "accessible_scopes": [
+                        "__main__",
+                        "__main__.main"
+                    ],
+                    "flow_tracking_data": {
+                        "ap_tracking": {
+                            "group": 4,
+                            "offset": 25
+                        },
+                        "reference_ids": {
+                            "__main__.main.__temp0": 30,
+                            "__main__.main.__temp1": 31,
+                            "__main__.main.__temp2": 33,
+                            "__main__.main.__temp3": 34,
+                            "__main__.main.a": 29,
+                            "__main__.main.a_and_b": 36,
+                            "__main__.main.a_or_b": 40,
+                            "__main__.main.a_xor_b": 38,
+                            "__main__.main.b": 32,
+                            "__main__.main.bitwise_ptr": 39
+                        }
+                    },
+                    "hints": [],
+                    "inst": {
+                        "end_col": 46,
+                        "end_line": 75,
+                        "input_file": {
+                            "filename": "/home/seb/cairo_venv/lib/python3.8/site-packages/starkware/cairo/common/bitwise.cairo"
+                        },
+                        "parent_location": [
+                            {
+                                "end_col": 36,
+                                "end_line": 23,
+                                "input_file": {
+                                    "filename": "tests/cairo_files/cairo_bitwise.cairo"
+                                },
+                                "parent_location": [
+                                    {
+                                        "end_col": 54,
+                                        "end_line": 16,
+                                        "input_file": {
+                                            "filename": "/home/seb/cairo_venv/lib/python3.8/site-packages/starkware/cairo/common/bitwise.cairo"
+                                        },
+                                        "parent_location": [
+                                            {
+                                                "end_col": 50,
+                                                "end_line": 26,
+                                                "input_file": {
+                                                    "filename": "tests/cairo_files/cairo_bitwise.cairo"
+                                                },
+                                                "start_col": 26,
+                                                "start_line": 26
+                                            },
+                                            "While trying to retrieve the implicit argument 'bitwise_ptr' in:"
+                                        ],
+                                        "start_col": 25,
+                                        "start_line": 16
+                                    },
+                                    "While expanding the reference 'bitwise_ptr' in:"
+                                ],
+                                "start_col": 20,
+                                "start_line": 23
+                            },
+                            "While trying to update the implicit return value 'bitwise_ptr' in:"
+                        ],
+                        "start_col": 17,
+                        "start_line": 75
+                    }
+                },
+                "70": {
+                    "accessible_scopes": [
+                        "__main__",
+                        "__main__.main"
+                    ],
+                    "flow_tracking_data": {
+                        "ap_tracking": {
+                            "group": 4,
+                            "offset": 26
+                        },
+                        "reference_ids": {
+                            "__main__.main.__temp0": 30,
+                            "__main__.main.__temp1": 31,
+                            "__main__.main.__temp2": 33,
+                            "__main__.main.__temp3": 34,
+                            "__main__.main.a": 29,
+                            "__main__.main.a_and_b": 36,
+                            "__main__.main.a_or_b": 40,
+                            "__main__.main.a_xor_b": 38,
+                            "__main__.main.b": 32,
+                            "__main__.main.bitwise_ptr": 39
+                        }
+                    },
+                    "hints": [],
+                    "inst": {
+                        "end_col": 54,
+                        "end_line": 9,
+                        "input_file": {
+                            "filename": "tests/cairo_files/cairo_bitwise.cairo"
+                        },
+                        "parent_location": [
+                            {
+                                "end_col": 46,
+                                "end_line": 26,
+                                "input_file": {
+                                    "filename": "tests/cairo_files/cairo_bitwise.cairo"
+                                },
+                                "start_col": 45,
+                                "start_line": 26
+                            },
+                            "While expanding the reference 'a' in:"
+                        ],
+                        "start_col": 13,
+                        "start_line": 9
+                    }
+                },
+                "72": {
+                    "accessible_scopes": [
+                        "__main__",
+                        "__main__.main"
+                    ],
+                    "flow_tracking_data": {
+                        "ap_tracking": {
+                            "group": 4,
+                            "offset": 27
+                        },
+                        "reference_ids": {
+                            "__main__.main.__temp0": 30,
+                            "__main__.main.__temp1": 31,
+                            "__main__.main.__temp2": 33,
+                            "__main__.main.__temp3": 34,
+                            "__main__.main.a": 29,
+                            "__main__.main.a_and_b": 36,
+                            "__main__.main.a_or_b": 40,
+                            "__main__.main.a_xor_b": 38,
+                            "__main__.main.b": 32,
+                            "__main__.main.bitwise_ptr": 39
+                        }
+                    },
+                    "hints": [],
+                    "inst": {
+                        "end_col": 54,
+                        "end_line": 13,
+                        "input_file": {
+                            "filename": "tests/cairo_files/cairo_bitwise.cairo"
+                        },
+                        "parent_location": [
+                            {
+                                "end_col": 49,
+                                "end_line": 26,
+                                "input_file": {
+                                    "filename": "tests/cairo_files/cairo_bitwise.cairo"
+                                },
+                                "start_col": 48,
+                                "start_line": 26
+                            },
+                            "While expanding the reference 'b' in:"
+                        ],
+                        "start_col": 13,
+                        "start_line": 13
+                    }
+                },
+                "74": {
+                    "accessible_scopes": [
+                        "__main__",
+                        "__main__.main"
+                    ],
+                    "flow_tracking_data": {
+                        "ap_tracking": {
+                            "group": 4,
+                            "offset": 28
+                        },
+                        "reference_ids": {
+                            "__main__.main.__temp0": 30,
+                            "__main__.main.__temp1": 31,
+                            "__main__.main.__temp2": 33,
+                            "__main__.main.__temp3": 34,
+                            "__main__.main.a": 29,
+                            "__main__.main.a_and_b": 36,
+                            "__main__.main.a_or_b": 40,
+                            "__main__.main.a_xor_b": 38,
+                            "__main__.main.b": 32,
+                            "__main__.main.bitwise_ptr": 39
+                        }
+                    },
+                    "hints": [],
+                    "inst": {
+                        "end_col": 50,
+                        "end_line": 26,
+                        "input_file": {
+                            "filename": "tests/cairo_files/cairo_bitwise.cairo"
+                        },
+                        "start_col": 26,
+                        "start_line": 26
+                    }
+                },
+                "76": {
+                    "accessible_scopes": [
+                        "__main__",
+                        "__main__.main"
+                    ],
+                    "flow_tracking_data": {
+                        "ap_tracking": {
+                            "group": 4,
+                            "offset": 34
+                        },
+                        "reference_ids": {
+                            "__main__.main.__temp0": 30,
+                            "__main__.main.__temp1": 31,
+                            "__main__.main.__temp2": 33,
+                            "__main__.main.__temp3": 34,
+                            "__main__.main.a": 29,
+                            "__main__.main.a_and_b": 36,
+                            "__main__.main.a_or_b": 40,
+                            "__main__.main.a_xor_b": 38,
+                            "__main__.main.and": 42,
+                            "__main__.main.b": 32,
+                            "__main__.main.bitwise_ptr": 41,
+                            "__main__.main.or": 44,
+                            "__main__.main.xor": 43
+                        }
+                    },
+                    "hints": [],
+                    "inst": {
+                        "end_col": 25,
+                        "end_line": 27,
+                        "input_file": {
+                            "filename": "tests/cairo_files/cairo_bitwise.cairo"
+                        },
+                        "start_col": 5,
+                        "start_line": 27
+                    }
+                },
+                "77": {
+                    "accessible_scopes": [
+                        "__main__",
+                        "__main__.main"
+                    ],
+                    "flow_tracking_data": {
+                        "ap_tracking": {
+                            "group": 4,
+                            "offset": 34
+                        },
+                        "reference_ids": {
+                            "__main__.main.__temp0": 30,
+                            "__main__.main.__temp1": 31,
+                            "__main__.main.__temp2": 33,
+                            "__main__.main.__temp3": 34,
+                            "__main__.main.a": 29,
+                            "__main__.main.a_and_b": 36,
+                            "__main__.main.a_or_b": 40,
+                            "__main__.main.a_xor_b": 38,
+                            "__main__.main.and": 42,
+                            "__main__.main.b": 32,
+                            "__main__.main.bitwise_ptr": 41,
+                            "__main__.main.or": 44,
+                            "__main__.main.xor": 43
+                        }
+                    },
+                    "hints": [],
+                    "inst": {
+                        "end_col": 25,
+                        "end_line": 28,
+                        "input_file": {
+                            "filename": "tests/cairo_files/cairo_bitwise.cairo"
+                        },
+                        "start_col": 5,
+                        "start_line": 28
+                    }
+                },
+                "78": {
+                    "accessible_scopes": [
+                        "__main__",
+                        "__main__.main"
+                    ],
+                    "flow_tracking_data": {
+                        "ap_tracking": {
+                            "group": 4,
+                            "offset": 34
+                        },
+                        "reference_ids": {
+                            "__main__.main.__temp0": 30,
+                            "__main__.main.__temp1": 31,
+                            "__main__.main.__temp2": 33,
+                            "__main__.main.__temp3": 34,
+                            "__main__.main.a": 29,
+                            "__main__.main.a_and_b": 36,
+                            "__main__.main.a_or_b": 40,
+                            "__main__.main.a_xor_b": 38,
+                            "__main__.main.and": 42,
+                            "__main__.main.b": 32,
+                            "__main__.main.bitwise_ptr": 41,
+                            "__main__.main.or": 44,
+                            "__main__.main.xor": 43
+                        }
+                    },
+                    "hints": [],
+                    "inst": {
+                        "end_col": 23,
+                        "end_line": 29,
+                        "input_file": {
+                            "filename": "tests/cairo_files/cairo_bitwise.cairo"
+                        },
+                        "start_col": 5,
+                        "start_line": 29
+                    }
+                },
+                "79": {
+                    "accessible_scopes": [
+                        "__main__",
+                        "__main__.main"
+                    ],
+                    "flow_tracking_data": {
+                        "ap_tracking": {
+                            "group": 4,
+                            "offset": 34
+                        },
+                        "reference_ids": {
+                            "__main__.main.__temp0": 30,
+                            "__main__.main.__temp1": 31,
+                            "__main__.main.__temp2": 33,
+                            "__main__.main.__temp3": 34,
+                            "__main__.main.a": 29,
+                            "__main__.main.a_and_b": 36,
+                            "__main__.main.a_or_b": 40,
+                            "__main__.main.a_xor_b": 38,
+                            "__main__.main.and": 42,
+                            "__main__.main.b": 32,
+                            "__main__.main.bitwise_ptr": 41,
+                            "__main__.main.or": 44,
+                            "__main__.main.xor": 43
+                        }
+                    },
+                    "hints": [],
+                    "inst": {
+                        "end_col": 54,
+                        "end_line": 16,
+                        "input_file": {
+                            "filename": "/home/seb/cairo_venv/lib/python3.8/site-packages/starkware/cairo/common/bitwise.cairo"
+                        },
+                        "parent_location": [
+                            {
+                                "end_col": 50,
+                                "end_line": 26,
+                                "input_file": {
+                                    "filename": "tests/cairo_files/cairo_bitwise.cairo"
+                                },
+                                "parent_location": [
+                                    {
+                                        "end_col": 46,
+                                        "end_line": 75,
+                                        "input_file": {
+                                            "filename": "/home/seb/cairo_venv/lib/python3.8/site-packages/starkware/cairo/common/bitwise.cairo"
+                                        },
+                                        "parent_location": [
+                                            {
+                                                "end_col": 39,
+                                                "end_line": 31,
+                                                "input_file": {
+                                                    "filename": "tests/cairo_files/cairo_bitwise.cairo"
+                                                },
+                                                "start_col": 15,
+                                                "start_line": 31
+                                            },
+                                            "While trying to retrieve the implicit argument 'bitwise_ptr' in:"
+                                        ],
+                                        "start_col": 17,
+                                        "start_line": 75
+                                    },
+                                    "While expanding the reference 'bitwise_ptr' in:"
+                                ],
+                                "start_col": 26,
+                                "start_line": 26
+                            },
+                            "While trying to update the implicit return value 'bitwise_ptr' in:"
+                        ],
+                        "start_col": 25,
+                        "start_line": 16
+                    }
+                },
+                "80": {
+                    "accessible_scopes": [
+                        "__main__",
+                        "__main__.main"
+                    ],
+                    "flow_tracking_data": {
+                        "ap_tracking": {
+                            "group": 4,
+                            "offset": 35
+                        },
+                        "reference_ids": {
+                            "__main__.main.__temp0": 30,
+                            "__main__.main.__temp1": 31,
+                            "__main__.main.__temp2": 33,
+                            "__main__.main.__temp3": 34,
+                            "__main__.main.a": 29,
+                            "__main__.main.a_and_b": 36,
+                            "__main__.main.a_or_b": 40,
+                            "__main__.main.a_xor_b": 38,
+                            "__main__.main.and": 42,
+                            "__main__.main.b": 32,
+                            "__main__.main.bitwise_ptr": 41,
+                            "__main__.main.or": 44,
+                            "__main__.main.xor": 43
+                        }
+                    },
+                    "hints": [],
+                    "inst": {
+                        "end_col": 32,
+                        "end_line": 31,
+                        "input_file": {
+                            "filename": "tests/cairo_files/cairo_bitwise.cairo"
+                        },
+                        "start_col": 26,
+                        "start_line": 31
+                    }
+                },
+                "82": {
+                    "accessible_scopes": [
+                        "__main__",
+                        "__main__.main"
+                    ],
+                    "flow_tracking_data": {
+                        "ap_tracking": {
+                            "group": 4,
+                            "offset": 36
+                        },
+                        "reference_ids": {
+                            "__main__.main.__temp0": 30,
+                            "__main__.main.__temp1": 31,
+                            "__main__.main.__temp2": 33,
+                            "__main__.main.__temp3": 34,
+                            "__main__.main.a": 29,
+                            "__main__.main.a_and_b": 36,
+                            "__main__.main.a_or_b": 40,
+                            "__main__.main.a_xor_b": 38,
+                            "__main__.main.and": 42,
+                            "__main__.main.b": 32,
+                            "__main__.main.bitwise_ptr": 41,
+                            "__main__.main.or": 44,
+                            "__main__.main.xor": 43
+                        }
+                    },
+                    "hints": [],
+                    "inst": {
+                        "end_col": 38,
+                        "end_line": 31,
+                        "input_file": {
+                            "filename": "tests/cairo_files/cairo_bitwise.cairo"
+                        },
+                        "start_col": 34,
+                        "start_line": 31
+                    }
+                },
+                "84": {
+                    "accessible_scopes": [
+                        "__main__",
+                        "__main__.main"
+                    ],
+                    "flow_tracking_data": {
+                        "ap_tracking": {
+                            "group": 4,
+                            "offset": 37
+                        },
+                        "reference_ids": {
+                            "__main__.main.__temp0": 30,
+                            "__main__.main.__temp1": 31,
+                            "__main__.main.__temp2": 33,
+                            "__main__.main.__temp3": 34,
+                            "__main__.main.a": 29,
+                            "__main__.main.a_and_b": 36,
+                            "__main__.main.a_or_b": 40,
+                            "__main__.main.a_xor_b": 38,
+                            "__main__.main.and": 42,
+                            "__main__.main.b": 32,
+                            "__main__.main.bitwise_ptr": 41,
+                            "__main__.main.or": 44,
+                            "__main__.main.xor": 43
+                        }
+                    },
+                    "hints": [],
+                    "inst": {
+                        "end_col": 39,
+                        "end_line": 31,
+                        "input_file": {
+                            "filename": "tests/cairo_files/cairo_bitwise.cairo"
+                        },
+                        "start_col": 15,
+                        "start_line": 31
+                    }
+                },
+                "86": {
+                    "accessible_scopes": [
+                        "__main__",
+                        "__main__.main"
+                    ],
+                    "flow_tracking_data": {
+                        "ap_tracking": {
+                            "group": 4,
+                            "offset": 41
+                        },
+                        "reference_ids": {
+                            "__main__.main.__temp0": 30,
+                            "__main__.main.__temp1": 31,
+                            "__main__.main.__temp2": 33,
+                            "__main__.main.__temp3": 34,
+                            "__main__.main.a": 29,
+                            "__main__.main.a_and_b": 36,
+                            "__main__.main.a_or_b": 40,
+                            "__main__.main.a_xor_b": 38,
+                            "__main__.main.and": 42,
+                            "__main__.main.b": 32,
+                            "__main__.main.bitwise_ptr": 45,
+                            "__main__.main.c": 46,
+                            "__main__.main.or": 44,
+                            "__main__.main.xor": 43
+                        }
+                    },
+                    "hints": [],
+                    "inst": {
+                        "end_col": 29,
+                        "end_line": 32,
+                        "input_file": {
+                            "filename": "tests/cairo_files/cairo_bitwise.cairo"
+                        },
+                        "start_col": 5,
+                        "start_line": 32
+                    }
+                },
+                "88": {
+                    "accessible_scopes": [
+                        "__main__",
+                        "__main__.main"
+                    ],
+                    "flow_tracking_data": {
+                        "ap_tracking": {
+                            "group": 4,
+                            "offset": 41
+                        },
+                        "reference_ids": {
+                            "__main__.main.__temp0": 30,
+                            "__main__.main.__temp1": 31,
+                            "__main__.main.__temp2": 33,
+                            "__main__.main.__temp3": 34,
+                            "__main__.main.a": 29,
+                            "__main__.main.a_and_b": 36,
+                            "__main__.main.a_or_b": 40,
+                            "__main__.main.a_xor_b": 38,
+                            "__main__.main.and": 42,
+                            "__main__.main.b": 32,
+                            "__main__.main.bitwise_ptr": 45,
+                            "__main__.main.c": 46,
+                            "__main__.main.or": 44,
+                            "__main__.main.xor": 43
+                        }
+                    },
+                    "hints": [],
+                    "inst": {
+                        "end_col": 46,
+                        "end_line": 75,
+                        "input_file": {
+                            "filename": "/home/seb/cairo_venv/lib/python3.8/site-packages/starkware/cairo/common/bitwise.cairo"
+                        },
+                        "parent_location": [
+                            {
+                                "end_col": 39,
+                                "end_line": 31,
+                                "input_file": {
+                                    "filename": "tests/cairo_files/cairo_bitwise.cairo"
+                                },
+                                "parent_location": [
+                                    {
+                                        "end_col": 39,
+                                        "end_line": 8,
+                                        "input_file": {
+                                            "filename": "tests/cairo_files/cairo_bitwise.cairo"
+                                        },
+                                        "parent_location": [
+                                            {
+                                                "end_col": 14,
+                                                "end_line": 34,
+                                                "input_file": {
+                                                    "filename": "tests/cairo_files/cairo_bitwise.cairo"
+                                                },
+                                                "start_col": 5,
+                                                "start_line": 34
+                                            },
+                                            "While trying to retrieve the implicit argument 'bitwise_ptr' in:"
+                                        ],
+                                        "start_col": 11,
+                                        "start_line": 8
+                                    },
+                                    "While expanding the reference 'bitwise_ptr' in:"
+                                ],
+                                "start_col": 15,
+                                "start_line": 31
+                            },
+                            "While trying to update the implicit return value 'bitwise_ptr' in:"
+                        ],
+                        "start_col": 17,
+                        "start_line": 75
+                    }
+                },
+                "89": {
+                    "accessible_scopes": [
+                        "__main__",
+                        "__main__.main"
+                    ],
+                    "flow_tracking_data": {
+                        "ap_tracking": {
+                            "group": 4,
+                            "offset": 42
+                        },
+                        "reference_ids": {
+                            "__main__.main.__temp0": 30,
+                            "__main__.main.__temp1": 31,
+                            "__main__.main.__temp2": 33,
+                            "__main__.main.__temp3": 34,
+                            "__main__.main.a": 29,
+                            "__main__.main.a_and_b": 36,
+                            "__main__.main.a_or_b": 40,
+                            "__main__.main.a_xor_b": 38,
+                            "__main__.main.and": 42,
+                            "__main__.main.b": 32,
+                            "__main__.main.bitwise_ptr": 45,
+                            "__main__.main.c": 46,
+                            "__main__.main.or": 44,
+                            "__main__.main.xor": 43
+                        }
+                    },
+                    "hints": [],
+                    "inst": {
+                        "end_col": 14,
+                        "end_line": 34,
+                        "input_file": {
+                            "filename": "tests/cairo_files/cairo_bitwise.cairo"
+                        },
+                        "start_col": 5,
+                        "start_line": 34
+                    }
+                }
+            }
+        },
+        "hints": {},
+        "identifiers": {
+            "__main__.BitwiseBuiltin": {
+                "destination": "starkware.cairo.common.cairo_builtins.BitwiseBuiltin",
+                "type": "alias"
+            },
+            "__main__.bitwise_and": {
+                "destination": "starkware.cairo.common.bitwise.bitwise_and",
+                "type": "alias"
+            },
+            "__main__.bitwise_operations": {
+                "destination": "starkware.cairo.common.bitwise.bitwise_operations",
+                "type": "alias"
+            },
+            "__main__.bitwise_or": {
+                "destination": "starkware.cairo.common.bitwise.bitwise_or",
+                "type": "alias"
+            },
+            "__main__.bitwise_xor": {
+                "destination": "starkware.cairo.common.bitwise.bitwise_xor",
+                "type": "alias"
+            },
+            "__main__.main": {
+                "decorators": [],
+                "pc": 26,
+                "type": "function"
+            },
+            "__main__.main.Args": {
+                "full_name": "__main__.main.Args",
+                "members": {},
+                "size": 0,
+                "type": "struct"
+            },
+            "__main__.main.ImplicitArgs": {
+                "full_name": "__main__.main.ImplicitArgs",
+                "members": {
+                    "bitwise_ptr": {
+                        "cairo_type": "starkware.cairo.common.cairo_builtins.BitwiseBuiltin*",
+                        "offset": 0
+                    }
+                },
+                "size": 1,
+                "type": "struct"
+            },
+            "__main__.main.Return": {
+                "full_name": "__main__.main.Return",
+                "members": {},
+                "size": 0,
+                "type": "struct"
+            },
+            "__main__.main.SIZEOF_LOCALS": {
+                "type": "const",
+                "value": 0
+            },
+            "__main__.main.__temp0": {
+                "cairo_type": "felt",
+                "full_name": "__main__.main.__temp0",
+                "references": [
+                    {
+                        "ap_tracking_data": {
+                            "group": 4,
+                            "offset": 1
+                        },
+                        "pc": 28,
+                        "value": "[cast(ap + (-1), felt*)]"
+                    }
+                ],
+                "type": "reference"
+            },
+            "__main__.main.__temp1": {
+                "cairo_type": "felt",
+                "full_name": "__main__.main.__temp1",
+                "references": [
+                    {
+                        "ap_tracking_data": {
+                            "group": 4,
+                            "offset": 2
+                        },
+                        "pc": 32,
+                        "value": "[cast(ap + (-1), felt*)]"
+                    }
+                ],
+                "type": "reference"
+            },
+            "__main__.main.__temp2": {
+                "cairo_type": "felt",
+                "full_name": "__main__.main.__temp2",
+                "references": [
+                    {
+                        "ap_tracking_data": {
+                            "group": 4,
+                            "offset": 3
+                        },
+                        "pc": 36,
+                        "value": "[cast(ap + (-1), felt*)]"
+                    }
+                ],
+                "type": "reference"
+            },
+            "__main__.main.__temp3": {
+                "cairo_type": "felt",
+                "full_name": "__main__.main.__temp3",
+                "references": [
+                    {
+                        "ap_tracking_data": {
+                            "group": 4,
+                            "offset": 4
+                        },
+                        "pc": 40,
+                        "value": "[cast(ap + (-1), felt*)]"
+                    }
+                ],
+                "type": "reference"
+            },
+            "__main__.main.a": {
+                "cairo_type": "felt",
+                "full_name": "__main__.main.a",
+                "references": [
+                    {
+                        "ap_tracking_data": {
+                            "group": 4,
+                            "offset": 0
+                        },
+                        "pc": 26,
+                        "value": "cast(12, felt)"
+                    }
+                ],
+                "type": "reference"
+            },
+            "__main__.main.a_and_b": {
+                "cairo_type": "felt",
+                "full_name": "__main__.main.a_and_b",
+                "references": [
+                    {
+                        "ap_tracking_data": {
+                            "group": 4,
+                            "offset": 11
+                        },
+                        "pc": 49,
+                        "value": "[cast(ap + (-1), felt*)]"
+                    }
+                ],
+                "type": "reference"
+            },
+            "__main__.main.a_or_b": {
+                "cairo_type": "felt",
+                "full_name": "__main__.main.a_or_b",
+                "references": [
+                    {
+                        "ap_tracking_data": {
+                            "group": 4,
+                            "offset": 25
+                        },
+                        "pc": 67,
+                        "value": "[cast(ap + (-1), felt*)]"
+                    }
+                ],
+                "type": "reference"
+            },
+            "__main__.main.a_xor_b": {
+                "cairo_type": "felt",
+                "full_name": "__main__.main.a_xor_b",
+                "references": [
+                    {
+                        "ap_tracking_data": {
+                            "group": 4,
+                            "offset": 18
+                        },
+                        "pc": 58,
+                        "value": "[cast(ap + (-1), felt*)]"
+                    }
+                ],
+                "type": "reference"
+            },
+            "__main__.main.and": {
+                "cairo_type": "felt",
+                "full_name": "__main__.main.and",
+                "references": [
+                    {
+                        "ap_tracking_data": {
+                            "group": 4,
+                            "offset": 34
+                        },
+                        "pc": 76,
+                        "value": "[cast(ap + (-3), felt*)]"
+                    }
+                ],
+                "type": "reference"
+            },
+            "__main__.main.b": {
+                "cairo_type": "felt",
+                "full_name": "__main__.main.b",
+                "references": [
+                    {
+                        "ap_tracking_data": {
+                            "group": 4,
+                            "offset": 2
+                        },
+                        "pc": 34,
+                        "value": "cast(10, felt)"
+                    }
+                ],
+                "type": "reference"
+            },
+            "__main__.main.bitwise_ptr": {
+                "cairo_type": "starkware.cairo.common.cairo_builtins.BitwiseBuiltin*",
+                "full_name": "__main__.main.bitwise_ptr",
+                "references": [
+                    {
+                        "ap_tracking_data": {
+                            "group": 4,
+                            "offset": 0
+                        },
+                        "pc": 26,
+                        "value": "[cast(fp + (-3), starkware.cairo.common.cairo_builtins.BitwiseBuiltin**)]"
+                    },
+                    {
+                        "ap_tracking_data": {
+                            "group": 4,
+                            "offset": 11
+                        },
+                        "pc": 49,
+                        "value": "[cast(ap + (-2), starkware.cairo.common.cairo_builtins.BitwiseBuiltin**)]"
+                    },
+                    {
+                        "ap_tracking_data": {
+                            "group": 4,
+                            "offset": 18
+                        },
+                        "pc": 58,
+                        "value": "[cast(ap + (-2), starkware.cairo.common.cairo_builtins.BitwiseBuiltin**)]"
+                    },
+                    {
+                        "ap_tracking_data": {
+                            "group": 4,
+                            "offset": 25
+                        },
+                        "pc": 67,
+                        "value": "[cast(ap + (-2), starkware.cairo.common.cairo_builtins.BitwiseBuiltin**)]"
+                    },
+                    {
+                        "ap_tracking_data": {
+                            "group": 4,
+                            "offset": 34
+                        },
+                        "pc": 76,
+                        "value": "[cast(ap + (-4), starkware.cairo.common.cairo_builtins.BitwiseBuiltin**)]"
+                    },
+                    {
+                        "ap_tracking_data": {
+                            "group": 4,
+                            "offset": 41
+                        },
+                        "pc": 86,
+                        "value": "[cast(ap + (-2), starkware.cairo.common.cairo_builtins.BitwiseBuiltin**)]"
+                    }
+                ],
+                "type": "reference"
+            },
+            "__main__.main.c": {
+                "cairo_type": "felt",
+                "full_name": "__main__.main.c",
+                "references": [
+                    {
+                        "ap_tracking_data": {
+                            "group": 4,
+                            "offset": 41
+                        },
+                        "pc": 86,
+                        "value": "[cast(ap + (-1), felt*)]"
+                    }
+                ],
+                "type": "reference"
+            },
+            "__main__.main.or": {
+                "cairo_type": "felt",
+                "full_name": "__main__.main.or",
+                "references": [
+                    {
+                        "ap_tracking_data": {
+                            "group": 4,
+                            "offset": 34
+                        },
+                        "pc": 76,
+                        "value": "[cast(ap + (-1), felt*)]"
+                    }
+                ],
+                "type": "reference"
+            },
+            "__main__.main.xor": {
+                "cairo_type": "felt",
+                "full_name": "__main__.main.xor",
+                "references": [
+                    {
+                        "ap_tracking_data": {
+                            "group": 4,
+                            "offset": 34
+                        },
+                        "pc": 76,
+                        "value": "[cast(ap + (-2), felt*)]"
+                    }
+                ],
+                "type": "reference"
+            },
+            "starkware.cairo.common.bitwise.ALL_ONES": {
+                "type": "const",
+                "value": -106710729501573572985208420194530329073740042555888586719234
+            },
+            "starkware.cairo.common.bitwise.BitwiseBuiltin": {
+                "destination": "starkware.cairo.common.cairo_builtins.BitwiseBuiltin",
+                "type": "alias"
+            },
+            "starkware.cairo.common.bitwise.bitwise_and": {
+                "decorators": [],
+                "pc": 8,
+                "type": "function"
+            },
+            "starkware.cairo.common.bitwise.bitwise_and.Args": {
+                "full_name": "starkware.cairo.common.bitwise.bitwise_and.Args",
+                "members": {
+                    "x": {
+                        "cairo_type": "felt",
+                        "offset": 0
+                    },
+                    "y": {
+                        "cairo_type": "felt",
+                        "offset": 1
+                    }
+                },
+                "size": 2,
+                "type": "struct"
+            },
+            "starkware.cairo.common.bitwise.bitwise_and.ImplicitArgs": {
+                "full_name": "starkware.cairo.common.bitwise.bitwise_and.ImplicitArgs",
+                "members": {
+                    "bitwise_ptr": {
+                        "cairo_type": "starkware.cairo.common.cairo_builtins.BitwiseBuiltin*",
+                        "offset": 0
+                    }
+                },
+                "size": 1,
+                "type": "struct"
+            },
+            "starkware.cairo.common.bitwise.bitwise_and.Return": {
+                "full_name": "starkware.cairo.common.bitwise.bitwise_and.Return",
+                "members": {
+                    "x_and_y": {
+                        "cairo_type": "felt",
+                        "offset": 0
+                    }
+                },
+                "size": 1,
+                "type": "struct"
+            },
+            "starkware.cairo.common.bitwise.bitwise_and.SIZEOF_LOCALS": {
+                "type": "const",
+                "value": 0
+            },
+            "starkware.cairo.common.bitwise.bitwise_and.bitwise_ptr": {
+                "cairo_type": "starkware.cairo.common.cairo_builtins.BitwiseBuiltin*",
+                "full_name": "starkware.cairo.common.bitwise.bitwise_and.bitwise_ptr",
+                "references": [
+                    {
+                        "ap_tracking_data": {
+                            "group": 1,
+                            "offset": 0
+                        },
+                        "pc": 8,
+                        "value": "[cast(fp + (-5), starkware.cairo.common.cairo_builtins.BitwiseBuiltin**)]"
+                    },
+                    {
+                        "ap_tracking_data": {
+                            "group": 1,
+                            "offset": 0
+                        },
+                        "pc": 10,
+                        "value": "cast([fp + (-5)] + 5, starkware.cairo.common.cairo_builtins.BitwiseBuiltin*)"
+                    }
+                ],
+                "type": "reference"
+            },
+            "starkware.cairo.common.bitwise.bitwise_and.x": {
+                "cairo_type": "felt",
+                "full_name": "starkware.cairo.common.bitwise.bitwise_and.x",
+                "references": [
+                    {
+                        "ap_tracking_data": {
+                            "group": 1,
+                            "offset": 0
+                        },
+                        "pc": 8,
+                        "value": "[cast(fp + (-4), felt*)]"
+                    }
+                ],
+                "type": "reference"
+            },
+            "starkware.cairo.common.bitwise.bitwise_and.x_and_y": {
+                "cairo_type": "felt",
+                "full_name": "starkware.cairo.common.bitwise.bitwise_and.x_and_y",
+                "references": [
+                    {
+                        "ap_tracking_data": {
+                            "group": 1,
+                            "offset": 0
+                        },
+                        "pc": 10,
+                        "value": "[cast([fp + (-5)] + 2, felt*)]"
+                    }
+                ],
+                "type": "reference"
+            },
+            "starkware.cairo.common.bitwise.bitwise_and.x_or_y": {
+                "cairo_type": "felt",
+                "full_name": "starkware.cairo.common.bitwise.bitwise_and.x_or_y",
+                "references": [
+                    {
+                        "ap_tracking_data": {
+                            "group": 1,
+                            "offset": 0
+                        },
+                        "pc": 10,
+                        "value": "[cast([fp + (-5)] + 4, felt*)]"
+                    }
+                ],
+                "type": "reference"
+            },
+            "starkware.cairo.common.bitwise.bitwise_and.x_xor_y": {
+                "cairo_type": "felt",
+                "full_name": "starkware.cairo.common.bitwise.bitwise_and.x_xor_y",
+                "references": [
+                    {
+                        "ap_tracking_data": {
+                            "group": 1,
+                            "offset": 0
+                        },
+                        "pc": 10,
+                        "value": "[cast([fp + (-5)] + 3, felt*)]"
+                    }
+                ],
+                "type": "reference"
+            },
+            "starkware.cairo.common.bitwise.bitwise_and.y": {
+                "cairo_type": "felt",
+                "full_name": "starkware.cairo.common.bitwise.bitwise_and.y",
+                "references": [
+                    {
+                        "ap_tracking_data": {
+                            "group": 1,
+                            "offset": 0
+                        },
+                        "pc": 8,
+                        "value": "[cast(fp + (-3), felt*)]"
+                    }
+                ],
+                "type": "reference"
+            },
+            "starkware.cairo.common.bitwise.bitwise_operations": {
+                "decorators": [],
+                "pc": 0,
+                "type": "function"
+            },
+            "starkware.cairo.common.bitwise.bitwise_operations.Args": {
+                "full_name": "starkware.cairo.common.bitwise.bitwise_operations.Args",
+                "members": {
+                    "x": {
+                        "cairo_type": "felt",
+                        "offset": 0
+                    },
+                    "y": {
+                        "cairo_type": "felt",
+                        "offset": 1
+                    }
+                },
+                "size": 2,
+                "type": "struct"
+            },
+            "starkware.cairo.common.bitwise.bitwise_operations.ImplicitArgs": {
+                "full_name": "starkware.cairo.common.bitwise.bitwise_operations.ImplicitArgs",
+                "members": {
+                    "bitwise_ptr": {
+                        "cairo_type": "starkware.cairo.common.cairo_builtins.BitwiseBuiltin*",
+                        "offset": 0
+                    }
+                },
+                "size": 1,
+                "type": "struct"
+            },
+            "starkware.cairo.common.bitwise.bitwise_operations.Return": {
+                "full_name": "starkware.cairo.common.bitwise.bitwise_operations.Return",
+                "members": {
+                    "x_and_y": {
+                        "cairo_type": "felt",
+                        "offset": 0
+                    },
+                    "x_or_y": {
+                        "cairo_type": "felt",
+                        "offset": 2
+                    },
+                    "x_xor_y": {
+                        "cairo_type": "felt",
+                        "offset": 1
+                    }
+                },
+                "size": 3,
+                "type": "struct"
+            },
+            "starkware.cairo.common.bitwise.bitwise_operations.SIZEOF_LOCALS": {
+                "type": "const",
+                "value": 0
+            },
+            "starkware.cairo.common.bitwise.bitwise_operations.bitwise_ptr": {
+                "cairo_type": "starkware.cairo.common.cairo_builtins.BitwiseBuiltin*",
+                "full_name": "starkware.cairo.common.bitwise.bitwise_operations.bitwise_ptr",
+                "references": [
+                    {
+                        "ap_tracking_data": {
+                            "group": 0,
+                            "offset": 0
+                        },
+                        "pc": 0,
+                        "value": "[cast(fp + (-5), starkware.cairo.common.cairo_builtins.BitwiseBuiltin**)]"
+                    },
+                    {
+                        "ap_tracking_data": {
+                            "group": 0,
+                            "offset": 0
+                        },
+                        "pc": 2,
+                        "value": "cast([fp + (-5)] + 5, starkware.cairo.common.cairo_builtins.BitwiseBuiltin*)"
+                    }
+                ],
+                "type": "reference"
+            },
+            "starkware.cairo.common.bitwise.bitwise_operations.x": {
+                "cairo_type": "felt",
+                "full_name": "starkware.cairo.common.bitwise.bitwise_operations.x",
+                "references": [
+                    {
+                        "ap_tracking_data": {
+                            "group": 0,
+                            "offset": 0
+                        },
+                        "pc": 0,
+                        "value": "[cast(fp + (-4), felt*)]"
+                    }
+                ],
+                "type": "reference"
+            },
+            "starkware.cairo.common.bitwise.bitwise_operations.x_and_y": {
+                "cairo_type": "felt",
+                "full_name": "starkware.cairo.common.bitwise.bitwise_operations.x_and_y",
+                "references": [
+                    {
+                        "ap_tracking_data": {
+                            "group": 0,
+                            "offset": 0
+                        },
+                        "pc": 2,
+                        "value": "[cast([fp + (-5)] + 2, felt*)]"
+                    }
+                ],
+                "type": "reference"
+            },
+            "starkware.cairo.common.bitwise.bitwise_operations.x_or_y": {
+                "cairo_type": "felt",
+                "full_name": "starkware.cairo.common.bitwise.bitwise_operations.x_or_y",
+                "references": [
+                    {
+                        "ap_tracking_data": {
+                            "group": 0,
+                            "offset": 0
+                        },
+                        "pc": 2,
+                        "value": "[cast([fp + (-5)] + 4, felt*)]"
+                    }
+                ],
+                "type": "reference"
+            },
+            "starkware.cairo.common.bitwise.bitwise_operations.x_xor_y": {
+                "cairo_type": "felt",
+                "full_name": "starkware.cairo.common.bitwise.bitwise_operations.x_xor_y",
+                "references": [
+                    {
+                        "ap_tracking_data": {
+                            "group": 0,
+                            "offset": 0
+                        },
+                        "pc": 2,
+                        "value": "[cast([fp + (-5)] + 3, felt*)]"
+                    }
+                ],
+                "type": "reference"
+            },
+            "starkware.cairo.common.bitwise.bitwise_operations.y": {
+                "cairo_type": "felt",
+                "full_name": "starkware.cairo.common.bitwise.bitwise_operations.y",
+                "references": [
+                    {
+                        "ap_tracking_data": {
+                            "group": 0,
+                            "offset": 0
+                        },
+                        "pc": 0,
+                        "value": "[cast(fp + (-3), felt*)]"
+                    }
+                ],
+                "type": "reference"
+            },
+            "starkware.cairo.common.bitwise.bitwise_or": {
+                "decorators": [],
+                "pc": 20,
+                "type": "function"
+            },
+            "starkware.cairo.common.bitwise.bitwise_or.Args": {
+                "full_name": "starkware.cairo.common.bitwise.bitwise_or.Args",
+                "members": {
+                    "x": {
+                        "cairo_type": "felt",
+                        "offset": 0
+                    },
+                    "y": {
+                        "cairo_type": "felt",
+                        "offset": 1
+                    }
+                },
+                "size": 2,
+                "type": "struct"
+            },
+            "starkware.cairo.common.bitwise.bitwise_or.ImplicitArgs": {
+                "full_name": "starkware.cairo.common.bitwise.bitwise_or.ImplicitArgs",
+                "members": {
+                    "bitwise_ptr": {
+                        "cairo_type": "starkware.cairo.common.cairo_builtins.BitwiseBuiltin*",
+                        "offset": 0
+                    }
+                },
+                "size": 1,
+                "type": "struct"
+            },
+            "starkware.cairo.common.bitwise.bitwise_or.Return": {
+                "full_name": "starkware.cairo.common.bitwise.bitwise_or.Return",
+                "members": {
+                    "x_or_y": {
+                        "cairo_type": "felt",
+                        "offset": 0
+                    }
+                },
+                "size": 1,
+                "type": "struct"
+            },
+            "starkware.cairo.common.bitwise.bitwise_or.SIZEOF_LOCALS": {
+                "type": "const",
+                "value": 0
+            },
+            "starkware.cairo.common.bitwise.bitwise_or.bitwise_ptr": {
+                "cairo_type": "starkware.cairo.common.cairo_builtins.BitwiseBuiltin*",
+                "full_name": "starkware.cairo.common.bitwise.bitwise_or.bitwise_ptr",
+                "references": [
+                    {
+                        "ap_tracking_data": {
+                            "group": 3,
+                            "offset": 0
+                        },
+                        "pc": 20,
+                        "value": "[cast(fp + (-5), starkware.cairo.common.cairo_builtins.BitwiseBuiltin**)]"
+                    },
+                    {
+                        "ap_tracking_data": {
+                            "group": 3,
+                            "offset": 0
+                        },
+                        "pc": 22,
+                        "value": "cast([fp + (-5)] + 5, starkware.cairo.common.cairo_builtins.BitwiseBuiltin*)"
+                    }
+                ],
+                "type": "reference"
+            },
+            "starkware.cairo.common.bitwise.bitwise_or.x": {
+                "cairo_type": "felt",
+                "full_name": "starkware.cairo.common.bitwise.bitwise_or.x",
+                "references": [
+                    {
+                        "ap_tracking_data": {
+                            "group": 3,
+                            "offset": 0
+                        },
+                        "pc": 20,
+                        "value": "[cast(fp + (-4), felt*)]"
+                    }
+                ],
+                "type": "reference"
+            },
+            "starkware.cairo.common.bitwise.bitwise_or.x_and_y": {
+                "cairo_type": "felt",
+                "full_name": "starkware.cairo.common.bitwise.bitwise_or.x_and_y",
+                "references": [
+                    {
+                        "ap_tracking_data": {
+                            "group": 3,
+                            "offset": 0
+                        },
+                        "pc": 22,
+                        "value": "[cast([fp + (-5)] + 2, felt*)]"
+                    }
+                ],
+                "type": "reference"
+            },
+            "starkware.cairo.common.bitwise.bitwise_or.x_or_y": {
+                "cairo_type": "felt",
+                "full_name": "starkware.cairo.common.bitwise.bitwise_or.x_or_y",
+                "references": [
+                    {
+                        "ap_tracking_data": {
+                            "group": 3,
+                            "offset": 0
+                        },
+                        "pc": 22,
+                        "value": "[cast([fp + (-5)] + 4, felt*)]"
+                    }
+                ],
+                "type": "reference"
+            },
+            "starkware.cairo.common.bitwise.bitwise_or.x_xor_y": {
+                "cairo_type": "felt",
+                "full_name": "starkware.cairo.common.bitwise.bitwise_or.x_xor_y",
+                "references": [
+                    {
+                        "ap_tracking_data": {
+                            "group": 3,
+                            "offset": 0
+                        },
+                        "pc": 22,
+                        "value": "[cast([fp + (-5)] + 3, felt*)]"
+                    }
+                ],
+                "type": "reference"
+            },
+            "starkware.cairo.common.bitwise.bitwise_or.y": {
+                "cairo_type": "felt",
+                "full_name": "starkware.cairo.common.bitwise.bitwise_or.y",
+                "references": [
+                    {
+                        "ap_tracking_data": {
+                            "group": 3,
+                            "offset": 0
+                        },
+                        "pc": 20,
+                        "value": "[cast(fp + (-3), felt*)]"
+                    }
+                ],
+                "type": "reference"
+            },
+            "starkware.cairo.common.bitwise.bitwise_xor": {
+                "decorators": [],
+                "pc": 14,
+                "type": "function"
+            },
+            "starkware.cairo.common.bitwise.bitwise_xor.Args": {
+                "full_name": "starkware.cairo.common.bitwise.bitwise_xor.Args",
+                "members": {
+                    "x": {
+                        "cairo_type": "felt",
+                        "offset": 0
+                    },
+                    "y": {
+                        "cairo_type": "felt",
+                        "offset": 1
+                    }
+                },
+                "size": 2,
+                "type": "struct"
+            },
+            "starkware.cairo.common.bitwise.bitwise_xor.ImplicitArgs": {
+                "full_name": "starkware.cairo.common.bitwise.bitwise_xor.ImplicitArgs",
+                "members": {
+                    "bitwise_ptr": {
+                        "cairo_type": "starkware.cairo.common.cairo_builtins.BitwiseBuiltin*",
+                        "offset": 0
+                    }
+                },
+                "size": 1,
+                "type": "struct"
+            },
+            "starkware.cairo.common.bitwise.bitwise_xor.Return": {
+                "full_name": "starkware.cairo.common.bitwise.bitwise_xor.Return",
+                "members": {
+                    "x_xor_y": {
+                        "cairo_type": "felt",
+                        "offset": 0
+                    }
+                },
+                "size": 1,
+                "type": "struct"
+            },
+            "starkware.cairo.common.bitwise.bitwise_xor.SIZEOF_LOCALS": {
+                "type": "const",
+                "value": 0
+            },
+            "starkware.cairo.common.bitwise.bitwise_xor.bitwise_ptr": {
+                "cairo_type": "starkware.cairo.common.cairo_builtins.BitwiseBuiltin*",
+                "full_name": "starkware.cairo.common.bitwise.bitwise_xor.bitwise_ptr",
+                "references": [
+                    {
+                        "ap_tracking_data": {
+                            "group": 2,
+                            "offset": 0
+                        },
+                        "pc": 14,
+                        "value": "[cast(fp + (-5), starkware.cairo.common.cairo_builtins.BitwiseBuiltin**)]"
+                    },
+                    {
+                        "ap_tracking_data": {
+                            "group": 2,
+                            "offset": 0
+                        },
+                        "pc": 16,
+                        "value": "cast([fp + (-5)] + 5, starkware.cairo.common.cairo_builtins.BitwiseBuiltin*)"
+                    }
+                ],
+                "type": "reference"
+            },
+            "starkware.cairo.common.bitwise.bitwise_xor.x": {
+                "cairo_type": "felt",
+                "full_name": "starkware.cairo.common.bitwise.bitwise_xor.x",
+                "references": [
+                    {
+                        "ap_tracking_data": {
+                            "group": 2,
+                            "offset": 0
+                        },
+                        "pc": 14,
+                        "value": "[cast(fp + (-4), felt*)]"
+                    }
+                ],
+                "type": "reference"
+            },
+            "starkware.cairo.common.bitwise.bitwise_xor.x_and_y": {
+                "cairo_type": "felt",
+                "full_name": "starkware.cairo.common.bitwise.bitwise_xor.x_and_y",
+                "references": [
+                    {
+                        "ap_tracking_data": {
+                            "group": 2,
+                            "offset": 0
+                        },
+                        "pc": 16,
+                        "value": "[cast([fp + (-5)] + 2, felt*)]"
+                    }
+                ],
+                "type": "reference"
+            },
+            "starkware.cairo.common.bitwise.bitwise_xor.x_or_y": {
+                "cairo_type": "felt",
+                "full_name": "starkware.cairo.common.bitwise.bitwise_xor.x_or_y",
+                "references": [
+                    {
+                        "ap_tracking_data": {
+                            "group": 2,
+                            "offset": 0
+                        },
+                        "pc": 16,
+                        "value": "[cast([fp + (-5)] + 4, felt*)]"
+                    }
+                ],
+                "type": "reference"
+            },
+            "starkware.cairo.common.bitwise.bitwise_xor.x_xor_y": {
+                "cairo_type": "felt",
+                "full_name": "starkware.cairo.common.bitwise.bitwise_xor.x_xor_y",
+                "references": [
+                    {
+                        "ap_tracking_data": {
+                            "group": 2,
+                            "offset": 0
+                        },
+                        "pc": 16,
+                        "value": "[cast([fp + (-5)] + 3, felt*)]"
+                    }
+                ],
+                "type": "reference"
+            },
+            "starkware.cairo.common.bitwise.bitwise_xor.y": {
+                "cairo_type": "felt",
+                "full_name": "starkware.cairo.common.bitwise.bitwise_xor.y",
+                "references": [
+                    {
+                        "ap_tracking_data": {
+                            "group": 2,
+                            "offset": 0
+                        },
+                        "pc": 14,
+                        "value": "[cast(fp + (-3), felt*)]"
+                    }
+                ],
+                "type": "reference"
+            },
+            "starkware.cairo.common.cairo_builtins.BitwiseBuiltin": {
+                "full_name": "starkware.cairo.common.cairo_builtins.BitwiseBuiltin",
+                "members": {
+                    "x": {
+                        "cairo_type": "felt",
+                        "offset": 0
+                    },
+                    "x_and_y": {
+                        "cairo_type": "felt",
+                        "offset": 2
+                    },
+                    "x_or_y": {
+                        "cairo_type": "felt",
+                        "offset": 4
+                    },
+                    "x_xor_y": {
+                        "cairo_type": "felt",
+                        "offset": 3
+                    },
+                    "y": {
+                        "cairo_type": "felt",
+                        "offset": 1
+                    }
+                },
+                "size": 5,
+                "type": "struct"
+            },
+            "starkware.cairo.common.cairo_builtins.EcOpBuiltin": {
+                "full_name": "starkware.cairo.common.cairo_builtins.EcOpBuiltin",
+                "members": {
+                    "m": {
+                        "cairo_type": "felt",
+                        "offset": 4
+                    },
+                    "p": {
+                        "cairo_type": "starkware.cairo.common.ec_point.EcPoint",
+                        "offset": 0
+                    },
+                    "q": {
+                        "cairo_type": "starkware.cairo.common.ec_point.EcPoint",
+                        "offset": 2
+                    },
+                    "r": {
+                        "cairo_type": "starkware.cairo.common.ec_point.EcPoint",
+                        "offset": 5
+                    }
+                },
+                "size": 7,
+                "type": "struct"
+            },
+            "starkware.cairo.common.cairo_builtins.EcPoint": {
+                "destination": "starkware.cairo.common.ec_point.EcPoint",
+                "type": "alias"
+            },
+            "starkware.cairo.common.cairo_builtins.HashBuiltin": {
+                "full_name": "starkware.cairo.common.cairo_builtins.HashBuiltin",
+                "members": {
+                    "result": {
+                        "cairo_type": "felt",
+                        "offset": 2
+                    },
+                    "x": {
+                        "cairo_type": "felt",
+                        "offset": 0
+                    },
+                    "y": {
+                        "cairo_type": "felt",
+                        "offset": 1
+                    }
+                },
+                "size": 3,
+                "type": "struct"
+            },
+            "starkware.cairo.common.cairo_builtins.SignatureBuiltin": {
+                "full_name": "starkware.cairo.common.cairo_builtins.SignatureBuiltin",
+                "members": {
+                    "message": {
+                        "cairo_type": "felt",
+                        "offset": 1
+                    },
+                    "pub_key": {
+                        "cairo_type": "felt",
+                        "offset": 0
+                    }
+                },
+                "size": 2,
+                "type": "struct"
+            },
+            "starkware.cairo.common.dict_access.DictAccess": {
+                "full_name": "starkware.cairo.common.dict_access.DictAccess",
+                "members": {
+                    "key": {
+                        "cairo_type": "felt",
+                        "offset": 0
+                    },
+                    "new_value": {
+                        "cairo_type": "felt",
+                        "offset": 2
+                    },
+                    "prev_value": {
+                        "cairo_type": "felt",
+                        "offset": 1
+                    }
+                },
+                "size": 3,
+                "type": "struct"
+            },
+            "starkware.cairo.common.ec_point.EcPoint": {
+                "full_name": "starkware.cairo.common.ec_point.EcPoint",
+                "members": {
+                    "x": {
+                        "cairo_type": "felt",
+                        "offset": 0
+                    },
+                    "y": {
+                        "cairo_type": "felt",
+                        "offset": 1
+                    }
+                },
+                "size": 2,
+                "type": "struct"
+            },
+            "starkware.cairo.common.hash.HashBuiltin": {
+                "destination": "starkware.cairo.common.cairo_builtins.HashBuiltin",
+                "type": "alias"
+            },
+            "starkware.starknet.common.storage.ADDR_BOUND": {
+                "type": "const",
+                "value": -106710729501573572985208420194530329073740042555888586719489
+            },
+            "starkware.starknet.common.storage.MAX_STORAGE_ITEM_SIZE": {
+                "type": "const",
+                "value": 256
+            },
+            "starkware.starknet.common.storage.assert_250_bit": {
+                "destination": "starkware.cairo.common.math.assert_250_bit",
+                "type": "alias"
+            },
+            "starkware.starknet.common.syscalls.CALL_CONTRACT_SELECTOR": {
+                "type": "const",
+                "value": 20853273475220472486191784820
+            },
+            "starkware.starknet.common.syscalls.CallContract": {
+                "full_name": "starkware.starknet.common.syscalls.CallContract",
+                "members": {
+                    "request": {
+                        "cairo_type": "starkware.starknet.common.syscalls.CallContractRequest",
+                        "offset": 0
+                    },
+                    "response": {
+                        "cairo_type": "starkware.starknet.common.syscalls.CallContractResponse",
+                        "offset": 5
+                    }
+                },
+                "size": 7,
+                "type": "struct"
+            },
+            "starkware.starknet.common.syscalls.CallContractRequest": {
+                "full_name": "starkware.starknet.common.syscalls.CallContractRequest",
+                "members": {
+                    "calldata": {
+                        "cairo_type": "felt*",
+                        "offset": 4
+                    },
+                    "calldata_size": {
+                        "cairo_type": "felt",
+                        "offset": 3
+                    },
+                    "contract_address": {
+                        "cairo_type": "felt",
+                        "offset": 1
+                    },
+                    "function_selector": {
+                        "cairo_type": "felt",
+                        "offset": 2
+                    },
+                    "selector": {
+                        "cairo_type": "felt",
+                        "offset": 0
+                    }
+                },
+                "size": 5,
+                "type": "struct"
+            },
+            "starkware.starknet.common.syscalls.CallContractResponse": {
+                "full_name": "starkware.starknet.common.syscalls.CallContractResponse",
+                "members": {
+                    "retdata": {
+                        "cairo_type": "felt*",
+                        "offset": 1
+                    },
+                    "retdata_size": {
+                        "cairo_type": "felt",
+                        "offset": 0
+                    }
+                },
+                "size": 2,
+                "type": "struct"
+            },
+            "starkware.starknet.common.syscalls.DELEGATE_CALL_SELECTOR": {
+                "type": "const",
+                "value": 21167594061783206823196716140
+            },
+            "starkware.starknet.common.syscalls.DELEGATE_L1_HANDLER_SELECTOR": {
+                "type": "const",
+                "value": 23274015802972845247556842986379118667122
+            },
+            "starkware.starknet.common.syscalls.DictAccess": {
+                "destination": "starkware.cairo.common.dict_access.DictAccess",
+                "type": "alias"
+            },
+            "starkware.starknet.common.syscalls.EMIT_EVENT_SELECTOR": {
+                "type": "const",
+                "value": 1280709301550335749748
+            },
+            "starkware.starknet.common.syscalls.EmitEvent": {
+                "full_name": "starkware.starknet.common.syscalls.EmitEvent",
+                "members": {
+                    "data": {
+                        "cairo_type": "felt*",
+                        "offset": 4
+                    },
+                    "data_len": {
+                        "cairo_type": "felt",
+                        "offset": 3
+                    },
+                    "keys": {
+                        "cairo_type": "felt*",
+                        "offset": 2
+                    },
+                    "keys_len": {
+                        "cairo_type": "felt",
+                        "offset": 1
+                    },
+                    "selector": {
+                        "cairo_type": "felt",
+                        "offset": 0
+                    }
+                },
+                "size": 5,
+                "type": "struct"
+            },
+            "starkware.starknet.common.syscalls.GET_BLOCK_NUMBER_SELECTOR": {
+                "type": "const",
+                "value": 1448089106835523001438702345020786
+            },
+            "starkware.starknet.common.syscalls.GET_BLOCK_TIMESTAMP_SELECTOR": {
+                "type": "const",
+                "value": 24294903732626645868215235778792757751152
+            },
+            "starkware.starknet.common.syscalls.GET_CALLER_ADDRESS_SELECTOR": {
+                "type": "const",
+                "value": 94901967781393078444254803017658102643
+            },
+            "starkware.starknet.common.syscalls.GET_CONTRACT_ADDRESS_SELECTOR": {
+                "type": "const",
+                "value": 6219495360805491471215297013070624192820083
+            },
+            "starkware.starknet.common.syscalls.GET_SEQUENCER_ADDRESS_SELECTOR": {
+                "type": "const",
+                "value": 1592190833581991703053805829594610833820054387
+            },
+            "starkware.starknet.common.syscalls.GET_TX_INFO_SELECTOR": {
+                "type": "const",
+                "value": 1317029390204112103023
+            },
+            "starkware.starknet.common.syscalls.GET_TX_SIGNATURE_SELECTOR": {
+                "type": "const",
+                "value": 1448089128652340074717162277007973
+            },
+            "starkware.starknet.common.syscalls.GetBlockNumber": {
+                "full_name": "starkware.starknet.common.syscalls.GetBlockNumber",
+                "members": {
+                    "request": {
+                        "cairo_type": "starkware.starknet.common.syscalls.GetBlockNumberRequest",
+                        "offset": 0
+                    },
+                    "response": {
+                        "cairo_type": "starkware.starknet.common.syscalls.GetBlockNumberResponse",
+                        "offset": 1
+                    }
+                },
+                "size": 2,
+                "type": "struct"
+            },
+            "starkware.starknet.common.syscalls.GetBlockNumberRequest": {
+                "full_name": "starkware.starknet.common.syscalls.GetBlockNumberRequest",
+                "members": {
+                    "selector": {
+                        "cairo_type": "felt",
+                        "offset": 0
+                    }
+                },
+                "size": 1,
+                "type": "struct"
+            },
+            "starkware.starknet.common.syscalls.GetBlockNumberResponse": {
+                "full_name": "starkware.starknet.common.syscalls.GetBlockNumberResponse",
+                "members": {
+                    "block_number": {
+                        "cairo_type": "felt",
+                        "offset": 0
+                    }
+                },
+                "size": 1,
+                "type": "struct"
+            },
+            "starkware.starknet.common.syscalls.GetBlockTimestamp": {
+                "full_name": "starkware.starknet.common.syscalls.GetBlockTimestamp",
+                "members": {
+                    "request": {
+                        "cairo_type": "starkware.starknet.common.syscalls.GetBlockTimestampRequest",
+                        "offset": 0
+                    },
+                    "response": {
+                        "cairo_type": "starkware.starknet.common.syscalls.GetBlockTimestampResponse",
+                        "offset": 1
+                    }
+                },
+                "size": 2,
+                "type": "struct"
+            },
+            "starkware.starknet.common.syscalls.GetBlockTimestampRequest": {
+                "full_name": "starkware.starknet.common.syscalls.GetBlockTimestampRequest",
+                "members": {
+                    "selector": {
+                        "cairo_type": "felt",
+                        "offset": 0
+                    }
+                },
+                "size": 1,
+                "type": "struct"
+            },
+            "starkware.starknet.common.syscalls.GetBlockTimestampResponse": {
+                "full_name": "starkware.starknet.common.syscalls.GetBlockTimestampResponse",
+                "members": {
+                    "block_timestamp": {
+                        "cairo_type": "felt",
+                        "offset": 0
+                    }
+                },
+                "size": 1,
+                "type": "struct"
+            },
+            "starkware.starknet.common.syscalls.GetCallerAddress": {
+                "full_name": "starkware.starknet.common.syscalls.GetCallerAddress",
+                "members": {
+                    "request": {
+                        "cairo_type": "starkware.starknet.common.syscalls.GetCallerAddressRequest",
+                        "offset": 0
+                    },
+                    "response": {
+                        "cairo_type": "starkware.starknet.common.syscalls.GetCallerAddressResponse",
+                        "offset": 1
+                    }
+                },
+                "size": 2,
+                "type": "struct"
+            },
+            "starkware.starknet.common.syscalls.GetCallerAddressRequest": {
+                "full_name": "starkware.starknet.common.syscalls.GetCallerAddressRequest",
+                "members": {
+                    "selector": {
+                        "cairo_type": "felt",
+                        "offset": 0
+                    }
+                },
+                "size": 1,
+                "type": "struct"
+            },
+            "starkware.starknet.common.syscalls.GetCallerAddressResponse": {
+                "full_name": "starkware.starknet.common.syscalls.GetCallerAddressResponse",
+                "members": {
+                    "caller_address": {
+                        "cairo_type": "felt",
+                        "offset": 0
+                    }
+                },
+                "size": 1,
+                "type": "struct"
+            },
+            "starkware.starknet.common.syscalls.GetContractAddress": {
+                "full_name": "starkware.starknet.common.syscalls.GetContractAddress",
+                "members": {
+                    "request": {
+                        "cairo_type": "starkware.starknet.common.syscalls.GetContractAddressRequest",
+                        "offset": 0
+                    },
+                    "response": {
+                        "cairo_type": "starkware.starknet.common.syscalls.GetContractAddressResponse",
+                        "offset": 1
+                    }
+                },
+                "size": 2,
+                "type": "struct"
+            },
+            "starkware.starknet.common.syscalls.GetContractAddressRequest": {
+                "full_name": "starkware.starknet.common.syscalls.GetContractAddressRequest",
+                "members": {
+                    "selector": {
+                        "cairo_type": "felt",
+                        "offset": 0
+                    }
+                },
+                "size": 1,
+                "type": "struct"
+            },
+            "starkware.starknet.common.syscalls.GetContractAddressResponse": {
+                "full_name": "starkware.starknet.common.syscalls.GetContractAddressResponse",
+                "members": {
+                    "contract_address": {
+                        "cairo_type": "felt",
+                        "offset": 0
+                    }
+                },
+                "size": 1,
+                "type": "struct"
+            },
+            "starkware.starknet.common.syscalls.GetSequencerAddress": {
+                "full_name": "starkware.starknet.common.syscalls.GetSequencerAddress",
+                "members": {
+                    "request": {
+                        "cairo_type": "starkware.starknet.common.syscalls.GetSequencerAddressRequest",
+                        "offset": 0
+                    },
+                    "response": {
+                        "cairo_type": "starkware.starknet.common.syscalls.GetSequencerAddressResponse",
+                        "offset": 1
+                    }
+                },
+                "size": 2,
+                "type": "struct"
+            },
+            "starkware.starknet.common.syscalls.GetSequencerAddressRequest": {
+                "full_name": "starkware.starknet.common.syscalls.GetSequencerAddressRequest",
+                "members": {
+                    "selector": {
+                        "cairo_type": "felt",
+                        "offset": 0
+                    }
+                },
+                "size": 1,
+                "type": "struct"
+            },
+            "starkware.starknet.common.syscalls.GetSequencerAddressResponse": {
+                "full_name": "starkware.starknet.common.syscalls.GetSequencerAddressResponse",
+                "members": {
+                    "sequencer_address": {
+                        "cairo_type": "felt",
+                        "offset": 0
+                    }
+                },
+                "size": 1,
+                "type": "struct"
+            },
+            "starkware.starknet.common.syscalls.GetTxInfo": {
+                "full_name": "starkware.starknet.common.syscalls.GetTxInfo",
+                "members": {
+                    "request": {
+                        "cairo_type": "starkware.starknet.common.syscalls.GetTxInfoRequest",
+                        "offset": 0
+                    },
+                    "response": {
+                        "cairo_type": "starkware.starknet.common.syscalls.GetTxInfoResponse",
+                        "offset": 1
+                    }
+                },
+                "size": 2,
+                "type": "struct"
+            },
+            "starkware.starknet.common.syscalls.GetTxInfoRequest": {
+                "full_name": "starkware.starknet.common.syscalls.GetTxInfoRequest",
+                "members": {
+                    "selector": {
+                        "cairo_type": "felt",
+                        "offset": 0
+                    }
+                },
+                "size": 1,
+                "type": "struct"
+            },
+            "starkware.starknet.common.syscalls.GetTxInfoResponse": {
+                "full_name": "starkware.starknet.common.syscalls.GetTxInfoResponse",
+                "members": {
+                    "tx_info": {
+                        "cairo_type": "starkware.starknet.common.syscalls.TxInfo*",
+                        "offset": 0
+                    }
+                },
+                "size": 1,
+                "type": "struct"
+            },
+            "starkware.starknet.common.syscalls.GetTxSignature": {
+                "full_name": "starkware.starknet.common.syscalls.GetTxSignature",
+                "members": {
+                    "request": {
+                        "cairo_type": "starkware.starknet.common.syscalls.GetTxSignatureRequest",
+                        "offset": 0
+                    },
+                    "response": {
+                        "cairo_type": "starkware.starknet.common.syscalls.GetTxSignatureResponse",
+                        "offset": 1
+                    }
+                },
+                "size": 3,
+                "type": "struct"
+            },
+            "starkware.starknet.common.syscalls.GetTxSignatureRequest": {
+                "full_name": "starkware.starknet.common.syscalls.GetTxSignatureRequest",
+                "members": {
+                    "selector": {
+                        "cairo_type": "felt",
+                        "offset": 0
+                    }
+                },
+                "size": 1,
+                "type": "struct"
+            },
+            "starkware.starknet.common.syscalls.GetTxSignatureResponse": {
+                "full_name": "starkware.starknet.common.syscalls.GetTxSignatureResponse",
+                "members": {
+                    "signature": {
+                        "cairo_type": "felt*",
+                        "offset": 1
+                    },
+                    "signature_len": {
+                        "cairo_type": "felt",
+                        "offset": 0
+                    }
+                },
+                "size": 2,
+                "type": "struct"
+            },
+            "starkware.starknet.common.syscalls.SEND_MESSAGE_TO_L1_SELECTOR": {
+                "type": "const",
+                "value": 433017908768303439907196859243777073
+            },
+            "starkware.starknet.common.syscalls.STORAGE_READ_SELECTOR": {
+                "type": "const",
+                "value": 100890693370601760042082660
+            },
+            "starkware.starknet.common.syscalls.STORAGE_WRITE_SELECTOR": {
+                "type": "const",
+                "value": 25828017502874050592466629733
+            },
+            "starkware.starknet.common.syscalls.SendMessageToL1SysCall": {
+                "full_name": "starkware.starknet.common.syscalls.SendMessageToL1SysCall",
+                "members": {
+                    "payload_ptr": {
+                        "cairo_type": "felt*",
+                        "offset": 3
+                    },
+                    "payload_size": {
+                        "cairo_type": "felt",
+                        "offset": 2
+                    },
+                    "selector": {
+                        "cairo_type": "felt",
+                        "offset": 0
+                    },
+                    "to_address": {
+                        "cairo_type": "felt",
+                        "offset": 1
+                    }
+                },
+                "size": 4,
+                "type": "struct"
+            },
+            "starkware.starknet.common.syscalls.StorageRead": {
+                "full_name": "starkware.starknet.common.syscalls.StorageRead",
+                "members": {
+                    "request": {
+                        "cairo_type": "starkware.starknet.common.syscalls.StorageReadRequest",
+                        "offset": 0
+                    },
+                    "response": {
+                        "cairo_type": "starkware.starknet.common.syscalls.StorageReadResponse",
+                        "offset": 2
+                    }
+                },
+                "size": 3,
+                "type": "struct"
+            },
+            "starkware.starknet.common.syscalls.StorageReadRequest": {
+                "full_name": "starkware.starknet.common.syscalls.StorageReadRequest",
+                "members": {
+                    "address": {
+                        "cairo_type": "felt",
+                        "offset": 1
+                    },
+                    "selector": {
+                        "cairo_type": "felt",
+                        "offset": 0
+                    }
+                },
+                "size": 2,
+                "type": "struct"
+            },
+            "starkware.starknet.common.syscalls.StorageReadResponse": {
+                "full_name": "starkware.starknet.common.syscalls.StorageReadResponse",
+                "members": {
+                    "value": {
+                        "cairo_type": "felt",
+                        "offset": 0
+                    }
+                },
+                "size": 1,
+                "type": "struct"
+            },
+            "starkware.starknet.common.syscalls.StorageWrite": {
+                "full_name": "starkware.starknet.common.syscalls.StorageWrite",
+                "members": {
+                    "address": {
+                        "cairo_type": "felt",
+                        "offset": 1
+                    },
+                    "selector": {
+                        "cairo_type": "felt",
+                        "offset": 0
+                    },
+                    "value": {
+                        "cairo_type": "felt",
+                        "offset": 2
+                    }
+                },
+                "size": 3,
+                "type": "struct"
+            },
+            "starkware.starknet.common.syscalls.TxInfo": {
+                "full_name": "starkware.starknet.common.syscalls.TxInfo",
+                "members": {
+                    "account_contract_address": {
+                        "cairo_type": "felt",
+                        "offset": 1
+                    },
+                    "chain_id": {
+                        "cairo_type": "felt",
+                        "offset": 6
+                    },
+                    "max_fee": {
+                        "cairo_type": "felt",
+                        "offset": 2
+                    },
+                    "signature": {
+                        "cairo_type": "felt*",
+                        "offset": 4
+                    },
+                    "signature_len": {
+                        "cairo_type": "felt",
+                        "offset": 3
+                    },
+                    "transaction_hash": {
+                        "cairo_type": "felt",
+                        "offset": 5
+                    },
+                    "version": {
+                        "cairo_type": "felt",
+                        "offset": 0
+                    }
+                },
+                "size": 7,
+                "type": "struct"
+            }
+        },
+        "main_scope": "__main__",
+        "prime": "0x800000000000011000000000000000000000000000000000000000000000001",
+        "reference_manager": {
+            "references": [
+                {
+                    "ap_tracking_data": {
+                        "group": 0,
+                        "offset": 0
+                    },
+                    "pc": 0,
+                    "value": "[cast(fp + (-4), felt*)]"
+                },
+                {
+                    "ap_tracking_data": {
+                        "group": 0,
+                        "offset": 0
+                    },
+                    "pc": 0,
+                    "value": "[cast(fp + (-3), felt*)]"
+                },
+                {
+                    "ap_tracking_data": {
+                        "group": 0,
+                        "offset": 0
+                    },
+                    "pc": 0,
+                    "value": "[cast(fp + (-5), starkware.cairo.common.cairo_builtins.BitwiseBuiltin**)]"
+                },
+                {
+                    "ap_tracking_data": {
+                        "group": 0,
+                        "offset": 0
+                    },
+                    "pc": 2,
+                    "value": "[cast([fp + (-5)] + 2, felt*)]"
+                },
+                {
+                    "ap_tracking_data": {
+                        "group": 0,
+                        "offset": 0
+                    },
+                    "pc": 2,
+                    "value": "[cast([fp + (-5)] + 3, felt*)]"
+                },
+                {
+                    "ap_tracking_data": {
+                        "group": 0,
+                        "offset": 0
+                    },
+                    "pc": 2,
+                    "value": "[cast([fp + (-5)] + 4, felt*)]"
+                },
+                {
+                    "ap_tracking_data": {
+                        "group": 0,
+                        "offset": 0
+                    },
+                    "pc": 2,
+                    "value": "cast([fp + (-5)] + 5, starkware.cairo.common.cairo_builtins.BitwiseBuiltin*)"
+                },
+                {
+                    "ap_tracking_data": {
+                        "group": 1,
+                        "offset": 0
+                    },
+                    "pc": 8,
+                    "value": "[cast(fp + (-4), felt*)]"
+                },
+                {
+                    "ap_tracking_data": {
+                        "group": 1,
+                        "offset": 0
+                    },
+                    "pc": 8,
+                    "value": "[cast(fp + (-3), felt*)]"
+                },
+                {
+                    "ap_tracking_data": {
+                        "group": 1,
+                        "offset": 0
+                    },
+                    "pc": 8,
+                    "value": "[cast(fp + (-5), starkware.cairo.common.cairo_builtins.BitwiseBuiltin**)]"
+                },
+                {
+                    "ap_tracking_data": {
+                        "group": 1,
+                        "offset": 0
+                    },
+                    "pc": 10,
+                    "value": "[cast([fp + (-5)] + 2, felt*)]"
+                },
+                {
+                    "ap_tracking_data": {
+                        "group": 1,
+                        "offset": 0
+                    },
+                    "pc": 10,
+                    "value": "[cast([fp + (-5)] + 3, felt*)]"
+                },
+                {
+                    "ap_tracking_data": {
+                        "group": 1,
+                        "offset": 0
+                    },
+                    "pc": 10,
+                    "value": "[cast([fp + (-5)] + 4, felt*)]"
+                },
+                {
+                    "ap_tracking_data": {
+                        "group": 1,
+                        "offset": 0
+                    },
+                    "pc": 10,
+                    "value": "cast([fp + (-5)] + 5, starkware.cairo.common.cairo_builtins.BitwiseBuiltin*)"
+                },
+                {
+                    "ap_tracking_data": {
+                        "group": 2,
+                        "offset": 0
+                    },
+                    "pc": 14,
+                    "value": "[cast(fp + (-4), felt*)]"
+                },
+                {
+                    "ap_tracking_data": {
+                        "group": 2,
+                        "offset": 0
+                    },
+                    "pc": 14,
+                    "value": "[cast(fp + (-3), felt*)]"
+                },
+                {
+                    "ap_tracking_data": {
+                        "group": 2,
+                        "offset": 0
+                    },
+                    "pc": 14,
+                    "value": "[cast(fp + (-5), starkware.cairo.common.cairo_builtins.BitwiseBuiltin**)]"
+                },
+                {
+                    "ap_tracking_data": {
+                        "group": 2,
+                        "offset": 0
+                    },
+                    "pc": 16,
+                    "value": "[cast([fp + (-5)] + 2, felt*)]"
+                },
+                {
+                    "ap_tracking_data": {
+                        "group": 2,
+                        "offset": 0
+                    },
+                    "pc": 16,
+                    "value": "[cast([fp + (-5)] + 3, felt*)]"
+                },
+                {
+                    "ap_tracking_data": {
+                        "group": 2,
+                        "offset": 0
+                    },
+                    "pc": 16,
+                    "value": "[cast([fp + (-5)] + 4, felt*)]"
+                },
+                {
+                    "ap_tracking_data": {
+                        "group": 2,
+                        "offset": 0
+                    },
+                    "pc": 16,
+                    "value": "cast([fp + (-5)] + 5, starkware.cairo.common.cairo_builtins.BitwiseBuiltin*)"
+                },
+                {
+                    "ap_tracking_data": {
+                        "group": 3,
+                        "offset": 0
+                    },
+                    "pc": 20,
+                    "value": "[cast(fp + (-4), felt*)]"
+                },
+                {
+                    "ap_tracking_data": {
+                        "group": 3,
+                        "offset": 0
+                    },
+                    "pc": 20,
+                    "value": "[cast(fp + (-3), felt*)]"
+                },
+                {
+                    "ap_tracking_data": {
+                        "group": 3,
+                        "offset": 0
+                    },
+                    "pc": 20,
+                    "value": "[cast(fp + (-5), starkware.cairo.common.cairo_builtins.BitwiseBuiltin**)]"
+                },
+                {
+                    "ap_tracking_data": {
+                        "group": 3,
+                        "offset": 0
+                    },
+                    "pc": 22,
+                    "value": "[cast([fp + (-5)] + 2, felt*)]"
+                },
+                {
+                    "ap_tracking_data": {
+                        "group": 3,
+                        "offset": 0
+                    },
+                    "pc": 22,
+                    "value": "[cast([fp + (-5)] + 3, felt*)]"
+                },
+                {
+                    "ap_tracking_data": {
+                        "group": 3,
+                        "offset": 0
+                    },
+                    "pc": 22,
+                    "value": "[cast([fp + (-5)] + 4, felt*)]"
+                },
+                {
+                    "ap_tracking_data": {
+                        "group": 3,
+                        "offset": 0
+                    },
+                    "pc": 22,
+                    "value": "cast([fp + (-5)] + 5, starkware.cairo.common.cairo_builtins.BitwiseBuiltin*)"
+                },
+                {
+                    "ap_tracking_data": {
+                        "group": 4,
+                        "offset": 0
+                    },
+                    "pc": 26,
+                    "value": "[cast(fp + (-3), starkware.cairo.common.cairo_builtins.BitwiseBuiltin**)]"
+                },
+                {
+                    "ap_tracking_data": {
+                        "group": 4,
+                        "offset": 0
+                    },
+                    "pc": 26,
+                    "value": "cast(12, felt)"
+                },
+                {
+                    "ap_tracking_data": {
+                        "group": 4,
+                        "offset": 1
+                    },
+                    "pc": 28,
+                    "value": "[cast(ap + (-1), felt*)]"
+                },
+                {
+                    "ap_tracking_data": {
+                        "group": 4,
+                        "offset": 2
+                    },
+                    "pc": 32,
+                    "value": "[cast(ap + (-1), felt*)]"
+                },
+                {
+                    "ap_tracking_data": {
+                        "group": 4,
+                        "offset": 2
+                    },
+                    "pc": 34,
+                    "value": "cast(10, felt)"
+                },
+                {
+                    "ap_tracking_data": {
+                        "group": 4,
+                        "offset": 3
+                    },
+                    "pc": 36,
+                    "value": "[cast(ap + (-1), felt*)]"
+                },
+                {
+                    "ap_tracking_data": {
+                        "group": 4,
+                        "offset": 4
+                    },
+                    "pc": 40,
+                    "value": "[cast(ap + (-1), felt*)]"
+                },
+                {
+                    "ap_tracking_data": {
+                        "group": 4,
+                        "offset": 11
+                    },
+                    "pc": 49,
+                    "value": "[cast(ap + (-2), starkware.cairo.common.cairo_builtins.BitwiseBuiltin**)]"
+                },
+                {
+                    "ap_tracking_data": {
+                        "group": 4,
+                        "offset": 11
+                    },
+                    "pc": 49,
+                    "value": "[cast(ap + (-1), felt*)]"
+                },
+                {
+                    "ap_tracking_data": {
+                        "group": 4,
+                        "offset": 18
+                    },
+                    "pc": 58,
+                    "value": "[cast(ap + (-2), starkware.cairo.common.cairo_builtins.BitwiseBuiltin**)]"
+                },
+                {
+                    "ap_tracking_data": {
+                        "group": 4,
+                        "offset": 18
+                    },
+                    "pc": 58,
+                    "value": "[cast(ap + (-1), felt*)]"
+                },
+                {
+                    "ap_tracking_data": {
+                        "group": 4,
+                        "offset": 25
+                    },
+                    "pc": 67,
+                    "value": "[cast(ap + (-2), starkware.cairo.common.cairo_builtins.BitwiseBuiltin**)]"
+                },
+                {
+                    "ap_tracking_data": {
+                        "group": 4,
+                        "offset": 25
+                    },
+                    "pc": 67,
+                    "value": "[cast(ap + (-1), felt*)]"
+                },
+                {
+                    "ap_tracking_data": {
+                        "group": 4,
+                        "offset": 34
+                    },
+                    "pc": 76,
+                    "value": "[cast(ap + (-4), starkware.cairo.common.cairo_builtins.BitwiseBuiltin**)]"
+                },
+                {
+                    "ap_tracking_data": {
+                        "group": 4,
+                        "offset": 34
+                    },
+                    "pc": 76,
+                    "value": "[cast(ap + (-3), felt*)]"
+                },
+                {
+                    "ap_tracking_data": {
+                        "group": 4,
+                        "offset": 34
+                    },
+                    "pc": 76,
+                    "value": "[cast(ap + (-2), felt*)]"
+                },
+                {
+                    "ap_tracking_data": {
+                        "group": 4,
+                        "offset": 34
+                    },
+                    "pc": 76,
+                    "value": "[cast(ap + (-1), felt*)]"
+                },
+                {
+                    "ap_tracking_data": {
+                        "group": 4,
+                        "offset": 41
+                    },
+                    "pc": 86,
+                    "value": "[cast(ap + (-2), starkware.cairo.common.cairo_builtins.BitwiseBuiltin**)]"
+                },
+                {
+                    "ap_tracking_data": {
+                        "group": 4,
+                        "offset": 41
+                    },
+                    "pc": 86,
+                    "value": "[cast(ap + (-1), felt*)]"
+                }
+            ]
+        }
+    }
+}
