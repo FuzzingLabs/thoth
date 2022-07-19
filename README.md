@@ -1,6 +1,6 @@
 # Thoth
 
-Thoth (pronounced "toss") is a Cairo/Starknet disassembler written in Python 3. Thoth's features also include the generation of the call graph and control-flow graph of a given Cairo/Starknet compilation artifact.
+Thoth (pronounced "toss") is a Cairo/Starknet analyzer & disassembler written in Python 3. Thoth's features also include the generation of the call graph and control-flow graph of a given Cairo/Starknet compilation artifact.
 
 ## Installation
 
