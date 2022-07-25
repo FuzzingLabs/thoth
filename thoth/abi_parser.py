@@ -4,7 +4,7 @@ import collections
 import re
 import sys
 from .cairo_instruction import decode_instruction
-
+from .utils import DEFAULT_PRIME
 
 def decode_to_json(decoded):
     """
@@ -101,7 +101,7 @@ def extract_prime(json_type, json_data):
     elif json_type == "starknet":
         prime = int(json_data["program"]["prime"], 16)
     elif json_type == "get_code":
-        prime = None
+        prime = DEFAULT_PRIME
 
     return prime
 
@@ -150,10 +150,9 @@ def extract_functions(json_type, json_data):
         func_identifiers = extract_function_prototype(
             func_offset, identifiers_data, entry_points_by_type
         )
-
     else:
-        raise SystemExit('Sorry, json retrieve using `get_code` is not supported yet. Please consider using `get_full_contract` instead')
-
+        func_offset["0"] = "unkown_function"
+        #raise SystemExit('Sorry, json retrieve using `get_code` is not supported yet. Please consider using `get_full_contract` instead')
     return (func_offset, func_identifiers)
 
 
@@ -268,11 +267,9 @@ def parse_to_json(json_data, json_type):
         if (json_type != "get_code" and str(offset) in func_offset) or (
             json_type == "get_code" and actual_function not in bytecodes_to_json
         ):
-            actual_function = (
-                func_offset[str(offset)] if (json_type != "get_code") else "function 0"
-            )
+            actual_function = func_offset[str(offset)]
             bytecodes_to_json[actual_function] = {}
-            bytecodes_to_json[actual_function]["data"] = func_identifiers[actual_function]
+            bytecodes_to_json[actual_function]["data"] = func_identifiers[actual_function] if (actual_function in func_identifiers) else {}
             bytecodes_to_json[actual_function]["instruction"] = {}
         try:
             decoded = decode_instruction(bytecode_data[offset])

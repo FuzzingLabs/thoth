@@ -1,6 +1,5 @@
 #!/usr/bin/env python3
 
-import sys
 import json
 
 from graphviz import Digraph
@@ -65,7 +64,7 @@ class Disassembler:
         self.events = extract_events(json_type, json_data)
         self.references = extract_references(json_type, json_data)
         self.hints = extract_hints(json_type, json_data)
-        self.prime = extract_prime(json_type, json_data) if not None else DEFAULT_PRIME
+        self.prime = extract_prime(json_type, json_data)
 
         # Create the list of Functions
         for function in self.json:
@@ -73,11 +72,10 @@ class Disassembler:
             offset_end = list(self.json[function]["instruction"].keys())[-1]
             name = function
             instructions = self.json[function]["instruction"]
-            args = self.json[function]["data"]["args"]
-            implicitargs = self.json[function]["data"]["implicitargs"]
-            ret = self.json[function]["data"]["return"]
-            decorators = self.json[function]["data"]["decorators"]
-
+            args = self.json[function]["data"]["args"] if ("args" in self.json[function]["data"]) else {}
+            implicitargs = self.json[function]["data"]["implicitargs"] if ("implicitargs" in self.json[function]["data"]) else {}
+            ret = self.json[function]["data"]["return"] if ("return" in self.json[function]["data"]) else {}
+            decorators = self.json[function]["data"]["decorators"] if ("decorators" in self.json[function]["data"]) else {}
             self.functions.append(
                 Function(
                     self.prime,
@@ -89,11 +87,10 @@ class Disassembler:
                     implicitargs,
                     ret,
                     decorators,
-                    entry_point=self.json[function]["data"]["entry_point"],
+                    entry_point=self.json[function]["data"]["entry_point"] if json_type != "get_code" else True,
                     is_import=not name.startswith("__"),
                 )
             )
-
         # Analyze all the CALL to find the corresponding function, also set the references and hints to their instructions
         for func in self.functions:
             for inst in func.instructions:
@@ -122,7 +119,7 @@ class Disassembler:
         print("_" * 75)
 
         if self.functions == []:
-            raise SystemExit("No bytecode/functions found (maybe it's a contract interface?). Otherwise please open an issue, Thanks!")
+            return
 
         # Disassembly for all functions
         elif func_name is None and func_offset is None:

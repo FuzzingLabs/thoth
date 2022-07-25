@@ -36,8 +36,11 @@ class TestDisassembler(unittest.TestCase):
                     format = "pdf"
                     disassembler.print_call_flow_graph(filename=filename, format=format, view=False)
             except Exception as e:
+                sys.stderr.write(str(e))
                 crash += 1
             except SystemExit as e:
+                sys.stderr.write(test + "\n")
+                sys.stderr.write(str(e) + "\n")
                 crash += 1
         sys.stdout = save_stdout
         f.close()

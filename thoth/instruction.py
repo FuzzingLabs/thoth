@@ -45,7 +45,8 @@ class Instruction:
 
     def _find_call_offset(self):
         if self.is_call_direct():
-            return int(self.id) + int(field_element_repr(int(self.imm), self.prime))
+            if (self.imm != None):
+                return int(self.id) + int(field_element_repr(int(self.imm), self.prime))
         else:
             None
 
