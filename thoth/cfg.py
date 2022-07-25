@@ -91,16 +91,7 @@ class CFG:
                 new_bb = True
 
             # Jump to instr offset + instr.imm
-            elif "JUMP_REL" in instr.pcUpdate:
-                if "CALL" not in instr.opcode:
-                    current_bb.end_instr = instr
-                    current_bb.end_offset = instr.id
-                    list_bb.append(current_bb)
-                    current_bb.edges_offset.append(str(int(instr.id) + int(instr.imm)))
-                    new_bb = True
-
-            # Jump to instr offset + instr.imm
-            elif "JUMP" in instr.pcUpdate:
+            elif ("JUMP" in instr.pcUpdate) or ("JUMP_REL" in instr.pcUpdate and "CALL" not in instr.opcode):
                 current_bb.end_instr = instr
                 current_bb.end_offset = instr.id
                 current_bb.edges_offset.append(str(int(instr.id) + int(instr.imm)))

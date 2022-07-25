@@ -1,6 +1,8 @@
+from lib2to3.pytree import Base
 import unittest
 import glob
-
+import os
+import sys
 from thoth.disassembler import Disassembler
 
 
@@ -19,6 +21,28 @@ class TestDisassembler(unittest.TestCase):
         )
         self.assertEqual(len(all_test), number_of_tests - 1)
 
+    def test_no_file_should_crash(self):
+        all_test = glob.glob("./tests/json_files/*")
+        crash = 0
+        f = open('/dev/null', 'w')
+        save_stdout = sys.stdout
+        sys.stdout = f
+        for test in all_test:
+            try :
+                with open(test, "r") as file:
+                    disassembler = Disassembler([file])
+                    disassembler.print_disassembly()
+                    filename = os.path.basename(file.name).split(".")[0]
+                    format = "pdf"
+                    disassembler.print_call_flow_graph(filename=filename, format=format, view=False)
+            except Exception as e:
+                crash += 1
+            except SystemExit as e:
+                crash += 1
+        sys.stdout = save_stdout
+        f.close()
+        self.assertEqual(crash, 0)
+ 
     def test_cairo_return(self):
         """
         Check if the disassembler is working well

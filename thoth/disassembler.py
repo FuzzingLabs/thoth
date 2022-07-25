@@ -28,7 +28,7 @@ class Disassembler:
     Analyze and disassemble
     """
 
-    def __init__(self, file, analyze=True):
+    def __init__(self, file, analyze=True, color=False):
         self.file = file
         self.json = None
         self.functions = []
@@ -37,7 +37,8 @@ class Disassembler:
         self.events = {}
         self.call_graph = None
         self.prime = None
-
+        utils.globals()
+        utils.color = utils.bcolors(color=color)
         if analyze:
             self.analyze()
 
@@ -48,12 +49,13 @@ class Disassembler:
         """
         json_data = ""
         with self.file[0] as f:
-            json_data = json.load(f)
-
+            try:
+                json_data = json.load(f)
+            except json.decoder.JSONDecodeError:
+                raise SystemExit("Error: Provided file is not a valid JSON.")
         # Check the file is OK
         if json_data is None or json_data == "":
-            print("Error: The provided JSON is empty")
-            sys.exit(1)
+            raise SystemExit("Error: The provided JSON is empty")
 
         # Start parsing the json to extract interesting info
         json_type = detect_type_input_json(json_data)
@@ -64,7 +66,6 @@ class Disassembler:
         self.references = extract_references(json_type, json_data)
         self.hints = extract_hints(json_type, json_data)
         self.prime = extract_prime(json_type, json_data) if not None else DEFAULT_PRIME
-        # self.dump_json()
 
         # Create the list of Functions
         for function in self.json:
@@ -121,11 +122,7 @@ class Disassembler:
         print("_" * 75)
 
         if self.functions == []:
-            print()
-            print("No bytecode/functions found (maybe it's a contract interface?)")
-            print("Otherwise please open an issue, Thanks!")
-            print()
-            sys.exit(1)
+            raise SystemExit("No bytecode/functions found (maybe it's a contract interface?). Otherwise please open an issue, Thanks!")
 
         # Disassembly for all functions
         elif func_name is None and func_offset is None:
@@ -143,8 +140,7 @@ class Disassembler:
             if function is not None:
                 function.print()
             else:
-                print("Error: Function does not exist.")
-                sys.exit(1)
+                raise SystemExit("Error: Function does not exist.")
 
     def print_structs(self):
         """

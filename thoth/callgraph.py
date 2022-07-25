@@ -27,8 +27,7 @@ class CallFlowGraph:
         """
         Create all the function nodes
         """
-        # TODO - issue #47
-
+        supported_decorators = ["constructor", "l1_handler", "external", "view", "raw_input", "raw_output", "known_ap_change"]
         for function in functions:
 
             # Default values
@@ -50,33 +49,10 @@ class CallFlowGraph:
                 style = self.config["import"]["style"]
                 fillcolor = self.config["import"]["fillcolor"]
 
-            elif "constructor" in function.decorators:
-                style = self.config["constructor"]["style"]
-                fillcolor = self.config["constructor"]["fillcolor"]
-
-            elif "l1_handler" in function.decorators:
-                style = self.config["l1_handler"]["style"]
-                fillcolor = self.config["l1_handler"]["fillcolor"]
-
-            elif "external" in function.decorators:
-                style = self.config["external"]["style"]
-                fillcolor = self.config["external"]["fillcolor"]
-
-            elif "view" in function.decorators:
-                style = self.config["view"]["style"]
-                fillcolor = self.config["view"]["fillcolor"]
-
-            elif "raw_input" in function.decorators:
-                style = self.config["raw_input"]["style"]
-                fillcolor = self.config["raw_input"]["fillcolor"]
-
-            elif "raw_output" in function.decorators:
-                style = self.config["raw_output"]["style"]
-                fillcolor = self.config["raw_output"]["fillcolor"]
-
-            elif "known_ap_change" in function.decorators:
-                style = self.config["known_ap_change"]["style"]
-                fillcolor = self.config["known_ap_change"]["fillcolor"]
+            for decorator in function.decorators:
+                if (decorator in supported_decorators):
+                    style = self.config[decorator]["style"]
+                    fillcolor = self.config[decorator]["fillcolor"]
 
             # Search if this function is doing indirect_calls
             if any(inst.is_call_indirect() for inst in function.instructions):

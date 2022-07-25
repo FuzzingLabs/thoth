@@ -121,8 +121,7 @@ class Instruction:
         """
         Handle Direct CALL, Indirect CALL and Relative CALL
         """
-        disass_str = ""
-        disass_str += self.print_instruction(f"{self.opcode}", color=utils.color.RED)
+        disass_str = "" + self.print_instruction(f"{self.opcode}", color=utils.color.RED)
 
         # Direct CALL or Relative CALL
         if self.is_call_direct():

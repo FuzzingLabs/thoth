@@ -71,9 +71,7 @@ def main():
     Main function
     """
     args = parse_args()
-    utils.globals()
-    utils.color = utils.bcolors(color=args.color)
-    disassembler = Disassembler(args.file)
+    disassembler = Disassembler(args.file, color=args.color)
 
     if args.verbose:
         disassembler.dump_json()

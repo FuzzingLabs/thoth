@@ -152,9 +152,7 @@ def extract_functions(json_type, json_data):
         )
 
     else:
-        print("Sorry, json retrieve using `get_code` is not supported yet")
-        print("Please consider using `get_full_contract` instead")
-        sys.exit(1)
+        raise SystemExit('Sorry, json retrieve using `get_code` is not supported yet. Please consider using `get_full_contract` instead')
 
     return (func_offset, func_identifiers)
 
