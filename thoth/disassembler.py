@@ -79,10 +79,26 @@ class Disassembler:
             offset_end = list(self.json[function]["instruction"].keys())[-1]
             name = function
             instructions = self.json[function]["instruction"]
-            args = self.json[function]["data"]["args"] if ("args" in self.json[function]["data"]) else {}
-            implicitargs = self.json[function]["data"]["implicitargs"] if ("implicitargs" in self.json[function]["data"]) else {}
-            ret = self.json[function]["data"]["return"] if ("return" in self.json[function]["data"]) else {}
-            decorators = self.json[function]["data"]["decorators"] if ("decorators" in self.json[function]["data"]) else {}
+            args = (
+                self.json[function]["data"]["args"]
+                if ("args" in self.json[function]["data"])
+                else {}
+            )
+            implicitargs = (
+                self.json[function]["data"]["implicitargs"]
+                if ("implicitargs" in self.json[function]["data"])
+                else {}
+            )
+            ret = (
+                self.json[function]["data"]["return"]
+                if ("return" in self.json[function]["data"])
+                else {}
+            )
+            decorators = (
+                self.json[function]["data"]["decorators"]
+                if ("decorators" in self.json[function]["data"])
+                else {}
+            )
             self.functions.append(
                 Function(
                     self.prime,
@@ -94,7 +110,9 @@ class Disassembler:
                     implicitargs,
                     ret,
                     decorators,
-                    entry_point=self.json[function]["data"]["entry_point"] if json_type != "get_code" else True,
+                    entry_point=self.json[function]["data"]["entry_point"]
+                    if json_type != "get_code"
+                    else True,
                     is_import=not name.startswith("__"),
                 )
             )
@@ -203,8 +221,7 @@ class Disassembler:
         return builtins_str
 
     def dump_json(self):
-        """Print the JSON containing the datas parsed from the ABI.
-        """
+        """Print the JSON containing the datas parsed from the ABI."""
         print("\n", json.dumps(self.json, indent=3))
 
     def get_function_by_name(self, func_name):

@@ -5,8 +5,7 @@ from graphviz import Digraph
 
 
 class BasicBlock:
-    """Basic Block class object.
-    """
+    """Basic Block class object."""
 
     def __init__(self, start_instr):
         """Create the basic block object from the given instruction.
@@ -48,6 +47,12 @@ class CFG:
     """
 
     def __init__(self, func_name, instructions):
+        """Create the CFG object
+
+        Args:
+            func_name (String): The name of the function
+            instructions (List): List of instructions
+        """
         self.dot = None
         self.func_name = func_name
         self.basicblocks = []
@@ -57,14 +62,22 @@ class CFG:
         self.generate_cfg()
 
     def set_basicblocks(self, bbs):
-        """
-        Setter for the list of BasicBlock
+        """Set the list of basicblocks
+
+        Args:
+            bbs (List): The basicblocks list
         """
         self.basicblocks = bbs
 
     def _generate_basicblocks(self, instructions):
-        """
-        Generate the internal list of BasicBlock
+        """Generate the internal list of BasicBlock
+
+
+        Args:
+            instructions (List): List of instructions
+
+        Raises:
+            AssertionError: Should never happen, all function finish by RET
         """
         list_bb = []
         last_func_instr = instructions[-1]
@@ -100,7 +113,9 @@ class CFG:
                 new_bb = True
 
             # Jump to instr offset + instr.imm
-            elif ("JUMP" in instr.pcUpdate) or ("JUMP_REL" in instr.pcUpdate and "CALL" not in instr.opcode):
+            elif ("JUMP" in instr.pcUpdate) or (
+                "JUMP_REL" in instr.pcUpdate and "CALL" not in instr.opcode
+            ):
                 current_bb.end_instr = instr
                 current_bb.end_offset = instr.id
                 current_bb.edges_offset.append(str(int(instr.id) + int(instr.imm)))
@@ -118,8 +133,6 @@ class CFG:
                 new_bb = True
 
             else:
-                # Should never happen
-                # all function finish by RET
                 if instr is last_func_instr:
                     raise AssertionError
 
@@ -129,9 +142,7 @@ class CFG:
         self.set_basicblocks(list_bb)
 
     def print_bb(self):
-        """
-        Print the list of basic blocks in textual form
-        """
+        """Print the list of basic blocks in textual form"""
         # TODO - issue #45
         print()
         for block in self.basicblocks:
@@ -141,9 +152,7 @@ class CFG:
             print()
 
     def generate_cfg(self):
-        """
-        Create the basicblock nodes and the edges
-        """
+        """Create the basicblock nodes and the edges"""
         # Create the directed graph
         cluster_name = "cluster_" + self.name
         self.dot = Digraph(cluster_name, comment=self.name)
@@ -179,9 +188,13 @@ class CFG:
                     )
 
     def print(self, view=True):
+        """Print the dot
+
+        Args:
+            view (bool, optional): Set if the disassembler should open the output file or not. Defaults to True.
+
+        Returns:
+            Dot: the output Dot
         """
-        Render the CFG in textual form
-        """
-        # TODO - issue #45
         self.print_bb()
         return self.dot

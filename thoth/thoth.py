@@ -10,7 +10,7 @@ def parse_args():
     """Parse the program arguments
 
     Returns:
-        list: list containing arguments 
+        list: list containing arguments
     """
     parser = argparse.ArgumentParser(
         add_help=True,
@@ -69,8 +69,10 @@ def parse_args():
 
 
 def main():
-    """
-    Main function
+    """Main function of Thoth
+
+    Returns:
+        Int: Return 0
     """
     args = parse_args()
     disassembler = Disassembler(args.file, color=args.color)

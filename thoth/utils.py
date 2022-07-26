@@ -81,8 +81,15 @@ def globals():
 # Copy from cairo-lang
 # https://github.com/starkware-libs/cairo-lang/blob/167b28bcd940fd25ea3816204fa882a0b0a49603/src/starkware/cairo/lang/tracer/tracer_data.py#L261-L273
 def field_element_repr(val: int, prime: int) -> str:
-    """
-    Converts a field element (given as int) to a decimal/hex string according to its size.
+    """Converts a field element (given as int) to a decimal/hex string according to its size.
+
+
+    Args:
+        val (int): The value
+        prime (int): The prime
+
+    Returns:
+        str: The hex value
     """
     # Shift val to the range (-prime // 2, prime // 2).
     shifted_val = (val + prime // 2) % prime - (prime // 2)
