@@ -7,8 +7,10 @@ from .disassembler import Disassembler
 
 
 def parse_args():
-    """
-    Argument parser for command line
+    """Parse the program arguments
+
+    Returns:
+        list: list containing arguments 
     """
     parser = argparse.ArgumentParser(
         add_help=True,

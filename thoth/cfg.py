@@ -5,11 +5,15 @@ from graphviz import Digraph
 
 
 class BasicBlock:
-    """
-    BasicBlock Class
+    """Basic Block class object.
     """
 
     def __init__(self, start_instr):
+        """Create the basic block object from the given instruction.
+
+        Args:
+            start_instr (Instruction): The given instruction.
+        """
         self.start_instr = start_instr
         self.start_offset = self.start_instr.id
         self.name = format_bb_name(self.start_instr.id)
@@ -20,6 +24,11 @@ class BasicBlock:
         self.edges_offset = []
 
     def set_instructions(self, instrs):
+        """Set the instruction list of the basic block.
+
+        Args:
+            instrs (Instruction List): The list containing all the instructions.
+        """
         self.instructions = instrs
 
     def print(self):
