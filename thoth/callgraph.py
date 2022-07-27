@@ -10,13 +10,15 @@ from .utils import (
 
 
 class CallFlowGraph:
-    """
-    CallFlowGraph class
-
-    Create a call flow graph for the contract
-    """
-
     def __init__(self, functions, format, filename, config=CALLGRAPH_CONFIG):
+        """Create the Call Flow Graph object
+
+        Args:
+            functions (List): List of all functions
+            format (String): Format of the dot
+            filename (String): Name of the output file
+            config (optional): Defaults to CALLGRAPH_CONFIG.
+        """
         self.dot = None
         self.config = config
         self.format = format
@@ -24,11 +26,20 @@ class CallFlowGraph:
         self._generate_call_flow_graph(functions)
 
     def _call_flow_graph_generate_nodes(self, functions):
-        """
-        Create all the function nodes
-        """
-        # TODO - issue #47
+        """Create all the function nodes
 
+        Args:
+            functions (List): List of all functions
+        """
+        supported_decorators = [
+            "constructor",
+            "l1_handler",
+            "external",
+            "view",
+            "raw_input",
+            "raw_output",
+            "known_ap_change",
+        ]
         for function in functions:
 
             # Default values
@@ -50,33 +61,10 @@ class CallFlowGraph:
                 style = self.config["import"]["style"]
                 fillcolor = self.config["import"]["fillcolor"]
 
-            elif "constructor" in function.decorators:
-                style = self.config["constructor"]["style"]
-                fillcolor = self.config["constructor"]["fillcolor"]
-
-            elif "l1_handler" in function.decorators:
-                style = self.config["l1_handler"]["style"]
-                fillcolor = self.config["l1_handler"]["fillcolor"]
-
-            elif "external" in function.decorators:
-                style = self.config["external"]["style"]
-                fillcolor = self.config["external"]["fillcolor"]
-
-            elif "view" in function.decorators:
-                style = self.config["view"]["style"]
-                fillcolor = self.config["view"]["fillcolor"]
-
-            elif "raw_input" in function.decorators:
-                style = self.config["raw_input"]["style"]
-                fillcolor = self.config["raw_input"]["fillcolor"]
-
-            elif "raw_output" in function.decorators:
-                style = self.config["raw_output"]["style"]
-                fillcolor = self.config["raw_output"]["fillcolor"]
-
-            elif "known_ap_change" in function.decorators:
-                style = self.config["known_ap_change"]["style"]
-                fillcolor = self.config["known_ap_change"]["fillcolor"]
+            for decorator in function.decorators:
+                if decorator in supported_decorators:
+                    style = self.config[decorator]["style"]
+                    fillcolor = self.config[decorator]["fillcolor"]
 
             # Search if this function is doing indirect_calls
             if any(inst.is_call_indirect() for inst in function.instructions):
@@ -97,8 +85,10 @@ class CallFlowGraph:
             )
 
     def _generate_call_flow_graph(self, functions):
-        """
-        Create the complete CallFlowGraph's dot
+        """Create the complete CallFlowGraph's dot
+
+        Args:
+            functions (List): List of all functions
         """
         # Create the directed graph
         self.dot = Digraph(
@@ -139,8 +129,13 @@ class CallFlowGraph:
             edges = list(filter(lambda x: x != edges[0], edges))
 
     def print(self, view=True):
-        """
-        Render the CallFlowGraph
+        """Print the dot
+
+        Args:
+            view (bool, optional): Set if the disassembler should open the output file or not. Defaults to True.
+
+        Returns:
+            Dot: the output Dot
         """
         self.dot.render(directory="output-callgraph", view=view)
         return self.dot

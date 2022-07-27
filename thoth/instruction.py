@@ -7,6 +7,13 @@ from thoth import utils
 
 class Instruction:
     def __init__(self, inst_id, instruction_data, prime):
+        """Create the instruction object
+
+        Args:
+            inst_id (String): Offset of the instruction
+            instruction_data (Dictionnary): Dictionnary containing the instruction data
+            prime (Int): The prime number
+        """
         self.id = inst_id
         self.instruction_data = instruction_data
         self.prime = prime
@@ -44,35 +51,46 @@ class Instruction:
         self.call_offset = self._find_call_offset()
 
     def _find_call_offset(self):
+        """Find the offset of the call
+
+        Returns:
+            Int: The offset of the call
+        """
         if self.is_call_direct():
-            return int(self.id) + int(field_element_repr(int(self.imm), self.prime))
+            if self.imm != None:
+                return int(self.id) + int(field_element_repr(int(self.imm), self.prime))
         else:
             None
 
-    def dump(self):
-        print(self.instruction_data)
-
     def is_call_indirect(self):
-        """
-        This instruction is an Indirect CALL
+        """Check if the instruction is a CALL INDIRECT
+
+        Returns:
+            Boolean: True if the opcode is a CALL INDIRECT
         """
         return ("CALL" == self.opcode) and (self.imm == "None")
 
     def is_call_direct(self):
-        """
-        This instruction is a Direct CALL
+        """Check if the instruction is a CALL DIRECT
+
+        Returns:
+            Boolean: True if the opcode is a CALL DIRECT
         """
         return ("CALL" == self.opcode) and (self.imm != "None")
 
     def is_return(self):
-        """
-        This instruction is a RET
+        """Check if the instruction is a RET
+
+        Returns:
+            Boolean: True if the opcode is a RET
         """
         return "RET" == self.opcode
 
     def _handle_assert_eq(self):
-        """
-        Handle ASSERT_EQ opcode
+        """Handle the ASSERT_EQ opcode
+
+        Returns:
+            String: The formated ASSERT_EQ instruction
         """
         OPERATORS = {"ADD": "+", "MUL": "*"}
 
@@ -104,8 +122,10 @@ class Instruction:
         return disass_str
 
     def _handle_nop(self):
-        """
-        Handle NOP opcode
+        """Handle the NOP opcode
+
+        Returns:
+            String: The formated NOP instruction
         """
         disass_str = ""
         if "REGULAR" not in self.pcUpdate:
@@ -118,20 +138,19 @@ class Instruction:
         return disass_str
 
     def _handle_call(self):
+        """Handle the CALL opcode
+
+        Returns:
+            String: The formated CALL instruction
         """
-        Handle Direct CALL, Indirect CALL and Relative CALL
-        """
-        disass_str = ""
-        disass_str += self.print_instruction(f"{self.opcode}", color=utils.color.RED)
+        disass_str = "" + self.print_instruction(f"{self.opcode}", color=utils.color.RED)
 
         # Direct CALL or Relative CALL
         if self.is_call_direct():
             offset = int(self.id) + int(field_element_repr(int(self.imm), self.prime))
             # direct CALL to a fonction
             if self.call_xref_func_name is not None:
-                disass_str += self.print_instruction(
-                    f"{offset}", color=utils.color.CYAN
-                )
+                disass_str += self.print_instruction(f"{offset}", color=utils.color.CYAN)
                 disass_str += self.print_instruction(
                     f"# {self.call_xref_func_name}", color=utils.color.CYAN
                 )
@@ -152,14 +171,21 @@ class Instruction:
         return disass_str
 
     def _handle_ret(self):
-        """
-        Handle the RET opcode
+        """Handle the RET opcode
+
+        Returns:
+            String: The formated RET instruction
         """
         return self.print_instruction(f"{self.opcode}", color=utils.color.RED)
 
     def print(self):
-        """
-        Print the instruction
+        """Read the instruction and print each element of it
+
+        Raises:
+            AssertionError: Should never happen - Unknown opcode
+
+        Returns:
+            String: String containing the instruction line with the offset ...
         """
         disass_str = ""
         disass_str += self.print_instruction(f"\noffset {self.id}:", color=utils.color.HEADER)
@@ -176,7 +202,6 @@ class Instruction:
             disass_str += self._handle_ret()
 
         else:
-            # Should never happen - Unknown opcode
             raise AssertionError
 
         if "REGULAR" not in self.apUpdate:
@@ -187,21 +212,27 @@ class Instruction:
             disass_str += self.print_instruction(f"{APopcode}", color=utils.color.YELLOW)
             disass_str += self.print_instruction(f"AP, {APval}")
 
-
-        #if self.hint and self.ref:
+        # if self.hint and self.ref:
         #    disass_str += self.print_instruction(
         #        f" # {self.hint} | {self.ref}", color=utils.color.BEIGE
         #    )
         if self.hint:
             disass_str += self.print_instruction(f" # {self.hint}", color=utils.color.BEIGE)
-        #elif self.ref:
+        # elif self.ref:
         #    disass_str += self.print_instruction(f" # {self.ref}", color=utils.color.BEIGE)
 
         return disass_str
 
     def print_instruction(self, data, color="", end=""):
-        """
-        Format the print
+        """format the instruction
+
+        Args:
+            data (String): Data to print
+            color (str, optional): Color to use. Defaults to "".
+            end (str, optional): End of the string. Defaults to "".
+
+        Returns:
+            String: The formated Instruction
         """
         spaces = " " * 20
         return color + data + utils.color.ENDC + spaces[len(data) :] + end

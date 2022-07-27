@@ -119,8 +119,14 @@ class Instruction(BytecodeElement):
 
 
 def decode_instruction_values(encoded_instruction):
-    """
-    Returns a tuple (flags, off0, off1, off2) according to the given encoded instruction.
+    """Returns a tuple (flags, off0, off1, off2) according to the given encoded instruction.
+
+
+    Args:
+        encoded_instruction (String): The encoded instruction
+
+    Returns:
+        Tuple: Decoded instruction
     """
     assert 0 <= encoded_instruction < 2 ** (3 * OFFSET_BITS + N_FLAGS), "Unsupported instruction."
     off0 = encoded_instruction & (2**OFFSET_BITS - 1)
@@ -149,9 +155,15 @@ OPCODE_ASSERT_EQ_BIT = 14
 
 # https://github.com/starkware-libs/cairo-lang/blob/4e233516f52477ad158bc81a86ec2760471c1b65/src/starkware/cairo/lang/compiler/encode.py#L131
 def decode_instruction(encoding: int, imm: Optional[int] = None) -> Instruction:
-    """
-    Given 1 or 2 integers representing an instruction, returns the Instruction.
+    """Given 1 or 2 integers representing an instruction, returns the Instruction.
     If imm is given for an instruction with no immediate, it will be ignored.
+
+    Args:
+        encoding (int): The bytecode
+        imm (Optional[int], optional): The imm value. Defaults to None.
+
+    Returns:
+        Instruction: Decoded instruction object
     """
     flags, off0_enc, off1_enc, off2_enc = decode_instruction_values(encoding)
 

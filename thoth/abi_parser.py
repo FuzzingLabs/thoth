@@ -4,11 +4,17 @@ import collections
 import re
 import sys
 from .cairo_instruction import decode_instruction
+from .utils import DEFAULT_PRIME
 
 
 def decode_to_json(decoded):
-    """
-    Split the return of the Decoded Bytecodes to create a dictionnary that contains the informations
+    """Create a JSON containing the decoded bytecode
+
+    Args:
+        decoded (string): The string containing data about the bytecode
+
+    Returns:
+        Dictionnary: A dictionnary containing the data of the bytecode
     """
     data_dict = {}
     parsed = re.search(r"\((.*?)\)", decoded).group(1).split(",")
@@ -23,6 +29,17 @@ def decode_to_json(decoded):
 
 
 def detect_type_input_json(json_data):
+    """Detect the type of the contract
+
+    Args:
+        json_data (Dictionnary): The input file
+
+    Raises:
+        NotImplementedError: should never be triggered
+
+    Returns:
+        String: The type of the input contract
+    """
     if "data" in json_data:
         # Compiled with cairo-compile
         json_type = "cairo"
@@ -34,14 +51,20 @@ def detect_type_input_json(json_data):
         # Retrive using `get_code`
         json_type = "get_code"
     else:
-        # should never be triggered
         raise NotImplementedError
     return json_type
 
 
 def extract_function_prototype(func_offset, identifiers_data, entry_points_by_type):
-    """
-    Get the informations about arguments/return/decorators
+    """Build the function prototype
+
+    Args:
+        func_offset (Dictionnary): Dict containing the function offset and their name
+        identifiers_data (Dictionnary): Dict containing the data needed to create the function prototype from the JSON of the contract
+        entry_points_by_type (Dictionnary): Dict containing the entry points
+
+    Returns:
+        Dictionnary: Dict containing the arguments, decorators...
     """
 
     identifiers_name = [".ImplicitArgs", ".Args", ".Return"]
@@ -96,19 +119,36 @@ def extract_function_prototype(func_offset, identifiers_data, entry_points_by_ty
 
 
 def extract_prime(json_type, json_data):
+    """Extract the prime number from the JSON or return the default prime number
+
+    Args:
+        json_type (String): The type of the contract
+        json_data (_type_): The JSON of the contract
+    Returns:
+        int: The prime Number
+    """
     if json_type == "cairo":
         prime = int(json_data["prime"], 16)
     elif json_type == "starknet":
         prime = int(json_data["program"]["prime"], 16)
     elif json_type == "get_code":
-        prime = None
+        prime = DEFAULT_PRIME
 
     return prime
 
 
 def extract_bytecode(json_type, json_data):
-    """
-    Return the instructions for the Bytecodes
+    """Extract the bytecode from the JSON
+
+    Args:
+        json_type (String): The type of the contract
+        json_data (Dictionnary): The JSON of the contract
+
+    Raises:
+        AssertionError: Should never be triggered
+
+    Returns:
+        Dictionnary: Dict containing the bytecode
     """
     bytecode = []
 
@@ -119,15 +159,20 @@ def extract_bytecode(json_type, json_data):
     elif json_type == "get_code":
         bytecode = [int(bytecode, 16) for bytecode in json_data["bytecode"]]
     else:
-        # Should never be triggered
         raise AssertionError
 
     return bytecode
 
 
 def extract_functions(json_type, json_data):
-    """
-    Return the good dictionary that contains the Identifiers for the return/args informations
+    """Get function name and put it in dictionnary with offset as key
+
+    Args:
+        json_type (String): The type of the contract
+        json_data (Dictionnary): The JSON of the contract
+
+    Returns:
+        Dictionnary: Dictionnary containing the functions of the contract
     """
 
     func_offset = {}
@@ -142,27 +187,28 @@ def extract_functions(json_type, json_data):
         entry_points_by_type = (
             json_data["entry_points_by_type"] if ("entry_points_by_type" in json_data) else None
         )
-
-        # Get function name and put it in dictionnary with offset as key
         for key, values in identifiers_data.items():
             if values["type"] == "function":
                 func_offset[str(values["pc"])] = key
         func_identifiers = extract_function_prototype(
             func_offset, identifiers_data, entry_points_by_type
         )
-
     else:
-        print("Sorry, json retrieve using `get_code` is not supported yet")
-        print("Please consider using `get_full_contract` instead")
-        sys.exit(1)
-
+        func_offset["0"] = "unknown_function"
     return (func_offset, func_identifiers)
 
 
 def extract_structs(json_type, json_data):
+    """Get the structs from the JSON contract
+
+    Args:
+        json_type (String): The type of the contract
+        json_data (Dictionnary): The JSON of the contract
+
+    Returns:
+        Dictionnary: Dictionnary containing the struct from the JSON contract
     """
-    Return a dictionnary that contains all the struct
-    """
+
     struct_identifiers = {}
 
     if json_type != "get_code":
@@ -172,7 +218,6 @@ def extract_structs(json_type, json_data):
             else json_data["program"]["identifiers"]
         )
 
-        # Get function name and put it in dictionnary with offset as key
         for key, values in identifiers_data.items():
             if values["type"] == "struct":
                 tmp = {}
@@ -187,9 +232,16 @@ def extract_structs(json_type, json_data):
 
 
 def extract_builtins(json_type, json_data):
+    """Get the builtins from the JSON contract
+
+    Args:
+        json_type (String): The type of the contract
+        json_data (Dictionnary): The JSON of the contract
+
+    Returns:
+        Dictionnary: Dictionnary containing builtins from the JSON contract
     """
-    Return a list that contains all the builtins
-    """
+
     if json_type == "cairo":
         builtins = json_data["builtins"]
     elif json_type == "starknet":
@@ -200,9 +252,16 @@ def extract_builtins(json_type, json_data):
 
 
 def extract_events(json_type, json_data):
+    """Get the events from the JSON contract
+
+    Args:
+        json_type (String): The type of the contract
+        json_data (Dictionnary): The JSON of the contract
+
+    Returns:
+        Dictionnary: Dictionnary containing the events from the JSON contract
     """
-    Return a dictionnary that contains all the event functions
-    """
+
     events = {}
     if json_type == "cairo":
         # no events in cairo
@@ -217,12 +276,21 @@ def extract_events(json_type, json_data):
 
 
 def extract_hints(json_type, json_data):
+    """Get the hints from the JSON contract
+
+    Args:
+        json_type (String): The type of the contract
+        json_data (Dictionnary): The JSON of the contract
+
+    Returns:
+        Dictionnary: Dictionnary containing the hints from the JSON contract
+    """
+
     hints_identifiers = {}
     if json_type != "get_code":
         instruction_data = (
             json_data["hints"] if ("hints" in json_data) else json_data["program"]["hints"]
         )
-        # Get function name and put it in dictionnary with offset as key
         for key, values in instruction_data.items():
             for data in values:
                 if "code" in data:
@@ -232,6 +300,16 @@ def extract_hints(json_type, json_data):
 
 
 def extract_references(json_type, json_data):
+    """Get the references from the JSON contract
+
+    Args:
+        json_type (String): The type of the contract
+        json_data (Dictionnary): The JSON of the contract
+
+    Returns:
+        Dictionnary: Dictionnary containing the references from the JSON contract
+    """
+
     references_identifiers = {}
     if json_type != "get_code":
         identifiers_data = (
@@ -239,7 +317,6 @@ def extract_references(json_type, json_data):
             if ("identifiers" in json_data)
             else json_data["program"]["identifiers"]
         )
-        # Get function name and put it in dictionnary with offset as key
         for _, values in identifiers_data.items():
             if values["type"] == "reference":
                 for ref in values["references"]:
@@ -251,12 +328,17 @@ def extract_references(json_type, json_data):
 
 
 def parse_to_json(json_data, json_type):
-    """
-    Get bytecodes and decode it.
+    """Get bytecodes and decode it.
     Also get informations about return values, arguments and decorators
     Build a generic Json.
-    """
 
+    Args:
+        json_type (String): The type of the contract
+        json_data (Dictionnary): The JSON of the contract
+
+    Returns:
+        Dictionnary: Dict containing the decoded bytecodes
+    """
     # get the bytecode data
     bytecode_data = extract_bytecode(json_type, json_data)
     # extract function info like offset and name
@@ -270,11 +352,11 @@ def parse_to_json(json_data, json_type):
         if (json_type != "get_code" and str(offset) in func_offset) or (
             json_type == "get_code" and actual_function not in bytecodes_to_json
         ):
-            actual_function = (
-                func_offset[str(offset)] if (json_type != "get_code") else "function 0"
-            )
+            actual_function = func_offset[str(offset)]
             bytecodes_to_json[actual_function] = {}
-            bytecodes_to_json[actual_function]["data"] = func_identifiers[actual_function]
+            bytecodes_to_json[actual_function]["data"] = (
+                func_identifiers[actual_function] if (actual_function in func_identifiers) else {}
+            )
             bytecodes_to_json[actual_function]["instruction"] = {}
         try:
             decoded = decode_instruction(bytecode_data[offset])

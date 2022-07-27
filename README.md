@@ -43,16 +43,17 @@ The call flow graph represents calling relationships between functions of the co
 thoth -f tests/json_files/cairo_array_sum.json -call
 ```
 The output file (pdf/svg/png) and the dot file are inside the `output-callgraph` folder.
-If needed, you can also visualize dot files online using [this](https://dreampuf.github.io/GraphvizOnline/) side. An example of a more complexe callgraph is available [here](images/starknet_get_full_contract_l2_dai_bridge.gv.png).
+If needed, you can also visualize dot files online using [this](https://dreampuf.github.io/GraphvizOnline/) website. The legend can be found [here](images/callgraph_legend.png).
 
 <p align="center">
 	<img src="/images/thoth_callgraph_simple.png"/>
 </p>
 
-Legend:
+
 <p align="center">
-	<img src="/images/callgraph_legend.png"/>
+	<img src="/images/starknet_get_full_contract_l2_dai_bridge.gv.png"/>
 </p>
+
 
 For a specific output format (pdf/svg/png):
 ```sh
@@ -79,10 +80,59 @@ For a specific output format (pdf/svg/png):
 ```sh
 thoth -f tests/json_files/cairo_array_sum.json -cfg -format png
 ```
+# F.A.Q
 
 ## How to find a Cairo/Starknet compilation artifact (json file)
 
 Thoth support cairo and starknet compilation artifact (json file) generated after compilation using `cairo-compile` or `starknet-compile`. Thoth also support the json file returned by: `starknet get_full_contract`.
+
+## How to build the documentation
+
+```sh
+# Install sphinx
+
+apt-get install python3-sphinx
+
+#Create the docs folder
+
+mkdir docs & cd docs
+
+#Init the folder
+
+sphinx-quickstart docs
+
+#Modify the `conf.py` file by adding
+
+import thoth
+
+#Generate the .rst files before the .html files
+
+sphinx-apidoc -f -o . ..
+
+#Generate the .html files
+
+make html
+
+#Run a python http server
+
+cd _build/html; python3 -m http.server
+```
+
+## Why my bytecode is empty
+
+First, verify that your JSON is correct and that it contains a data section.
+Second, verify that your JSON is not a contract interface.
+Finally, it is possible that your contract does not generate bytecodes, for example:
+
+```cairo
+%lang starknet
+
+from starkware.cairo.common.cairo_builtins import HashBuiltin
+
+@storage_var
+func balance() -> (res : felt):
+end
+```
 
 # License
 

@@ -7,8 +7,10 @@ from .disassembler import Disassembler
 
 
 def parse_args():
-    """
-    Argument parser for command line
+    """Parse the program arguments
+
+    Returns:
+        list: list containing arguments
     """
     parser = argparse.ArgumentParser(
         add_help=True,
@@ -67,13 +69,13 @@ def parse_args():
 
 
 def main():
-    """
-    Main function
+    """Main function of Thoth
+
+    Returns:
+        Int: Return 0
     """
     args = parse_args()
-    utils.globals()
-    utils.color = utils.bcolors(color=args.color)
-    disassembler = Disassembler(args.file)
+    disassembler = Disassembler(args.file, color=args.color)
 
     if args.verbose:
         disassembler.dump_json()

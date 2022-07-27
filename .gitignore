@@ -1,7 +1,7 @@
 # Project custom
 output-callgraph/
 output-cfg/
-
+.vscode/
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]

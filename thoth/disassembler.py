@@ -1,6 +1,5 @@
 #!/usr/bin/env python3
 
-import sys
 import json
 
 from graphviz import Digraph
@@ -28,7 +27,13 @@ class Disassembler:
     Analyze and disassemble
     """
 
-    def __init__(self, file, analyze=True):
+    def __init__(self, file, color=False):
+        """Init the disassembler object and run the analyzer.
+
+        Args:
+            file (file): The smart contract file
+            color (bool, optional): Enable or disable coloring of the output. Defaults to False.
+        """
         self.file = file
         self.json = None
         self.functions = []
@@ -37,23 +42,26 @@ class Disassembler:
         self.events = {}
         self.call_graph = None
         self.prime = None
-
-        if analyze:
-            self.analyze()
+        utils.globals()
+        utils.color = utils.bcolors(color=color)
+        self.analyze()
 
     def analyze(self):
-        """
-        Start the analyze of the code by parsing the cairo/starknet/other json.
-        Then it creates every Function class and add it to the Disassembler functions list
+        """Run the analyze of the file.
+
+        Raises:
+            SystemExit: If the file provided is an invalid JSON.
+            SystemExit: if the JSON is empty.
         """
         json_data = ""
         with self.file[0] as f:
-            json_data = json.load(f)
-
+            try:
+                json_data = json.load(f)
+            except json.decoder.JSONDecodeError:
+                raise SystemExit("Error: Provided file is not a valid JSON.")
         # Check the file is OK
         if json_data is None or json_data == "":
-            print("Error: The provided JSON is empty")
-            sys.exit(1)
+            raise SystemExit("Error: The provided JSON is empty")
 
         # Start parsing the json to extract interesting info
         json_type = detect_type_input_json(json_data)
@@ -63,8 +71,7 @@ class Disassembler:
         self.events = extract_events(json_type, json_data)
         self.references = extract_references(json_type, json_data)
         self.hints = extract_hints(json_type, json_data)
-        self.prime = extract_prime(json_type, json_data) if not None else DEFAULT_PRIME
-        # self.dump_json()
+        self.prime = extract_prime(json_type, json_data)
 
         # Create the list of Functions
         for function in self.json:
@@ -72,11 +79,26 @@ class Disassembler:
             offset_end = list(self.json[function]["instruction"].keys())[-1]
             name = function
             instructions = self.json[function]["instruction"]
-            args = self.json[function]["data"]["args"]
-            implicitargs = self.json[function]["data"]["implicitargs"]
-            ret = self.json[function]["data"]["return"]
-            decorators = self.json[function]["data"]["decorators"]
-
+            args = (
+                self.json[function]["data"]["args"]
+                if ("args" in self.json[function]["data"])
+                else {}
+            )
+            implicitargs = (
+                self.json[function]["data"]["implicitargs"]
+                if ("implicitargs" in self.json[function]["data"])
+                else {}
+            )
+            ret = (
+                self.json[function]["data"]["return"]
+                if ("return" in self.json[function]["data"])
+                else {}
+            )
+            decorators = (
+                self.json[function]["data"]["decorators"]
+                if ("decorators" in self.json[function]["data"])
+                else {}
+            )
             self.functions.append(
                 Function(
                     self.prime,
@@ -88,11 +110,12 @@ class Disassembler:
                     implicitargs,
                     ret,
                     decorators,
-                    entry_point=self.json[function]["data"]["entry_point"],
+                    entry_point=self.json[function]["data"]["entry_point"]
+                    if json_type != "get_code"
+                    else True,
                     is_import=not name.startswith("__"),
                 )
             )
-
         # Analyze all the CALL to find the corresponding function, also set the references and hints to their instructions
         for func in self.functions:
             for inst in func.instructions:
@@ -106,8 +129,14 @@ class Disassembler:
                     inst.hint = self.hints[inst.id]
 
     def print_disassembly(self, func_name=None, func_offset=None):
-        """
-        Iterate over every function and print the disassembly
+        """Print the disassembly of all the bytecodes or a given function.
+
+        Args:
+            func_name (string, optional): The function name to disassemble. Defaults to None.
+            func_offset (string, optional): The function offset to disassemble. Defaults to None.
+
+        Raises:
+            SystemExit: If the function name or offset does not exist.
         """
         if self.builtins:
             print("_" * 75)
@@ -121,34 +150,28 @@ class Disassembler:
         print("_" * 75)
 
         if self.functions == []:
-            print()
-            print("No bytecode/functions found (maybe it's a contract interface?)")
-            print("Otherwise please open an issue, Thanks!")
-            print()
-            sys.exit(1)
+            return
 
-        # Disassembly for all functions
         elif func_name is None and func_offset is None:
             for function in self.functions:
                 function.print()
 
-        # func_name or func_offset provided
         else:
             if func_name is not None:
                 function = self.get_function_by_name(func_name)
             elif func_offset is not None:
                 function = self.get_function_by_offset(func_offset)
 
-            # Print the function
             if function is not None:
                 function.print()
             else:
-                print("Error: Function does not exist.")
-                sys.exit(1)
+                raise SystemExit("Error: Function does not exist.")
 
     def print_structs(self):
-        """
-        Print the structures
+        """Print the structures parsed from the ABI.
+
+        Returns:
+            string: Return a string containing the output of the parsed structures.
         """
         struct_str = ""
         for struct in self.structs:
@@ -170,8 +193,10 @@ class Disassembler:
         return struct_str
 
     def print_events(self):
-        """
-        Print the events
+        """Print the events parsed from the ABI.
+
+        Returns:
+            string: Return a string containing the output of the parsed events.
         """
         events_str = ""
         for event_name, data in self.events.items():
@@ -184,8 +209,10 @@ class Disassembler:
         return events_str
 
     def print_builtins(self):
-        """
-        Print the builtins
+        """Print the builtins parsed from the ABI.
+
+        Returns:
+            string: Return a string containing the output of the parsed builtins.
         """
         builtins_str = ""
         if self.builtins != []:
@@ -194,14 +221,17 @@ class Disassembler:
         return builtins_str
 
     def dump_json(self):
-        """
-        Print the JSON that contains the informations about functions/instructions/opcode ...
-        """
+        """Print the JSON containing the datas parsed from the ABI."""
         print("\n", json.dumps(self.json, indent=3))
 
     def get_function_by_name(self, func_name):
-        """
-        Return a Function if the func_name match
+        """Get the function object from it name.
+
+        Args:
+            func_name (string): The name of the function to return.
+
+        Returns:
+            Function: Function object.
         """
         for function in self.functions:
             if func_name == function.name:
@@ -209,8 +239,13 @@ class Disassembler:
         return None
 
     def get_function_by_offset(self, offset):
-        """
-        Return a Function if the offset match
+        """Get the function object from it offset.
+
+        Args:
+            func_offset (string): The offset of the function to return.
+
+        Returns:
+            Function: Function object.
         """
         for function in self.functions:
             if function.offset_start == offset:
@@ -218,22 +253,32 @@ class Disassembler:
         return None
 
     def print_call_flow_graph(self, filename, view=True, format="pdf"):
+        """Print the call flow graph.
+
+        Args:
+            filename (string): The name of the output file.
+            view (bool, optional): Set if the output file should be opened or not. Defaults to True.
+            format (str, optional): The format of the output file. Defaults to "pdf".
+
+        Returns:
+            dot: The call graph dot.
         """
-        Print the CallFlowGraph
-        """
-        # The CallFlowGraph is not generated yet
         if self.call_graph is None:
             self.call_graph = CallFlowGraph(self.functions, filename=filename, format=format)
 
-        # Show/Render the CallFlowGraph
         self.call_graph.print(view)
         return self.call_graph.dot
 
     def print_cfg(self, filename, format="pdf", func_name=None, func_offset=None, view=True):
+        """Print the CFG.
+
+        Args:
+            filename (string): The name of the output file.
+            format (str, optional): The format of the output file. Defaults to "pdf".
+            func_name (string, optional): Build the CFG of the given function name. Defaults to None.
+            func_offset (string, optional): Build the CFG of the given function offset. Defaults to None.
+            view (bool, optional): Set if the output file should be opened or not. Defaults to True.
         """
-        Print the CFG (Control Flow Graph)
-        """
-        # Create a dot graph
         graph = Digraph(
             name=filename,
             node_attr=CFG_NODE_ATTR,
@@ -241,14 +286,12 @@ class Disassembler:
             edge_attr=CFG_EDGE_ATTR,
         )
         graph.format = format
-        # The graph will contains all functions
         if func_name is None and func_offset is None:
             for function in self.functions:
                 function.generate_cfg()
                 graph.subgraph(function.cfg.dot)
             graph.render(directory="output-cfg", view=view)
 
-        # Only `func_name` or `func_offset` will be in the graph
         else:
             if func_name is not None:
                 function = self.get_function_by_name(func_name)
@@ -263,9 +306,10 @@ class Disassembler:
                 print("Error : Function does not exist.")
 
     def analytics(self):
-        """
-        Print some interesting metrics
-        (Useful for tests as well)
+        """Analyze and get some datas for unit tests.
+
+        Returns:
+            Dictionnary: Dictionnary containings datas.
         """
         analytics = {}
         analytics["functions"] = str(len(self.functions))
