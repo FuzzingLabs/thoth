@@ -1,4 +1,3 @@
-from lib2to3.pytree import Base
 import unittest
 import glob
 import os
