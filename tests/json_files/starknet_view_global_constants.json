@@ -1,0 +1,3709 @@
+{
+    "abi": [
+        {
+            "inputs": [],
+            "name": "get_constants",
+            "outputs": [
+                {
+                    "name": "number_1",
+                    "type": "felt"
+                },
+                {
+                    "name": "number_2",
+                    "type": "felt"
+                }
+            ],
+            "stateMutability": "view",
+            "type": "function"
+        },
+        {
+            "inputs": [],
+            "name": "get_constant1",
+            "outputs": [
+                {
+                    "name": "number_1",
+                    "type": "felt"
+                }
+            ],
+            "stateMutability": "view",
+            "type": "function"
+        }
+    ],
+    "entry_points_by_type": {
+        "CONSTRUCTOR": [],
+        "EXTERNAL": [
+            {
+                "offset": "0xf",
+                "selector": "0x38ebb1b98d41f26c2d98a59df47d343e4fe57f77e606b0a36b30a7922aedd4"
+            },
+            {
+                "offset": "0x26",
+                "selector": "0xf6032bc0188bd2916f261047cd9ca4079db320ab169083b2c99be87c46a41f"
+            }
+        ],
+        "L1_HANDLER": []
+    },
+    "program": {
+        "attributes": [],
+        "builtins": [
+            "range_check"
+        ],
+        "data": [
+            "0x480680017fff8000",
+            "0x1e240",
+            "0x480680017fff8000",
+            "0x75bcd15",
+            "0x208b7fff7fff7ffe",
+            "0x40780017fff7fff",
+            "0x1",
+            "0x4003800080007ffb",
+            "0x4003800180007ffc",
+            "0x4826800180008000",
+            "0x2",
+            "0x480a7ffd7fff8000",
+            "0x4828800080007ffe",
+            "0x480a80007fff8000",
+            "0x208b7fff7fff7ffe",
+            "0x402b7ffd7ffc7ffd",
+            "0x1104800180018000",
+            "0x800000000000010fffffffffffffffffffffffffffffffffffffffffffffff1",
+            "0x480280017ffb8000",
+            "0x1104800180018000",
+            "0x800000000000010fffffffffffffffffffffffffffffffffffffffffffffff3",
+            "0x480280007ffb8000",
+            "0x48127ffc7fff8000",
+            "0x48127ffc7fff8000",
+            "0x48127ffc7fff8000",
+            "0x208b7fff7fff7ffe",
+            "0x480680017fff8000",
+            "0x1e240",
+            "0x208b7fff7fff7ffe",
+            "0x40780017fff7fff",
+            "0x1",
+            "0x4003800080007ffc",
+            "0x4826800180008000",
+            "0x1",
+            "0x480a7ffd7fff8000",
+            "0x4828800080007ffe",
+            "0x480a80007fff8000",
+            "0x208b7fff7fff7ffe",
+            "0x402b7ffd7ffc7ffd",
+            "0x1104800180018000",
+            "0x800000000000010fffffffffffffffffffffffffffffffffffffffffffffff4",
+            "0x480280017ffb8000",
+            "0x1104800180018000",
+            "0x800000000000010fffffffffffffffffffffffffffffffffffffffffffffff4",
+            "0x480280007ffb8000",
+            "0x48127ffc7fff8000",
+            "0x48127ffc7fff8000",
+            "0x48127ffc7fff8000",
+            "0x208b7fff7fff7ffe"
+        ],
+        "debug_info": {
+            "file_contents": {
+                "autogen/starknet/arg_processor/1b562308a65653425ce06491fa4b4539466f3251a07e73e099d0afe86a48900e.cairo": "assert [cast(fp + (-4), felt*)] = __calldata_actual_size\n",
+                "autogen/starknet/arg_processor/73ac72f32b66568f3ee41bb93112705a9f72347566e96b406edc4ca03f8a9b92.cairo": "assert [__return_value_ptr] = ret_struct.number_1\nlet __return_value_ptr = __return_value_ptr + 1\n",
+                "autogen/starknet/arg_processor/e2862e3fadd3e0a5b156a9ed1a405994e768bddabe4d256c57d3b0ccfff9aee0.cairo": "assert [__return_value_ptr] = ret_struct.number_2\nlet __return_value_ptr = __return_value_ptr + 1\n",
+                "autogen/starknet/external/get_constant1/8ff3c870faa0ee083f062bf6c6add3444ce3ffe843b9047321f6c9172381996c.cairo": "return (syscall_ptr,range_check_ptr,retdata_size,retdata)\n",
+                "autogen/starknet/external/get_constant1/910226883b5574b28ea2537fe13a3852f331a56beabe1d4fd14748a9b4dbd7d0.cairo": "let syscall_ptr = [cast([cast(fp + (-5), felt**)] + 0, felt*)]\n",
+                "autogen/starknet/external/get_constant1/a0096d4e36b6a7b51efe8ce04fabefa7656bfce054940eced93c852f6fb7162c.cairo": "let range_check_ptr = [cast([cast(fp + (-5), felt**)] + 1, felt*)]\n",
+                "autogen/starknet/external/get_constant1/a95678d010928be6c296cbd0eb07ca21f72d0606b4935435103113b206a09d3d.cairo": "let ret_struct = __wrapped_func{}()\nlet (range_check_ptr, retdata_size, retdata) = get_constant1_encode_return(ret_struct, range_check_ptr)\n",
+                "autogen/starknet/external/get_constants/357496caaf342f07879a59a46b1f64ca00b46a0ebbd363e96ac1d592586d2dd5.cairo": "let ret_struct = __wrapped_func{}()\nlet (range_check_ptr, retdata_size, retdata) = get_constants_encode_return(ret_struct, range_check_ptr)\n",
+                "autogen/starknet/external/get_constants/8ff3c870faa0ee083f062bf6c6add3444ce3ffe843b9047321f6c9172381996c.cairo": "return (syscall_ptr,range_check_ptr,retdata_size,retdata)\n",
+                "autogen/starknet/external/get_constants/910226883b5574b28ea2537fe13a3852f331a56beabe1d4fd14748a9b4dbd7d0.cairo": "let syscall_ptr = [cast([cast(fp + (-5), felt**)] + 0, felt*)]\n",
+                "autogen/starknet/external/get_constants/a0096d4e36b6a7b51efe8ce04fabefa7656bfce054940eced93c852f6fb7162c.cairo": "let range_check_ptr = [cast([cast(fp + (-5), felt**)] + 1, felt*)]\n",
+                "autogen/starknet/external/return/get_constant1/fe308ed452d3ea5a33677c895c4caeaac6136f74a8a50112bebb6a51c9bcc254.cairo": "func get_constant1_encode_return(ret_struct : __main__.get_constant1.Return, range_check_ptr) -> (\n        range_check_ptr, data_len : felt, data : felt*):\n    %{ memory[ap] = segments.add() %}\n    alloc_locals\n    local __return_value_ptr_start : felt*\n    let __return_value_ptr = __return_value_ptr_start\n    with range_check_ptr:\n    end\n    return (\n        range_check_ptr=range_check_ptr,\n        data_len=__return_value_ptr - __return_value_ptr_start,\n        data=__return_value_ptr_start)\nend\n",
+                "autogen/starknet/external/return/get_constants/ad7bea7a4acfebfa66e482b1d084b52876cdad8cbb3634de0b4784a81e3d8f4d.cairo": "func get_constants_encode_return(ret_struct : __main__.get_constants.Return, range_check_ptr) -> (\n        range_check_ptr, data_len : felt, data : felt*):\n    %{ memory[ap] = segments.add() %}\n    alloc_locals\n    local __return_value_ptr_start : felt*\n    let __return_value_ptr = __return_value_ptr_start\n    with range_check_ptr:\n    end\n    return (\n        range_check_ptr=range_check_ptr,\n        data_len=__return_value_ptr - __return_value_ptr_start,\n        data=__return_value_ptr_start)\nend\n"
+            },
+            "instruction_locations": {
+                "0": {
+                    "accessible_scopes": [
+                        "__main__",
+                        "__main__",
+                        "__main__.get_constants"
+                    ],
+                    "flow_tracking_data": {
+                        "ap_tracking": {
+                            "group": 0,
+                            "offset": 0
+                        },
+                        "reference_ids": {}
+                    },
+                    "hints": [],
+                    "inst": {
+                        "end_col": 20,
+                        "end_line": 9,
+                        "input_file": {
+                            "filename": "tests/cairo_files/starknet_view_global_constants.cairo"
+                        },
+                        "start_col": 13,
+                        "start_line": 9
+                    }
+                },
+                "2": {
+                    "accessible_scopes": [
+                        "__main__",
+                        "__main__",
+                        "__main__.get_constants"
+                    ],
+                    "flow_tracking_data": {
+                        "ap_tracking": {
+                            "group": 0,
+                            "offset": 1
+                        },
+                        "reference_ids": {}
+                    },
+                    "hints": [],
+                    "inst": {
+                        "end_col": 29,
+                        "end_line": 9,
+                        "input_file": {
+                            "filename": "tests/cairo_files/starknet_view_global_constants.cairo"
+                        },
+                        "start_col": 22,
+                        "start_line": 9
+                    }
+                },
+                "4": {
+                    "accessible_scopes": [
+                        "__main__",
+                        "__main__",
+                        "__main__.get_constants"
+                    ],
+                    "flow_tracking_data": {
+                        "ap_tracking": {
+                            "group": 0,
+                            "offset": 2
+                        },
+                        "reference_ids": {}
+                    },
+                    "hints": [],
+                    "inst": {
+                        "end_col": 30,
+                        "end_line": 9,
+                        "input_file": {
+                            "filename": "tests/cairo_files/starknet_view_global_constants.cairo"
+                        },
+                        "start_col": 5,
+                        "start_line": 9
+                    }
+                },
+                "5": {
+                    "accessible_scopes": [
+                        "__main__",
+                        "__main__",
+                        "__wrappers__",
+                        "__wrappers__.get_constants_encode_return"
+                    ],
+                    "flow_tracking_data": {
+                        "ap_tracking": {
+                            "group": 1,
+                            "offset": 0
+                        },
+                        "reference_ids": {
+                            "__wrappers__.get_constants_encode_return.range_check_ptr": 1,
+                            "__wrappers__.get_constants_encode_return.ret_struct": 0
+                        }
+                    },
+                    "hints": [
+                        {
+                            "location": {
+                                "end_col": 38,
+                                "end_line": 3,
+                                "input_file": {
+                                    "filename": "autogen/starknet/external/return/get_constants/ad7bea7a4acfebfa66e482b1d084b52876cdad8cbb3634de0b4784a81e3d8f4d.cairo"
+                                },
+                                "parent_location": [
+                                    {
+                                        "end_col": 19,
+                                        "end_line": 8,
+                                        "input_file": {
+                                            "filename": "tests/cairo_files/starknet_view_global_constants.cairo"
+                                        },
+                                        "start_col": 6,
+                                        "start_line": 8
+                                    },
+                                    "While handling return value of"
+                                ],
+                                "start_col": 5,
+                                "start_line": 3
+                            },
+                            "n_prefix_newlines": 0
+                        }
+                    ],
+                    "inst": {
+                        "end_col": 17,
+                        "end_line": 4,
+                        "input_file": {
+                            "filename": "autogen/starknet/external/return/get_constants/ad7bea7a4acfebfa66e482b1d084b52876cdad8cbb3634de0b4784a81e3d8f4d.cairo"
+                        },
+                        "parent_location": [
+                            {
+                                "end_col": 19,
+                                "end_line": 8,
+                                "input_file": {
+                                    "filename": "tests/cairo_files/starknet_view_global_constants.cairo"
+                                },
+                                "start_col": 6,
+                                "start_line": 8
+                            },
+                            "While handling return value of"
+                        ],
+                        "start_col": 5,
+                        "start_line": 4
+                    }
+                },
+                "7": {
+                    "accessible_scopes": [
+                        "__main__",
+                        "__main__",
+                        "__wrappers__",
+                        "__wrappers__.get_constants_encode_return"
+                    ],
+                    "flow_tracking_data": {
+                        "ap_tracking": {
+                            "group": 1,
+                            "offset": 1
+                        },
+                        "reference_ids": {
+                            "__wrappers__.get_constants_encode_return.__return_value_ptr": 3,
+                            "__wrappers__.get_constants_encode_return.__return_value_ptr_start": 2,
+                            "__wrappers__.get_constants_encode_return.range_check_ptr": 1,
+                            "__wrappers__.get_constants_encode_return.ret_struct": 0
+                        }
+                    },
+                    "hints": [],
+                    "inst": {
+                        "end_col": 50,
+                        "end_line": 1,
+                        "input_file": {
+                            "filename": "autogen/starknet/arg_processor/73ac72f32b66568f3ee41bb93112705a9f72347566e96b406edc4ca03f8a9b92.cairo"
+                        },
+                        "parent_location": [
+                            {
+                                "end_col": 41,
+                                "end_line": 8,
+                                "input_file": {
+                                    "filename": "tests/cairo_files/starknet_view_global_constants.cairo"
+                                },
+                                "start_col": 26,
+                                "start_line": 8
+                            },
+                            "While handling return value 'number_1'"
+                        ],
+                        "start_col": 1,
+                        "start_line": 1
+                    }
+                },
+                "8": {
+                    "accessible_scopes": [
+                        "__main__",
+                        "__main__",
+                        "__wrappers__",
+                        "__wrappers__.get_constants_encode_return"
+                    ],
+                    "flow_tracking_data": {
+                        "ap_tracking": {
+                            "group": 1,
+                            "offset": 1
+                        },
+                        "reference_ids": {
+                            "__wrappers__.get_constants_encode_return.__return_value_ptr": 4,
+                            "__wrappers__.get_constants_encode_return.__return_value_ptr_start": 2,
+                            "__wrappers__.get_constants_encode_return.range_check_ptr": 1,
+                            "__wrappers__.get_constants_encode_return.ret_struct": 0
+                        }
+                    },
+                    "hints": [],
+                    "inst": {
+                        "end_col": 50,
+                        "end_line": 1,
+                        "input_file": {
+                            "filename": "autogen/starknet/arg_processor/e2862e3fadd3e0a5b156a9ed1a405994e768bddabe4d256c57d3b0ccfff9aee0.cairo"
+                        },
+                        "parent_location": [
+                            {
+                                "end_col": 58,
+                                "end_line": 8,
+                                "input_file": {
+                                    "filename": "tests/cairo_files/starknet_view_global_constants.cairo"
+                                },
+                                "start_col": 43,
+                                "start_line": 8
+                            },
+                            "While handling return value 'number_2'"
+                        ],
+                        "start_col": 1,
+                        "start_line": 1
+                    }
+                },
+                "9": {
+                    "accessible_scopes": [
+                        "__main__",
+                        "__main__",
+                        "__wrappers__",
+                        "__wrappers__.get_constants_encode_return"
+                    ],
+                    "flow_tracking_data": {
+                        "ap_tracking": {
+                            "group": 1,
+                            "offset": 1
+                        },
+                        "reference_ids": {
+                            "__wrappers__.get_constants_encode_return.__return_value_ptr": 5,
+                            "__wrappers__.get_constants_encode_return.__return_value_ptr_start": 2,
+                            "__wrappers__.get_constants_encode_return.range_check_ptr": 1,
+                            "__wrappers__.get_constants_encode_return.ret_struct": 0
+                        }
+                    },
+                    "hints": [],
+                    "inst": {
+                        "end_col": 48,
+                        "end_line": 2,
+                        "input_file": {
+                            "filename": "autogen/starknet/arg_processor/e2862e3fadd3e0a5b156a9ed1a405994e768bddabe4d256c57d3b0ccfff9aee0.cairo"
+                        },
+                        "parent_location": [
+                            {
+                                "end_col": 58,
+                                "end_line": 8,
+                                "input_file": {
+                                    "filename": "tests/cairo_files/starknet_view_global_constants.cairo"
+                                },
+                                "parent_location": [
+                                    {
+                                        "end_col": 36,
+                                        "end_line": 11,
+                                        "input_file": {
+                                            "filename": "autogen/starknet/external/return/get_constants/ad7bea7a4acfebfa66e482b1d084b52876cdad8cbb3634de0b4784a81e3d8f4d.cairo"
+                                        },
+                                        "parent_location": [
+                                            {
+                                                "end_col": 19,
+                                                "end_line": 8,
+                                                "input_file": {
+                                                    "filename": "tests/cairo_files/starknet_view_global_constants.cairo"
+                                                },
+                                                "start_col": 6,
+                                                "start_line": 8
+                                            },
+                                            "While handling return value of"
+                                        ],
+                                        "start_col": 18,
+                                        "start_line": 11
+                                    },
+                                    "While expanding the reference '__return_value_ptr' in:"
+                                ],
+                                "start_col": 43,
+                                "start_line": 8
+                            },
+                            "While handling return value 'number_2'"
+                        ],
+                        "start_col": 26,
+                        "start_line": 2
+                    }
+                },
+                "11": {
+                    "accessible_scopes": [
+                        "__main__",
+                        "__main__",
+                        "__wrappers__",
+                        "__wrappers__.get_constants_encode_return"
+                    ],
+                    "flow_tracking_data": {
+                        "ap_tracking": {
+                            "group": 1,
+                            "offset": 2
+                        },
+                        "reference_ids": {
+                            "__wrappers__.get_constants_encode_return.__return_value_ptr": 5,
+                            "__wrappers__.get_constants_encode_return.__return_value_ptr_start": 2,
+                            "__wrappers__.get_constants_encode_return.__temp0": 6,
+                            "__wrappers__.get_constants_encode_return.range_check_ptr": 1,
+                            "__wrappers__.get_constants_encode_return.ret_struct": 0
+                        }
+                    },
+                    "hints": [],
+                    "inst": {
+                        "end_col": 93,
+                        "end_line": 1,
+                        "input_file": {
+                            "filename": "autogen/starknet/external/return/get_constants/ad7bea7a4acfebfa66e482b1d084b52876cdad8cbb3634de0b4784a81e3d8f4d.cairo"
+                        },
+                        "parent_location": [
+                            {
+                                "end_col": 19,
+                                "end_line": 8,
+                                "input_file": {
+                                    "filename": "tests/cairo_files/starknet_view_global_constants.cairo"
+                                },
+                                "parent_location": [
+                                    {
+                                        "end_col": 40,
+                                        "end_line": 10,
+                                        "input_file": {
+                                            "filename": "autogen/starknet/external/return/get_constants/ad7bea7a4acfebfa66e482b1d084b52876cdad8cbb3634de0b4784a81e3d8f4d.cairo"
+                                        },
+                                        "parent_location": [
+                                            {
+                                                "end_col": 19,
+                                                "end_line": 8,
+                                                "input_file": {
+                                                    "filename": "tests/cairo_files/starknet_view_global_constants.cairo"
+                                                },
+                                                "start_col": 6,
+                                                "start_line": 8
+                                            },
+                                            "While handling return value of"
+                                        ],
+                                        "start_col": 25,
+                                        "start_line": 10
+                                    },
+                                    "While expanding the reference 'range_check_ptr' in:"
+                                ],
+                                "start_col": 6,
+                                "start_line": 8
+                            },
+                            "While handling return value of"
+                        ],
+                        "start_col": 78,
+                        "start_line": 1
+                    }
+                },
+                "12": {
+                    "accessible_scopes": [
+                        "__main__",
+                        "__main__",
+                        "__wrappers__",
+                        "__wrappers__.get_constants_encode_return"
+                    ],
+                    "flow_tracking_data": {
+                        "ap_tracking": {
+                            "group": 1,
+                            "offset": 3
+                        },
+                        "reference_ids": {
+                            "__wrappers__.get_constants_encode_return.__return_value_ptr": 5,
+                            "__wrappers__.get_constants_encode_return.__return_value_ptr_start": 2,
+                            "__wrappers__.get_constants_encode_return.__temp0": 6,
+                            "__wrappers__.get_constants_encode_return.range_check_ptr": 1,
+                            "__wrappers__.get_constants_encode_return.ret_struct": 0
+                        }
+                    },
+                    "hints": [],
+                    "inst": {
+                        "end_col": 63,
+                        "end_line": 11,
+                        "input_file": {
+                            "filename": "autogen/starknet/external/return/get_constants/ad7bea7a4acfebfa66e482b1d084b52876cdad8cbb3634de0b4784a81e3d8f4d.cairo"
+                        },
+                        "parent_location": [
+                            {
+                                "end_col": 19,
+                                "end_line": 8,
+                                "input_file": {
+                                    "filename": "tests/cairo_files/starknet_view_global_constants.cairo"
+                                },
+                                "start_col": 6,
+                                "start_line": 8
+                            },
+                            "While handling return value of"
+                        ],
+                        "start_col": 18,
+                        "start_line": 11
+                    }
+                },
+                "13": {
+                    "accessible_scopes": [
+                        "__main__",
+                        "__main__",
+                        "__wrappers__",
+                        "__wrappers__.get_constants_encode_return"
+                    ],
+                    "flow_tracking_data": {
+                        "ap_tracking": {
+                            "group": 1,
+                            "offset": 4
+                        },
+                        "reference_ids": {
+                            "__wrappers__.get_constants_encode_return.__return_value_ptr": 5,
+                            "__wrappers__.get_constants_encode_return.__return_value_ptr_start": 2,
+                            "__wrappers__.get_constants_encode_return.__temp0": 6,
+                            "__wrappers__.get_constants_encode_return.range_check_ptr": 1,
+                            "__wrappers__.get_constants_encode_return.ret_struct": 0
+                        }
+                    },
+                    "hints": [],
+                    "inst": {
+                        "end_col": 35,
+                        "end_line": 5,
+                        "input_file": {
+                            "filename": "autogen/starknet/external/return/get_constants/ad7bea7a4acfebfa66e482b1d084b52876cdad8cbb3634de0b4784a81e3d8f4d.cairo"
+                        },
+                        "parent_location": [
+                            {
+                                "end_col": 19,
+                                "end_line": 8,
+                                "input_file": {
+                                    "filename": "tests/cairo_files/starknet_view_global_constants.cairo"
+                                },
+                                "parent_location": [
+                                    {
+                                        "end_col": 38,
+                                        "end_line": 12,
+                                        "input_file": {
+                                            "filename": "autogen/starknet/external/return/get_constants/ad7bea7a4acfebfa66e482b1d084b52876cdad8cbb3634de0b4784a81e3d8f4d.cairo"
+                                        },
+                                        "parent_location": [
+                                            {
+                                                "end_col": 19,
+                                                "end_line": 8,
+                                                "input_file": {
+                                                    "filename": "tests/cairo_files/starknet_view_global_constants.cairo"
+                                                },
+                                                "start_col": 6,
+                                                "start_line": 8
+                                            },
+                                            "While handling return value of"
+                                        ],
+                                        "start_col": 14,
+                                        "start_line": 12
+                                    },
+                                    "While expanding the reference '__return_value_ptr_start' in:"
+                                ],
+                                "start_col": 6,
+                                "start_line": 8
+                            },
+                            "While handling return value of"
+                        ],
+                        "start_col": 11,
+                        "start_line": 5
+                    }
+                },
+                "14": {
+                    "accessible_scopes": [
+                        "__main__",
+                        "__main__",
+                        "__wrappers__",
+                        "__wrappers__.get_constants_encode_return"
+                    ],
+                    "flow_tracking_data": {
+                        "ap_tracking": {
+                            "group": 1,
+                            "offset": 5
+                        },
+                        "reference_ids": {
+                            "__wrappers__.get_constants_encode_return.__return_value_ptr": 5,
+                            "__wrappers__.get_constants_encode_return.__return_value_ptr_start": 2,
+                            "__wrappers__.get_constants_encode_return.__temp0": 6,
+                            "__wrappers__.get_constants_encode_return.range_check_ptr": 1,
+                            "__wrappers__.get_constants_encode_return.ret_struct": 0
+                        }
+                    },
+                    "hints": [],
+                    "inst": {
+                        "end_col": 39,
+                        "end_line": 12,
+                        "input_file": {
+                            "filename": "autogen/starknet/external/return/get_constants/ad7bea7a4acfebfa66e482b1d084b52876cdad8cbb3634de0b4784a81e3d8f4d.cairo"
+                        },
+                        "parent_location": [
+                            {
+                                "end_col": 19,
+                                "end_line": 8,
+                                "input_file": {
+                                    "filename": "tests/cairo_files/starknet_view_global_constants.cairo"
+                                },
+                                "start_col": 6,
+                                "start_line": 8
+                            },
+                            "While handling return value of"
+                        ],
+                        "start_col": 5,
+                        "start_line": 9
+                    }
+                },
+                "15": {
+                    "accessible_scopes": [
+                        "__main__",
+                        "__main__",
+                        "__wrappers__",
+                        "__wrappers__.get_constants"
+                    ],
+                    "flow_tracking_data": {
+                        "ap_tracking": {
+                            "group": 2,
+                            "offset": 0
+                        },
+                        "reference_ids": {
+                            "__wrappers__.get_constants.__calldata_actual_size": 10,
+                            "__wrappers__.get_constants.__calldata_ptr": 9,
+                            "__wrappers__.get_constants.range_check_ptr": 8,
+                            "__wrappers__.get_constants.syscall_ptr": 7
+                        }
+                    },
+                    "hints": [],
+                    "inst": {
+                        "end_col": 57,
+                        "end_line": 1,
+                        "input_file": {
+                            "filename": "autogen/starknet/arg_processor/1b562308a65653425ce06491fa4b4539466f3251a07e73e099d0afe86a48900e.cairo"
+                        },
+                        "parent_location": [
+                            {
+                                "end_col": 19,
+                                "end_line": 8,
+                                "input_file": {
+                                    "filename": "tests/cairo_files/starknet_view_global_constants.cairo"
+                                },
+                                "start_col": 6,
+                                "start_line": 8
+                            },
+                            "While handling calldata of"
+                        ],
+                        "start_col": 1,
+                        "start_line": 1
+                    }
+                },
+                "16": {
+                    "accessible_scopes": [
+                        "__main__",
+                        "__main__",
+                        "__wrappers__",
+                        "__wrappers__.get_constants"
+                    ],
+                    "flow_tracking_data": {
+                        "ap_tracking": {
+                            "group": 2,
+                            "offset": 0
+                        },
+                        "reference_ids": {
+                            "__wrappers__.get_constants.__calldata_actual_size": 10,
+                            "__wrappers__.get_constants.__calldata_ptr": 9,
+                            "__wrappers__.get_constants.range_check_ptr": 8,
+                            "__wrappers__.get_constants.syscall_ptr": 7
+                        }
+                    },
+                    "hints": [],
+                    "inst": {
+                        "end_col": 19,
+                        "end_line": 8,
+                        "input_file": {
+                            "filename": "tests/cairo_files/starknet_view_global_constants.cairo"
+                        },
+                        "start_col": 6,
+                        "start_line": 8
+                    }
+                },
+                "18": {
+                    "accessible_scopes": [
+                        "__main__",
+                        "__main__",
+                        "__wrappers__",
+                        "__wrappers__.get_constants"
+                    ],
+                    "flow_tracking_data": {
+                        "ap_tracking": {
+                            "group": 2,
+                            "offset": 4
+                        },
+                        "reference_ids": {
+                            "__wrappers__.get_constants.__calldata_actual_size": 10,
+                            "__wrappers__.get_constants.__calldata_ptr": 9,
+                            "__wrappers__.get_constants.range_check_ptr": 8,
+                            "__wrappers__.get_constants.ret_struct": 11,
+                            "__wrappers__.get_constants.syscall_ptr": 7
+                        }
+                    },
+                    "hints": [],
+                    "inst": {
+                        "end_col": 67,
+                        "end_line": 1,
+                        "input_file": {
+                            "filename": "autogen/starknet/external/get_constants/a0096d4e36b6a7b51efe8ce04fabefa7656bfce054940eced93c852f6fb7162c.cairo"
+                        },
+                        "parent_location": [
+                            {
+                                "end_col": 19,
+                                "end_line": 8,
+                                "input_file": {
+                                    "filename": "tests/cairo_files/starknet_view_global_constants.cairo"
+                                },
+                                "parent_location": [
+                                    {
+                                        "end_col": 103,
+                                        "end_line": 2,
+                                        "input_file": {
+                                            "filename": "autogen/starknet/external/get_constants/357496caaf342f07879a59a46b1f64ca00b46a0ebbd363e96ac1d592586d2dd5.cairo"
+                                        },
+                                        "parent_location": [
+                                            {
+                                                "end_col": 19,
+                                                "end_line": 8,
+                                                "input_file": {
+                                                    "filename": "tests/cairo_files/starknet_view_global_constants.cairo"
+                                                },
+                                                "start_col": 6,
+                                                "start_line": 8
+                                            },
+                                            "While constructing the external wrapper for:"
+                                        ],
+                                        "start_col": 88,
+                                        "start_line": 2
+                                    },
+                                    "While expanding the reference 'range_check_ptr' in:"
+                                ],
+                                "start_col": 6,
+                                "start_line": 8
+                            },
+                            "While constructing the external wrapper for:"
+                        ],
+                        "start_col": 23,
+                        "start_line": 1
+                    }
+                },
+                "19": {
+                    "accessible_scopes": [
+                        "__main__",
+                        "__main__",
+                        "__wrappers__",
+                        "__wrappers__.get_constants"
+                    ],
+                    "flow_tracking_data": {
+                        "ap_tracking": {
+                            "group": 2,
+                            "offset": 5
+                        },
+                        "reference_ids": {
+                            "__wrappers__.get_constants.__calldata_actual_size": 10,
+                            "__wrappers__.get_constants.__calldata_ptr": 9,
+                            "__wrappers__.get_constants.range_check_ptr": 8,
+                            "__wrappers__.get_constants.ret_struct": 11,
+                            "__wrappers__.get_constants.syscall_ptr": 7
+                        }
+                    },
+                    "hints": [],
+                    "inst": {
+                        "end_col": 104,
+                        "end_line": 2,
+                        "input_file": {
+                            "filename": "autogen/starknet/external/get_constants/357496caaf342f07879a59a46b1f64ca00b46a0ebbd363e96ac1d592586d2dd5.cairo"
+                        },
+                        "parent_location": [
+                            {
+                                "end_col": 19,
+                                "end_line": 8,
+                                "input_file": {
+                                    "filename": "tests/cairo_files/starknet_view_global_constants.cairo"
+                                },
+                                "start_col": 6,
+                                "start_line": 8
+                            },
+                            "While constructing the external wrapper for:"
+                        ],
+                        "start_col": 48,
+                        "start_line": 2
+                    }
+                },
+                "21": {
+                    "accessible_scopes": [
+                        "__main__",
+                        "__main__",
+                        "__wrappers__",
+                        "__wrappers__.get_constants"
+                    ],
+                    "flow_tracking_data": {
+                        "ap_tracking": {
+                            "group": 2,
+                            "offset": 12
+                        },
+                        "reference_ids": {
+                            "__wrappers__.get_constants.__calldata_actual_size": 10,
+                            "__wrappers__.get_constants.__calldata_ptr": 9,
+                            "__wrappers__.get_constants.range_check_ptr": 12,
+                            "__wrappers__.get_constants.ret_struct": 11,
+                            "__wrappers__.get_constants.retdata": 14,
+                            "__wrappers__.get_constants.retdata_size": 13,
+                            "__wrappers__.get_constants.syscall_ptr": 7
+                        }
+                    },
+                    "hints": [],
+                    "inst": {
+                        "end_col": 63,
+                        "end_line": 1,
+                        "input_file": {
+                            "filename": "autogen/starknet/external/get_constants/910226883b5574b28ea2537fe13a3852f331a56beabe1d4fd14748a9b4dbd7d0.cairo"
+                        },
+                        "parent_location": [
+                            {
+                                "end_col": 19,
+                                "end_line": 8,
+                                "input_file": {
+                                    "filename": "tests/cairo_files/starknet_view_global_constants.cairo"
+                                },
+                                "parent_location": [
+                                    {
+                                        "end_col": 20,
+                                        "end_line": 1,
+                                        "input_file": {
+                                            "filename": "autogen/starknet/external/get_constants/8ff3c870faa0ee083f062bf6c6add3444ce3ffe843b9047321f6c9172381996c.cairo"
+                                        },
+                                        "parent_location": [
+                                            {
+                                                "end_col": 19,
+                                                "end_line": 8,
+                                                "input_file": {
+                                                    "filename": "tests/cairo_files/starknet_view_global_constants.cairo"
+                                                },
+                                                "start_col": 6,
+                                                "start_line": 8
+                                            },
+                                            "While constructing the external wrapper for:"
+                                        ],
+                                        "start_col": 9,
+                                        "start_line": 1
+                                    },
+                                    "While expanding the reference 'syscall_ptr' in:"
+                                ],
+                                "start_col": 6,
+                                "start_line": 8
+                            },
+                            "While constructing the external wrapper for:"
+                        ],
+                        "start_col": 19,
+                        "start_line": 1
+                    }
+                },
+                "22": {
+                    "accessible_scopes": [
+                        "__main__",
+                        "__main__",
+                        "__wrappers__",
+                        "__wrappers__.get_constants"
+                    ],
+                    "flow_tracking_data": {
+                        "ap_tracking": {
+                            "group": 2,
+                            "offset": 13
+                        },
+                        "reference_ids": {
+                            "__wrappers__.get_constants.__calldata_actual_size": 10,
+                            "__wrappers__.get_constants.__calldata_ptr": 9,
+                            "__wrappers__.get_constants.range_check_ptr": 12,
+                            "__wrappers__.get_constants.ret_struct": 11,
+                            "__wrappers__.get_constants.retdata": 14,
+                            "__wrappers__.get_constants.retdata_size": 13,
+                            "__wrappers__.get_constants.syscall_ptr": 7
+                        }
+                    },
+                    "hints": [],
+                    "inst": {
+                        "end_col": 21,
+                        "end_line": 2,
+                        "input_file": {
+                            "filename": "autogen/starknet/external/get_constants/357496caaf342f07879a59a46b1f64ca00b46a0ebbd363e96ac1d592586d2dd5.cairo"
+                        },
+                        "parent_location": [
+                            {
+                                "end_col": 19,
+                                "end_line": 8,
+                                "input_file": {
+                                    "filename": "tests/cairo_files/starknet_view_global_constants.cairo"
+                                },
+                                "parent_location": [
+                                    {
+                                        "end_col": 36,
+                                        "end_line": 1,
+                                        "input_file": {
+                                            "filename": "autogen/starknet/external/get_constants/8ff3c870faa0ee083f062bf6c6add3444ce3ffe843b9047321f6c9172381996c.cairo"
+                                        },
+                                        "parent_location": [
+                                            {
+                                                "end_col": 19,
+                                                "end_line": 8,
+                                                "input_file": {
+                                                    "filename": "tests/cairo_files/starknet_view_global_constants.cairo"
+                                                },
+                                                "start_col": 6,
+                                                "start_line": 8
+                                            },
+                                            "While constructing the external wrapper for:"
+                                        ],
+                                        "start_col": 21,
+                                        "start_line": 1
+                                    },
+                                    "While expanding the reference 'range_check_ptr' in:"
+                                ],
+                                "start_col": 6,
+                                "start_line": 8
+                            },
+                            "While constructing the external wrapper for:"
+                        ],
+                        "start_col": 6,
+                        "start_line": 2
+                    }
+                },
+                "23": {
+                    "accessible_scopes": [
+                        "__main__",
+                        "__main__",
+                        "__wrappers__",
+                        "__wrappers__.get_constants"
+                    ],
+                    "flow_tracking_data": {
+                        "ap_tracking": {
+                            "group": 2,
+                            "offset": 14
+                        },
+                        "reference_ids": {
+                            "__wrappers__.get_constants.__calldata_actual_size": 10,
+                            "__wrappers__.get_constants.__calldata_ptr": 9,
+                            "__wrappers__.get_constants.range_check_ptr": 12,
+                            "__wrappers__.get_constants.ret_struct": 11,
+                            "__wrappers__.get_constants.retdata": 14,
+                            "__wrappers__.get_constants.retdata_size": 13,
+                            "__wrappers__.get_constants.syscall_ptr": 7
+                        }
+                    },
+                    "hints": [],
+                    "inst": {
+                        "end_col": 35,
+                        "end_line": 2,
+                        "input_file": {
+                            "filename": "autogen/starknet/external/get_constants/357496caaf342f07879a59a46b1f64ca00b46a0ebbd363e96ac1d592586d2dd5.cairo"
+                        },
+                        "parent_location": [
+                            {
+                                "end_col": 19,
+                                "end_line": 8,
+                                "input_file": {
+                                    "filename": "tests/cairo_files/starknet_view_global_constants.cairo"
+                                },
+                                "parent_location": [
+                                    {
+                                        "end_col": 49,
+                                        "end_line": 1,
+                                        "input_file": {
+                                            "filename": "autogen/starknet/external/get_constants/8ff3c870faa0ee083f062bf6c6add3444ce3ffe843b9047321f6c9172381996c.cairo"
+                                        },
+                                        "parent_location": [
+                                            {
+                                                "end_col": 19,
+                                                "end_line": 8,
+                                                "input_file": {
+                                                    "filename": "tests/cairo_files/starknet_view_global_constants.cairo"
+                                                },
+                                                "start_col": 6,
+                                                "start_line": 8
+                                            },
+                                            "While constructing the external wrapper for:"
+                                        ],
+                                        "start_col": 37,
+                                        "start_line": 1
+                                    },
+                                    "While expanding the reference 'retdata_size' in:"
+                                ],
+                                "start_col": 6,
+                                "start_line": 8
+                            },
+                            "While constructing the external wrapper for:"
+                        ],
+                        "start_col": 23,
+                        "start_line": 2
+                    }
+                },
+                "24": {
+                    "accessible_scopes": [
+                        "__main__",
+                        "__main__",
+                        "__wrappers__",
+                        "__wrappers__.get_constants"
+                    ],
+                    "flow_tracking_data": {
+                        "ap_tracking": {
+                            "group": 2,
+                            "offset": 15
+                        },
+                        "reference_ids": {
+                            "__wrappers__.get_constants.__calldata_actual_size": 10,
+                            "__wrappers__.get_constants.__calldata_ptr": 9,
+                            "__wrappers__.get_constants.range_check_ptr": 12,
+                            "__wrappers__.get_constants.ret_struct": 11,
+                            "__wrappers__.get_constants.retdata": 14,
+                            "__wrappers__.get_constants.retdata_size": 13,
+                            "__wrappers__.get_constants.syscall_ptr": 7
+                        }
+                    },
+                    "hints": [],
+                    "inst": {
+                        "end_col": 44,
+                        "end_line": 2,
+                        "input_file": {
+                            "filename": "autogen/starknet/external/get_constants/357496caaf342f07879a59a46b1f64ca00b46a0ebbd363e96ac1d592586d2dd5.cairo"
+                        },
+                        "parent_location": [
+                            {
+                                "end_col": 19,
+                                "end_line": 8,
+                                "input_file": {
+                                    "filename": "tests/cairo_files/starknet_view_global_constants.cairo"
+                                },
+                                "parent_location": [
+                                    {
+                                        "end_col": 57,
+                                        "end_line": 1,
+                                        "input_file": {
+                                            "filename": "autogen/starknet/external/get_constants/8ff3c870faa0ee083f062bf6c6add3444ce3ffe843b9047321f6c9172381996c.cairo"
+                                        },
+                                        "parent_location": [
+                                            {
+                                                "end_col": 19,
+                                                "end_line": 8,
+                                                "input_file": {
+                                                    "filename": "tests/cairo_files/starknet_view_global_constants.cairo"
+                                                },
+                                                "start_col": 6,
+                                                "start_line": 8
+                                            },
+                                            "While constructing the external wrapper for:"
+                                        ],
+                                        "start_col": 50,
+                                        "start_line": 1
+                                    },
+                                    "While expanding the reference 'retdata' in:"
+                                ],
+                                "start_col": 6,
+                                "start_line": 8
+                            },
+                            "While constructing the external wrapper for:"
+                        ],
+                        "start_col": 37,
+                        "start_line": 2
+                    }
+                },
+                "25": {
+                    "accessible_scopes": [
+                        "__main__",
+                        "__main__",
+                        "__wrappers__",
+                        "__wrappers__.get_constants"
+                    ],
+                    "flow_tracking_data": {
+                        "ap_tracking": {
+                            "group": 2,
+                            "offset": 16
+                        },
+                        "reference_ids": {
+                            "__wrappers__.get_constants.__calldata_actual_size": 10,
+                            "__wrappers__.get_constants.__calldata_ptr": 9,
+                            "__wrappers__.get_constants.range_check_ptr": 12,
+                            "__wrappers__.get_constants.ret_struct": 11,
+                            "__wrappers__.get_constants.retdata": 14,
+                            "__wrappers__.get_constants.retdata_size": 13,
+                            "__wrappers__.get_constants.syscall_ptr": 7
+                        }
+                    },
+                    "hints": [],
+                    "inst": {
+                        "end_col": 58,
+                        "end_line": 1,
+                        "input_file": {
+                            "filename": "autogen/starknet/external/get_constants/8ff3c870faa0ee083f062bf6c6add3444ce3ffe843b9047321f6c9172381996c.cairo"
+                        },
+                        "parent_location": [
+                            {
+                                "end_col": 19,
+                                "end_line": 8,
+                                "input_file": {
+                                    "filename": "tests/cairo_files/starknet_view_global_constants.cairo"
+                                },
+                                "start_col": 6,
+                                "start_line": 8
+                            },
+                            "While constructing the external wrapper for:"
+                        ],
+                        "start_col": 1,
+                        "start_line": 1
+                    }
+                },
+                "26": {
+                    "accessible_scopes": [
+                        "__main__",
+                        "__main__",
+                        "__main__.get_constant1"
+                    ],
+                    "flow_tracking_data": {
+                        "ap_tracking": {
+                            "group": 3,
+                            "offset": 0
+                        },
+                        "reference_ids": {}
+                    },
+                    "hints": [],
+                    "inst": {
+                        "end_col": 20,
+                        "end_line": 14,
+                        "input_file": {
+                            "filename": "tests/cairo_files/starknet_view_global_constants.cairo"
+                        },
+                        "start_col": 13,
+                        "start_line": 14
+                    }
+                },
+                "28": {
+                    "accessible_scopes": [
+                        "__main__",
+                        "__main__",
+                        "__main__.get_constant1"
+                    ],
+                    "flow_tracking_data": {
+                        "ap_tracking": {
+                            "group": 3,
+                            "offset": 1
+                        },
+                        "reference_ids": {}
+                    },
+                    "hints": [],
+                    "inst": {
+                        "end_col": 21,
+                        "end_line": 14,
+                        "input_file": {
+                            "filename": "tests/cairo_files/starknet_view_global_constants.cairo"
+                        },
+                        "start_col": 5,
+                        "start_line": 14
+                    }
+                },
+                "29": {
+                    "accessible_scopes": [
+                        "__main__",
+                        "__main__",
+                        "__wrappers__",
+                        "__wrappers__.get_constant1_encode_return"
+                    ],
+                    "flow_tracking_data": {
+                        "ap_tracking": {
+                            "group": 4,
+                            "offset": 0
+                        },
+                        "reference_ids": {
+                            "__wrappers__.get_constant1_encode_return.range_check_ptr": 16,
+                            "__wrappers__.get_constant1_encode_return.ret_struct": 15
+                        }
+                    },
+                    "hints": [
+                        {
+                            "location": {
+                                "end_col": 38,
+                                "end_line": 3,
+                                "input_file": {
+                                    "filename": "autogen/starknet/external/return/get_constant1/fe308ed452d3ea5a33677c895c4caeaac6136f74a8a50112bebb6a51c9bcc254.cairo"
+                                },
+                                "parent_location": [
+                                    {
+                                        "end_col": 19,
+                                        "end_line": 13,
+                                        "input_file": {
+                                            "filename": "tests/cairo_files/starknet_view_global_constants.cairo"
+                                        },
+                                        "start_col": 6,
+                                        "start_line": 13
+                                    },
+                                    "While handling return value of"
+                                ],
+                                "start_col": 5,
+                                "start_line": 3
+                            },
+                            "n_prefix_newlines": 0
+                        }
+                    ],
+                    "inst": {
+                        "end_col": 17,
+                        "end_line": 4,
+                        "input_file": {
+                            "filename": "autogen/starknet/external/return/get_constant1/fe308ed452d3ea5a33677c895c4caeaac6136f74a8a50112bebb6a51c9bcc254.cairo"
+                        },
+                        "parent_location": [
+                            {
+                                "end_col": 19,
+                                "end_line": 13,
+                                "input_file": {
+                                    "filename": "tests/cairo_files/starknet_view_global_constants.cairo"
+                                },
+                                "start_col": 6,
+                                "start_line": 13
+                            },
+                            "While handling return value of"
+                        ],
+                        "start_col": 5,
+                        "start_line": 4
+                    }
+                },
+                "31": {
+                    "accessible_scopes": [
+                        "__main__",
+                        "__main__",
+                        "__wrappers__",
+                        "__wrappers__.get_constant1_encode_return"
+                    ],
+                    "flow_tracking_data": {
+                        "ap_tracking": {
+                            "group": 4,
+                            "offset": 1
+                        },
+                        "reference_ids": {
+                            "__wrappers__.get_constant1_encode_return.__return_value_ptr": 18,
+                            "__wrappers__.get_constant1_encode_return.__return_value_ptr_start": 17,
+                            "__wrappers__.get_constant1_encode_return.range_check_ptr": 16,
+                            "__wrappers__.get_constant1_encode_return.ret_struct": 15
+                        }
+                    },
+                    "hints": [],
+                    "inst": {
+                        "end_col": 50,
+                        "end_line": 1,
+                        "input_file": {
+                            "filename": "autogen/starknet/arg_processor/73ac72f32b66568f3ee41bb93112705a9f72347566e96b406edc4ca03f8a9b92.cairo"
+                        },
+                        "parent_location": [
+                            {
+                                "end_col": 41,
+                                "end_line": 13,
+                                "input_file": {
+                                    "filename": "tests/cairo_files/starknet_view_global_constants.cairo"
+                                },
+                                "start_col": 26,
+                                "start_line": 13
+                            },
+                            "While handling return value 'number_1'"
+                        ],
+                        "start_col": 1,
+                        "start_line": 1
+                    }
+                },
+                "32": {
+                    "accessible_scopes": [
+                        "__main__",
+                        "__main__",
+                        "__wrappers__",
+                        "__wrappers__.get_constant1_encode_return"
+                    ],
+                    "flow_tracking_data": {
+                        "ap_tracking": {
+                            "group": 4,
+                            "offset": 1
+                        },
+                        "reference_ids": {
+                            "__wrappers__.get_constant1_encode_return.__return_value_ptr": 19,
+                            "__wrappers__.get_constant1_encode_return.__return_value_ptr_start": 17,
+                            "__wrappers__.get_constant1_encode_return.range_check_ptr": 16,
+                            "__wrappers__.get_constant1_encode_return.ret_struct": 15
+                        }
+                    },
+                    "hints": [],
+                    "inst": {
+                        "end_col": 48,
+                        "end_line": 2,
+                        "input_file": {
+                            "filename": "autogen/starknet/arg_processor/73ac72f32b66568f3ee41bb93112705a9f72347566e96b406edc4ca03f8a9b92.cairo"
+                        },
+                        "parent_location": [
+                            {
+                                "end_col": 41,
+                                "end_line": 13,
+                                "input_file": {
+                                    "filename": "tests/cairo_files/starknet_view_global_constants.cairo"
+                                },
+                                "parent_location": [
+                                    {
+                                        "end_col": 36,
+                                        "end_line": 11,
+                                        "input_file": {
+                                            "filename": "autogen/starknet/external/return/get_constant1/fe308ed452d3ea5a33677c895c4caeaac6136f74a8a50112bebb6a51c9bcc254.cairo"
+                                        },
+                                        "parent_location": [
+                                            {
+                                                "end_col": 19,
+                                                "end_line": 13,
+                                                "input_file": {
+                                                    "filename": "tests/cairo_files/starknet_view_global_constants.cairo"
+                                                },
+                                                "start_col": 6,
+                                                "start_line": 13
+                                            },
+                                            "While handling return value of"
+                                        ],
+                                        "start_col": 18,
+                                        "start_line": 11
+                                    },
+                                    "While expanding the reference '__return_value_ptr' in:"
+                                ],
+                                "start_col": 26,
+                                "start_line": 13
+                            },
+                            "While handling return value 'number_1'"
+                        ],
+                        "start_col": 26,
+                        "start_line": 2
+                    }
+                },
+                "34": {
+                    "accessible_scopes": [
+                        "__main__",
+                        "__main__",
+                        "__wrappers__",
+                        "__wrappers__.get_constant1_encode_return"
+                    ],
+                    "flow_tracking_data": {
+                        "ap_tracking": {
+                            "group": 4,
+                            "offset": 2
+                        },
+                        "reference_ids": {
+                            "__wrappers__.get_constant1_encode_return.__return_value_ptr": 19,
+                            "__wrappers__.get_constant1_encode_return.__return_value_ptr_start": 17,
+                            "__wrappers__.get_constant1_encode_return.__temp1": 20,
+                            "__wrappers__.get_constant1_encode_return.range_check_ptr": 16,
+                            "__wrappers__.get_constant1_encode_return.ret_struct": 15
+                        }
+                    },
+                    "hints": [],
+                    "inst": {
+                        "end_col": 93,
+                        "end_line": 1,
+                        "input_file": {
+                            "filename": "autogen/starknet/external/return/get_constant1/fe308ed452d3ea5a33677c895c4caeaac6136f74a8a50112bebb6a51c9bcc254.cairo"
+                        },
+                        "parent_location": [
+                            {
+                                "end_col": 19,
+                                "end_line": 13,
+                                "input_file": {
+                                    "filename": "tests/cairo_files/starknet_view_global_constants.cairo"
+                                },
+                                "parent_location": [
+                                    {
+                                        "end_col": 40,
+                                        "end_line": 10,
+                                        "input_file": {
+                                            "filename": "autogen/starknet/external/return/get_constant1/fe308ed452d3ea5a33677c895c4caeaac6136f74a8a50112bebb6a51c9bcc254.cairo"
+                                        },
+                                        "parent_location": [
+                                            {
+                                                "end_col": 19,
+                                                "end_line": 13,
+                                                "input_file": {
+                                                    "filename": "tests/cairo_files/starknet_view_global_constants.cairo"
+                                                },
+                                                "start_col": 6,
+                                                "start_line": 13
+                                            },
+                                            "While handling return value of"
+                                        ],
+                                        "start_col": 25,
+                                        "start_line": 10
+                                    },
+                                    "While expanding the reference 'range_check_ptr' in:"
+                                ],
+                                "start_col": 6,
+                                "start_line": 13
+                            },
+                            "While handling return value of"
+                        ],
+                        "start_col": 78,
+                        "start_line": 1
+                    }
+                },
+                "35": {
+                    "accessible_scopes": [
+                        "__main__",
+                        "__main__",
+                        "__wrappers__",
+                        "__wrappers__.get_constant1_encode_return"
+                    ],
+                    "flow_tracking_data": {
+                        "ap_tracking": {
+                            "group": 4,
+                            "offset": 3
+                        },
+                        "reference_ids": {
+                            "__wrappers__.get_constant1_encode_return.__return_value_ptr": 19,
+                            "__wrappers__.get_constant1_encode_return.__return_value_ptr_start": 17,
+                            "__wrappers__.get_constant1_encode_return.__temp1": 20,
+                            "__wrappers__.get_constant1_encode_return.range_check_ptr": 16,
+                            "__wrappers__.get_constant1_encode_return.ret_struct": 15
+                        }
+                    },
+                    "hints": [],
+                    "inst": {
+                        "end_col": 63,
+                        "end_line": 11,
+                        "input_file": {
+                            "filename": "autogen/starknet/external/return/get_constant1/fe308ed452d3ea5a33677c895c4caeaac6136f74a8a50112bebb6a51c9bcc254.cairo"
+                        },
+                        "parent_location": [
+                            {
+                                "end_col": 19,
+                                "end_line": 13,
+                                "input_file": {
+                                    "filename": "tests/cairo_files/starknet_view_global_constants.cairo"
+                                },
+                                "start_col": 6,
+                                "start_line": 13
+                            },
+                            "While handling return value of"
+                        ],
+                        "start_col": 18,
+                        "start_line": 11
+                    }
+                },
+                "36": {
+                    "accessible_scopes": [
+                        "__main__",
+                        "__main__",
+                        "__wrappers__",
+                        "__wrappers__.get_constant1_encode_return"
+                    ],
+                    "flow_tracking_data": {
+                        "ap_tracking": {
+                            "group": 4,
+                            "offset": 4
+                        },
+                        "reference_ids": {
+                            "__wrappers__.get_constant1_encode_return.__return_value_ptr": 19,
+                            "__wrappers__.get_constant1_encode_return.__return_value_ptr_start": 17,
+                            "__wrappers__.get_constant1_encode_return.__temp1": 20,
+                            "__wrappers__.get_constant1_encode_return.range_check_ptr": 16,
+                            "__wrappers__.get_constant1_encode_return.ret_struct": 15
+                        }
+                    },
+                    "hints": [],
+                    "inst": {
+                        "end_col": 35,
+                        "end_line": 5,
+                        "input_file": {
+                            "filename": "autogen/starknet/external/return/get_constant1/fe308ed452d3ea5a33677c895c4caeaac6136f74a8a50112bebb6a51c9bcc254.cairo"
+                        },
+                        "parent_location": [
+                            {
+                                "end_col": 19,
+                                "end_line": 13,
+                                "input_file": {
+                                    "filename": "tests/cairo_files/starknet_view_global_constants.cairo"
+                                },
+                                "parent_location": [
+                                    {
+                                        "end_col": 38,
+                                        "end_line": 12,
+                                        "input_file": {
+                                            "filename": "autogen/starknet/external/return/get_constant1/fe308ed452d3ea5a33677c895c4caeaac6136f74a8a50112bebb6a51c9bcc254.cairo"
+                                        },
+                                        "parent_location": [
+                                            {
+                                                "end_col": 19,
+                                                "end_line": 13,
+                                                "input_file": {
+                                                    "filename": "tests/cairo_files/starknet_view_global_constants.cairo"
+                                                },
+                                                "start_col": 6,
+                                                "start_line": 13
+                                            },
+                                            "While handling return value of"
+                                        ],
+                                        "start_col": 14,
+                                        "start_line": 12
+                                    },
+                                    "While expanding the reference '__return_value_ptr_start' in:"
+                                ],
+                                "start_col": 6,
+                                "start_line": 13
+                            },
+                            "While handling return value of"
+                        ],
+                        "start_col": 11,
+                        "start_line": 5
+                    }
+                },
+                "37": {
+                    "accessible_scopes": [
+                        "__main__",
+                        "__main__",
+                        "__wrappers__",
+                        "__wrappers__.get_constant1_encode_return"
+                    ],
+                    "flow_tracking_data": {
+                        "ap_tracking": {
+                            "group": 4,
+                            "offset": 5
+                        },
+                        "reference_ids": {
+                            "__wrappers__.get_constant1_encode_return.__return_value_ptr": 19,
+                            "__wrappers__.get_constant1_encode_return.__return_value_ptr_start": 17,
+                            "__wrappers__.get_constant1_encode_return.__temp1": 20,
+                            "__wrappers__.get_constant1_encode_return.range_check_ptr": 16,
+                            "__wrappers__.get_constant1_encode_return.ret_struct": 15
+                        }
+                    },
+                    "hints": [],
+                    "inst": {
+                        "end_col": 39,
+                        "end_line": 12,
+                        "input_file": {
+                            "filename": "autogen/starknet/external/return/get_constant1/fe308ed452d3ea5a33677c895c4caeaac6136f74a8a50112bebb6a51c9bcc254.cairo"
+                        },
+                        "parent_location": [
+                            {
+                                "end_col": 19,
+                                "end_line": 13,
+                                "input_file": {
+                                    "filename": "tests/cairo_files/starknet_view_global_constants.cairo"
+                                },
+                                "start_col": 6,
+                                "start_line": 13
+                            },
+                            "While handling return value of"
+                        ],
+                        "start_col": 5,
+                        "start_line": 9
+                    }
+                },
+                "38": {
+                    "accessible_scopes": [
+                        "__main__",
+                        "__main__",
+                        "__wrappers__",
+                        "__wrappers__.get_constant1"
+                    ],
+                    "flow_tracking_data": {
+                        "ap_tracking": {
+                            "group": 5,
+                            "offset": 0
+                        },
+                        "reference_ids": {
+                            "__wrappers__.get_constant1.__calldata_actual_size": 24,
+                            "__wrappers__.get_constant1.__calldata_ptr": 23,
+                            "__wrappers__.get_constant1.range_check_ptr": 22,
+                            "__wrappers__.get_constant1.syscall_ptr": 21
+                        }
+                    },
+                    "hints": [],
+                    "inst": {
+                        "end_col": 57,
+                        "end_line": 1,
+                        "input_file": {
+                            "filename": "autogen/starknet/arg_processor/1b562308a65653425ce06491fa4b4539466f3251a07e73e099d0afe86a48900e.cairo"
+                        },
+                        "parent_location": [
+                            {
+                                "end_col": 19,
+                                "end_line": 13,
+                                "input_file": {
+                                    "filename": "tests/cairo_files/starknet_view_global_constants.cairo"
+                                },
+                                "start_col": 6,
+                                "start_line": 13
+                            },
+                            "While handling calldata of"
+                        ],
+                        "start_col": 1,
+                        "start_line": 1
+                    }
+                },
+                "39": {
+                    "accessible_scopes": [
+                        "__main__",
+                        "__main__",
+                        "__wrappers__",
+                        "__wrappers__.get_constant1"
+                    ],
+                    "flow_tracking_data": {
+                        "ap_tracking": {
+                            "group": 5,
+                            "offset": 0
+                        },
+                        "reference_ids": {
+                            "__wrappers__.get_constant1.__calldata_actual_size": 24,
+                            "__wrappers__.get_constant1.__calldata_ptr": 23,
+                            "__wrappers__.get_constant1.range_check_ptr": 22,
+                            "__wrappers__.get_constant1.syscall_ptr": 21
+                        }
+                    },
+                    "hints": [],
+                    "inst": {
+                        "end_col": 19,
+                        "end_line": 13,
+                        "input_file": {
+                            "filename": "tests/cairo_files/starknet_view_global_constants.cairo"
+                        },
+                        "start_col": 6,
+                        "start_line": 13
+                    }
+                },
+                "41": {
+                    "accessible_scopes": [
+                        "__main__",
+                        "__main__",
+                        "__wrappers__",
+                        "__wrappers__.get_constant1"
+                    ],
+                    "flow_tracking_data": {
+                        "ap_tracking": {
+                            "group": 5,
+                            "offset": 3
+                        },
+                        "reference_ids": {
+                            "__wrappers__.get_constant1.__calldata_actual_size": 24,
+                            "__wrappers__.get_constant1.__calldata_ptr": 23,
+                            "__wrappers__.get_constant1.range_check_ptr": 22,
+                            "__wrappers__.get_constant1.ret_struct": 25,
+                            "__wrappers__.get_constant1.syscall_ptr": 21
+                        }
+                    },
+                    "hints": [],
+                    "inst": {
+                        "end_col": 67,
+                        "end_line": 1,
+                        "input_file": {
+                            "filename": "autogen/starknet/external/get_constant1/a0096d4e36b6a7b51efe8ce04fabefa7656bfce054940eced93c852f6fb7162c.cairo"
+                        },
+                        "parent_location": [
+                            {
+                                "end_col": 19,
+                                "end_line": 13,
+                                "input_file": {
+                                    "filename": "tests/cairo_files/starknet_view_global_constants.cairo"
+                                },
+                                "parent_location": [
+                                    {
+                                        "end_col": 103,
+                                        "end_line": 2,
+                                        "input_file": {
+                                            "filename": "autogen/starknet/external/get_constant1/a95678d010928be6c296cbd0eb07ca21f72d0606b4935435103113b206a09d3d.cairo"
+                                        },
+                                        "parent_location": [
+                                            {
+                                                "end_col": 19,
+                                                "end_line": 13,
+                                                "input_file": {
+                                                    "filename": "tests/cairo_files/starknet_view_global_constants.cairo"
+                                                },
+                                                "start_col": 6,
+                                                "start_line": 13
+                                            },
+                                            "While constructing the external wrapper for:"
+                                        ],
+                                        "start_col": 88,
+                                        "start_line": 2
+                                    },
+                                    "While expanding the reference 'range_check_ptr' in:"
+                                ],
+                                "start_col": 6,
+                                "start_line": 13
+                            },
+                            "While constructing the external wrapper for:"
+                        ],
+                        "start_col": 23,
+                        "start_line": 1
+                    }
+                },
+                "42": {
+                    "accessible_scopes": [
+                        "__main__",
+                        "__main__",
+                        "__wrappers__",
+                        "__wrappers__.get_constant1"
+                    ],
+                    "flow_tracking_data": {
+                        "ap_tracking": {
+                            "group": 5,
+                            "offset": 4
+                        },
+                        "reference_ids": {
+                            "__wrappers__.get_constant1.__calldata_actual_size": 24,
+                            "__wrappers__.get_constant1.__calldata_ptr": 23,
+                            "__wrappers__.get_constant1.range_check_ptr": 22,
+                            "__wrappers__.get_constant1.ret_struct": 25,
+                            "__wrappers__.get_constant1.syscall_ptr": 21
+                        }
+                    },
+                    "hints": [],
+                    "inst": {
+                        "end_col": 104,
+                        "end_line": 2,
+                        "input_file": {
+                            "filename": "autogen/starknet/external/get_constant1/a95678d010928be6c296cbd0eb07ca21f72d0606b4935435103113b206a09d3d.cairo"
+                        },
+                        "parent_location": [
+                            {
+                                "end_col": 19,
+                                "end_line": 13,
+                                "input_file": {
+                                    "filename": "tests/cairo_files/starknet_view_global_constants.cairo"
+                                },
+                                "start_col": 6,
+                                "start_line": 13
+                            },
+                            "While constructing the external wrapper for:"
+                        ],
+                        "start_col": 48,
+                        "start_line": 2
+                    }
+                },
+                "44": {
+                    "accessible_scopes": [
+                        "__main__",
+                        "__main__",
+                        "__wrappers__",
+                        "__wrappers__.get_constant1"
+                    ],
+                    "flow_tracking_data": {
+                        "ap_tracking": {
+                            "group": 5,
+                            "offset": 11
+                        },
+                        "reference_ids": {
+                            "__wrappers__.get_constant1.__calldata_actual_size": 24,
+                            "__wrappers__.get_constant1.__calldata_ptr": 23,
+                            "__wrappers__.get_constant1.range_check_ptr": 26,
+                            "__wrappers__.get_constant1.ret_struct": 25,
+                            "__wrappers__.get_constant1.retdata": 28,
+                            "__wrappers__.get_constant1.retdata_size": 27,
+                            "__wrappers__.get_constant1.syscall_ptr": 21
+                        }
+                    },
+                    "hints": [],
+                    "inst": {
+                        "end_col": 63,
+                        "end_line": 1,
+                        "input_file": {
+                            "filename": "autogen/starknet/external/get_constant1/910226883b5574b28ea2537fe13a3852f331a56beabe1d4fd14748a9b4dbd7d0.cairo"
+                        },
+                        "parent_location": [
+                            {
+                                "end_col": 19,
+                                "end_line": 13,
+                                "input_file": {
+                                    "filename": "tests/cairo_files/starknet_view_global_constants.cairo"
+                                },
+                                "parent_location": [
+                                    {
+                                        "end_col": 20,
+                                        "end_line": 1,
+                                        "input_file": {
+                                            "filename": "autogen/starknet/external/get_constant1/8ff3c870faa0ee083f062bf6c6add3444ce3ffe843b9047321f6c9172381996c.cairo"
+                                        },
+                                        "parent_location": [
+                                            {
+                                                "end_col": 19,
+                                                "end_line": 13,
+                                                "input_file": {
+                                                    "filename": "tests/cairo_files/starknet_view_global_constants.cairo"
+                                                },
+                                                "start_col": 6,
+                                                "start_line": 13
+                                            },
+                                            "While constructing the external wrapper for:"
+                                        ],
+                                        "start_col": 9,
+                                        "start_line": 1
+                                    },
+                                    "While expanding the reference 'syscall_ptr' in:"
+                                ],
+                                "start_col": 6,
+                                "start_line": 13
+                            },
+                            "While constructing the external wrapper for:"
+                        ],
+                        "start_col": 19,
+                        "start_line": 1
+                    }
+                },
+                "45": {
+                    "accessible_scopes": [
+                        "__main__",
+                        "__main__",
+                        "__wrappers__",
+                        "__wrappers__.get_constant1"
+                    ],
+                    "flow_tracking_data": {
+                        "ap_tracking": {
+                            "group": 5,
+                            "offset": 12
+                        },
+                        "reference_ids": {
+                            "__wrappers__.get_constant1.__calldata_actual_size": 24,
+                            "__wrappers__.get_constant1.__calldata_ptr": 23,
+                            "__wrappers__.get_constant1.range_check_ptr": 26,
+                            "__wrappers__.get_constant1.ret_struct": 25,
+                            "__wrappers__.get_constant1.retdata": 28,
+                            "__wrappers__.get_constant1.retdata_size": 27,
+                            "__wrappers__.get_constant1.syscall_ptr": 21
+                        }
+                    },
+                    "hints": [],
+                    "inst": {
+                        "end_col": 21,
+                        "end_line": 2,
+                        "input_file": {
+                            "filename": "autogen/starknet/external/get_constant1/a95678d010928be6c296cbd0eb07ca21f72d0606b4935435103113b206a09d3d.cairo"
+                        },
+                        "parent_location": [
+                            {
+                                "end_col": 19,
+                                "end_line": 13,
+                                "input_file": {
+                                    "filename": "tests/cairo_files/starknet_view_global_constants.cairo"
+                                },
+                                "parent_location": [
+                                    {
+                                        "end_col": 36,
+                                        "end_line": 1,
+                                        "input_file": {
+                                            "filename": "autogen/starknet/external/get_constant1/8ff3c870faa0ee083f062bf6c6add3444ce3ffe843b9047321f6c9172381996c.cairo"
+                                        },
+                                        "parent_location": [
+                                            {
+                                                "end_col": 19,
+                                                "end_line": 13,
+                                                "input_file": {
+                                                    "filename": "tests/cairo_files/starknet_view_global_constants.cairo"
+                                                },
+                                                "start_col": 6,
+                                                "start_line": 13
+                                            },
+                                            "While constructing the external wrapper for:"
+                                        ],
+                                        "start_col": 21,
+                                        "start_line": 1
+                                    },
+                                    "While expanding the reference 'range_check_ptr' in:"
+                                ],
+                                "start_col": 6,
+                                "start_line": 13
+                            },
+                            "While constructing the external wrapper for:"
+                        ],
+                        "start_col": 6,
+                        "start_line": 2
+                    }
+                },
+                "46": {
+                    "accessible_scopes": [
+                        "__main__",
+                        "__main__",
+                        "__wrappers__",
+                        "__wrappers__.get_constant1"
+                    ],
+                    "flow_tracking_data": {
+                        "ap_tracking": {
+                            "group": 5,
+                            "offset": 13
+                        },
+                        "reference_ids": {
+                            "__wrappers__.get_constant1.__calldata_actual_size": 24,
+                            "__wrappers__.get_constant1.__calldata_ptr": 23,
+                            "__wrappers__.get_constant1.range_check_ptr": 26,
+                            "__wrappers__.get_constant1.ret_struct": 25,
+                            "__wrappers__.get_constant1.retdata": 28,
+                            "__wrappers__.get_constant1.retdata_size": 27,
+                            "__wrappers__.get_constant1.syscall_ptr": 21
+                        }
+                    },
+                    "hints": [],
+                    "inst": {
+                        "end_col": 35,
+                        "end_line": 2,
+                        "input_file": {
+                            "filename": "autogen/starknet/external/get_constant1/a95678d010928be6c296cbd0eb07ca21f72d0606b4935435103113b206a09d3d.cairo"
+                        },
+                        "parent_location": [
+                            {
+                                "end_col": 19,
+                                "end_line": 13,
+                                "input_file": {
+                                    "filename": "tests/cairo_files/starknet_view_global_constants.cairo"
+                                },
+                                "parent_location": [
+                                    {
+                                        "end_col": 49,
+                                        "end_line": 1,
+                                        "input_file": {
+                                            "filename": "autogen/starknet/external/get_constant1/8ff3c870faa0ee083f062bf6c6add3444ce3ffe843b9047321f6c9172381996c.cairo"
+                                        },
+                                        "parent_location": [
+                                            {
+                                                "end_col": 19,
+                                                "end_line": 13,
+                                                "input_file": {
+                                                    "filename": "tests/cairo_files/starknet_view_global_constants.cairo"
+                                                },
+                                                "start_col": 6,
+                                                "start_line": 13
+                                            },
+                                            "While constructing the external wrapper for:"
+                                        ],
+                                        "start_col": 37,
+                                        "start_line": 1
+                                    },
+                                    "While expanding the reference 'retdata_size' in:"
+                                ],
+                                "start_col": 6,
+                                "start_line": 13
+                            },
+                            "While constructing the external wrapper for:"
+                        ],
+                        "start_col": 23,
+                        "start_line": 2
+                    }
+                },
+                "47": {
+                    "accessible_scopes": [
+                        "__main__",
+                        "__main__",
+                        "__wrappers__",
+                        "__wrappers__.get_constant1"
+                    ],
+                    "flow_tracking_data": {
+                        "ap_tracking": {
+                            "group": 5,
+                            "offset": 14
+                        },
+                        "reference_ids": {
+                            "__wrappers__.get_constant1.__calldata_actual_size": 24,
+                            "__wrappers__.get_constant1.__calldata_ptr": 23,
+                            "__wrappers__.get_constant1.range_check_ptr": 26,
+                            "__wrappers__.get_constant1.ret_struct": 25,
+                            "__wrappers__.get_constant1.retdata": 28,
+                            "__wrappers__.get_constant1.retdata_size": 27,
+                            "__wrappers__.get_constant1.syscall_ptr": 21
+                        }
+                    },
+                    "hints": [],
+                    "inst": {
+                        "end_col": 44,
+                        "end_line": 2,
+                        "input_file": {
+                            "filename": "autogen/starknet/external/get_constant1/a95678d010928be6c296cbd0eb07ca21f72d0606b4935435103113b206a09d3d.cairo"
+                        },
+                        "parent_location": [
+                            {
+                                "end_col": 19,
+                                "end_line": 13,
+                                "input_file": {
+                                    "filename": "tests/cairo_files/starknet_view_global_constants.cairo"
+                                },
+                                "parent_location": [
+                                    {
+                                        "end_col": 57,
+                                        "end_line": 1,
+                                        "input_file": {
+                                            "filename": "autogen/starknet/external/get_constant1/8ff3c870faa0ee083f062bf6c6add3444ce3ffe843b9047321f6c9172381996c.cairo"
+                                        },
+                                        "parent_location": [
+                                            {
+                                                "end_col": 19,
+                                                "end_line": 13,
+                                                "input_file": {
+                                                    "filename": "tests/cairo_files/starknet_view_global_constants.cairo"
+                                                },
+                                                "start_col": 6,
+                                                "start_line": 13
+                                            },
+                                            "While constructing the external wrapper for:"
+                                        ],
+                                        "start_col": 50,
+                                        "start_line": 1
+                                    },
+                                    "While expanding the reference 'retdata' in:"
+                                ],
+                                "start_col": 6,
+                                "start_line": 13
+                            },
+                            "While constructing the external wrapper for:"
+                        ],
+                        "start_col": 37,
+                        "start_line": 2
+                    }
+                },
+                "48": {
+                    "accessible_scopes": [
+                        "__main__",
+                        "__main__",
+                        "__wrappers__",
+                        "__wrappers__.get_constant1"
+                    ],
+                    "flow_tracking_data": {
+                        "ap_tracking": {
+                            "group": 5,
+                            "offset": 15
+                        },
+                        "reference_ids": {
+                            "__wrappers__.get_constant1.__calldata_actual_size": 24,
+                            "__wrappers__.get_constant1.__calldata_ptr": 23,
+                            "__wrappers__.get_constant1.range_check_ptr": 26,
+                            "__wrappers__.get_constant1.ret_struct": 25,
+                            "__wrappers__.get_constant1.retdata": 28,
+                            "__wrappers__.get_constant1.retdata_size": 27,
+                            "__wrappers__.get_constant1.syscall_ptr": 21
+                        }
+                    },
+                    "hints": [],
+                    "inst": {
+                        "end_col": 58,
+                        "end_line": 1,
+                        "input_file": {
+                            "filename": "autogen/starknet/external/get_constant1/8ff3c870faa0ee083f062bf6c6add3444ce3ffe843b9047321f6c9172381996c.cairo"
+                        },
+                        "parent_location": [
+                            {
+                                "end_col": 19,
+                                "end_line": 13,
+                                "input_file": {
+                                    "filename": "tests/cairo_files/starknet_view_global_constants.cairo"
+                                },
+                                "start_col": 6,
+                                "start_line": 13
+                            },
+                            "While constructing the external wrapper for:"
+                        ],
+                        "start_col": 1,
+                        "start_line": 1
+                    }
+                }
+            }
+        },
+        "hints": {
+            "5": [
+                {
+                    "accessible_scopes": [
+                        "__main__",
+                        "__main__",
+                        "__wrappers__",
+                        "__wrappers__.get_constants_encode_return"
+                    ],
+                    "code": "memory[ap] = segments.add()",
+                    "flow_tracking_data": {
+                        "ap_tracking": {
+                            "group": 1,
+                            "offset": 0
+                        },
+                        "reference_ids": {
+                            "__wrappers__.get_constants_encode_return.range_check_ptr": 1,
+                            "__wrappers__.get_constants_encode_return.ret_struct": 0
+                        }
+                    }
+                }
+            ],
+            "29": [
+                {
+                    "accessible_scopes": [
+                        "__main__",
+                        "__main__",
+                        "__wrappers__",
+                        "__wrappers__.get_constant1_encode_return"
+                    ],
+                    "code": "memory[ap] = segments.add()",
+                    "flow_tracking_data": {
+                        "ap_tracking": {
+                            "group": 4,
+                            "offset": 0
+                        },
+                        "reference_ids": {
+                            "__wrappers__.get_constant1_encode_return.range_check_ptr": 16,
+                            "__wrappers__.get_constant1_encode_return.ret_struct": 15
+                        }
+                    }
+                }
+            ]
+        },
+        "identifiers": {
+            "__main__.const_1": {
+                "type": "const",
+                "value": 123456
+            },
+            "__main__.const_2": {
+                "type": "const",
+                "value": 123456789
+            },
+            "__main__.get_constant1": {
+                "decorators": [
+                    "view"
+                ],
+                "pc": 26,
+                "type": "function"
+            },
+            "__main__.get_constant1.Args": {
+                "full_name": "__main__.get_constant1.Args",
+                "members": {},
+                "size": 0,
+                "type": "struct"
+            },
+            "__main__.get_constant1.ImplicitArgs": {
+                "full_name": "__main__.get_constant1.ImplicitArgs",
+                "members": {},
+                "size": 0,
+                "type": "struct"
+            },
+            "__main__.get_constant1.Return": {
+                "full_name": "__main__.get_constant1.Return",
+                "members": {
+                    "number_1": {
+                        "cairo_type": "felt",
+                        "offset": 0
+                    }
+                },
+                "size": 1,
+                "type": "struct"
+            },
+            "__main__.get_constant1.SIZEOF_LOCALS": {
+                "type": "const",
+                "value": 0
+            },
+            "__main__.get_constants": {
+                "decorators": [
+                    "view"
+                ],
+                "pc": 0,
+                "type": "function"
+            },
+            "__main__.get_constants.Args": {
+                "full_name": "__main__.get_constants.Args",
+                "members": {},
+                "size": 0,
+                "type": "struct"
+            },
+            "__main__.get_constants.ImplicitArgs": {
+                "full_name": "__main__.get_constants.ImplicitArgs",
+                "members": {},
+                "size": 0,
+                "type": "struct"
+            },
+            "__main__.get_constants.Return": {
+                "full_name": "__main__.get_constants.Return",
+                "members": {
+                    "number_1": {
+                        "cairo_type": "felt",
+                        "offset": 0
+                    },
+                    "number_2": {
+                        "cairo_type": "felt",
+                        "offset": 1
+                    }
+                },
+                "size": 2,
+                "type": "struct"
+            },
+            "__main__.get_constants.SIZEOF_LOCALS": {
+                "type": "const",
+                "value": 0
+            },
+            "__wrappers__.get_constant1": {
+                "decorators": [
+                    "view"
+                ],
+                "pc": 38,
+                "type": "function"
+            },
+            "__wrappers__.get_constant1.Args": {
+                "full_name": "__wrappers__.get_constant1.Args",
+                "members": {},
+                "size": 0,
+                "type": "struct"
+            },
+            "__wrappers__.get_constant1.ImplicitArgs": {
+                "full_name": "__wrappers__.get_constant1.ImplicitArgs",
+                "members": {},
+                "size": 0,
+                "type": "struct"
+            },
+            "__wrappers__.get_constant1.Return": {
+                "full_name": "__wrappers__.get_constant1.Return",
+                "members": {
+                    "range_check_ptr": {
+                        "cairo_type": "felt",
+                        "offset": 1
+                    },
+                    "retdata": {
+                        "cairo_type": "felt*",
+                        "offset": 3
+                    },
+                    "size": {
+                        "cairo_type": "felt",
+                        "offset": 2
+                    },
+                    "syscall_ptr": {
+                        "cairo_type": "felt",
+                        "offset": 0
+                    }
+                },
+                "size": 4,
+                "type": "struct"
+            },
+            "__wrappers__.get_constant1.SIZEOF_LOCALS": {
+                "type": "const",
+                "value": 0
+            },
+            "__wrappers__.get_constant1.__calldata_actual_size": {
+                "cairo_type": "felt",
+                "full_name": "__wrappers__.get_constant1.__calldata_actual_size",
+                "references": [
+                    {
+                        "ap_tracking_data": {
+                            "group": 5,
+                            "offset": 0
+                        },
+                        "pc": 38,
+                        "value": "cast([fp + (-3)] - [fp + (-3)], felt)"
+                    }
+                ],
+                "type": "reference"
+            },
+            "__wrappers__.get_constant1.__calldata_ptr": {
+                "cairo_type": "felt*",
+                "full_name": "__wrappers__.get_constant1.__calldata_ptr",
+                "references": [
+                    {
+                        "ap_tracking_data": {
+                            "group": 5,
+                            "offset": 0
+                        },
+                        "pc": 38,
+                        "value": "[cast(fp + (-3), felt**)]"
+                    }
+                ],
+                "type": "reference"
+            },
+            "__wrappers__.get_constant1.__wrapped_func": {
+                "destination": "__main__.get_constant1",
+                "type": "alias"
+            },
+            "__wrappers__.get_constant1.range_check_ptr": {
+                "cairo_type": "felt",
+                "full_name": "__wrappers__.get_constant1.range_check_ptr",
+                "references": [
+                    {
+                        "ap_tracking_data": {
+                            "group": 5,
+                            "offset": 0
+                        },
+                        "pc": 38,
+                        "value": "[cast([fp + (-5)] + 1, felt*)]"
+                    },
+                    {
+                        "ap_tracking_data": {
+                            "group": 5,
+                            "offset": 11
+                        },
+                        "pc": 44,
+                        "value": "[cast(ap + (-3), felt*)]"
+                    }
+                ],
+                "type": "reference"
+            },
+            "__wrappers__.get_constant1.ret_struct": {
+                "cairo_type": "__main__.get_constant1.Return",
+                "full_name": "__wrappers__.get_constant1.ret_struct",
+                "references": [
+                    {
+                        "ap_tracking_data": {
+                            "group": 5,
+                            "offset": 3
+                        },
+                        "pc": 41,
+                        "value": "[cast(ap + (-1), __main__.get_constant1.Return*)]"
+                    }
+                ],
+                "type": "reference"
+            },
+            "__wrappers__.get_constant1.retdata": {
+                "cairo_type": "felt*",
+                "full_name": "__wrappers__.get_constant1.retdata",
+                "references": [
+                    {
+                        "ap_tracking_data": {
+                            "group": 5,
+                            "offset": 11
+                        },
+                        "pc": 44,
+                        "value": "[cast(ap + (-1), felt**)]"
+                    }
+                ],
+                "type": "reference"
+            },
+            "__wrappers__.get_constant1.retdata_size": {
+                "cairo_type": "felt",
+                "full_name": "__wrappers__.get_constant1.retdata_size",
+                "references": [
+                    {
+                        "ap_tracking_data": {
+                            "group": 5,
+                            "offset": 11
+                        },
+                        "pc": 44,
+                        "value": "[cast(ap + (-2), felt*)]"
+                    }
+                ],
+                "type": "reference"
+            },
+            "__wrappers__.get_constant1.syscall_ptr": {
+                "cairo_type": "felt",
+                "full_name": "__wrappers__.get_constant1.syscall_ptr",
+                "references": [
+                    {
+                        "ap_tracking_data": {
+                            "group": 5,
+                            "offset": 0
+                        },
+                        "pc": 38,
+                        "value": "[cast([fp + (-5)], felt*)]"
+                    }
+                ],
+                "type": "reference"
+            },
+            "__wrappers__.get_constant1_encode_return": {
+                "decorators": [],
+                "pc": 29,
+                "type": "function"
+            },
+            "__wrappers__.get_constant1_encode_return.Args": {
+                "full_name": "__wrappers__.get_constant1_encode_return.Args",
+                "members": {
+                    "range_check_ptr": {
+                        "cairo_type": "felt",
+                        "offset": 1
+                    },
+                    "ret_struct": {
+                        "cairo_type": "__main__.get_constant1.Return",
+                        "offset": 0
+                    }
+                },
+                "size": 2,
+                "type": "struct"
+            },
+            "__wrappers__.get_constant1_encode_return.ImplicitArgs": {
+                "full_name": "__wrappers__.get_constant1_encode_return.ImplicitArgs",
+                "members": {},
+                "size": 0,
+                "type": "struct"
+            },
+            "__wrappers__.get_constant1_encode_return.Return": {
+                "full_name": "__wrappers__.get_constant1_encode_return.Return",
+                "members": {
+                    "data": {
+                        "cairo_type": "felt*",
+                        "offset": 2
+                    },
+                    "data_len": {
+                        "cairo_type": "felt",
+                        "offset": 1
+                    },
+                    "range_check_ptr": {
+                        "cairo_type": "felt",
+                        "offset": 0
+                    }
+                },
+                "size": 3,
+                "type": "struct"
+            },
+            "__wrappers__.get_constant1_encode_return.SIZEOF_LOCALS": {
+                "type": "const",
+                "value": 1
+            },
+            "__wrappers__.get_constant1_encode_return.__return_value_ptr": {
+                "cairo_type": "felt*",
+                "full_name": "__wrappers__.get_constant1_encode_return.__return_value_ptr",
+                "references": [
+                    {
+                        "ap_tracking_data": {
+                            "group": 4,
+                            "offset": 1
+                        },
+                        "pc": 31,
+                        "value": "[cast(fp, felt**)]"
+                    },
+                    {
+                        "ap_tracking_data": {
+                            "group": 4,
+                            "offset": 1
+                        },
+                        "pc": 32,
+                        "value": "cast([fp] + 1, felt*)"
+                    }
+                ],
+                "type": "reference"
+            },
+            "__wrappers__.get_constant1_encode_return.__return_value_ptr_start": {
+                "cairo_type": "felt*",
+                "full_name": "__wrappers__.get_constant1_encode_return.__return_value_ptr_start",
+                "references": [
+                    {
+                        "ap_tracking_data": {
+                            "group": 4,
+                            "offset": 1
+                        },
+                        "pc": 31,
+                        "value": "[cast(fp, felt**)]"
+                    }
+                ],
+                "type": "reference"
+            },
+            "__wrappers__.get_constant1_encode_return.__temp1": {
+                "cairo_type": "felt",
+                "full_name": "__wrappers__.get_constant1_encode_return.__temp1",
+                "references": [
+                    {
+                        "ap_tracking_data": {
+                            "group": 4,
+                            "offset": 2
+                        },
+                        "pc": 34,
+                        "value": "[cast(ap + (-1), felt*)]"
+                    }
+                ],
+                "type": "reference"
+            },
+            "__wrappers__.get_constant1_encode_return.memcpy": {
+                "destination": "starkware.cairo.common.memcpy.memcpy",
+                "type": "alias"
+            },
+            "__wrappers__.get_constant1_encode_return.range_check_ptr": {
+                "cairo_type": "felt",
+                "full_name": "__wrappers__.get_constant1_encode_return.range_check_ptr",
+                "references": [
+                    {
+                        "ap_tracking_data": {
+                            "group": 4,
+                            "offset": 0
+                        },
+                        "pc": 29,
+                        "value": "[cast(fp + (-3), felt*)]"
+                    }
+                ],
+                "type": "reference"
+            },
+            "__wrappers__.get_constant1_encode_return.ret_struct": {
+                "cairo_type": "__main__.get_constant1.Return",
+                "full_name": "__wrappers__.get_constant1_encode_return.ret_struct",
+                "references": [
+                    {
+                        "ap_tracking_data": {
+                            "group": 4,
+                            "offset": 0
+                        },
+                        "pc": 29,
+                        "value": "[cast(fp + (-4), __main__.get_constant1.Return*)]"
+                    }
+                ],
+                "type": "reference"
+            },
+            "__wrappers__.get_constants": {
+                "decorators": [
+                    "view"
+                ],
+                "pc": 15,
+                "type": "function"
+            },
+            "__wrappers__.get_constants.Args": {
+                "full_name": "__wrappers__.get_constants.Args",
+                "members": {},
+                "size": 0,
+                "type": "struct"
+            },
+            "__wrappers__.get_constants.ImplicitArgs": {
+                "full_name": "__wrappers__.get_constants.ImplicitArgs",
+                "members": {},
+                "size": 0,
+                "type": "struct"
+            },
+            "__wrappers__.get_constants.Return": {
+                "full_name": "__wrappers__.get_constants.Return",
+                "members": {
+                    "range_check_ptr": {
+                        "cairo_type": "felt",
+                        "offset": 1
+                    },
+                    "retdata": {
+                        "cairo_type": "felt*",
+                        "offset": 3
+                    },
+                    "size": {
+                        "cairo_type": "felt",
+                        "offset": 2
+                    },
+                    "syscall_ptr": {
+                        "cairo_type": "felt",
+                        "offset": 0
+                    }
+                },
+                "size": 4,
+                "type": "struct"
+            },
+            "__wrappers__.get_constants.SIZEOF_LOCALS": {
+                "type": "const",
+                "value": 0
+            },
+            "__wrappers__.get_constants.__calldata_actual_size": {
+                "cairo_type": "felt",
+                "full_name": "__wrappers__.get_constants.__calldata_actual_size",
+                "references": [
+                    {
+                        "ap_tracking_data": {
+                            "group": 2,
+                            "offset": 0
+                        },
+                        "pc": 15,
+                        "value": "cast([fp + (-3)] - [fp + (-3)], felt)"
+                    }
+                ],
+                "type": "reference"
+            },
+            "__wrappers__.get_constants.__calldata_ptr": {
+                "cairo_type": "felt*",
+                "full_name": "__wrappers__.get_constants.__calldata_ptr",
+                "references": [
+                    {
+                        "ap_tracking_data": {
+                            "group": 2,
+                            "offset": 0
+                        },
+                        "pc": 15,
+                        "value": "[cast(fp + (-3), felt**)]"
+                    }
+                ],
+                "type": "reference"
+            },
+            "__wrappers__.get_constants.__wrapped_func": {
+                "destination": "__main__.get_constants",
+                "type": "alias"
+            },
+            "__wrappers__.get_constants.range_check_ptr": {
+                "cairo_type": "felt",
+                "full_name": "__wrappers__.get_constants.range_check_ptr",
+                "references": [
+                    {
+                        "ap_tracking_data": {
+                            "group": 2,
+                            "offset": 0
+                        },
+                        "pc": 15,
+                        "value": "[cast([fp + (-5)] + 1, felt*)]"
+                    },
+                    {
+                        "ap_tracking_data": {
+                            "group": 2,
+                            "offset": 12
+                        },
+                        "pc": 21,
+                        "value": "[cast(ap + (-3), felt*)]"
+                    }
+                ],
+                "type": "reference"
+            },
+            "__wrappers__.get_constants.ret_struct": {
+                "cairo_type": "__main__.get_constants.Return",
+                "full_name": "__wrappers__.get_constants.ret_struct",
+                "references": [
+                    {
+                        "ap_tracking_data": {
+                            "group": 2,
+                            "offset": 4
+                        },
+                        "pc": 18,
+                        "value": "[cast(ap + (-2), __main__.get_constants.Return*)]"
+                    }
+                ],
+                "type": "reference"
+            },
+            "__wrappers__.get_constants.retdata": {
+                "cairo_type": "felt*",
+                "full_name": "__wrappers__.get_constants.retdata",
+                "references": [
+                    {
+                        "ap_tracking_data": {
+                            "group": 2,
+                            "offset": 12
+                        },
+                        "pc": 21,
+                        "value": "[cast(ap + (-1), felt**)]"
+                    }
+                ],
+                "type": "reference"
+            },
+            "__wrappers__.get_constants.retdata_size": {
+                "cairo_type": "felt",
+                "full_name": "__wrappers__.get_constants.retdata_size",
+                "references": [
+                    {
+                        "ap_tracking_data": {
+                            "group": 2,
+                            "offset": 12
+                        },
+                        "pc": 21,
+                        "value": "[cast(ap + (-2), felt*)]"
+                    }
+                ],
+                "type": "reference"
+            },
+            "__wrappers__.get_constants.syscall_ptr": {
+                "cairo_type": "felt",
+                "full_name": "__wrappers__.get_constants.syscall_ptr",
+                "references": [
+                    {
+                        "ap_tracking_data": {
+                            "group": 2,
+                            "offset": 0
+                        },
+                        "pc": 15,
+                        "value": "[cast([fp + (-5)], felt*)]"
+                    }
+                ],
+                "type": "reference"
+            },
+            "__wrappers__.get_constants_encode_return": {
+                "decorators": [],
+                "pc": 5,
+                "type": "function"
+            },
+            "__wrappers__.get_constants_encode_return.Args": {
+                "full_name": "__wrappers__.get_constants_encode_return.Args",
+                "members": {
+                    "range_check_ptr": {
+                        "cairo_type": "felt",
+                        "offset": 2
+                    },
+                    "ret_struct": {
+                        "cairo_type": "__main__.get_constants.Return",
+                        "offset": 0
+                    }
+                },
+                "size": 3,
+                "type": "struct"
+            },
+            "__wrappers__.get_constants_encode_return.ImplicitArgs": {
+                "full_name": "__wrappers__.get_constants_encode_return.ImplicitArgs",
+                "members": {},
+                "size": 0,
+                "type": "struct"
+            },
+            "__wrappers__.get_constants_encode_return.Return": {
+                "full_name": "__wrappers__.get_constants_encode_return.Return",
+                "members": {
+                    "data": {
+                        "cairo_type": "felt*",
+                        "offset": 2
+                    },
+                    "data_len": {
+                        "cairo_type": "felt",
+                        "offset": 1
+                    },
+                    "range_check_ptr": {
+                        "cairo_type": "felt",
+                        "offset": 0
+                    }
+                },
+                "size": 3,
+                "type": "struct"
+            },
+            "__wrappers__.get_constants_encode_return.SIZEOF_LOCALS": {
+                "type": "const",
+                "value": 1
+            },
+            "__wrappers__.get_constants_encode_return.__return_value_ptr": {
+                "cairo_type": "felt*",
+                "full_name": "__wrappers__.get_constants_encode_return.__return_value_ptr",
+                "references": [
+                    {
+                        "ap_tracking_data": {
+                            "group": 1,
+                            "offset": 1
+                        },
+                        "pc": 7,
+                        "value": "[cast(fp, felt**)]"
+                    },
+                    {
+                        "ap_tracking_data": {
+                            "group": 1,
+                            "offset": 1
+                        },
+                        "pc": 8,
+                        "value": "cast([fp] + 1, felt*)"
+                    },
+                    {
+                        "ap_tracking_data": {
+                            "group": 1,
+                            "offset": 1
+                        },
+                        "pc": 9,
+                        "value": "cast([fp] + 2, felt*)"
+                    }
+                ],
+                "type": "reference"
+            },
+            "__wrappers__.get_constants_encode_return.__return_value_ptr_start": {
+                "cairo_type": "felt*",
+                "full_name": "__wrappers__.get_constants_encode_return.__return_value_ptr_start",
+                "references": [
+                    {
+                        "ap_tracking_data": {
+                            "group": 1,
+                            "offset": 1
+                        },
+                        "pc": 7,
+                        "value": "[cast(fp, felt**)]"
+                    }
+                ],
+                "type": "reference"
+            },
+            "__wrappers__.get_constants_encode_return.__temp0": {
+                "cairo_type": "felt",
+                "full_name": "__wrappers__.get_constants_encode_return.__temp0",
+                "references": [
+                    {
+                        "ap_tracking_data": {
+                            "group": 1,
+                            "offset": 2
+                        },
+                        "pc": 11,
+                        "value": "[cast(ap + (-1), felt*)]"
+                    }
+                ],
+                "type": "reference"
+            },
+            "__wrappers__.get_constants_encode_return.memcpy": {
+                "destination": "starkware.cairo.common.memcpy.memcpy",
+                "type": "alias"
+            },
+            "__wrappers__.get_constants_encode_return.range_check_ptr": {
+                "cairo_type": "felt",
+                "full_name": "__wrappers__.get_constants_encode_return.range_check_ptr",
+                "references": [
+                    {
+                        "ap_tracking_data": {
+                            "group": 1,
+                            "offset": 0
+                        },
+                        "pc": 5,
+                        "value": "[cast(fp + (-3), felt*)]"
+                    }
+                ],
+                "type": "reference"
+            },
+            "__wrappers__.get_constants_encode_return.ret_struct": {
+                "cairo_type": "__main__.get_constants.Return",
+                "full_name": "__wrappers__.get_constants_encode_return.ret_struct",
+                "references": [
+                    {
+                        "ap_tracking_data": {
+                            "group": 1,
+                            "offset": 0
+                        },
+                        "pc": 5,
+                        "value": "[cast(fp + (-5), __main__.get_constants.Return*)]"
+                    }
+                ],
+                "type": "reference"
+            },
+            "starkware.cairo.common.cairo_builtins.BitwiseBuiltin": {
+                "full_name": "starkware.cairo.common.cairo_builtins.BitwiseBuiltin",
+                "members": {
+                    "x": {
+                        "cairo_type": "felt",
+                        "offset": 0
+                    },
+                    "x_and_y": {
+                        "cairo_type": "felt",
+                        "offset": 2
+                    },
+                    "x_or_y": {
+                        "cairo_type": "felt",
+                        "offset": 4
+                    },
+                    "x_xor_y": {
+                        "cairo_type": "felt",
+                        "offset": 3
+                    },
+                    "y": {
+                        "cairo_type": "felt",
+                        "offset": 1
+                    }
+                },
+                "size": 5,
+                "type": "struct"
+            },
+            "starkware.cairo.common.cairo_builtins.EcOpBuiltin": {
+                "full_name": "starkware.cairo.common.cairo_builtins.EcOpBuiltin",
+                "members": {
+                    "m": {
+                        "cairo_type": "felt",
+                        "offset": 4
+                    },
+                    "p": {
+                        "cairo_type": "starkware.cairo.common.ec_point.EcPoint",
+                        "offset": 0
+                    },
+                    "q": {
+                        "cairo_type": "starkware.cairo.common.ec_point.EcPoint",
+                        "offset": 2
+                    },
+                    "r": {
+                        "cairo_type": "starkware.cairo.common.ec_point.EcPoint",
+                        "offset": 5
+                    }
+                },
+                "size": 7,
+                "type": "struct"
+            },
+            "starkware.cairo.common.cairo_builtins.EcPoint": {
+                "destination": "starkware.cairo.common.ec_point.EcPoint",
+                "type": "alias"
+            },
+            "starkware.cairo.common.cairo_builtins.HashBuiltin": {
+                "full_name": "starkware.cairo.common.cairo_builtins.HashBuiltin",
+                "members": {
+                    "result": {
+                        "cairo_type": "felt",
+                        "offset": 2
+                    },
+                    "x": {
+                        "cairo_type": "felt",
+                        "offset": 0
+                    },
+                    "y": {
+                        "cairo_type": "felt",
+                        "offset": 1
+                    }
+                },
+                "size": 3,
+                "type": "struct"
+            },
+            "starkware.cairo.common.cairo_builtins.SignatureBuiltin": {
+                "full_name": "starkware.cairo.common.cairo_builtins.SignatureBuiltin",
+                "members": {
+                    "message": {
+                        "cairo_type": "felt",
+                        "offset": 1
+                    },
+                    "pub_key": {
+                        "cairo_type": "felt",
+                        "offset": 0
+                    }
+                },
+                "size": 2,
+                "type": "struct"
+            },
+            "starkware.cairo.common.dict_access.DictAccess": {
+                "full_name": "starkware.cairo.common.dict_access.DictAccess",
+                "members": {
+                    "key": {
+                        "cairo_type": "felt",
+                        "offset": 0
+                    },
+                    "new_value": {
+                        "cairo_type": "felt",
+                        "offset": 2
+                    },
+                    "prev_value": {
+                        "cairo_type": "felt",
+                        "offset": 1
+                    }
+                },
+                "size": 3,
+                "type": "struct"
+            },
+            "starkware.cairo.common.ec_point.EcPoint": {
+                "full_name": "starkware.cairo.common.ec_point.EcPoint",
+                "members": {
+                    "x": {
+                        "cairo_type": "felt",
+                        "offset": 0
+                    },
+                    "y": {
+                        "cairo_type": "felt",
+                        "offset": 1
+                    }
+                },
+                "size": 2,
+                "type": "struct"
+            },
+            "starkware.cairo.common.hash.HashBuiltin": {
+                "destination": "starkware.cairo.common.cairo_builtins.HashBuiltin",
+                "type": "alias"
+            },
+            "starkware.starknet.common.storage.ADDR_BOUND": {
+                "type": "const",
+                "value": -106710729501573572985208420194530329073740042555888586719489
+            },
+            "starkware.starknet.common.storage.MAX_STORAGE_ITEM_SIZE": {
+                "type": "const",
+                "value": 256
+            },
+            "starkware.starknet.common.storage.assert_250_bit": {
+                "destination": "starkware.cairo.common.math.assert_250_bit",
+                "type": "alias"
+            },
+            "starkware.starknet.common.syscalls.CALL_CONTRACT_SELECTOR": {
+                "type": "const",
+                "value": 20853273475220472486191784820
+            },
+            "starkware.starknet.common.syscalls.CallContract": {
+                "full_name": "starkware.starknet.common.syscalls.CallContract",
+                "members": {
+                    "request": {
+                        "cairo_type": "starkware.starknet.common.syscalls.CallContractRequest",
+                        "offset": 0
+                    },
+                    "response": {
+                        "cairo_type": "starkware.starknet.common.syscalls.CallContractResponse",
+                        "offset": 5
+                    }
+                },
+                "size": 7,
+                "type": "struct"
+            },
+            "starkware.starknet.common.syscalls.CallContractRequest": {
+                "full_name": "starkware.starknet.common.syscalls.CallContractRequest",
+                "members": {
+                    "calldata": {
+                        "cairo_type": "felt*",
+                        "offset": 4
+                    },
+                    "calldata_size": {
+                        "cairo_type": "felt",
+                        "offset": 3
+                    },
+                    "contract_address": {
+                        "cairo_type": "felt",
+                        "offset": 1
+                    },
+                    "function_selector": {
+                        "cairo_type": "felt",
+                        "offset": 2
+                    },
+                    "selector": {
+                        "cairo_type": "felt",
+                        "offset": 0
+                    }
+                },
+                "size": 5,
+                "type": "struct"
+            },
+            "starkware.starknet.common.syscalls.CallContractResponse": {
+                "full_name": "starkware.starknet.common.syscalls.CallContractResponse",
+                "members": {
+                    "retdata": {
+                        "cairo_type": "felt*",
+                        "offset": 1
+                    },
+                    "retdata_size": {
+                        "cairo_type": "felt",
+                        "offset": 0
+                    }
+                },
+                "size": 2,
+                "type": "struct"
+            },
+            "starkware.starknet.common.syscalls.DELEGATE_CALL_SELECTOR": {
+                "type": "const",
+                "value": 21167594061783206823196716140
+            },
+            "starkware.starknet.common.syscalls.DELEGATE_L1_HANDLER_SELECTOR": {
+                "type": "const",
+                "value": 23274015802972845247556842986379118667122
+            },
+            "starkware.starknet.common.syscalls.DictAccess": {
+                "destination": "starkware.cairo.common.dict_access.DictAccess",
+                "type": "alias"
+            },
+            "starkware.starknet.common.syscalls.EMIT_EVENT_SELECTOR": {
+                "type": "const",
+                "value": 1280709301550335749748
+            },
+            "starkware.starknet.common.syscalls.EmitEvent": {
+                "full_name": "starkware.starknet.common.syscalls.EmitEvent",
+                "members": {
+                    "data": {
+                        "cairo_type": "felt*",
+                        "offset": 4
+                    },
+                    "data_len": {
+                        "cairo_type": "felt",
+                        "offset": 3
+                    },
+                    "keys": {
+                        "cairo_type": "felt*",
+                        "offset": 2
+                    },
+                    "keys_len": {
+                        "cairo_type": "felt",
+                        "offset": 1
+                    },
+                    "selector": {
+                        "cairo_type": "felt",
+                        "offset": 0
+                    }
+                },
+                "size": 5,
+                "type": "struct"
+            },
+            "starkware.starknet.common.syscalls.GET_BLOCK_NUMBER_SELECTOR": {
+                "type": "const",
+                "value": 1448089106835523001438702345020786
+            },
+            "starkware.starknet.common.syscalls.GET_BLOCK_TIMESTAMP_SELECTOR": {
+                "type": "const",
+                "value": 24294903732626645868215235778792757751152
+            },
+            "starkware.starknet.common.syscalls.GET_CALLER_ADDRESS_SELECTOR": {
+                "type": "const",
+                "value": 94901967781393078444254803017658102643
+            },
+            "starkware.starknet.common.syscalls.GET_CONTRACT_ADDRESS_SELECTOR": {
+                "type": "const",
+                "value": 6219495360805491471215297013070624192820083
+            },
+            "starkware.starknet.common.syscalls.GET_SEQUENCER_ADDRESS_SELECTOR": {
+                "type": "const",
+                "value": 1592190833581991703053805829594610833820054387
+            },
+            "starkware.starknet.common.syscalls.GET_TX_INFO_SELECTOR": {
+                "type": "const",
+                "value": 1317029390204112103023
+            },
+            "starkware.starknet.common.syscalls.GET_TX_SIGNATURE_SELECTOR": {
+                "type": "const",
+                "value": 1448089128652340074717162277007973
+            },
+            "starkware.starknet.common.syscalls.GetBlockNumber": {
+                "full_name": "starkware.starknet.common.syscalls.GetBlockNumber",
+                "members": {
+                    "request": {
+                        "cairo_type": "starkware.starknet.common.syscalls.GetBlockNumberRequest",
+                        "offset": 0
+                    },
+                    "response": {
+                        "cairo_type": "starkware.starknet.common.syscalls.GetBlockNumberResponse",
+                        "offset": 1
+                    }
+                },
+                "size": 2,
+                "type": "struct"
+            },
+            "starkware.starknet.common.syscalls.GetBlockNumberRequest": {
+                "full_name": "starkware.starknet.common.syscalls.GetBlockNumberRequest",
+                "members": {
+                    "selector": {
+                        "cairo_type": "felt",
+                        "offset": 0
+                    }
+                },
+                "size": 1,
+                "type": "struct"
+            },
+            "starkware.starknet.common.syscalls.GetBlockNumberResponse": {
+                "full_name": "starkware.starknet.common.syscalls.GetBlockNumberResponse",
+                "members": {
+                    "block_number": {
+                        "cairo_type": "felt",
+                        "offset": 0
+                    }
+                },
+                "size": 1,
+                "type": "struct"
+            },
+            "starkware.starknet.common.syscalls.GetBlockTimestamp": {
+                "full_name": "starkware.starknet.common.syscalls.GetBlockTimestamp",
+                "members": {
+                    "request": {
+                        "cairo_type": "starkware.starknet.common.syscalls.GetBlockTimestampRequest",
+                        "offset": 0
+                    },
+                    "response": {
+                        "cairo_type": "starkware.starknet.common.syscalls.GetBlockTimestampResponse",
+                        "offset": 1
+                    }
+                },
+                "size": 2,
+                "type": "struct"
+            },
+            "starkware.starknet.common.syscalls.GetBlockTimestampRequest": {
+                "full_name": "starkware.starknet.common.syscalls.GetBlockTimestampRequest",
+                "members": {
+                    "selector": {
+                        "cairo_type": "felt",
+                        "offset": 0
+                    }
+                },
+                "size": 1,
+                "type": "struct"
+            },
+            "starkware.starknet.common.syscalls.GetBlockTimestampResponse": {
+                "full_name": "starkware.starknet.common.syscalls.GetBlockTimestampResponse",
+                "members": {
+                    "block_timestamp": {
+                        "cairo_type": "felt",
+                        "offset": 0
+                    }
+                },
+                "size": 1,
+                "type": "struct"
+            },
+            "starkware.starknet.common.syscalls.GetCallerAddress": {
+                "full_name": "starkware.starknet.common.syscalls.GetCallerAddress",
+                "members": {
+                    "request": {
+                        "cairo_type": "starkware.starknet.common.syscalls.GetCallerAddressRequest",
+                        "offset": 0
+                    },
+                    "response": {
+                        "cairo_type": "starkware.starknet.common.syscalls.GetCallerAddressResponse",
+                        "offset": 1
+                    }
+                },
+                "size": 2,
+                "type": "struct"
+            },
+            "starkware.starknet.common.syscalls.GetCallerAddressRequest": {
+                "full_name": "starkware.starknet.common.syscalls.GetCallerAddressRequest",
+                "members": {
+                    "selector": {
+                        "cairo_type": "felt",
+                        "offset": 0
+                    }
+                },
+                "size": 1,
+                "type": "struct"
+            },
+            "starkware.starknet.common.syscalls.GetCallerAddressResponse": {
+                "full_name": "starkware.starknet.common.syscalls.GetCallerAddressResponse",
+                "members": {
+                    "caller_address": {
+                        "cairo_type": "felt",
+                        "offset": 0
+                    }
+                },
+                "size": 1,
+                "type": "struct"
+            },
+            "starkware.starknet.common.syscalls.GetContractAddress": {
+                "full_name": "starkware.starknet.common.syscalls.GetContractAddress",
+                "members": {
+                    "request": {
+                        "cairo_type": "starkware.starknet.common.syscalls.GetContractAddressRequest",
+                        "offset": 0
+                    },
+                    "response": {
+                        "cairo_type": "starkware.starknet.common.syscalls.GetContractAddressResponse",
+                        "offset": 1
+                    }
+                },
+                "size": 2,
+                "type": "struct"
+            },
+            "starkware.starknet.common.syscalls.GetContractAddressRequest": {
+                "full_name": "starkware.starknet.common.syscalls.GetContractAddressRequest",
+                "members": {
+                    "selector": {
+                        "cairo_type": "felt",
+                        "offset": 0
+                    }
+                },
+                "size": 1,
+                "type": "struct"
+            },
+            "starkware.starknet.common.syscalls.GetContractAddressResponse": {
+                "full_name": "starkware.starknet.common.syscalls.GetContractAddressResponse",
+                "members": {
+                    "contract_address": {
+                        "cairo_type": "felt",
+                        "offset": 0
+                    }
+                },
+                "size": 1,
+                "type": "struct"
+            },
+            "starkware.starknet.common.syscalls.GetSequencerAddress": {
+                "full_name": "starkware.starknet.common.syscalls.GetSequencerAddress",
+                "members": {
+                    "request": {
+                        "cairo_type": "starkware.starknet.common.syscalls.GetSequencerAddressRequest",
+                        "offset": 0
+                    },
+                    "response": {
+                        "cairo_type": "starkware.starknet.common.syscalls.GetSequencerAddressResponse",
+                        "offset": 1
+                    }
+                },
+                "size": 2,
+                "type": "struct"
+            },
+            "starkware.starknet.common.syscalls.GetSequencerAddressRequest": {
+                "full_name": "starkware.starknet.common.syscalls.GetSequencerAddressRequest",
+                "members": {
+                    "selector": {
+                        "cairo_type": "felt",
+                        "offset": 0
+                    }
+                },
+                "size": 1,
+                "type": "struct"
+            },
+            "starkware.starknet.common.syscalls.GetSequencerAddressResponse": {
+                "full_name": "starkware.starknet.common.syscalls.GetSequencerAddressResponse",
+                "members": {
+                    "sequencer_address": {
+                        "cairo_type": "felt",
+                        "offset": 0
+                    }
+                },
+                "size": 1,
+                "type": "struct"
+            },
+            "starkware.starknet.common.syscalls.GetTxInfo": {
+                "full_name": "starkware.starknet.common.syscalls.GetTxInfo",
+                "members": {
+                    "request": {
+                        "cairo_type": "starkware.starknet.common.syscalls.GetTxInfoRequest",
+                        "offset": 0
+                    },
+                    "response": {
+                        "cairo_type": "starkware.starknet.common.syscalls.GetTxInfoResponse",
+                        "offset": 1
+                    }
+                },
+                "size": 2,
+                "type": "struct"
+            },
+            "starkware.starknet.common.syscalls.GetTxInfoRequest": {
+                "full_name": "starkware.starknet.common.syscalls.GetTxInfoRequest",
+                "members": {
+                    "selector": {
+                        "cairo_type": "felt",
+                        "offset": 0
+                    }
+                },
+                "size": 1,
+                "type": "struct"
+            },
+            "starkware.starknet.common.syscalls.GetTxInfoResponse": {
+                "full_name": "starkware.starknet.common.syscalls.GetTxInfoResponse",
+                "members": {
+                    "tx_info": {
+                        "cairo_type": "starkware.starknet.common.syscalls.TxInfo*",
+                        "offset": 0
+                    }
+                },
+                "size": 1,
+                "type": "struct"
+            },
+            "starkware.starknet.common.syscalls.GetTxSignature": {
+                "full_name": "starkware.starknet.common.syscalls.GetTxSignature",
+                "members": {
+                    "request": {
+                        "cairo_type": "starkware.starknet.common.syscalls.GetTxSignatureRequest",
+                        "offset": 0
+                    },
+                    "response": {
+                        "cairo_type": "starkware.starknet.common.syscalls.GetTxSignatureResponse",
+                        "offset": 1
+                    }
+                },
+                "size": 3,
+                "type": "struct"
+            },
+            "starkware.starknet.common.syscalls.GetTxSignatureRequest": {
+                "full_name": "starkware.starknet.common.syscalls.GetTxSignatureRequest",
+                "members": {
+                    "selector": {
+                        "cairo_type": "felt",
+                        "offset": 0
+                    }
+                },
+                "size": 1,
+                "type": "struct"
+            },
+            "starkware.starknet.common.syscalls.GetTxSignatureResponse": {
+                "full_name": "starkware.starknet.common.syscalls.GetTxSignatureResponse",
+                "members": {
+                    "signature": {
+                        "cairo_type": "felt*",
+                        "offset": 1
+                    },
+                    "signature_len": {
+                        "cairo_type": "felt",
+                        "offset": 0
+                    }
+                },
+                "size": 2,
+                "type": "struct"
+            },
+            "starkware.starknet.common.syscalls.SEND_MESSAGE_TO_L1_SELECTOR": {
+                "type": "const",
+                "value": 433017908768303439907196859243777073
+            },
+            "starkware.starknet.common.syscalls.STORAGE_READ_SELECTOR": {
+                "type": "const",
+                "value": 100890693370601760042082660
+            },
+            "starkware.starknet.common.syscalls.STORAGE_WRITE_SELECTOR": {
+                "type": "const",
+                "value": 25828017502874050592466629733
+            },
+            "starkware.starknet.common.syscalls.SendMessageToL1SysCall": {
+                "full_name": "starkware.starknet.common.syscalls.SendMessageToL1SysCall",
+                "members": {
+                    "payload_ptr": {
+                        "cairo_type": "felt*",
+                        "offset": 3
+                    },
+                    "payload_size": {
+                        "cairo_type": "felt",
+                        "offset": 2
+                    },
+                    "selector": {
+                        "cairo_type": "felt",
+                        "offset": 0
+                    },
+                    "to_address": {
+                        "cairo_type": "felt",
+                        "offset": 1
+                    }
+                },
+                "size": 4,
+                "type": "struct"
+            },
+            "starkware.starknet.common.syscalls.StorageRead": {
+                "full_name": "starkware.starknet.common.syscalls.StorageRead",
+                "members": {
+                    "request": {
+                        "cairo_type": "starkware.starknet.common.syscalls.StorageReadRequest",
+                        "offset": 0
+                    },
+                    "response": {
+                        "cairo_type": "starkware.starknet.common.syscalls.StorageReadResponse",
+                        "offset": 2
+                    }
+                },
+                "size": 3,
+                "type": "struct"
+            },
+            "starkware.starknet.common.syscalls.StorageReadRequest": {
+                "full_name": "starkware.starknet.common.syscalls.StorageReadRequest",
+                "members": {
+                    "address": {
+                        "cairo_type": "felt",
+                        "offset": 1
+                    },
+                    "selector": {
+                        "cairo_type": "felt",
+                        "offset": 0
+                    }
+                },
+                "size": 2,
+                "type": "struct"
+            },
+            "starkware.starknet.common.syscalls.StorageReadResponse": {
+                "full_name": "starkware.starknet.common.syscalls.StorageReadResponse",
+                "members": {
+                    "value": {
+                        "cairo_type": "felt",
+                        "offset": 0
+                    }
+                },
+                "size": 1,
+                "type": "struct"
+            },
+            "starkware.starknet.common.syscalls.StorageWrite": {
+                "full_name": "starkware.starknet.common.syscalls.StorageWrite",
+                "members": {
+                    "address": {
+                        "cairo_type": "felt",
+                        "offset": 1
+                    },
+                    "selector": {
+                        "cairo_type": "felt",
+                        "offset": 0
+                    },
+                    "value": {
+                        "cairo_type": "felt",
+                        "offset": 2
+                    }
+                },
+                "size": 3,
+                "type": "struct"
+            },
+            "starkware.starknet.common.syscalls.TxInfo": {
+                "full_name": "starkware.starknet.common.syscalls.TxInfo",
+                "members": {
+                    "account_contract_address": {
+                        "cairo_type": "felt",
+                        "offset": 1
+                    },
+                    "chain_id": {
+                        "cairo_type": "felt",
+                        "offset": 6
+                    },
+                    "max_fee": {
+                        "cairo_type": "felt",
+                        "offset": 2
+                    },
+                    "signature": {
+                        "cairo_type": "felt*",
+                        "offset": 4
+                    },
+                    "signature_len": {
+                        "cairo_type": "felt",
+                        "offset": 3
+                    },
+                    "transaction_hash": {
+                        "cairo_type": "felt",
+                        "offset": 5
+                    },
+                    "version": {
+                        "cairo_type": "felt",
+                        "offset": 0
+                    }
+                },
+                "size": 7,
+                "type": "struct"
+            }
+        },
+        "main_scope": "__main__",
+        "prime": "0x800000000000011000000000000000000000000000000000000000000000001",
+        "reference_manager": {
+            "references": [
+                {
+                    "ap_tracking_data": {
+                        "group": 1,
+                        "offset": 0
+                    },
+                    "pc": 5,
+                    "value": "[cast(fp + (-5), __main__.get_constants.Return*)]"
+                },
+                {
+                    "ap_tracking_data": {
+                        "group": 1,
+                        "offset": 0
+                    },
+                    "pc": 5,
+                    "value": "[cast(fp + (-3), felt*)]"
+                },
+                {
+                    "ap_tracking_data": {
+                        "group": 1,
+                        "offset": 1
+                    },
+                    "pc": 7,
+                    "value": "[cast(fp, felt**)]"
+                },
+                {
+                    "ap_tracking_data": {
+                        "group": 1,
+                        "offset": 1
+                    },
+                    "pc": 7,
+                    "value": "[cast(fp, felt**)]"
+                },
+                {
+                    "ap_tracking_data": {
+                        "group": 1,
+                        "offset": 1
+                    },
+                    "pc": 8,
+                    "value": "cast([fp] + 1, felt*)"
+                },
+                {
+                    "ap_tracking_data": {
+                        "group": 1,
+                        "offset": 1
+                    },
+                    "pc": 9,
+                    "value": "cast([fp] + 2, felt*)"
+                },
+                {
+                    "ap_tracking_data": {
+                        "group": 1,
+                        "offset": 2
+                    },
+                    "pc": 11,
+                    "value": "[cast(ap + (-1), felt*)]"
+                },
+                {
+                    "ap_tracking_data": {
+                        "group": 2,
+                        "offset": 0
+                    },
+                    "pc": 15,
+                    "value": "[cast([fp + (-5)], felt*)]"
+                },
+                {
+                    "ap_tracking_data": {
+                        "group": 2,
+                        "offset": 0
+                    },
+                    "pc": 15,
+                    "value": "[cast([fp + (-5)] + 1, felt*)]"
+                },
+                {
+                    "ap_tracking_data": {
+                        "group": 2,
+                        "offset": 0
+                    },
+                    "pc": 15,
+                    "value": "[cast(fp + (-3), felt**)]"
+                },
+                {
+                    "ap_tracking_data": {
+                        "group": 2,
+                        "offset": 0
+                    },
+                    "pc": 15,
+                    "value": "cast([fp + (-3)] - [fp + (-3)], felt)"
+                },
+                {
+                    "ap_tracking_data": {
+                        "group": 2,
+                        "offset": 4
+                    },
+                    "pc": 18,
+                    "value": "[cast(ap + (-2), __main__.get_constants.Return*)]"
+                },
+                {
+                    "ap_tracking_data": {
+                        "group": 2,
+                        "offset": 12
+                    },
+                    "pc": 21,
+                    "value": "[cast(ap + (-3), felt*)]"
+                },
+                {
+                    "ap_tracking_data": {
+                        "group": 2,
+                        "offset": 12
+                    },
+                    "pc": 21,
+                    "value": "[cast(ap + (-2), felt*)]"
+                },
+                {
+                    "ap_tracking_data": {
+                        "group": 2,
+                        "offset": 12
+                    },
+                    "pc": 21,
+                    "value": "[cast(ap + (-1), felt**)]"
+                },
+                {
+                    "ap_tracking_data": {
+                        "group": 4,
+                        "offset": 0
+                    },
+                    "pc": 29,
+                    "value": "[cast(fp + (-4), __main__.get_constant1.Return*)]"
+                },
+                {
+                    "ap_tracking_data": {
+                        "group": 4,
+                        "offset": 0
+                    },
+                    "pc": 29,
+                    "value": "[cast(fp + (-3), felt*)]"
+                },
+                {
+                    "ap_tracking_data": {
+                        "group": 4,
+                        "offset": 1
+                    },
+                    "pc": 31,
+                    "value": "[cast(fp, felt**)]"
+                },
+                {
+                    "ap_tracking_data": {
+                        "group": 4,
+                        "offset": 1
+                    },
+                    "pc": 31,
+                    "value": "[cast(fp, felt**)]"
+                },
+                {
+                    "ap_tracking_data": {
+                        "group": 4,
+                        "offset": 1
+                    },
+                    "pc": 32,
+                    "value": "cast([fp] + 1, felt*)"
+                },
+                {
+                    "ap_tracking_data": {
+                        "group": 4,
+                        "offset": 2
+                    },
+                    "pc": 34,
+                    "value": "[cast(ap + (-1), felt*)]"
+                },
+                {
+                    "ap_tracking_data": {
+                        "group": 5,
+                        "offset": 0
+                    },
+                    "pc": 38,
+                    "value": "[cast([fp + (-5)], felt*)]"
+                },
+                {
+                    "ap_tracking_data": {
+                        "group": 5,
+                        "offset": 0
+                    },
+                    "pc": 38,
+                    "value": "[cast([fp + (-5)] + 1, felt*)]"
+                },
+                {
+                    "ap_tracking_data": {
+                        "group": 5,
+                        "offset": 0
+                    },
+                    "pc": 38,
+                    "value": "[cast(fp + (-3), felt**)]"
+                },
+                {
+                    "ap_tracking_data": {
+                        "group": 5,
+                        "offset": 0
+                    },
+                    "pc": 38,
+                    "value": "cast([fp + (-3)] - [fp + (-3)], felt)"
+                },
+                {
+                    "ap_tracking_data": {
+                        "group": 5,
+                        "offset": 3
+                    },
+                    "pc": 41,
+                    "value": "[cast(ap + (-1), __main__.get_constant1.Return*)]"
+                },
+                {
+                    "ap_tracking_data": {
+                        "group": 5,
+                        "offset": 11
+                    },
+                    "pc": 44,
+                    "value": "[cast(ap + (-3), felt*)]"
+                },
+                {
+                    "ap_tracking_data": {
+                        "group": 5,
+                        "offset": 11
+                    },
+                    "pc": 44,
+                    "value": "[cast(ap + (-2), felt*)]"
+                },
+                {
+                    "ap_tracking_data": {
+                        "group": 5,
+                        "offset": 11
+                    },
+                    "pc": 44,
+                    "value": "[cast(ap + (-1), felt**)]"
+                }
+            ]
+        }
+    }
+}
