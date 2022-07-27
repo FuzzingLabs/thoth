@@ -194,7 +194,7 @@ def extract_functions(json_type, json_data):
             func_offset, identifiers_data, entry_points_by_type
         )
     else:
-        func_offset["0"] = "unkown_function"
+        func_offset["0"] = "unknown_function"
     return (func_offset, func_identifiers)
 
 
