@@ -43,13 +43,17 @@ The call flow graph represents calling relationships between functions of the co
 thoth -f tests/json_files/cairo_array_sum.json -call
 ```
 The output file (pdf/svg/png) and the dot file are inside the `output-callgraph` folder.
-If needed, you can also visualize dot files online using [this](https://dreampuf.github.io/GraphvizOnline/) side.
+If needed, you can also visualize dot files online using [this](https://dreampuf.github.io/GraphvizOnline/) website. The legend can be found [here](images/callgraph_legend.png).
+
+<p align="center">
+	<img src="/images/thoth_callgraph_simple.png"/>
+</p>
+
 
 <p align="center">
 	<img src="/images/starknet_get_full_contract_l2_dai_bridge.gv.png"/>
 </p>
 
-The legend can be found [here](images/callgraph_legend.png).
 
 For a specific output format (pdf/svg/png):
 ```sh
