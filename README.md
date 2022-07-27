@@ -43,16 +43,13 @@ The call flow graph represents calling relationships between functions of the co
 thoth -f tests/json_files/cairo_array_sum.json -call
 ```
 The output file (pdf/svg/png) and the dot file are inside the `output-callgraph` folder.
-If needed, you can also visualize dot files online using [this](https://dreampuf.github.io/GraphvizOnline/) side. An example of a more complexe callgraph is available [here](images/starknet_get_full_contract_l2_dai_bridge.gv.png).
+If needed, you can also visualize dot files online using [this](https://dreampuf.github.io/GraphvizOnline/) side.
 
 <p align="center">
-	<img src="/images/thoth_callgraph_simple.png"/>
+	<img src="/images/starknet_get_full_contract_l2_dai_bridge.gv.png"/>
 </p>
 
-Legend:
-<p align="center">
-	<img src="/images/callgraph_legend.png"/>
-</p>
+The legend can be found [here](images/callgraph_legend.png).
 
 For a specific output format (pdf/svg/png):
 ```sh
@@ -87,34 +84,37 @@ Thoth support cairo and starknet compilation artifact (json file) generated afte
 
 ## How to build the documentation
 
-Install sphinx
-```apt-get install python3-sphinx```
+```sh
+# Install sphinx
 
-Create the docs folder
+apt-get install python3-sphinx
 
-```mkdir docs & cd docs```
+#Create the docs folder
 
-Init the folder
+mkdir docs & cd docs
 
-```sphinx-quickstart docs```
+#Init the folder
 
-Modify the `conf.py` file by adding
+sphinx-quickstart docs
 
-```import thoth```
+#Modify the `conf.py` file by adding
 
-Generate the .rst files before the .html files
+import thoth
 
-```sphinx-apidoc -f -o . ..```
+#Generate the .rst files before the .html files
 
-Generate the .html files
+sphinx-apidoc -f -o . ..
 
-```make html```
+#Generate the .html files
 
-Run a python http server
+make html
 
-```cd _build/html; python3 -m http.server```
+#Run a python http server
 
-## If your bytecode is empty
+cd _build/html; python3 -m http.server
+```
+
+## Why my bytecode is empty
 
 First, verify that your JSON is correct and that it contains a data section.
 Second, verify that your JSON is not a contract interface.
