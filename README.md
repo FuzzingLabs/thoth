@@ -1,6 +1,6 @@
-# Thoth
+# Thoth, the Cairo/Starknet bytecode analyzer & disassembler
 
-Thoth (pronounced "toss") is a Cairo/Starknet analyzer & disassembler written in Python 3. Thoth's features also include the generation of the call graph and control-flow graph of a given Cairo/Starknet compilation artifact.
+Thoth (pronounced "toss") is a Cairo/Starknet analyzer & disassembler written in Python 3. Thoth's features also include the generation of the call graph and control-flow graph (CFG) of a given Cairo/Starknet compilation artifact.
 
 ## Installation
 
@@ -49,7 +49,7 @@ If needed, you can also visualize dot files online using [this](https://dreampuf
 	<img src="/images/thoth_callgraph_simple.png"/>
 </p>
 
-
+A more complexe callgraph:
 <p align="center">
 	<img src="/images/starknet_get_full_contract_l2_dai_bridge.gv.png"/>
 </p>
@@ -90,31 +90,24 @@ Thoth support cairo and starknet compilation artifact (json file) generated afte
 
 ```sh
 # Install sphinx
-
 apt-get install python3-sphinx
 
 #Create the docs folder
-
 mkdir docs & cd docs
 
 #Init the folder
-
 sphinx-quickstart docs
 
 #Modify the `conf.py` file by adding
-
 import thoth
 
 #Generate the .rst files before the .html files
-
 sphinx-apidoc -f -o . ..
 
 #Generate the .html files
-
 make html
 
 #Run a python http server
-
 cd _build/html; python3 -m http.server
 ```
 
