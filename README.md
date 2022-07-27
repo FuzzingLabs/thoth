@@ -79,12 +79,13 @@ For a specific output format (pdf/svg/png):
 ```sh
 thoth -f tests/json_files/cairo_array_sum.json -cfg -format png
 ```
+# F.A.Q
 
 ## How to find a Cairo/Starknet compilation artifact (json file)
 
 Thoth support cairo and starknet compilation artifact (json file) generated after compilation using `cairo-compile` or `starknet-compile`. Thoth also support the json file returned by: `starknet get_full_contract`.
 
-## Documentation
+## How to build the documentation
 
 Install sphinx
 ```apt-get install python3-sphinx```
@@ -112,6 +113,22 @@ Generate the .html files
 Run a python http server
 
 ```cd _build/html; python3 -m http.server```
+
+## If your bytecode is empty
+
+First, verify that your JSON is correct and that it contains a data section.
+Second, verify that your JSON is not a contract interface.
+Finally, it is possible that your contract does not generate bytecodes, for example:
+
+```cairo
+%lang starknet
+
+from starkware.cairo.common.cairo_builtins import HashBuiltin
+
+@storage_var
+func balance() -> (res : felt):
+end
+```
 
 # License
 
