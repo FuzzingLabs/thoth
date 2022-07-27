@@ -84,6 +84,35 @@ thoth -f tests/json_files/cairo_array_sum.json -cfg -format png
 
 Thoth support cairo and starknet compilation artifact (json file) generated after compilation using `cairo-compile` or `starknet-compile`. Thoth also support the json file returned by: `starknet get_full_contract`.
 
+## Documentation
+
+Install sphinx
+```apt-get install python3-sphinx```
+
+Create the docs folder
+
+```mkdir docs & cd docs```
+
+Init the folder
+
+```sphinx-quickstart docs```
+
+Modify the `conf.py` file by adding
+
+```import thoth```
+
+Generate the .rst files before the .html files
+
+```sphinx-apidoc -f -o . ..```
+
+Generate the .html files
+
+```make html```
+
+Run a python http server
+
+```cd _build/html; python3 -m http.server```
+
 # License
 
 Thoth is licensed and distributed under the AGPLv3 license. [Contact us](mailto:contact@fuzzinglabs.com) if you're looking for an exception to the terms.

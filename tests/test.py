@@ -1,4 +1,3 @@
-from lib2to3.pytree import Base
 import unittest
 import glob
 import os
@@ -24,11 +23,11 @@ class TestDisassembler(unittest.TestCase):
     def test_no_file_should_crash(self):
         all_test = glob.glob("./tests/json_files/*")
         crash = 0
-        f = open('/dev/null', 'w')
+        f = open("/dev/null", "w")
         save_stdout = sys.stdout
         sys.stdout = f
         for test in all_test:
-            try :
+            try:
                 with open(test, "r") as file:
                     disassembler = Disassembler([file])
                     disassembler.print_disassembly()
@@ -45,7 +44,7 @@ class TestDisassembler(unittest.TestCase):
         sys.stdout = save_stdout
         f.close()
         self.assertEqual(crash, 0)
- 
+
     def test_cairo_return(self):
         """
         Check if the disassembler is working well
