@@ -113,14 +113,15 @@ def value_to_string(val: int, prime: int) -> str:
         str: The string representation
     """
     repr = field_element_repr(val, prime)
+    repr_hex = ""
     # print(f"here {bytearray.fromhex(repr[2:])} end")
     if repr[:2] != "0x":
         try:
-            repr = hex(int(repr))
+            repr_hex = hex(int(repr))
         except Exception:
             return ""
     try:
-        repr_str = bytearray.fromhex(repr[2:]).decode("utf-8")
+        repr_str = bytearray.fromhex(repr_hex[2:]).decode("utf-8")
         return repr_str
     except Exception:
-        return ""
+        return repr_hex
