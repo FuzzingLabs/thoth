@@ -325,5 +325,6 @@ class Disassembler:
                     call += 1
             analytics["decorators"] += function.decorators
         analytics["call_nbr"] = str(call)
+        analytics["structs"] = len(self.structs)
         # print(json.dumps(analytics, indent=3))
         return analytics
