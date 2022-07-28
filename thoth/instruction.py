@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
 import re
-from .utils import field_element_repr
+from .utils import field_element_repr, value_to_string
 from thoth import utils
 
 
@@ -101,6 +101,11 @@ class Instruction:
                 disass_str += self.print_instruction(
                     f"[{self.dstRegister}{self.offDest}], {field_element_repr(int(self.imm), self.prime)}"
                 )
+                comment = self.print_instruction(
+                    f"#{value_to_string(int(self.imm), self.prime)}", color=utils.color.CYAN
+                )
+                if comment != "#":
+                    disass_str += comment
             elif "OP0" in self.op1Addr:
                 disass_str += self.print_instruction(
                     f"[{self.dstRegister}{self.offDest}], [[{self.op0Register}{self.off1}]{self.off2}]"

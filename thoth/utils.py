@@ -100,3 +100,27 @@ def field_element_repr(val: int, prime: int) -> str:
     if abs(shifted_val) < 2**100:
         return hex(shifted_val)
     return hex(val)
+
+
+def value_to_string(val: int, prime: int) -> str:
+    """Check if the imm value is a printable string to add it as a comment
+
+    Args:
+        val (int): The value
+        prime (int): The prime
+
+    Returns:
+        str: The string representation
+    """
+    repr = field_element_repr(val, prime)
+    # print(f"here {bytearray.fromhex(repr[2:])} end")
+    if repr[:2] != "0x":
+        try:
+            repr = hex(int(repr))
+        except Exception:
+            return ""
+    try:
+        repr_str = bytearray.fromhex(repr[2:]).decode("utf-8")
+        return repr_str
+    except Exception:
+        return ""
