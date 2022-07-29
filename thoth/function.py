@@ -3,6 +3,7 @@
 from thoth import utils
 from .instruction import Instruction
 from .cfg import CFG
+from .utils import handling_arrows
 
 
 class Function:
@@ -113,7 +114,15 @@ class Function:
     def print(self):
         """Iterate over each instruction and print the disassembly"""
         prototype = self.get_prototype()
-        print(f"\n\t{utils.color.BLUE + prototype + utils.color.ENDC}")
+        arrow = ""
+        if self.instructions != []:
+            arrow = handling_arrows(self.instructions[0].id)
+            if "|" not in arrow:
+                arrow = ""
+        spaces = " " * (30 - len(arrow))
+        print(
+            f"\n{utils.color.HEADER + arrow}{spaces}{utils.color.BLUE + prototype + utils.color.ENDC}"
+        )
         for instr in self.instructions:
             print(instr.print(), end="")
         print()

@@ -1,3 +1,5 @@
+CALLS_LIST = []
+
 # Default prime value
 DEFAULT_PRIME = (2**251) + (17 * (2**192)) + 1
 
@@ -124,3 +126,46 @@ def value_to_string(val: int, prime: int) -> str:
         return repr_str
     except Exception:
         return ""
+
+
+def handling_arrows(id, gap=0):
+    """Handling the calls arrows
+
+    Args:
+        id (String): the offset
+        gap (int, optional): if it's the same offset for example for the ADD instruction. Defaults to 0.
+
+    Returns:
+        String: The arrows
+    """
+    arrow = ""
+    index = 1
+    start = False
+    end = False
+    offset = str(int(id) + gap)
+    offset_starting_number = 0
+    offset_ending_number = 0
+    for (a, b) in CALLS_LIST:
+        if offset == a:
+            offset_starting_number += 1
+            start = True
+        elif offset == b:
+            offset_ending_number += 1
+            end = True
+    for (a, b) in CALLS_LIST:
+        if offset == a:
+            arrow = " " * ((len(CALLS_LIST) - index) + 1) + "`" + "=" * index + "<"
+            start = True
+        elif offset == b:
+            arrow = " " * ((len(CALLS_LIST) - index)) + "." + "-" * (index + 1) + ">"
+            end = True
+        index += 1
+    if start or end:
+        return arrow
+    index_bis = 1
+    for (a_, b_) in CALLS_LIST:
+        if int(offset) in range(min(int(a_), int(b_)), max(int(a_), int(b_))):
+            arrow += "|"
+            index_bis += 1
+    arrow += " " * (len(CALLS_LIST) * 2 - len(arrow))
+    return arrow

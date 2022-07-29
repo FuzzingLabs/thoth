@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
 import re
-from .utils import field_element_repr, value_to_string
+from .utils import field_element_repr, value_to_string, handling_arrows, CALLS_LIST
 from thoth import utils
 
 
@@ -49,6 +49,9 @@ class Instruction:
         # Specific values
         self.call_xref_func_name = None
         self.call_offset = self._find_call_offset()
+        if self.call_offset != None:
+            CALLS_LIST.append((self.id, str(self.call_offset)))
+            print(CALLS_LIST)
 
     def _find_call_offset(self):
         """Find the offset of the call
@@ -193,7 +196,10 @@ class Instruction:
             String: String containing the instruction line with the offset ...
         """
         disass_str = ""
-        disass_str += self.print_instruction(f"\noffset {self.id}:", color=utils.color.HEADER)
+        arrow = handling_arrows(self.id)
+        disass_str += self.print_instruction(
+            f"\n{arrow}offset {self.id}:", color=utils.color.HEADER
+        )
         if "ASSERT_EQ" in self.opcode:
             disass_str += self._handle_assert_eq()
 
@@ -210,10 +216,13 @@ class Instruction:
             raise AssertionError
 
         if "REGULAR" not in self.apUpdate:
+            arrow = handling_arrows(self.id, gap=1)
             op = list(filter(None, re.split(r"(\d+)", self.apUpdate)))
             APopcode = op[0]
             APval = op[1] if (len(op) > 1) else int(field_element_repr(int(self.imm), self.prime))
-            disass_str += self.print_instruction(f"\noffset {self.id}:", color=utils.color.HEADER)
+            disass_str += self.print_instruction(
+                f"\n{arrow}offset {self.id}:", color=utils.color.HEADER
+            )
             disass_str += self.print_instruction(f"{APopcode}", color=utils.color.YELLOW)
             disass_str += self.print_instruction(f"AP, {APval}")
 
