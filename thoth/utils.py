@@ -120,6 +120,8 @@ def value_to_string(val: int, prime: int) -> str:
             repr_hex = hex(int(repr))
         except Exception:
             return ""
+    else:
+        return ""
     try:
         repr_str = bytearray.fromhex(repr_hex[2:]).decode("utf-8")
         return repr_str

@@ -102,11 +102,11 @@ class Instruction:
                 disass_str += self.print_instruction(
                     f"[{self.dstRegister}{self.offDest}], {field_element_repr(int(self.imm), self.prime)}"
                 )
-                comment = self.print_instruction(
-                    f"# {value_to_string(int(self.imm), self.prime)}", color=utils.color.CYAN
-                )
-                if comment != "#":
-                    disass_str += comment
+                value = value_to_string(int(self.imm), self.prime)
+                if value != "":
+                    disass_str += self.print_instruction(
+                        f"# {value_to_string(int(self.imm), self.prime)}", color=utils.color.CYAN
+                    )
             elif "OP0" in self.op1Addr:
                 disass_str += self.print_instruction(
                     f"[{self.dstRegister}{self.offDest}], [[{self.op0Register}{self.off1}]{self.off2}]"
@@ -175,7 +175,10 @@ class Instruction:
             # e.g. call rel (123)
             else:
                 disass_str += self.print_instruction(f"rel ({offset})", color=utils.color.BEIGE)
-
+                if str(offset) in self.labels:
+                    disass_str += self.print_instruction(
+                        f"# {self.labels[str(offset)]}", color=utils.color.CYAN
+                    )
         # Indirect CALL
         # e.g. call rel [fp + 4]
         elif self.is_call_indirect():
