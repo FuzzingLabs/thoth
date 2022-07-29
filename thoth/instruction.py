@@ -105,7 +105,7 @@ class Instruction:
                     f"[{self.dstRegister}{self.offDest}], {field_element_repr(int(self.imm), self.prime)}"
                 )
                 comment = self.print_instruction(
-                    f"#{value_to_string(int(self.imm), self.prime)}", color=utils.color.CYAN
+                    f"# {value_to_string(int(self.imm), self.prime)}", color=utils.color.CYAN
                 )
                 if comment != "#":
                     disass_str += comment
