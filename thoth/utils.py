@@ -106,11 +106,9 @@ def field_element_repr(val: int, prime: int) -> str:
 
 def value_to_string(val: int, prime: int) -> str:
     """Check if the imm value is a printable string to add it as a comment
-
     Args:
         val (int): The value
         prime (int): The prime
-
     Returns:
         str: The string representation
     """
@@ -126,7 +124,7 @@ def value_to_string(val: int, prime: int) -> str:
         repr_str = bytearray.fromhex(repr_hex[2:]).decode("utf-8")
         return repr_str
     except Exception:
-        return ""
+        return repr_hex
 
 
 def handling_arrows(id, gap=0):
@@ -170,4 +168,3 @@ def handling_arrows(id, gap=0):
             index_bis += 1
     arrow += " " * (len(CALLS_LIST) * 2 - len(arrow))
     return arrow
-        return repr_hex
