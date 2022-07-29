@@ -19,6 +19,7 @@ class Function:
         implicitargs,
         ret,
         decorators,
+        labels,
         is_import=False,
         entry_point=False,
     ) -> None:
@@ -50,6 +51,7 @@ class Function:
         self.is_import = is_import
         self.entry_point = entry_point
         self.cfg = None
+        self.labels = labels
 
         self._generate_instruction()
 
@@ -62,7 +64,9 @@ class Function:
         for offset in self.instructions_dict:
             for bytecode in self.instructions_dict[offset]:
                 self.instructions.append(
-                    Instruction(offset, self.instructions_dict[offset][bytecode], self.prime)
+                    Instruction(
+                        offset, self.instructions_dict[offset][bytecode], self.prime, self.labels
+                    )
                 )
         return self.instructions
 
