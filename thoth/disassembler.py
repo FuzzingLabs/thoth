@@ -13,6 +13,7 @@ from .abi_parser import (
     extract_builtins,
     extract_prime,
     extract_references,
+    extract_labels,
 )
 from .callgraph import CallFlowGraph
 from .utils import CFG_NODE_ATTR, CFG_GRAPH_ATTR, CFG_EDGE_ATTR, DEFAULT_PRIME
@@ -72,6 +73,7 @@ class Disassembler:
         self.references = extract_references(json_type, json_data)
         self.hints = extract_hints(json_type, json_data)
         self.prime = extract_prime(json_type, json_data)
+        self.labels = extract_labels(json_type, json_data)
 
         # Create the list of Functions
         for function in self.json:
@@ -110,6 +112,7 @@ class Disassembler:
                     implicitargs,
                     ret,
                     decorators,
+                    self.labels,
                     entry_point=self.json[function]["data"]["entry_point"]
                     if json_type != "get_code"
                     else True,

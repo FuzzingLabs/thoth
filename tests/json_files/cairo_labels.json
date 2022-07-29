@@ -1,0 +1,200 @@
+{
+    "attributes": [],
+    "builtins": [],
+    "data": [
+        "0x10780017fff7fff",
+        "0x2",
+        "0x480680017fff8000",
+        "0x0",
+        "0x208b7fff7fff7ffe",
+        "0x10780017fff7fff",
+        "0x2",
+        "0x480680017fff8000",
+        "0x1",
+        "0x208b7fff7fff7ffe"
+    ],
+    "debug_info": {
+        "file_contents": {},
+        "instruction_locations": {
+            "0": {
+                "accessible_scopes": [
+                    "__main__",
+                    "__main__.my_function"
+                ],
+                "flow_tracking_data": {
+                    "ap_tracking": {
+                        "group": 0,
+                        "offset": 0
+                    },
+                    "reference_ids": {}
+                },
+                "hints": [],
+                "inst": {
+                    "end_col": 19,
+                    "end_line": 2,
+                    "input_file": {
+                        "filename": "tests/cairo_files/cairo_labels.cairo"
+                    },
+                    "start_col": 5,
+                    "start_line": 2
+                }
+            },
+            "2": {
+                "accessible_scopes": [
+                    "__main__",
+                    "__main__.my_function"
+                ],
+                "flow_tracking_data": {
+                    "ap_tracking": {
+                        "group": 0,
+                        "offset": 0
+                    },
+                    "reference_ids": {}
+                },
+                "hints": [],
+                "inst": {
+                    "end_col": 21,
+                    "end_line": 5,
+                    "input_file": {
+                        "filename": "tests/cairo_files/cairo_labels.cairo"
+                    },
+                    "start_col": 20,
+                    "start_line": 5
+                }
+            },
+            "4": {
+                "accessible_scopes": [
+                    "__main__",
+                    "__main__.my_function"
+                ],
+                "flow_tracking_data": {
+                    "ap_tracking": {
+                        "group": 0,
+                        "offset": 1
+                    },
+                    "reference_ids": {}
+                },
+                "hints": [],
+                "inst": {
+                    "end_col": 22,
+                    "end_line": 5,
+                    "input_file": {
+                        "filename": "tests/cairo_files/cairo_labels.cairo"
+                    },
+                    "start_col": 5,
+                    "start_line": 5
+                }
+            },
+            "5": {
+                "accessible_scopes": [
+                    "__main__",
+                    "__main__.my_function"
+                ],
+                "flow_tracking_data": {
+                    "ap_tracking": {
+                        "group": 1,
+                        "offset": 0
+                    },
+                    "reference_ids": {}
+                },
+                "hints": [],
+                "inst": {
+                    "end_col": 18,
+                    "end_line": 7,
+                    "input_file": {
+                        "filename": "tests/cairo_files/cairo_labels.cairo"
+                    },
+                    "start_col": 5,
+                    "start_line": 7
+                }
+            },
+            "7": {
+                "accessible_scopes": [
+                    "__main__",
+                    "__main__.my_function"
+                ],
+                "flow_tracking_data": {
+                    "ap_tracking": {
+                        "group": 1,
+                        "offset": 0
+                    },
+                    "reference_ids": {}
+                },
+                "hints": [],
+                "inst": {
+                    "end_col": 21,
+                    "end_line": 10,
+                    "input_file": {
+                        "filename": "tests/cairo_files/cairo_labels.cairo"
+                    },
+                    "start_col": 20,
+                    "start_line": 10
+                }
+            },
+            "9": {
+                "accessible_scopes": [
+                    "__main__",
+                    "__main__.my_function"
+                ],
+                "flow_tracking_data": {
+                    "ap_tracking": {
+                        "group": 1,
+                        "offset": 1
+                    },
+                    "reference_ids": {}
+                },
+                "hints": [],
+                "inst": {
+                    "end_col": 22,
+                    "end_line": 10,
+                    "input_file": {
+                        "filename": "tests/cairo_files/cairo_labels.cairo"
+                    },
+                    "start_col": 5,
+                    "start_line": 10
+                }
+            }
+        }
+    },
+    "hints": {},
+    "identifiers": {
+        "__main__.my_function": {
+            "decorators": [],
+            "pc": 0,
+            "type": "function"
+        },
+        "__main__.my_function.Args": {
+            "full_name": "__main__.my_function.Args",
+            "members": {},
+            "size": 0,
+            "type": "struct"
+        },
+        "__main__.my_function.ImplicitArgs": {
+            "full_name": "__main__.my_function.ImplicitArgs",
+            "members": {},
+            "size": 0,
+            "type": "struct"
+        },
+        "__main__.my_function.Return": {
+            "cairo_type": "(result : felt)",
+            "type": "type_definition"
+        },
+        "__main__.my_function.SIZEOF_LOCALS": {
+            "type": "const",
+            "value": 0
+        },
+        "__main__.my_function.case_false": {
+            "pc": 2,
+            "type": "label"
+        },
+        "__main__.my_function.case_true": {
+            "pc": 7,
+            "type": "label"
+        }
+    },
+    "main_scope": "__main__",
+    "prime": "0x800000000000011000000000000000000000000000000000000000000000001",
+    "reference_manager": {
+        "references": []
+    }
+}

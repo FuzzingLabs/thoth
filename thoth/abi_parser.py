@@ -327,6 +327,31 @@ def extract_references(json_type, json_data):
     return references_identifiers
 
 
+def extract_labels(json_type, json_data):
+    """Get the labels from the JSON contract
+
+    Args:
+        json_type (String): The type of the contract
+        json_data (Dictionnary): The JSON of the contract
+
+    Returns:
+        Dictionnary: Dictionnary containing the labels from the JSON contract
+    """
+
+    labels_identifiers = {}
+    if json_type != "get_code":
+        identifiers_data = (
+            json_data["identifiers"]
+            if ("identifiers" in json_data)
+            else json_data["program"]["identifiers"]
+        )
+        for key, values in identifiers_data.items():
+            if values["type"] == "label":
+                labels_identifiers[str(values["pc"])] = key.split(".")[-1]
+        labels_identifiers = dict(collections.OrderedDict(sorted(labels_identifiers.items())))
+    return labels_identifiers
+
+
 def parse_to_json(json_data, json_type):
     """Get bytecodes and decode it.
     Also get informations about return values, arguments and decorators
