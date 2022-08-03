@@ -1,12 +1,12 @@
 #!/usr/bin/env python3
 
 import re
-from .utils import field_element_repr
+from .utils import field_element_repr, value_to_string
 from thoth import utils
 
 
 class Instruction:
-    def __init__(self, inst_id, instruction_data, prime):
+    def __init__(self, inst_id, instruction_data, prime, labels):
         """Create the instruction object
 
         Args:
@@ -17,6 +17,7 @@ class Instruction:
         self.id = inst_id
         self.instruction_data = instruction_data
         self.prime = prime
+        self.labels = labels
         self.offDest = (
             instruction_data.get("off0")
             if instruction_data.get("off0")[0] == "-"
@@ -101,6 +102,11 @@ class Instruction:
                 disass_str += self.print_instruction(
                     f"[{self.dstRegister}{self.offDest}], {field_element_repr(int(self.imm), self.prime)}"
                 )
+                value = value_to_string(int(self.imm), self.prime)
+                if value != "":
+                    disass_str += self.print_instruction(
+                        f"# {value_to_string(int(self.imm), self.prime)}", color=utils.color.CYAN
+                    )
             elif "OP0" in self.op1Addr:
                 disass_str += self.print_instruction(
                     f"[{self.dstRegister}{self.offDest}], [[{self.op0Register}{self.off1}]{self.off2}]"
@@ -133,6 +139,17 @@ class Instruction:
             disass_str += self.print_instruction(
                 field_element_repr(int(self.imm), self.prime), utils.color.BLUE
             )
+            jump_to = int(field_element_repr(int(self.imm), self.prime)) + int(self.id)
+            if str(jump_to) in self.labels:
+                disass_str += self.print_instruction(
+                    f"# JMP {self.labels[str(jump_to)]}",
+                    color=utils.color.CYAN,
+                )
+            else:
+                disass_str += self.print_instruction(
+                    f"# JMP {jump_to}",
+                    color=utils.color.CYAN,
+                )
         else:
             disass_str += self.print_instruction(f"{self.opcode}", color=utils.color.RED)
         return disass_str
@@ -158,7 +175,10 @@ class Instruction:
             # e.g. call rel (123)
             else:
                 disass_str += self.print_instruction(f"rel ({offset})", color=utils.color.BEIGE)
-
+                if str(offset) in self.labels:
+                    disass_str += self.print_instruction(
+                        f"# {self.labels[str(offset)]}", color=utils.color.CYAN
+                    )
         # Indirect CALL
         # e.g. call rel [fp + 4]
         elif self.is_call_indirect():
@@ -188,6 +208,10 @@ class Instruction:
             String: String containing the instruction line with the offset ...
         """
         disass_str = ""
+        if self.id in self.labels:
+            disass_str += self.print_instruction(
+                f"\nLABEL : {self.labels[self.id]}", color=utils.color.GREEN
+            )
         disass_str += self.print_instruction(f"\noffset {self.id}:", color=utils.color.HEADER)
         if "ASSERT_EQ" in self.opcode:
             disass_str += self._handle_assert_eq()
