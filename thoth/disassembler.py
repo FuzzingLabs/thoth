@@ -60,9 +60,6 @@ class Disassembler:
                 json_data = json.load(f)
             except json.decoder.JSONDecodeError:
                 raise SystemExit("Error: Provided file is not a valid JSON.")
-        # Check the file is OK
-        if json_data is None or json_data == "":
-            raise SystemExit("Error: The provided JSON is empty")
 
         # Start parsing the json to extract interesting info
         json_type = detect_type_input_json(json_data)
