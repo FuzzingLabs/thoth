@@ -247,7 +247,7 @@ class Instruction:
 
         return disass_str
 
-    def print_instruction(self, data, color="", end=""):
+    def print_instruction(self, data, color="", end="", tab=1,):
         """format the instruction
 
         Args:

@@ -64,6 +64,12 @@ def parse_args():
         action="store_true",
         help="Dump a Json file containing debug information",
     )
+    m.add_argument(
+        "-d",
+        "-decomp",
+        "--decomp",
+        action="store_true"
+    )
 
     return parser.parse_args()
 
@@ -95,7 +101,9 @@ def main():
     # print analytics
     if args.analytics:
         print(disassembler.analytics())
-
+    
+    if args.decomp:
+        disassembler.decompiler_poc()
     return 0
 
 

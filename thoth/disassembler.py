@@ -15,6 +15,7 @@ from .abi_parser import (
     extract_references,
     extract_labels,
 )
+from .decompiler import Decompiler
 from .callgraph import CallFlowGraph
 from .utils import CFG_NODE_ATTR, CFG_GRAPH_ATTR, CFG_EDGE_ATTR, DEFAULT_PRIME
 from .function import Function
@@ -331,3 +332,9 @@ class Disassembler:
         analytics["structs"] = len(self.structs)
         # print(json.dumps(analytics, indent=3))
         return analytics
+
+##### POC decompiler #####
+    def decompiler_poc(self):
+        decomp = Decompiler()
+        decomp.decompile_code(self.functions)
+                    
