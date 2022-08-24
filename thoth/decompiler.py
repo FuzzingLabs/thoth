@@ -181,5 +181,4 @@ class Decompiler:
                                 print(self.print_instruction_decomp("end"))
                         instruction = self.print_build_code(instruction)
                         print(instruction)
-            #self.tab-=1
                     

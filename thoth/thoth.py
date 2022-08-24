@@ -87,7 +87,7 @@ def main():
         disassembler.dump_json()
 
     # print assembly code
-    disassembler.print_disassembly()
+    #disassembler.print_disassembly()
     filename = os.path.basename(args.file[0].name).split(".")[0]
     format = "pdf" if args.format is None else str(args.format)
     # print call flow graph

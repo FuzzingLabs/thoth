@@ -335,6 +335,7 @@ class Disassembler:
 
 ##### POC decompiler #####
     def decompiler_poc(self):
+        print(self.print_builtins())
         decomp = Decompiler()
         decomp.decompile_code(self.functions)
                     
