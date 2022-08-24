@@ -26,7 +26,12 @@ CFG_EDGE_ATTR = {
 
 # Graphical stuff for the CallFlowGraph's dot
 CALLGRAPH_CONFIG = {
-    "default": {"shape": "oval", "color": "", "style": "solid", "fillcolor": "white"},
+    "default": {
+        "shape": "oval",
+        "color": "",
+        "style": "solid",
+        "fillcolor": "white",
+    },
     "entrypoint": {"shape": "doubleoctagon", "style": "filled"},
     "import": {"style": "filled", "fillcolor": "lightcoral"},
     "constructor": {"style": "filled", "fillcolor": "violet"},

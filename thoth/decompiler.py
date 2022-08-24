@@ -1,6 +1,5 @@
-import dis
-import re
 from thoth import utils
+
 
 class Decompiler:
     """
@@ -55,14 +54,21 @@ class Decompiler:
         """
         disass_str = ""
         if "REGULAR" not in instruction.pcUpdate:
-            if (instruction.pcUpdate == "JNZ"):
+            if instruction.pcUpdate == "JNZ":
                 disass_str += self.print_instruction_decomp("if [AP] == 0:")
-                self.tab+=1
-            elif (instruction.pcUpdate == "JUMP_REL"):
-                self.tab -=1
+                self.tab += 1
+            elif instruction.pcUpdate == "JUMP_REL":
+                self.tab -= 1
                 disass_str += self.print_instruction_decomp("else:")
-                self.tab+=1
-                self.end = int(utils.field_element_repr(int(instruction.imm), instruction.prime)) - 1
+                self.tab += 1
+                self.end = (
+                    int(
+                        utils.field_element_repr(
+                            int(instruction.imm), instruction.prime
+                        )
+                    )
+                    - 1
+                )
         return disass_str
 
     def _handle_call_decomp(self, instruction):
@@ -74,26 +80,34 @@ class Decompiler:
         # Direct CALL or Relative CALL
         disass_str = ""
         if instruction.is_call_direct():
-            offset = int(instruction.id) + int(utils.field_element_repr(int(instruction.imm), instruction.prime))
+            offset = int(instruction.id) + int(
+                utils.field_element_repr(
+                    int(instruction.imm), instruction.prime
+                )
+            )
             # direct CALL to a fonction
             if instruction.call_xref_func_name is not None:
                 call_name = instruction.call_xref_func_name.split(".")
                 disass_str += self.print_instruction_decomp(
                     f"{call_name[-1]}()"
-               )
+                )
             # relative CALL to a label
             # e.g. call rel (123)
             else:
-                disass_str += self.print_instruction_decomp(f"rel ({offset})", color=utils.color.BEIGE)
+                disass_str += self.print_instruction_decomp(
+                    f"rel ({offset})", color=utils.color.BEIGE
+                )
                 if str(offset) in instruction.labels:
                     disass_str += self.print_instruction_decomp(
-                        f"# {instruction.labels[str(offset)]}", color=utils.color.CYAN
+                        f"# {instruction.labels[str(offset)]}",
+                        color=utils.color.CYAN,
                     )
         # Indirect CALL
         # e.g. call rel [fp + 4]
         elif instruction.is_call_indirect():
             disass_str += self.print_instruction_decomp(
-                f"rel [{instruction.op1Addr}{instruction.off2}]", color=utils.color.BEIGE
+                f"rel [{instruction.op1Addr}{instruction.off2}]",
+                color=utils.color.BEIGE,
             )
         else:
             raise NotImplementedError
@@ -124,7 +138,8 @@ class Decompiler:
         disass_str = ""
         if instruction.id in instruction.labels:
             disass_str += self.print_instruction_decomp(
-                f"\nLABEL : {instruction.labels[instruction.id]}", color=utils.color.GREEN
+                f"\nLABEL : {instruction.labels[instruction.id]}",
+                color=utils.color.GREEN,
             )
         if "ASSERT_EQ" in instruction.opcode:
             disass_str += self._handle_assert_eq_decomp(instruction)
@@ -145,7 +160,9 @@ class Decompiler:
             disass_str += self.print_instruction_decomp(f"ap++", tab=1)
 
         if instruction.hint:
-            disass_str += self.print_instruction_decomp(f" # {instruction.hint}", color=utils.color.BEIGE)
+            disass_str += self.print_instruction_decomp(
+                f" # {instruction.hint}", color=utils.color.BEIGE
+            )
 
         return disass_str
 
@@ -161,7 +178,7 @@ class Decompiler:
             String: The formated Instruction
         """
         tabulation = "    " * self.tab
-        if (tab != None):
+        if tab != None:
             tabulation = "    " * tab
         return color + tabulation + data + utils.color.ENDC + end
 
@@ -169,16 +186,20 @@ class Decompiler:
         for function in functions:
             function.generate_cfg()
         for function in functions:
-            print(function.get_prototype())
-            self.tab+=1
-            if (function.cfg.basicblocks != []):
-                for block in function.cfg.basicblocks:
-                    for instruction in block.instructions:
-                        if (self.end != 0):
-                            self.end-=1
-                            if (self.end == 1):
-                                self.tab -=1
-                                print(self.print_instruction_decomp("end"))
-                        instruction = self.print_build_code(instruction)
-                        print(instruction)
-                    
+            if function.is_import:
+                func_name = function.name.split(".")[-1]
+                package = ".".join(function.name.split(".")[:-1])
+                print(f"from {package} import {func_name}")
+            else:
+                print(function.get_prototype())
+                self.tab += 1
+                if function.cfg.basicblocks != []:
+                    for block in function.cfg.basicblocks:
+                        for instruction in block.instructions:
+                            if self.end != 0:
+                                self.end -= 1
+                                if self.end == 1:
+                                    self.tab -= 1
+                                    print(self.print_instruction_decomp("end"))
+                            instruction = self.print_build_code(instruction)
+                            print(instruction)

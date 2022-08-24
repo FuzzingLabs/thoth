@@ -65,7 +65,10 @@ class Function:
             for bytecode in self.instructions_dict[offset]:
                 self.instructions.append(
                     Instruction(
-                        offset, self.instructions_dict[offset][bytecode], self.prime, self.labels
+                        offset,
+                        self.instructions_dict[offset][bytecode],
+                        self.prime,
+                        self.labels,
                     )
                 )
         return self.instructions
@@ -102,12 +105,17 @@ class Function:
                 for idarg in data_content:
                     if data_content[idarg] != {}:
                         for args in data_content[idarg]:
-                            prototype += args + " : " + data_content[idarg][args]
+                            prototype += (
+                                args + " : " + data_content[idarg][args]
+                            )
                             if int(idarg) != len(data_content) - 1:
                                 prototype += ", "
             prototype += (
                 ")"
-                if (data_name == "args" or (data_name == "ret" and data_content is not None))
+                if (
+                    data_name == "args"
+                    or (data_name == "ret" and data_content is not None)
+                )
                 else "}"
                 if data_name == "implicitargs"
                 else ""

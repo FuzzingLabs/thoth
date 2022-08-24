@@ -125,8 +125,12 @@ class Disassembler:
             for inst in func.instructions:
                 # Only for direct call
                 if inst.is_call_direct():
-                    xref_func = self.get_function_by_offset(str(inst.call_offset))
-                    inst.call_xref_func_name = xref_func.name if xref_func is not None else None
+                    xref_func = self.get_function_by_offset(
+                        str(inst.call_offset)
+                    )
+                    inst.call_xref_func_name = (
+                        xref_func.name if xref_func is not None else None
+                    )
                 if inst.id in self.references:
                     inst.ref = self.references[inst.id]
                 if inst.id in self.hints:
@@ -179,7 +183,13 @@ class Disassembler:
         """
         struct_str = ""
         for struct in self.structs:
-            struct_str += "\n\t struct: " + utils.color.BEIGE + struct + utils.color.ENDC + "\n"
+            struct_str += (
+                "\n\t struct: "
+                + utils.color.BEIGE
+                + struct
+                + utils.color.ENDC
+                + "\n"
+            )
             for attribut in self.structs[struct]:
                 struct_str += (
                     "\t    "
@@ -204,11 +214,26 @@ class Disassembler:
         """
         events_str = ""
         for event_name, data in self.events.items():
-            events_str += "\n\t event: " + utils.color.BEIGE + event_name + utils.color.ENDC + "\n"
+            events_str += (
+                "\n\t event: "
+                + utils.color.BEIGE
+                + event_name
+                + utils.color.ENDC
+                + "\n"
+            )
             for attribut in data:
-                events_str += "\t    " + utils.color.GREEN + attribut["name"] + utils.color.ENDC
                 events_str += (
-                    "   : " + utils.color.YELLOW + attribut["type"] + utils.color.ENDC + "\n"
+                    "\t    "
+                    + utils.color.GREEN
+                    + attribut["name"]
+                    + utils.color.ENDC
+                )
+                events_str += (
+                    "   : "
+                    + utils.color.YELLOW
+                    + attribut["type"]
+                    + utils.color.ENDC
+                    + "\n"
                 )
         return events_str
 
@@ -221,7 +246,12 @@ class Disassembler:
         builtins_str = ""
         if self.builtins != []:
             builtins_str += "\n\t %builtins "
-            return builtins_str + utils.color.RED + " ".join(self.builtins) + utils.color.ENDC
+            return (
+                builtins_str
+                + utils.color.RED
+                + " ".join(self.builtins)
+                + utils.color.ENDC
+            )
         return builtins_str
 
     def dump_json(self):
@@ -268,12 +298,21 @@ class Disassembler:
             dot: The call graph dot.
         """
         if self.call_graph is None:
-            self.call_graph = CallFlowGraph(self.functions, filename=filename, format=format)
+            self.call_graph = CallFlowGraph(
+                self.functions, filename=filename, format=format
+            )
 
         self.call_graph.print(view)
         return self.call_graph.dot
 
-    def print_cfg(self, filename, format="pdf", func_name=None, func_offset=None, view=True):
+    def print_cfg(
+        self,
+        filename,
+        format="pdf",
+        func_name=None,
+        func_offset=None,
+        view=True,
+    ):
         """Print the CFG.
 
         Args:
@@ -333,9 +372,8 @@ class Disassembler:
         # print(json.dumps(analytics, indent=3))
         return analytics
 
-##### POC decompiler #####
+    ##### POC decompiler #####
     def decompiler_poc(self):
         print(self.print_builtins())
         decomp = Decompiler()
         decomp.decompile_code(self.functions)
-                    

@@ -37,8 +37,12 @@ class Instruction:
         )
         self.off2 = self.off2 if int(self.off2) != 0 else ""
         self.imm = instruction_data.get("imm")
-        self.dstRegister = instruction_data.get("dst_register").split("Register.")[1]
-        self.op0Register = instruction_data.get("op0_register").split("Register.")[1]
+        self.dstRegister = instruction_data.get("dst_register").split(
+            "Register."
+        )[1]
+        self.op0Register = instruction_data.get("op0_register").split(
+            "Register."
+        )[1]
         self.op1Addr = instruction_data.get("op1_addr").split("Op1Addr.")[1]
         self.res = instruction_data.get("res").split("Res.")[1]
         self.pcUpdate = instruction_data.get("pc_update").split("PcUpdate.")[1]
@@ -59,7 +63,9 @@ class Instruction:
         """
         if self.is_call_direct():
             if self.imm != None:
-                return int(self.id) + int(field_element_repr(int(self.imm), self.prime))
+                return int(self.id) + int(
+                    field_element_repr(int(self.imm), self.prime)
+                )
         else:
             None
 
@@ -96,7 +102,9 @@ class Instruction:
         OPERATORS = {"ADD": "+", "MUL": "*"}
 
         disass_str = ""
-        disass_str += self.print_instruction(f"{self.opcode}", color=utils.color.GREEN)
+        disass_str += self.print_instruction(
+            f"{self.opcode}", color=utils.color.GREEN
+        )
         if "OP1" in self.res:
             if "IMM" in self.op1Addr:
                 disass_str += self.print_instruction(
@@ -105,7 +113,8 @@ class Instruction:
                 value = value_to_string(int(self.imm), self.prime)
                 if value != "":
                     disass_str += self.print_instruction(
-                        f"# {value_to_string(int(self.imm), self.prime)}", color=utils.color.CYAN
+                        f"# {value_to_string(int(self.imm), self.prime)}",
+                        color=utils.color.CYAN,
                     )
             elif "OP0" in self.op1Addr:
                 disass_str += self.print_instruction(
@@ -135,11 +144,15 @@ class Instruction:
         """
         disass_str = ""
         if "REGULAR" not in self.pcUpdate:
-            disass_str += self.print_instruction(f"{self.pcUpdate}", color=utils.color.RED)
+            disass_str += self.print_instruction(
+                f"{self.pcUpdate}", color=utils.color.RED
+            )
             disass_str += self.print_instruction(
                 field_element_repr(int(self.imm), self.prime), utils.color.BLUE
             )
-            jump_to = int(field_element_repr(int(self.imm), self.prime)) + int(self.id)
+            jump_to = int(field_element_repr(int(self.imm), self.prime)) + int(
+                self.id
+            )
             if str(jump_to) in self.labels:
                 disass_str += self.print_instruction(
                     f"# JMP {self.labels[str(jump_to)]}",
@@ -151,7 +164,9 @@ class Instruction:
                     color=utils.color.CYAN,
                 )
         else:
-            disass_str += self.print_instruction(f"{self.opcode}", color=utils.color.RED)
+            disass_str += self.print_instruction(
+                f"{self.opcode}", color=utils.color.RED
+            )
         return disass_str
 
     def _handle_call(self):
@@ -160,21 +175,29 @@ class Instruction:
         Returns:
             String: The formated CALL instruction
         """
-        disass_str = "" + self.print_instruction(f"{self.opcode}", color=utils.color.RED)
+        disass_str = "" + self.print_instruction(
+            f"{self.opcode}", color=utils.color.RED
+        )
 
         # Direct CALL or Relative CALL
         if self.is_call_direct():
-            offset = int(self.id) + int(field_element_repr(int(self.imm), self.prime))
+            offset = int(self.id) + int(
+                field_element_repr(int(self.imm), self.prime)
+            )
             # direct CALL to a fonction
             if self.call_xref_func_name is not None:
-                disass_str += self.print_instruction(f"{offset}", color=utils.color.CYAN)
+                disass_str += self.print_instruction(
+                    f"{offset}", color=utils.color.CYAN
+                )
                 disass_str += self.print_instruction(
                     f"# {self.call_xref_func_name}", color=utils.color.CYAN
                 )
             # relative CALL to a label
             # e.g. call rel (123)
             else:
-                disass_str += self.print_instruction(f"rel ({offset})", color=utils.color.BEIGE)
+                disass_str += self.print_instruction(
+                    f"rel ({offset})", color=utils.color.BEIGE
+                )
                 if str(offset) in self.labels:
                     disass_str += self.print_instruction(
                         f"# {self.labels[str(offset)]}", color=utils.color.CYAN
@@ -212,7 +235,9 @@ class Instruction:
             disass_str += self.print_instruction(
                 f"\nLABEL : {self.labels[self.id]}", color=utils.color.GREEN
             )
-        disass_str += self.print_instruction(f"\noffset {self.id}:", color=utils.color.HEADER)
+        disass_str += self.print_instruction(
+            f"\noffset {self.id}:", color=utils.color.HEADER
+        )
         if "ASSERT_EQ" in self.opcode:
             disass_str += self._handle_assert_eq()
 
@@ -231,9 +256,17 @@ class Instruction:
         if "REGULAR" not in self.apUpdate:
             op = list(filter(None, re.split(r"(\d+)", self.apUpdate)))
             APopcode = op[0]
-            APval = op[1] if (len(op) > 1) else int(field_element_repr(int(self.imm), self.prime))
-            disass_str += self.print_instruction(f"\noffset {self.id}:", color=utils.color.HEADER)
-            disass_str += self.print_instruction(f"{APopcode}", color=utils.color.YELLOW)
+            APval = (
+                op[1]
+                if (len(op) > 1)
+                else int(field_element_repr(int(self.imm), self.prime))
+            )
+            disass_str += self.print_instruction(
+                f"\noffset {self.id}:", color=utils.color.HEADER
+            )
+            disass_str += self.print_instruction(
+                f"{APopcode}", color=utils.color.YELLOW
+            )
             disass_str += self.print_instruction(f"AP, {APval}")
 
         # if self.hint and self.ref:
@@ -241,13 +274,21 @@ class Instruction:
         #        f" # {self.hint} | {self.ref}", color=utils.color.BEIGE
         #    )
         if self.hint:
-            disass_str += self.print_instruction(f" # {self.hint}", color=utils.color.BEIGE)
+            disass_str += self.print_instruction(
+                f" # {self.hint}", color=utils.color.BEIGE
+            )
         # elif self.ref:
         #    disass_str += self.print_instruction(f" # {self.ref}", color=utils.color.BEIGE)
 
         return disass_str
 
-    def print_instruction(self, data, color="", end="", tab=1,):
+    def print_instruction(
+        self,
+        data,
+        color="",
+        end="",
+        tab=1,
+    ):
         """format the instruction
 
         Args:

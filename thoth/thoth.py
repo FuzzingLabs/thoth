@@ -39,8 +39,20 @@ def parse_args():
         action="store_true",
         help="Print JSON with details of all instructions",
     )
-    m.add_argument("-c", "-call", "--call", action="store_true", help="Print call flow graph")
-    m.add_argument("-g", "-cfg", "--cfg", action="store_true", help="Print control flow graph")
+    m.add_argument(
+        "-c",
+        "-call",
+        "--call",
+        action="store_true",
+        help="Print call flow graph",
+    )
+    m.add_argument(
+        "-g",
+        "-cfg",
+        "--cfg",
+        action="store_true",
+        help="Print control flow graph",
+    )
     m.add_argument(
         "-format",
         "--format",
@@ -49,7 +61,12 @@ def parse_args():
         choices=["pdf", "png", "svg"],
         help="Format of the graphs",
     )
-    m.add_argument("-color", "--color", action="store_true", help="Print disassembler with color")
+    m.add_argument(
+        "-color",
+        "--color",
+        action="store_true",
+        help="Print disassembler with color",
+    )
     m.add_argument(
         "-function",
         "--function",
@@ -64,12 +81,7 @@ def parse_args():
         action="store_true",
         help="Dump a Json file containing debug information",
     )
-    m.add_argument(
-        "-d",
-        "-decomp",
-        "--decomp",
-        action="store_true"
-    )
+    m.add_argument("-d", "-decomp", "--decomp", action="store_true")
 
     return parser.parse_args()
 
@@ -87,7 +99,7 @@ def main():
         disassembler.dump_json()
 
     # print assembly code
-    #disassembler.print_disassembly()
+    # disassembler.print_disassembly()
     filename = os.path.basename(args.file[0].name).split(".")[0]
     format = "pdf" if args.format is None else str(args.format)
     # print call flow graph
@@ -96,12 +108,14 @@ def main():
 
     # print CFG
     if args.cfg:
-        disassembler.print_cfg(filename=filename, format=format, func_name=args.function)
+        disassembler.print_cfg(
+            filename=filename, format=format, func_name=args.function
+        )
 
     # print analytics
     if args.analytics:
         print(disassembler.analytics())
-    
+
     if args.decomp:
         disassembler.decompiler_poc()
     return 0
