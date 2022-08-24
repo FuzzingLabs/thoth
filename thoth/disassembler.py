@@ -184,26 +184,27 @@ class Disassembler:
         struct_str = ""
         for struct in self.structs:
             struct_str += (
-                "\n\t struct: "
+                "struct "
                 + utils.color.BEIGE
                 + struct
                 + utils.color.ENDC
-                + "\n"
+                + ":\n"
             )
             for attribut in self.structs[struct]:
                 struct_str += (
-                    "\t    "
+                    "\tmember "
                     + utils.color.GREEN
                     + self.structs[struct][attribut]["attribut"]
                     + utils.color.ENDC
                 )
                 struct_str += (
-                    "   : "
+                    " : "
                     + utils.color.YELLOW
                     + self.structs[struct][attribut]["cairo_type"]
                     + utils.color.ENDC
                     + "\n"
                 )
+            struct_str += "end\n\n"
         return struct_str
 
     def print_events(self):
@@ -245,7 +246,7 @@ class Disassembler:
         """
         builtins_str = ""
         if self.builtins != []:
-            builtins_str += "\n\t %builtins "
+            builtins_str += "\n%builtins "
             return (
                 builtins_str
                 + utils.color.RED
@@ -375,5 +376,11 @@ class Disassembler:
     ##### POC decompiler #####
     def decompiler_poc(self):
         print(self.print_builtins())
+        for function in self.functions:
+            if function.is_import:
+                func_name = function.name.split(".")[-1]
+                package = ".".join(function.name.split(".")[:-1])
+                print(f"from {package} import {func_name}")
+        print(self.print_structs())
         decomp = Decompiler()
         decomp.decompile_code(self.functions)

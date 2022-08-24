@@ -1,3 +1,4 @@
+import re
 from thoth import utils
 
 
@@ -143,21 +144,34 @@ class Decompiler:
             )
         if "ASSERT_EQ" in instruction.opcode:
             disass_str += self._handle_assert_eq_decomp(instruction)
-
         elif "NOP" in instruction.opcode:
             disass_str += self._handle_nop_decomp(instruction)
+            disass_str += ";" if disass_str != "" else ""
         elif "CALL" in instruction.opcode:
             disass_str += self._handle_call_decomp(instruction)
-
         elif "RET" in instruction.opcode:
             disass_str += self._handle_ret_decomp(instruction)
-
         else:
             raise AssertionError
 
         if "REGULAR" not in instruction.apUpdate:
-            disass_str += "; "
-            disass_str += self.print_instruction_decomp(f"ap++", tab=1)
+            op = list(filter(None, re.split(r"(\d+)", instruction.apUpdate)))
+            APopcode = op[0]
+            APval = (
+                op[1]
+                if (len(op) > 1)
+                else int(
+                    utils.field_element_repr(
+                        int(instruction.imm), instruction.prime
+                    )
+                )
+            )
+            for i in range(int(APval)):
+                disass_str += self.print_instruction_decomp(
+                    f"ap ++", tab=self.tab
+                )
+                if i != int(APval) - 1:
+                    disass_str += "\n"
 
         if instruction.hint:
             disass_str += self.print_instruction_decomp(
@@ -184,13 +198,8 @@ class Decompiler:
 
     def decompile_code(self, functions):
         for function in functions:
-            function.generate_cfg()
-        for function in functions:
-            if function.is_import:
-                func_name = function.name.split(".")[-1]
-                package = ".".join(function.name.split(".")[:-1])
-                print(f"from {package} import {func_name}")
-            else:
+            if function.is_import is False:
+                function.generate_cfg()
                 print(function.get_prototype())
                 self.tab += 1
                 if function.cfg.basicblocks != []:
