@@ -100,7 +100,7 @@ def extract_function_prototype(
                         ]
                         tmp[ret_data["offset"]] = {}
                         tmp[ret_data["offset"]][argument] = ret_data["cairo_type"]
-                if (identifier_name == ".Return"):
+                if (identifier_name == ".Return" and "cairo_type" in identifiers_data[function_identifier]):
                     return_data = identifiers_data[function_identifier]["cairo_type"].replace("(", "").replace(")", "")
                     return_data = return_data.split(",")
                     i = 0
@@ -113,8 +113,6 @@ def extract_function_prototype(
                 identifiers[identifier_name[1:].lower()] = dict(
                     collections.OrderedDict(sorted(tmp.items()))
                 )
-                print(identifiers)
-
         # get decorators
         if (
             func_name in identifiers_data

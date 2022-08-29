@@ -14,7 +14,10 @@ class Decompiler:
         self.end = 0
         self.ap = []
         self.ifcount = 0
+        self.end_if = None
         self.functions = functions
+        self.decompiled_function = None
+        self.return_values = None
 
     def _handle_assert_eq_decomp(self, instruction):
         """Handle the ASSERT_EQ opcode
@@ -62,6 +65,17 @@ class Decompiler:
                 decomp_str += self.print_instruction_decomp(f"if [AP{instruction.offDest}] == 0:")
                 self.tab += 1
                 self.ifcount += 1
+                ## Detect if there is an else later
+                jump_to = int(utils.field_element_repr(int(instruction.imm), instruction.prime)) + int(instruction.id)
+                for inst in self.decompiled_function.instructions:
+                   # print(inst.id)
+                    if (int(inst.id) == int(jump_to) - 2):
+                        if (inst.pcUpdate != "JUMP_REL"):
+                            self.end_if = int(jump_to)
+                            self.ifcount -=1
+                #for inst in next_instructions:
+                    #if inst.opcode ==
+                #print(next_instructions)
             elif instruction.pcUpdate == "JUMP_REL":
                 if self.ifcount != 0:
                     self.tab -= 1
@@ -144,7 +158,19 @@ class Decompiler:
             String: The formated RET instruction
         """
         decomp_str = ""
-        decomp_str += self.print_instruction_decomp("ret", end="\n")
+        if (self.return_values == None):
+            if (last):
+                self.tab -= 1
+            decomp_str += self.print_instruction_decomp("ret", end="\n")
+        else:
+            idx = len(self.return_values)
+            decomp_str += self.print_instruction_decomp("return(")
+            while (idx):
+                decomp_str += f"[ap-{idx}]"
+                if (idx != 1):
+                    decomp_str += ", "
+                idx-=1
+            decomp_str += ")\n"
         if last:
             self.tab = 0
             decomp_str += self.print_instruction_decomp("end")
@@ -235,6 +261,8 @@ class Decompiler:
     def decompile_code(self):
         for function in self.functions:
             if function.is_import is False:
+                self.decompiled_function = function
+                self.return_values = function.ret
                 function.generate_cfg()
                 print(function.get_prototype())
                 self.tab += 1
@@ -243,6 +271,10 @@ class Decompiler:
                         for count, instruction in enumerate(
                             block.instructions, start=1
                         ):
+                            if (int(instruction.id) == self.end_if):
+                                self.end_if = None
+                                self.tab -= 1
+                                print(self.print_instruction_decomp("end"))
                             if self.end != 0:
                                 self.end -= 1
                                 if self.end == 1:
