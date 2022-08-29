@@ -175,7 +175,7 @@ class Disassembler:
             else:
                 raise SystemExit("Error: Function does not exist.")
 
-    def print_structs(self):
+    def print_structs(self, decompiler=False):
         """Print the structures parsed from the ABI.
 
         Returns:
@@ -183,6 +183,8 @@ class Disassembler:
         """
         struct_str = ""
         for struct in self.structs:
+            if decompiler == True and len(self.structs[struct]) == 0:
+                continue
             struct_str += (
                 "struct "
                 + utils.color.BEIGE
@@ -381,6 +383,6 @@ class Disassembler:
                 func_name = function.name.split(".")[-1]
                 package = ".".join(function.name.split(".")[:-1])
                 print(f"from {package} import {func_name}")
-        print(self.print_structs())
-        decomp = Decompiler()
-        decomp.decompile_code(self.functions)
+        print(self.print_structs(decompiler=True))
+        decomp = Decompiler(functions=self.functions)
+        decomp.decompile_code()

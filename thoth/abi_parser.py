@@ -85,28 +85,35 @@ def extract_function_prototype(
     for offset in func_offset:
         func_name = func_offset[offset]
         identifiers = func_identifiers[func_name] = {}
-
         # get func args values
         for identifier_name in identifiers_name:
             # first create the identifier_name even if content will be empty
             identifiers[identifier_name[1:].lower()] = {}
             function_identifier = func_name + identifier_name
-            if (
-                function_identifier in identifiers_data
-                and "members" in identifiers_data[function_identifier]
-            ):
-                data = identifiers_data[function_identifier]["members"]
-
+            if (function_identifier in identifiers_data):
                 tmp = {}
-                for argument in data:
-                    ret_data = identifiers_data[function_identifier]["members"][
-                        argument
-                    ]
-                    tmp[ret_data["offset"]] = {}
-                    tmp[ret_data["offset"]][argument] = ret_data["cairo_type"]
+                if ("members" in identifiers_data[function_identifier]):
+                    data = identifiers_data[function_identifier]["members"]
+                    for argument in data:
+                        ret_data = identifiers_data[function_identifier]["members"][
+                            argument
+                        ]
+                        tmp[ret_data["offset"]] = {}
+                        tmp[ret_data["offset"]][argument] = ret_data["cairo_type"]
+                if (identifier_name == ".Return"):
+                    return_data = identifiers_data[function_identifier]["cairo_type"].replace("(", "").replace(")", "")
+                    return_data = return_data.split(",")
+                    i = 0
+                    for ret_val in return_data:
+                        if (":" in ret_val):
+                            var_name = ret_val.split(":")[0].replace(" ", "")
+                            tmp[i] = {}
+                            tmp[i][var_name] = ret_val.split(":")[1].replace(" ", "")
+                            i+=1
                 identifiers[identifier_name[1:].lower()] = dict(
                     collections.OrderedDict(sorted(tmp.items()))
                 )
+                print(identifiers)
 
         # get decorators
         if (
@@ -125,7 +132,6 @@ def extract_function_prototype(
             identifiers["entry_point"] = True
         else:
             identifiers["entry_point"] = False
-
     return func_identifiers
 
 

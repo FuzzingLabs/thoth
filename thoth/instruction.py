@@ -85,6 +85,9 @@ class Instruction:
         """
         return ("CALL" == self.opcode) and (self.imm != "None")
 
+    def is_call_abs(self):
+        return ("CALL" == self.opcode) and (self.pcUpdate == "JUMP")
+
     def is_return(self):
         """Check if the instruction is a RET
 

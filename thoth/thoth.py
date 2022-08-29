@@ -99,7 +99,10 @@ def main():
         disassembler.dump_json()
 
     # print assembly code
-    disassembler.print_disassembly()
+    if args.decomp:
+        disassembler.decompiler_poc()
+    else:
+        disassembler.print_disassembly()
     filename = os.path.basename(args.file[0].name).split(".")[0]
     format = "pdf" if args.format is None else str(args.format)
     # print call flow graph
@@ -116,8 +119,6 @@ def main():
     if args.analytics:
         print(disassembler.analytics())
 
-    if args.decomp:
-        disassembler.decompiler_poc()
     return 0
 
 

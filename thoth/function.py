@@ -88,7 +88,6 @@ class Function:
             ("args", self.args),
             ("ret", self.ret),
         ]
-
         for data in datas:
             data_name = data[0]
             data_content = data[1]
