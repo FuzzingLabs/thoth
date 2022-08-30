@@ -181,6 +181,7 @@ class Instruction:
         disass_str = "" + self.print_instruction(
             f"{self.opcode}", color=utils.color.RED
         )
+        call_type = "abs" if self.is_call_abs() else "rel"
 
         # Direct CALL or Relative CALL
         if self.is_call_direct():
@@ -199,7 +200,7 @@ class Instruction:
             # e.g. call rel (123)
             else:
                 disass_str += self.print_instruction(
-                    f"rel ({offset})", color=utils.color.BEIGE
+                    f"{call_type} ({offset})", color=utils.color.BEIGE
                 )
                 if str(offset) in self.labels:
                     disass_str += self.print_instruction(
@@ -209,7 +210,8 @@ class Instruction:
         # e.g. call rel [fp + 4]
         elif self.is_call_indirect():
             disass_str += self.print_instruction(
-                f"rel [{self.op1Addr}{self.off2}]", color=utils.color.BEIGE
+                f"{call_type} [{self.op1Addr}{self.off2}]",
+                color=utils.color.BEIGE,
             )
         else:
             raise NotImplementedError
