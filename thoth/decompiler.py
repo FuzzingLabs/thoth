@@ -157,7 +157,7 @@ class Decompiler:
 
         return decomp_str
 
-    def _handle_ret_decomp(self, instruction, last=False):
+    def _handle_ret_decomp(self, last=False):
         """Handle the RET opcode
 
         Returns:
@@ -243,7 +243,7 @@ class Decompiler:
         elif "CALL" in instruction.opcode:
             decomp_str += self._handle_call_decomp(instruction)
         elif "RET" in instruction.opcode:
-            decomp_str += self._handle_ret_decomp(instruction, last=last)
+            decomp_str += self._handle_ret_decomp(last=last)
         else:
             raise AssertionError
         return decomp_str

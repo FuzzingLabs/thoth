@@ -285,13 +285,7 @@ class Instruction:
 
         return disass_str
 
-    def print_instruction(
-        self,
-        data,
-        color="",
-        end="",
-        tab=1,
-    ):
+    def print_instruction(self, data, color="", end=""):
         """format the instruction
 
         Args:
