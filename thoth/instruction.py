@@ -243,8 +243,24 @@ class Instruction:
         disass_str += self.print_instruction(
             f"\noffset {self.id}:", color=utils.color.HEADER
         )
+
         if "ASSERT_EQ" in self.opcode:
             disass_str += self._handle_assert_eq()
+            if "REGULAR" not in self.apUpdate:
+                op = list(filter(None, re.split(r"(\d+)", self.apUpdate)))
+                APopcode = op[0]
+                APval = (
+                    op[1]
+                    if (len(op) > 1)
+                    else int(field_element_repr(int(self.imm), self.prime))
+                )
+                disass_str += self.print_instruction(
+                    f"\noffset {self.id}:", color=utils.color.HEADER
+                )
+                disass_str += self.print_instruction(
+                    f"{APopcode}", color=utils.color.YELLOW
+                )
+                disass_str += self.print_instruction(f"AP, {APval}")
 
         elif "NOP" in self.opcode:
             disass_str += self._handle_nop()
@@ -257,22 +273,6 @@ class Instruction:
 
         else:
             raise AssertionError
-
-        if "REGULAR" not in self.apUpdate:
-            op = list(filter(None, re.split(r"(\d+)", self.apUpdate)))
-            APopcode = op[0]
-            APval = (
-                op[1]
-                if (len(op) > 1)
-                else int(field_element_repr(int(self.imm), self.prime))
-            )
-            disass_str += self.print_instruction(
-                f"\noffset {self.id}:", color=utils.color.HEADER
-            )
-            disass_str += self.print_instruction(
-                f"{APopcode}", color=utils.color.YELLOW
-            )
-            disass_str += self.print_instruction(f"AP, {APval}")
 
         # if self.hint and self.ref:
         #    disass_str += self.print_instruction(
