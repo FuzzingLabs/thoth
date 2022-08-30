@@ -90,26 +90,38 @@ def extract_function_prototype(
             # first create the identifier_name even if content will be empty
             identifiers[identifier_name[1:].lower()] = {}
             function_identifier = func_name + identifier_name
-            if (function_identifier in identifiers_data):
+            if function_identifier in identifiers_data:
                 tmp = {}
-                if ("members" in identifiers_data[function_identifier]):
+                if "members" in identifiers_data[function_identifier]:
                     data = identifiers_data[function_identifier]["members"]
                     for argument in data:
-                        ret_data = identifiers_data[function_identifier]["members"][
-                            argument
-                        ]
+                        ret_data = identifiers_data[function_identifier][
+                            "members"
+                        ][argument]
                         tmp[ret_data["offset"]] = {}
-                        tmp[ret_data["offset"]][argument] = ret_data["cairo_type"]
-                if (identifier_name == ".Return" and "cairo_type" in identifiers_data[function_identifier]):
-                    return_data = identifiers_data[function_identifier]["cairo_type"].replace("(", "").replace(")", "")
+                        tmp[ret_data["offset"]][argument] = ret_data[
+                            "cairo_type"
+                        ]
+                if (
+                    identifier_name == ".Return"
+                    and "cairo_type" in identifiers_data[function_identifier]
+                ):
+                    ##Get return values and type
+                    return_data = (
+                        identifiers_data[function_identifier]["cairo_type"]
+                        .replace("(", "")
+                        .replace(")", "")
+                    )
                     return_data = return_data.split(",")
                     i = 0
                     for ret_val in return_data:
-                        if (":" in ret_val):
+                        if ":" in ret_val:
                             var_name = ret_val.split(":")[0].replace(" ", "")
                             tmp[i] = {}
-                            tmp[i][var_name] = ret_val.split(":")[1].replace(" ", "")
-                            i+=1
+                            tmp[i][var_name] = ret_val.split(":")[1].replace(
+                                " ", ""
+                            )
+                            i += 1
                 identifiers[identifier_name[1:].lower()] = dict(
                     collections.OrderedDict(sorted(tmp.items()))
                 )
