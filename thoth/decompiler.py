@@ -73,14 +73,14 @@ class Decompiler:
                     )
                 ) + int(instruction.id)
                 for inst in self.decompiled_function.instructions:
-                    # print(inst.id)
-                    if int(inst.id) == int(jump_to) - 2:
+                    if (
+                        int(inst.id) == int(jump_to) - 2
+                        or int(inst.id) == int(jump_to) - 1
+                    ):
                         if inst.pcUpdate != "JUMP_REL":
                             self.end_if = int(jump_to)
                             self.ifcount -= 1
                 # for inst in next_instructions:
-                # if inst.opcode ==
-                # print(next_instructions)
             elif instruction.pcUpdate == "JUMP_REL":
                 if self.ifcount != 0:
                     self.tab -= 1
@@ -164,9 +164,9 @@ class Decompiler:
         """
         decomp_str = ""
         if self.return_values == None:
+            decomp_str += self.print_instruction_decomp("ret", end="\n")
             if last:
                 self.tab -= 1
-            decomp_str += self.print_instruction_decomp("ret", end="\n")
         else:
             idx = len(self.return_values)
             decomp_str += self.print_instruction_decomp("return(")
