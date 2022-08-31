@@ -43,13 +43,17 @@ thoth -f tests/json_files/cairo_test_addition.json -d
 ```
 Example 1 with strings:
 <p align="center">
-	<img src="/images/thoth_decompile_sourcecode.png"/>
-	<img src="/images/thoth_decompile.png"/>
+	<b> source code </b></br>
+	<img src="/images/thoth_decompile_sourcecode.png"/></br>
+	<b> decompiler code </b></br>
+	<img src="/images/thoth_decompile.png"/></br>
 </p>
 Example 2 with function call:
 <p align="center">
-	<img src="/images/thoth_decompile_sourcecode_2.png"/>
-	<img src="/images/thoth_decompile_2.png"/>
+	<b> source code </b></br>
+	<img src="/images/thoth_decompile_sourcecode_2.png"/></br>
+	<b> decompiler code </b></br>
+	<img src="/images/thoth_decompile_2.png"/></br>
 </p>
 ## Print the contract's call graph 
 
