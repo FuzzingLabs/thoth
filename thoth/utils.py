@@ -129,6 +129,8 @@ def value_to_string(val: int, prime: int) -> str:
         return ""
     try:
         repr_str = bytearray.fromhex(repr_hex[2:]).decode("utf-8")
+        if not repr_str.isprintable():
+            return hex(int(repr))
         return repr_str
     except Exception:
         return repr_hex
