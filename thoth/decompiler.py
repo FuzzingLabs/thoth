@@ -26,7 +26,6 @@ class Decompiler:
             String: The formated ASSERT_EQ instruction
         """
         OPERATORS = {"ADD": "+", "MUL": "*"}
-
         decomp_str = ""
         if "OP1" in instruction.res:
             if "IMM" in instruction.op1Addr:
