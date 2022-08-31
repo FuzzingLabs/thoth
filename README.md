@@ -1,7 +1,7 @@
 # Thoth, the Cairo/Starknet bytecode analyzer & disassembler
 <img src="./tests/coverage.svg"/> <img src ="https://img.shields.io/badge/python-3.10-blue.svg"/>
 
-Thoth (pronounced "toss") is a Cairo/Starknet analyzer & disassembler written in Python 3. Thoth's features also include the generation of the call graph and control-flow graph (CFG) of a given Cairo/Starknet compilation artifact.
+Thoth (pronounced "toss") is a Cairo/Starknet analyzer, disassembler & decompiler written in Python 3. Thoth's features also include the generation of the call graph and control-flow graph (CFG) of a given Cairo/Starknet compilation artifact.
 
 ## Installation
 
@@ -36,6 +36,26 @@ To get a verbose version with more details about decoded bytecodes:
 thoth -f tests/json_files/cairo_array_sum.json -vvv
 ```
 
+## Decompile the contract's compilation artifact (json)
+
+
+```sh
+thoth -f tests/json_files/cairo_test_addition.json -d
+```
+Example 1 with strings:
+<p align="center">
+	<b> source code </b></br>
+	<img src="/images/thoth_decompile_sourcecode.png"/></br>
+	<b> decompiler code </b></br>
+	<img src="/images/thoth_decompile.png"/></br>
+</p>
+Example 2 with function call:
+<p align="center">
+	<b> source code </b></br>
+	<img src="/images/thoth_decompile_sourcecode_2.png"/></br>
+	<b> decompiler code </b></br>
+	<img src="/images/thoth_decompile_2.png"/></br>
+</p>
 ## Print the contract's call graph 
 
 The call flow graph represents calling relationships between functions of the contract. We tried to provide a maximum of information, such as the entry-point functions, the imports, decorators, etc.

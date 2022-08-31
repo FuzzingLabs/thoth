@@ -118,7 +118,9 @@ class CFG:
             ):
                 current_bb.end_instr = instr
                 current_bb.end_offset = instr.id
-                current_bb.edges_offset.append(str(int(instr.id) + int(instr.imm)))
+                current_bb.edges_offset.append(
+                    str(int(instr.id) + int(instr.imm))
+                )
                 list_bb.append(current_bb)
                 new_bb = True
 
@@ -127,7 +129,9 @@ class CFG:
             elif "JNZ" in instr.pcUpdate:
                 current_bb.end_instr = instr
                 current_bb.end_offset = instr.id
-                current_bb.edges_offset.append(str(int(instr.id) + int(instr.imm)))
+                current_bb.edges_offset.append(
+                    str(int(instr.id) + int(instr.imm))
+                )
                 current_bb.edges_offset.append(str(int(instr.id) + int(2)))
                 list_bb.append(current_bb)
                 new_bb = True
@@ -146,7 +150,9 @@ class CFG:
         # TODO - issue #45
         print()
         for block in self.basicblocks:
-            print(f"-- BB {block.name, len(block.instructions)} {block.edges_offset} --")
+            print(
+                f"-- BB {block.name, len(block.instructions)} {block.edges_offset} --"
+            )
             for instr in block.instructions:
                 print(instr.print())
             print()
@@ -168,8 +174,12 @@ class CFG:
             shape = "square"
             label_instruction = ""
             for instr in block.instructions:
-                label_instruction += re.sub("\s+", " ", instr.print().replace("\n", "\\l"))
-            self.dot.node(block.name, label=label_instruction + "\\l", shape=shape)
+                label_instruction += re.sub(
+                    "\s+", " ", instr.print().replace("\n", "\\l")
+                )
+            self.dot.node(
+                block.name, label=label_instruction + "\\l", shape=shape
+            )
 
             # Iterate over edges_offset
             for offset in block.edges_offset:

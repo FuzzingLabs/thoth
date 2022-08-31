@@ -1,0 +1,719 @@
+{
+    "attributes": [],
+    "builtins": [],
+    "data": [
+        "0x208b7fff7fff7ffe",
+        "0x208b7fff7fff7ffe",
+        "0x480680017fff8000",
+        "0x2",
+        "0x480680017fff8000",
+        "0x1",
+        "0x480680017fff8000",
+        "0x3",
+        "0x1104800180018000",
+        "0x800000000000010fffffffffffffffffffffffffffffffffffffffffffffff9",
+        "0x480680017fff8000",
+        "0x3",
+        "0x480680017fff8000",
+        "0x1",
+        "0x1104800180018000",
+        "0x800000000000010fffffffffffffffffffffffffffffffffffffffffffffff4",
+        "0x208b7fff7fff7ffe"
+    ],
+    "debug_info": {
+        "file_contents": {},
+        "instruction_locations": {
+            "0": {
+                "accessible_scopes": [
+                    "__main__",
+                    "__main__.myfunc"
+                ],
+                "flow_tracking_data": {
+                    "ap_tracking": {
+                        "group": 0,
+                        "offset": 0
+                    },
+                    "reference_ids": {
+                        "__main__.myfunc.a": 0,
+                        "__main__.myfunc.b": 1,
+                        "__main__.myfunc.c": 2,
+                        "__main__.myfunc.d": 3
+                    }
+                },
+                "hints": [],
+                "inst": {
+                    "end_col": 8,
+                    "end_line": 3,
+                    "input_file": {
+                        "filename": "cairo_files/cairo_call_with_arguments.cairo"
+                    },
+                    "start_col": 5,
+                    "start_line": 3
+                }
+            },
+            "1": {
+                "accessible_scopes": [
+                    "__main__",
+                    "__main__.myfuncbis"
+                ],
+                "flow_tracking_data": {
+                    "ap_tracking": {
+                        "group": 1,
+                        "offset": 0
+                    },
+                    "reference_ids": {
+                        "__main__.myfuncbis.a": 4,
+                        "__main__.myfuncbis.b": 5,
+                        "__main__.myfuncbis.c": 6,
+                        "__main__.myfuncbis.d": 7
+                    }
+                },
+                "hints": [],
+                "inst": {
+                    "end_col": 8,
+                    "end_line": 9,
+                    "input_file": {
+                        "filename": "cairo_files/cairo_call_with_arguments.cairo"
+                    },
+                    "start_col": 5,
+                    "start_line": 9
+                }
+            },
+            "2": {
+                "accessible_scopes": [
+                    "__main__",
+                    "__main__.main"
+                ],
+                "flow_tracking_data": {
+                    "ap_tracking": {
+                        "group": 2,
+                        "offset": 0
+                    },
+                    "reference_ids": {
+                        "__main__.main.a": 8,
+                        "__main__.main.b": 9,
+                        "__main__.main.c": 10
+                    }
+                },
+                "hints": [],
+                "inst": {
+                    "end_col": 14,
+                    "end_line": 14,
+                    "input_file": {
+                        "filename": "cairo_files/cairo_call_with_arguments.cairo"
+                    },
+                    "parent_location": [
+                        {
+                            "end_col": 13,
+                            "end_line": 16,
+                            "input_file": {
+                                "filename": "cairo_files/cairo_call_with_arguments.cairo"
+                            },
+                            "start_col": 12,
+                            "start_line": 16
+                        },
+                        "While expanding the reference 'b' in:"
+                    ],
+                    "start_col": 13,
+                    "start_line": 14
+                }
+            },
+            "4": {
+                "accessible_scopes": [
+                    "__main__",
+                    "__main__.main"
+                ],
+                "flow_tracking_data": {
+                    "ap_tracking": {
+                        "group": 2,
+                        "offset": 1
+                    },
+                    "reference_ids": {
+                        "__main__.main.a": 8,
+                        "__main__.main.b": 9,
+                        "__main__.main.c": 10
+                    }
+                },
+                "hints": [],
+                "inst": {
+                    "end_col": 14,
+                    "end_line": 13,
+                    "input_file": {
+                        "filename": "cairo_files/cairo_call_with_arguments.cairo"
+                    },
+                    "parent_location": [
+                        {
+                            "end_col": 16,
+                            "end_line": 16,
+                            "input_file": {
+                                "filename": "cairo_files/cairo_call_with_arguments.cairo"
+                            },
+                            "start_col": 15,
+                            "start_line": 16
+                        },
+                        "While expanding the reference 'a' in:"
+                    ],
+                    "start_col": 13,
+                    "start_line": 13
+                }
+            },
+            "6": {
+                "accessible_scopes": [
+                    "__main__",
+                    "__main__.main"
+                ],
+                "flow_tracking_data": {
+                    "ap_tracking": {
+                        "group": 2,
+                        "offset": 2
+                    },
+                    "reference_ids": {
+                        "__main__.main.a": 8,
+                        "__main__.main.b": 9,
+                        "__main__.main.c": 10
+                    }
+                },
+                "hints": [],
+                "inst": {
+                    "end_col": 14,
+                    "end_line": 15,
+                    "input_file": {
+                        "filename": "cairo_files/cairo_call_with_arguments.cairo"
+                    },
+                    "parent_location": [
+                        {
+                            "end_col": 19,
+                            "end_line": 16,
+                            "input_file": {
+                                "filename": "cairo_files/cairo_call_with_arguments.cairo"
+                            },
+                            "start_col": 18,
+                            "start_line": 16
+                        },
+                        "While expanding the reference 'c' in:"
+                    ],
+                    "start_col": 13,
+                    "start_line": 15
+                }
+            },
+            "8": {
+                "accessible_scopes": [
+                    "__main__",
+                    "__main__.main"
+                ],
+                "flow_tracking_data": {
+                    "ap_tracking": {
+                        "group": 2,
+                        "offset": 3
+                    },
+                    "reference_ids": {
+                        "__main__.main.a": 8,
+                        "__main__.main.b": 9,
+                        "__main__.main.c": 10
+                    }
+                },
+                "hints": [],
+                "inst": {
+                    "end_col": 20,
+                    "end_line": 16,
+                    "input_file": {
+                        "filename": "cairo_files/cairo_call_with_arguments.cairo"
+                    },
+                    "start_col": 5,
+                    "start_line": 16
+                }
+            },
+            "10": {
+                "accessible_scopes": [
+                    "__main__",
+                    "__main__.main"
+                ],
+                "flow_tracking_data": {
+                    "ap_tracking": {
+                        "group": 2,
+                        "offset": 5
+                    },
+                    "reference_ids": {
+                        "__main__.main.a": 8,
+                        "__main__.main.b": 9,
+                        "__main__.main.c": 10
+                    }
+                },
+                "hints": [],
+                "inst": {
+                    "end_col": 14,
+                    "end_line": 15,
+                    "input_file": {
+                        "filename": "cairo_files/cairo_call_with_arguments.cairo"
+                    },
+                    "parent_location": [
+                        {
+                            "end_col": 16,
+                            "end_line": 17,
+                            "input_file": {
+                                "filename": "cairo_files/cairo_call_with_arguments.cairo"
+                            },
+                            "start_col": 15,
+                            "start_line": 17
+                        },
+                        "While expanding the reference 'c' in:"
+                    ],
+                    "start_col": 13,
+                    "start_line": 15
+                }
+            },
+            "12": {
+                "accessible_scopes": [
+                    "__main__",
+                    "__main__.main"
+                ],
+                "flow_tracking_data": {
+                    "ap_tracking": {
+                        "group": 2,
+                        "offset": 6
+                    },
+                    "reference_ids": {
+                        "__main__.main.a": 8,
+                        "__main__.main.b": 9,
+                        "__main__.main.c": 10
+                    }
+                },
+                "hints": [],
+                "inst": {
+                    "end_col": 14,
+                    "end_line": 13,
+                    "input_file": {
+                        "filename": "cairo_files/cairo_call_with_arguments.cairo"
+                    },
+                    "parent_location": [
+                        {
+                            "end_col": 19,
+                            "end_line": 17,
+                            "input_file": {
+                                "filename": "cairo_files/cairo_call_with_arguments.cairo"
+                            },
+                            "start_col": 18,
+                            "start_line": 17
+                        },
+                        "While expanding the reference 'a' in:"
+                    ],
+                    "start_col": 13,
+                    "start_line": 13
+                }
+            },
+            "14": {
+                "accessible_scopes": [
+                    "__main__",
+                    "__main__.main"
+                ],
+                "flow_tracking_data": {
+                    "ap_tracking": {
+                        "group": 2,
+                        "offset": 7
+                    },
+                    "reference_ids": {
+                        "__main__.main.a": 8,
+                        "__main__.main.b": 9,
+                        "__main__.main.c": 10
+                    }
+                },
+                "hints": [],
+                "inst": {
+                    "end_col": 20,
+                    "end_line": 17,
+                    "input_file": {
+                        "filename": "cairo_files/cairo_call_with_arguments.cairo"
+                    },
+                    "start_col": 5,
+                    "start_line": 17
+                }
+            },
+            "16": {
+                "accessible_scopes": [
+                    "__main__",
+                    "__main__.main"
+                ],
+                "flow_tracking_data": {
+                    "ap_tracking": {
+                        "group": 2,
+                        "offset": 9
+                    },
+                    "reference_ids": {
+                        "__main__.main.a": 8,
+                        "__main__.main.b": 9,
+                        "__main__.main.c": 10
+                    }
+                },
+                "hints": [],
+                "inst": {
+                    "end_col": 8,
+                    "end_line": 18,
+                    "input_file": {
+                        "filename": "cairo_files/cairo_call_with_arguments.cairo"
+                    },
+                    "start_col": 5,
+                    "start_line": 18
+                }
+            }
+        }
+    },
+    "hints": {},
+    "identifiers": {
+        "__main__.main": {
+            "decorators": [],
+            "pc": 2,
+            "type": "function"
+        },
+        "__main__.main.Args": {
+            "full_name": "__main__.main.Args",
+            "members": {},
+            "size": 0,
+            "type": "struct"
+        },
+        "__main__.main.ImplicitArgs": {
+            "full_name": "__main__.main.ImplicitArgs",
+            "members": {},
+            "size": 0,
+            "type": "struct"
+        },
+        "__main__.main.Return": {
+            "cairo_type": "()",
+            "type": "type_definition"
+        },
+        "__main__.main.SIZEOF_LOCALS": {
+            "type": "const",
+            "value": 0
+        },
+        "__main__.main.a": {
+            "cairo_type": "felt",
+            "full_name": "__main__.main.a",
+            "references": [
+                {
+                    "ap_tracking_data": {
+                        "group": 2,
+                        "offset": 0
+                    },
+                    "pc": 2,
+                    "value": "cast(1, felt)"
+                }
+            ],
+            "type": "reference"
+        },
+        "__main__.main.b": {
+            "cairo_type": "felt",
+            "full_name": "__main__.main.b",
+            "references": [
+                {
+                    "ap_tracking_data": {
+                        "group": 2,
+                        "offset": 0
+                    },
+                    "pc": 2,
+                    "value": "cast(2, felt)"
+                }
+            ],
+            "type": "reference"
+        },
+        "__main__.main.c": {
+            "cairo_type": "felt",
+            "full_name": "__main__.main.c",
+            "references": [
+                {
+                    "ap_tracking_data": {
+                        "group": 2,
+                        "offset": 0
+                    },
+                    "pc": 2,
+                    "value": "cast(3, felt)"
+                }
+            ],
+            "type": "reference"
+        },
+        "__main__.myfunc": {
+            "decorators": [],
+            "pc": 0,
+            "type": "function"
+        },
+        "__main__.myfunc.Args": {
+            "full_name": "__main__.myfunc.Args",
+            "members": {
+                "a": {
+                    "cairo_type": "felt",
+                    "offset": 0
+                },
+                "b": {
+                    "cairo_type": "felt",
+                    "offset": 1
+                },
+                "c": {
+                    "cairo_type": "felt",
+                    "offset": 2
+                }
+            },
+            "size": 3,
+            "type": "struct"
+        },
+        "__main__.myfunc.ImplicitArgs": {
+            "full_name": "__main__.myfunc.ImplicitArgs",
+            "members": {},
+            "size": 0,
+            "type": "struct"
+        },
+        "__main__.myfunc.Return": {
+            "cairo_type": "()",
+            "type": "type_definition"
+        },
+        "__main__.myfunc.SIZEOF_LOCALS": {
+            "type": "const",
+            "value": 0
+        },
+        "__main__.myfunc.a": {
+            "cairo_type": "felt",
+            "full_name": "__main__.myfunc.a",
+            "references": [
+                {
+                    "ap_tracking_data": {
+                        "group": 0,
+                        "offset": 0
+                    },
+                    "pc": 0,
+                    "value": "[cast(fp + (-5), felt*)]"
+                }
+            ],
+            "type": "reference"
+        },
+        "__main__.myfunc.b": {
+            "cairo_type": "felt",
+            "full_name": "__main__.myfunc.b",
+            "references": [
+                {
+                    "ap_tracking_data": {
+                        "group": 0,
+                        "offset": 0
+                    },
+                    "pc": 0,
+                    "value": "[cast(fp + (-4), felt*)]"
+                }
+            ],
+            "type": "reference"
+        },
+        "__main__.myfunc.c": {
+            "cairo_type": "felt",
+            "full_name": "__main__.myfunc.c",
+            "references": [
+                {
+                    "ap_tracking_data": {
+                        "group": 0,
+                        "offset": 0
+                    },
+                    "pc": 0,
+                    "value": "[cast(fp + (-3), felt*)]"
+                }
+            ],
+            "type": "reference"
+        },
+        "__main__.myfunc.d": {
+            "cairo_type": "felt",
+            "full_name": "__main__.myfunc.d",
+            "references": [
+                {
+                    "ap_tracking_data": {
+                        "group": 0,
+                        "offset": 0
+                    },
+                    "pc": 0,
+                    "value": "cast([fp + (-3)] + [fp + (-5)] + [fp + (-4)], felt)"
+                }
+            ],
+            "type": "reference"
+        },
+        "__main__.myfuncbis": {
+            "decorators": [],
+            "pc": 1,
+            "type": "function"
+        },
+        "__main__.myfuncbis.Args": {
+            "full_name": "__main__.myfuncbis.Args",
+            "members": {
+                "a": {
+                    "cairo_type": "felt",
+                    "offset": 0
+                },
+                "b": {
+                    "cairo_type": "felt",
+                    "offset": 1
+                }
+            },
+            "size": 2,
+            "type": "struct"
+        },
+        "__main__.myfuncbis.ImplicitArgs": {
+            "full_name": "__main__.myfuncbis.ImplicitArgs",
+            "members": {},
+            "size": 0,
+            "type": "struct"
+        },
+        "__main__.myfuncbis.Return": {
+            "cairo_type": "()",
+            "type": "type_definition"
+        },
+        "__main__.myfuncbis.SIZEOF_LOCALS": {
+            "type": "const",
+            "value": 0
+        },
+        "__main__.myfuncbis.a": {
+            "cairo_type": "felt",
+            "full_name": "__main__.myfuncbis.a",
+            "references": [
+                {
+                    "ap_tracking_data": {
+                        "group": 1,
+                        "offset": 0
+                    },
+                    "pc": 1,
+                    "value": "[cast(fp + (-4), felt*)]"
+                }
+            ],
+            "type": "reference"
+        },
+        "__main__.myfuncbis.b": {
+            "cairo_type": "felt",
+            "full_name": "__main__.myfuncbis.b",
+            "references": [
+                {
+                    "ap_tracking_data": {
+                        "group": 1,
+                        "offset": 0
+                    },
+                    "pc": 1,
+                    "value": "[cast(fp + (-3), felt*)]"
+                }
+            ],
+            "type": "reference"
+        },
+        "__main__.myfuncbis.c": {
+            "cairo_type": "felt",
+            "full_name": "__main__.myfuncbis.c",
+            "references": [
+                {
+                    "ap_tracking_data": {
+                        "group": 1,
+                        "offset": 0
+                    },
+                    "pc": 1,
+                    "value": "cast([fp + (-4)] + [fp + (-3)], felt)"
+                }
+            ],
+            "type": "reference"
+        },
+        "__main__.myfuncbis.d": {
+            "cairo_type": "felt",
+            "full_name": "__main__.myfuncbis.d",
+            "references": [
+                {
+                    "ap_tracking_data": {
+                        "group": 1,
+                        "offset": 0
+                    },
+                    "pc": 1,
+                    "value": "cast([fp + (-4)] + [fp + (-3)] + 5, felt)"
+                }
+            ],
+            "type": "reference"
+        }
+    },
+    "main_scope": "__main__",
+    "prime": "0x800000000000011000000000000000000000000000000000000000000000001",
+    "reference_manager": {
+        "references": [
+            {
+                "ap_tracking_data": {
+                    "group": 0,
+                    "offset": 0
+                },
+                "pc": 0,
+                "value": "[cast(fp + (-5), felt*)]"
+            },
+            {
+                "ap_tracking_data": {
+                    "group": 0,
+                    "offset": 0
+                },
+                "pc": 0,
+                "value": "[cast(fp + (-4), felt*)]"
+            },
+            {
+                "ap_tracking_data": {
+                    "group": 0,
+                    "offset": 0
+                },
+                "pc": 0,
+                "value": "[cast(fp + (-3), felt*)]"
+            },
+            {
+                "ap_tracking_data": {
+                    "group": 0,
+                    "offset": 0
+                },
+                "pc": 0,
+                "value": "cast([fp + (-3)] + [fp + (-5)] + [fp + (-4)], felt)"
+            },
+            {
+                "ap_tracking_data": {
+                    "group": 1,
+                    "offset": 0
+                },
+                "pc": 1,
+                "value": "[cast(fp + (-4), felt*)]"
+            },
+            {
+                "ap_tracking_data": {
+                    "group": 1,
+                    "offset": 0
+                },
+                "pc": 1,
+                "value": "[cast(fp + (-3), felt*)]"
+            },
+            {
+                "ap_tracking_data": {
+                    "group": 1,
+                    "offset": 0
+                },
+                "pc": 1,
+                "value": "cast([fp + (-4)] + [fp + (-3)], felt)"
+            },
+            {
+                "ap_tracking_data": {
+                    "group": 1,
+                    "offset": 0
+                },
+                "pc": 1,
+                "value": "cast([fp + (-4)] + [fp + (-3)] + 5, felt)"
+            },
+            {
+                "ap_tracking_data": {
+                    "group": 2,
+                    "offset": 0
+                },
+                "pc": 2,
+                "value": "cast(1, felt)"
+            },
+            {
+                "ap_tracking_data": {
+                    "group": 2,
+                    "offset": 0
+                },
+                "pc": 2,
+                "value": "cast(2, felt)"
+            },
+            {
+                "ap_tracking_data": {
+                    "group": 2,
+                    "offset": 0
+                },
+                "pc": 2,
+                "value": "cast(3, felt)"
+            }
+        ]
+    }
+}

@@ -15,6 +15,7 @@ from .abi_parser import (
     extract_references,
     extract_labels,
 )
+from .decompiler import Decompiler
 from .callgraph import CallFlowGraph
 from .utils import CFG_NODE_ATTR, CFG_GRAPH_ATTR, CFG_EDGE_ATTR, DEFAULT_PRIME
 from .function import Function
@@ -124,8 +125,12 @@ class Disassembler:
             for inst in func.instructions:
                 # Only for direct call
                 if inst.is_call_direct():
-                    xref_func = self.get_function_by_offset(str(inst.call_offset))
-                    inst.call_xref_func_name = xref_func.name if xref_func is not None else None
+                    xref_func = self.get_function_by_offset(
+                        str(inst.call_offset)
+                    )
+                    inst.call_xref_func_name = (
+                        xref_func.name if xref_func is not None else None
+                    )
                 if inst.id in self.references:
                     inst.ref = self.references[inst.id]
                 if inst.id in self.hints:
@@ -170,7 +175,7 @@ class Disassembler:
             else:
                 raise SystemExit("Error: Function does not exist.")
 
-    def print_structs(self):
+    def print_structs(self, decompiler=False):
         """Print the structures parsed from the ABI.
 
         Returns:
@@ -178,21 +183,30 @@ class Disassembler:
         """
         struct_str = ""
         for struct in self.structs:
-            struct_str += "\n\t struct: " + utils.color.BEIGE + struct + utils.color.ENDC + "\n"
+            if decompiler == True and len(self.structs[struct]) == 0:
+                continue
+            struct_str += (
+                "struct "
+                + utils.color.BEIGE
+                + struct
+                + utils.color.ENDC
+                + ":\n"
+            )
             for attribut in self.structs[struct]:
                 struct_str += (
-                    "\t    "
+                    "\tmember "
                     + utils.color.GREEN
                     + self.structs[struct][attribut]["attribut"]
                     + utils.color.ENDC
                 )
                 struct_str += (
-                    "   : "
+                    " : "
                     + utils.color.YELLOW
                     + self.structs[struct][attribut]["cairo_type"]
                     + utils.color.ENDC
                     + "\n"
                 )
+            struct_str += "end\n\n"
         return struct_str
 
     def print_events(self):
@@ -203,11 +217,26 @@ class Disassembler:
         """
         events_str = ""
         for event_name, data in self.events.items():
-            events_str += "\n\t event: " + utils.color.BEIGE + event_name + utils.color.ENDC + "\n"
+            events_str += (
+                "\n\t event: "
+                + utils.color.BEIGE
+                + event_name
+                + utils.color.ENDC
+                + "\n"
+            )
             for attribut in data:
-                events_str += "\t    " + utils.color.GREEN + attribut["name"] + utils.color.ENDC
                 events_str += (
-                    "   : " + utils.color.YELLOW + attribut["type"] + utils.color.ENDC + "\n"
+                    "\t    "
+                    + utils.color.GREEN
+                    + attribut["name"]
+                    + utils.color.ENDC
+                )
+                events_str += (
+                    "   : "
+                    + utils.color.YELLOW
+                    + attribut["type"]
+                    + utils.color.ENDC
+                    + "\n"
                 )
         return events_str
 
@@ -219,8 +248,13 @@ class Disassembler:
         """
         builtins_str = ""
         if self.builtins != []:
-            builtins_str += "\n\t %builtins "
-            return builtins_str + utils.color.RED + " ".join(self.builtins) + utils.color.ENDC
+            builtins_str += "\n%builtins "
+            return (
+                builtins_str
+                + utils.color.RED
+                + " ".join(self.builtins)
+                + utils.color.ENDC
+            )
         return builtins_str
 
     def dump_json(self):
@@ -267,12 +301,21 @@ class Disassembler:
             dot: The call graph dot.
         """
         if self.call_graph is None:
-            self.call_graph = CallFlowGraph(self.functions, filename=filename, format=format)
+            self.call_graph = CallFlowGraph(
+                self.functions, filename=filename, format=format
+            )
 
         self.call_graph.print(view)
         return self.call_graph.dot
 
-    def print_cfg(self, filename, format="pdf", func_name=None, func_offset=None, view=True):
+    def print_cfg(
+        self,
+        filename,
+        format="pdf",
+        func_name=None,
+        func_offset=None,
+        view=True,
+    ):
         """Print the CFG.
 
         Args:
@@ -331,3 +374,14 @@ class Disassembler:
         analytics["structs"] = len(self.structs)
         # print(json.dumps(analytics, indent=3))
         return analytics
+
+    def decompiler(self):
+        print(self.print_builtins())
+        for function in self.functions:
+            if function.is_import:
+                func_name = function.name.split(".")[-1]
+                package = ".".join(function.name.split(".")[:-1])
+                print(f"from {package} import {func_name}")
+        print(self.print_structs(decompiler=True))
+        decomp = Decompiler(functions=self.functions)
+        print(decomp.decompile_code())

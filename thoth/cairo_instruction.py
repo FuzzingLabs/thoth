@@ -128,7 +128,9 @@ def decode_instruction_values(encoded_instruction):
     Returns:
         Tuple: Decoded instruction
     """
-    assert 0 <= encoded_instruction < 2 ** (3 * OFFSET_BITS + N_FLAGS), "Unsupported instruction."
+    assert (
+        0 <= encoded_instruction < 2 ** (3 * OFFSET_BITS + N_FLAGS)
+    ), "Unsupported instruction."
     off0 = encoded_instruction & (2**OFFSET_BITS - 1)
     off1 = (encoded_instruction >> OFFSET_BITS) & (2**OFFSET_BITS - 1)
     off2 = (encoded_instruction >> (2 * OFFSET_BITS)) & (2**OFFSET_BITS - 1)
@@ -179,10 +181,16 @@ def decode_instruction(encoding: int, imm: Optional[int] = None) -> Instruction:
         (0, 1, 0): Instruction.Op1Addr.AP,
         (0, 0, 1): Instruction.Op1Addr.FP,
         (0, 0, 0): Instruction.Op1Addr.OP0,
-    }[(flags >> OP1_IMM_BIT) & 1, (flags >> OP1_AP_BIT) & 1, (flags >> OP1_FP_BIT) & 1]
+    }[
+        (flags >> OP1_IMM_BIT) & 1,
+        (flags >> OP1_AP_BIT) & 1,
+        (flags >> OP1_FP_BIT) & 1,
+    ]
 
     if op1_addr is Instruction.Op1Addr.IMM:
-        assert imm is not None, "op1_addr is Op1Addr.IMM, but no immediate given"
+        assert (
+            imm is not None
+        ), "op1_addr is Op1Addr.IMM, but no immediate given"
     else:
         imm = None
 
@@ -235,7 +243,9 @@ def decode_instruction(encoding: int, imm: Optional[int] = None) -> Instruction:
 
     # CALL opcode means ap_update must be ADD2.
     if opcode is Instruction.Opcode.CALL:
-        assert ap_update is Instruction.ApUpdate.REGULAR, "CALL must have update_ap is ADD2"
+        assert (
+            ap_update is Instruction.ApUpdate.REGULAR
+        ), "CALL must have update_ap is ADD2"
         ap_update = Instruction.ApUpdate.ADD2
 
     # Get fp_update.
