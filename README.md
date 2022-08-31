@@ -41,11 +41,16 @@ thoth -f tests/json_files/cairo_array_sum.json -vvv
 ```sh
 thoth -f tests/json_files/cairo_test_addition.json -d
 ```
+Example 1 with strings:
 <p align="center">
 	<img src="/images/thoth_decompile_sourcecode.png"/>
 	<img src="/images/thoth_decompile.png"/>
 </p>
-
+Example 2 with function call:
+<p align="center">
+	<img src="/images/thoth_decompile_sourcecode_2.png"/>
+	<img src="/images/thoth_decompile_2.png"/>
+</p>
 ## Print the contract's call graph 
 
 The call flow graph represents calling relationships between functions of the contract. We tried to provide a maximum of information, such as the entry-point functions, the imports, decorators, etc.

@@ -7,9 +7,9 @@ with open("README.md", "r", encoding="utf-8") as f:
 
 setup(
     name="thoth",
-    description="Cairo/Starknet bytecode disassembler",
+    description="Cairo/Starknet bytecode analyzer, disassembler and decompiler",
     url="https://github.com/FuzzingLabs/thoth",
-    keywords="cairo-lang starknet disassembler analysis security reversing cfg callflow",
+    keywords="cairo-lang starknet disassembler decompiler analysis security reversing cfg callflow",
     author="FuzzingLabs",
     version="0.2.0",
     packages=find_packages(),

@@ -375,7 +375,6 @@ class Disassembler:
         # print(json.dumps(analytics, indent=3))
         return analytics
 
-    ##### POC decompiler #####
     def decompiler(self):
         print(self.print_builtins())
         for function in self.functions:
