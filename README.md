@@ -1,6 +1,6 @@
 # Thoth, the Cairo/Starknet bytecode analyzer & disassembler
 
-Thoth (pronounced "toss") is a Cairo/Starknet analyzer & disassembler written in Python 3. Thoth's features also include the generation of the call graph and control-flow graph (CFG) of a given Cairo/Starknet compilation artifact.
+Thoth (pronounced "toss") is a Cairo/Starknet analyzer, disassembler & decompiler written in Python 3. Thoth's features also include the generation of the call graph and control-flow graph (CFG) of a given Cairo/Starknet compilation artifact.
 
 ## Installation
 
@@ -34,6 +34,17 @@ To get a verbose version with more details about decoded bytecodes:
 ```sh
 thoth -f tests/json_files/cairo_array_sum.json -vvv
 ```
+
+## Decompile the contract's compilation artifact (json)
+
+
+```sh
+thoth -f tests/json_files/cairo_test_addition.json -d
+```
+<p align="center">
+	<img src="/images/thoth_decompile_sourcecode.png"/>
+	<img src="/images/thoth_decompile.png"/>
+</p>
 
 ## Print the contract's call graph 
 
