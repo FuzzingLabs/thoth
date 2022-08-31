@@ -37,7 +37,11 @@ class Decompiler:
                         int(instruction.imm), instruction.prime
                     )
                 decomp_str += self.print_instruction_decomp(
-                    f"[{instruction.dstRegister}{instruction.offDest}] = {value}"
+                    f"# {utils.field_element_repr(int(instruction.imm), instruction.prime)} -> {value}",
+                    end="\n",
+                )
+                decomp_str += self.print_instruction_decomp(
+                    f"[{instruction.dstRegister}{instruction.offDest}] = {utils.field_element_repr(int(instruction.imm), instruction.prime)}"
                 )
             elif "OP0" in instruction.op1Addr:
                 decomp_str += self.print_instruction_decomp(
