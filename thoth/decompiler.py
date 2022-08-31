@@ -39,27 +39,33 @@ class Decompiler:
                 decomp_str += self.print_instruction_decomp(
                     f"# {utils.field_element_repr(int(instruction.imm), instruction.prime)} -> {value}",
                     end="\n",
+                    color=utils.color.CYAN,
                 )
                 decomp_str += self.print_instruction_decomp(
-                    f"[{instruction.dstRegister}{instruction.offDest}] = {utils.field_element_repr(int(instruction.imm), instruction.prime)}"
+                    f"[{instruction.dstRegister}{instruction.offDest}] = {utils.field_element_repr(int(instruction.imm), instruction.prime)}",
+                    color=utils.color.GREEN,
                 )
             elif "OP0" in instruction.op1Addr:
                 decomp_str += self.print_instruction_decomp(
-                    f"[{instruction.dstRegister}{instruction.offDest}] = [[{instruction.op0Register}{instruction.off1}]{instruction.off2}]"
+                    f"[{instruction.dstRegister}{instruction.offDest}] = [[{instruction.op0Register}{instruction.off1}]{instruction.off2}]",
+                    color=utils.color.GREEN,
                 )
             else:
                 decomp_str += self.print_instruction_decomp(
-                    f"[{instruction.dstRegister}{instruction.offDest}] = [{instruction.op1Addr}{instruction.off2}]"
+                    f"[{instruction.dstRegister}{instruction.offDest}] = [{instruction.op1Addr}{instruction.off2}]",
+                    color=utils.color.GREEN,
                 )
         else:
             op = OPERATORS[instruction.res]
             if "IMM" not in instruction.op1Addr:
                 decomp_str += self.print_instruction_decomp(
-                    f"[{instruction.dstRegister}{instruction.offDest}] =  [{instruction.op0Register}{instruction.off1}] {op} [{instruction.op1Addr}{instruction.off2}]"
+                    f"[{instruction.dstRegister}{instruction.offDest}] =  [{instruction.op0Register}{instruction.off1}] {op} [{instruction.op1Addr}{instruction.off2}]",
+                    color=utils.color.GREEN,
                 )
             else:
                 decomp_str += self.print_instruction_decomp(
-                    f"[{instruction.dstRegister}{instruction.offDest}] = [{instruction.op0Register}{instruction.off1}] {op} {utils.field_element_repr(int(instruction.imm), instruction.prime)}"
+                    f"[{instruction.dstRegister}{instruction.offDest}] = [{instruction.op0Register}{instruction.off1}] {op} {utils.field_element_repr(int(instruction.imm), instruction.prime)}",
+                    color=utils.color.GREEN,
                 )
         return decomp_str
 
@@ -72,8 +78,9 @@ class Decompiler:
         decomp_str = ""
         if "REGULAR" not in instruction.pcUpdate:
             if instruction.pcUpdate == "JNZ":
-                decomp_str += self.print_instruction_decomp(
-                    f"if [AP{instruction.offDest}] == 0:"
+                decomp_str += (
+                    self.print_instruction_decomp(f"if ", color=utils.color.RED)
+                    + f"[AP{instruction.offDest}] == 0:"
                 )
                 self.tab += 1
                 self.ifcount += 1
@@ -95,7 +102,9 @@ class Decompiler:
             elif instruction.pcUpdate == "JUMP_REL":
                 if self.ifcount != 0:
                     self.tab -= 1
-                    decomp_str += self.print_instruction_decomp("else:")
+                    decomp_str += self.print_instruction_decomp(
+                        "else:", color=utils.color.RED
+                    )
                     self.tab += 1
                     self.end_else.append(
                         int(
@@ -143,18 +152,22 @@ class Decompiler:
                     if args != 1:
                         args_str += ", "
                     args -= 1
-                decomp_str += self.print_instruction_decomp(
-                    f"{call_name[-1]}({args_str})"
+                decomp_str += (
+                    self.print_instruction_decomp(
+                        f"{call_name[-1]}", color=utils.color.RED
+                    )
+                    + f"({args_str})"
                 )
             # CALL to a label
             # e.g. call rel (123)
             else:
                 decomp_str += self.print_instruction_decomp(
-                    f"{call_type} ({offset})"
+                    f"{call_type} ({offset})", color=utils.color.RED
                 )
                 if str(offset) in instruction.labels:
                     decomp_str += self.print_instruction_decomp(
-                        f"# {instruction.labels[str(offset)]}"
+                        f"# {instruction.labels[str(offset)]}",
+                        color=utils.color.CYAN,
                     )
         # CALL
         # e.g. call rel [fp + 4]
@@ -175,12 +188,17 @@ class Decompiler:
         """
         decomp_str = ""
         if self.return_values == None:
-            decomp_str += self.print_instruction_decomp("ret", end="\n")
+            decomp_str += self.print_instruction_decomp(
+                "ret", end="\n", color=utils.color.RED
+            )
             if last:
                 self.tab -= 1
         else:
             idx = len(self.return_values)
-            decomp_str += self.print_instruction_decomp("return(")
+            decomp_str += (
+                self.print_instruction_decomp("return", color=utils.color.RED)
+                + "("
+            )
             while idx:
                 decomp_str += f"[ap-{idx}]"
                 if idx != 1:
@@ -189,7 +207,9 @@ class Decompiler:
             decomp_str += ")\n"
         if last:
             self.tab = 0
-            decomp_str += self.print_instruction_decomp("end")
+            decomp_str += self.print_instruction_decomp(
+                "end", color=utils.color.RED
+            )
         return decomp_str
 
     def _handle_hint_decomp(self, instruction, last=False):
@@ -244,7 +264,7 @@ class Decompiler:
                 )
                 for i in range(int(APval)):
                     decomp_str += self.print_instruction_decomp(
-                        f"ap ++", tab=self.tab
+                        f"ap ++", tab=self.tab, color=utils.color.YELLOW
                     )
                     if i != int(APval) - 1:
                         decomp_str += "\n"
@@ -284,7 +304,9 @@ class Decompiler:
                 self.decompiled_function = function
                 self.return_values = function.ret
                 function.generate_cfg()
-                res += function.get_prototype() + "\n"
+                res += self.print_instruction_decomp(
+                    function.get_prototype(), end="\n", color=utils.color.BLUE
+                )
                 self.tab += 1
                 if function.cfg.basicblocks != []:
                     for block in function.cfg.basicblocks:
@@ -293,7 +315,7 @@ class Decompiler:
                                 self.end_if = None
                                 self.tab -= 1
                                 res += self.print_instruction_decomp(
-                                    "end", end="\n"
+                                    "end", end="\n", color=utils.color.RED
                                 )
                             if self.end_else != []:
                                 for idx in range(len(self.end_else)):
@@ -302,7 +324,9 @@ class Decompiler:
                                     ):
                                         self.tab -= 1
                                         res += self.print_instruction_decomp(
-                                            "end", end="\n"
+                                            "end",
+                                            end="\n",
+                                            color=utils.color.RED,
                                         )
                                         # del self.end_else[idx]
 
