@@ -278,6 +278,7 @@ class Decompiler:
         res = ""
         for function in self.functions:
             self.tab = 0
+            count = 0
             if function.is_import is False:
                 res += "\n"
                 self.decompiled_function = function
@@ -287,9 +288,7 @@ class Decompiler:
                 self.tab += 1
                 if function.cfg.basicblocks != []:
                     for block in function.cfg.basicblocks:
-                        for count, instruction in enumerate(
-                            block.instructions, start=1
-                        ):
+                        for instruction in block.instructions:
                             if int(instruction.id) == self.end_if:
                                 self.end_if = None
                                 self.tab -= 1
@@ -303,6 +302,9 @@ class Decompiler:
                                     res += self.print_instruction_decomp(
                                         "end", end="\n"
                                     )
+                            print(count)
+                            print((count == len(function.instructions)))
+                            count += 1
                             instruction = self.print_build_code(
                                 instruction,
                                 last=(count == len(function.instructions)),
