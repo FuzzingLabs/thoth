@@ -175,7 +175,7 @@ class Decompiler:
                 if idx != 1:
                     decomp_str += ", "
                 idx -= 1
-            decomp_str += ")\n"
+            decomp_str += ")"
         if last:
             self.tab = 0
             decomp_str += self.print_instruction_decomp("end")
@@ -254,7 +254,7 @@ class Decompiler:
             data (String): Data to print
             color (str, optional): Color to use. Defaults to "".
             end (str, optional): End of the string. Defaults to "".
-
+            tab (int): Number of tabulation
         Returns:
             String: The formated Instruction
         """
@@ -287,6 +287,6 @@ class Decompiler:
                                     print(self.print_instruction_decomp("end"))
                             instruction = self.print_build_code(
                                 instruction,
-                                last=(count == len(block.instructions)),
+                                last=(count == len(function.instructions)),
                             )
                             print(instruction)
