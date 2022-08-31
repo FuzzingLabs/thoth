@@ -11,7 +11,7 @@ class Decompiler:
 
     def __init__(self, functions):
         self.tab = 1
-        self.end = 0
+        self.end_else = []
         self.ap = []
         self.ifcount = 0
         self.end_if = None
@@ -97,13 +97,13 @@ class Decompiler:
                     self.tab -= 1
                     decomp_str += self.print_instruction_decomp("else:")
                     self.tab += 1
-                    self.end = (
+                    self.end_else.append(
                         int(
                             utils.field_element_repr(
                                 int(instruction.imm), instruction.prime
                             )
                         )
-                        - 1
+                        + int(instruction.id)
                     )
                     self.ifcount -= 1
                 else:
@@ -295,13 +295,17 @@ class Decompiler:
                                 res += self.print_instruction_decomp(
                                     "end", end="\n"
                                 )
-                            if self.end != 0:
-                                self.end -= 1
-                                if self.end == 1:
-                                    self.tab -= 1
-                                    res += self.print_instruction_decomp(
-                                        "end", end="\n"
-                                    )
+                            if self.end_else != []:
+                                for idx in range(len(self.end_else)):
+                                    if self.end_else[idx] == int(
+                                        instruction.id
+                                    ):
+                                        self.tab -= 1
+                                        res += self.print_instruction_decomp(
+                                            "end", end="\n"
+                                        )
+                                        # del self.end_else[idx]
+
                             count += 1
                             instruction = self.print_build_code(
                                 instruction,
