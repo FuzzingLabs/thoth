@@ -302,8 +302,6 @@ class Decompiler:
                                     res += self.print_instruction_decomp(
                                         "end", end="\n"
                                     )
-                            print(count)
-                            print((count == len(function.instructions)))
                             count += 1
                             instruction = self.print_build_code(
                                 instruction,
