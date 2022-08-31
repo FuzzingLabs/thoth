@@ -264,12 +264,15 @@ class Decompiler:
         return color + tabulation + data + utils.color.ENDC + end
 
     def decompile_code(self):
+        res = ""
         for function in self.functions:
+            self.tab = 0
             if function.is_import is False:
+                res += "\n"
                 self.decompiled_function = function
                 self.return_values = function.ret
                 function.generate_cfg()
-                print(function.get_prototype())
+                res += function.get_prototype() + "\n"
                 self.tab += 1
                 if function.cfg.basicblocks != []:
                     for block in function.cfg.basicblocks:
@@ -279,14 +282,19 @@ class Decompiler:
                             if int(instruction.id) == self.end_if:
                                 self.end_if = None
                                 self.tab -= 1
-                                print(self.print_instruction_decomp("end"))
+                                res += self.print_instruction_decomp(
+                                    "end", end="\n"
+                                )
                             if self.end != 0:
                                 self.end -= 1
                                 if self.end == 1:
                                     self.tab -= 1
-                                    print(self.print_instruction_decomp("end"))
+                                    res += self.print_instruction_decomp(
+                                        "end", end="\n"
+                                    )
                             instruction = self.print_build_code(
                                 instruction,
                                 last=(count == len(function.instructions)),
                             )
-                            print(instruction)
+                            res += instruction + "\n"
+        return res

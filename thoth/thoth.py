@@ -100,7 +100,7 @@ def main():
 
     # print assembly code
     if args.decomp:
-        disassembler.decompiler_poc()
+        disassembler.decompiler()
     else:
         disassembler.print_disassembly()
     filename = os.path.basename(args.file[0].name).split(".")[0]

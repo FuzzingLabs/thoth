@@ -376,7 +376,7 @@ class Disassembler:
         return analytics
 
     ##### POC decompiler #####
-    def decompiler_poc(self):
+    def decompiler(self):
         print(self.print_builtins())
         for function in self.functions:
             if function.is_import:
@@ -385,4 +385,4 @@ class Disassembler:
                 print(f"from {package} import {func_name}")
         print(self.print_structs(decompiler=True))
         decomp = Decompiler(functions=self.functions)
-        decomp.decompile_code()
+        print(decomp.decompile_code())
