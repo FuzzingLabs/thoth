@@ -175,7 +175,7 @@ class Decompiler:
                 if idx != 1:
                     decomp_str += ", "
                 idx -= 1
-            decomp_str += ")"
+            decomp_str += ")\n"
         if last:
             self.tab = 0
             decomp_str += self.print_instruction_decomp("end")
