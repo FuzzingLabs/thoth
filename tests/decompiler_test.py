@@ -29,7 +29,7 @@ def main():
             ratio = SequenceMatcher(None, output, content_file).ratio()
             total += ratio
             tests += 1
-            print(f"test {filename} -- simillar -- {ratio}")
+            print(f"test {filename} -- simillarity -- {ratio}")
     print("Average simillarity ratio : ", total / tests)
 
 
