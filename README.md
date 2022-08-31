@@ -56,6 +56,7 @@ Example 2 with function call:
 	<b> decompiler code </b></br>
 	<img src="/images/thoth_decompile_2.png"/></br>
 </p>
+
 ## Print the contract's call graph 
 
 The call flow graph represents calling relationships between functions of the contract. We tried to provide a maximum of information, such as the entry-point functions, the imports, decorators, etc.
