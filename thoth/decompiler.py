@@ -29,8 +29,15 @@ class Decompiler:
         decomp_str = ""
         if "OP1" in instruction.res:
             if "IMM" in instruction.op1Addr:
+                value = utils.value_to_string(
+                    int(instruction.imm), (instruction.prime)
+                )
+                if value == "":
+                    value = utils.field_element_repr(
+                        int(instruction.imm), instruction.prime
+                    )
                 decomp_str += self.print_instruction_decomp(
-                    f"[{instruction.dstRegister}{instruction.offDest}] = {utils.field_element_repr(int(instruction.imm), instruction.prime)}"
+                    f"[{instruction.dstRegister}{instruction.offDest}] = {value}"
                 )
             elif "OP0" in instruction.op1Addr:
                 decomp_str += self.print_instruction_decomp(
