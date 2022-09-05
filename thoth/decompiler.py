@@ -79,8 +79,8 @@ class Decompiler:
         if "REGULAR" not in instruction.pcUpdate:
             if instruction.pcUpdate == "JNZ":
                 decomp_str += (
-                    self.print_instruction_decomp(f"if ", color=utils.color.RED)
-                    + f"[AP{instruction.offDest}] == 0:"
+                    self.print_instruction_decomp(f"if ", color=utils.color.RED) + "("
+                    + f"[AP{instruction.offDest}] == 0)" + " {"
                 )
                 self.tab += 1
                 self.ifcount += 1
@@ -103,7 +103,7 @@ class Decompiler:
                 if self.ifcount != 0:
                     self.tab -= 1
                     decomp_str += self.print_instruction_decomp(
-                        "else:", color=utils.color.RED
+                        "}else {", color=utils.color.RED
                     )
                     self.tab += 1
                     self.end_else.append(
@@ -208,7 +208,7 @@ class Decompiler:
         if last:
             self.tab = 0
             decomp_str += self.print_instruction_decomp(
-                "end", color=utils.color.RED
+                "}", color=utils.color.RED
             )
         return decomp_str
 
@@ -247,9 +247,8 @@ class Decompiler:
             decomp_str += self._handle_hint_decomp(instruction)
 
         if "ASSERT_EQ" in instruction.opcode:
-            decomp_str += self._handle_assert_eq_decomp(instruction)
+            decomp_str += self._handle_assert_eq_decomp(instruction) + ";"
             if "REGULAR" not in instruction.apUpdate:
-                decomp_str += ";"
                 op = list(
                     filter(None, re.split(r"(\d+)", instruction.apUpdate))
                 )
@@ -264,7 +263,7 @@ class Decompiler:
                 )
                 for i in range(int(APval)):
                     decomp_str += self.print_instruction_decomp(
-                        f"ap ++", tab=self.tab, color=utils.color.YELLOW
+                        f"ap ++;", tab=self.tab, color=utils.color.YELLOW
                     )
                     if i != int(APval) - 1:
                         decomp_str += "\n"
@@ -305,7 +304,7 @@ class Decompiler:
                 self.return_values = function.ret
                 function.generate_cfg()
                 res += self.print_instruction_decomp(
-                    function.get_prototype(), end="\n", color=utils.color.BLUE
+                    function.get_prototype(), end="{\n", color=utils.color.BLUE
                 )
                 self.tab += 1
                 if function.cfg.basicblocks != []:
@@ -315,7 +314,7 @@ class Decompiler:
                                 self.end_if = None
                                 self.tab -= 1
                                 res += self.print_instruction_decomp(
-                                    "end", end="\n", color=utils.color.RED
+                                    "}", end="\n", color=utils.color.RED
                                 )
                             if self.end_else != []:
                                 for idx in range(len(self.end_else)):
@@ -324,7 +323,7 @@ class Decompiler:
                                     ):
                                         self.tab -= 1
                                         res += self.print_instruction_decomp(
-                                            "end",
+                                            "}",
                                             end="\n",
                                             color=utils.color.RED,
                                         )
