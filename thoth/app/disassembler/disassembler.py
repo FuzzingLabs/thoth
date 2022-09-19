@@ -4,7 +4,7 @@ import json
 
 from graphviz import Digraph
 from thoth import utils
-from thoth.app.decompiler.abi_parser import (
+from thoth.app.disassembler.abi_parser import (
     detect_type_input_json,
     extract_hints,
     parse_to_json,

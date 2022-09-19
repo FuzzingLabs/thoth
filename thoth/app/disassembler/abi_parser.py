@@ -2,7 +2,7 @@
 
 import collections
 import re
-from thoth.app.decompiler.cairo_instruction import decode_instruction
+from thoth.app.disassembler.cairo_instruction import decode_instruction
 from thoth.app.utils import DEFAULT_PRIME
 
 
