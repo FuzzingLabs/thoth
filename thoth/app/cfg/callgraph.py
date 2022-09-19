@@ -1,6 +1,6 @@
-#!/usr/bin/env python3
-
 from graphviz import Digraph
+from typing import List
+from thoth.app.decompiler.function import Function
 from thoth.app.cfg.config import (
     CALLGRAPH_CONFIG,
     CALLGRAPH_NODE_ATTR,
@@ -10,7 +10,9 @@ from thoth.app.cfg.config import (
 
 
 class CallFlowGraph:
-    def __init__(self, functions, format, filename, config=CALLGRAPH_CONFIG):
+    def __init__(
+        self, functions: List[Function], format: str, filename: str, config: dict = CALLGRAPH_CONFIG
+    ) -> None:
         """Create the Call Flow Graph object
 
         Args:
@@ -19,13 +21,13 @@ class CallFlowGraph:
             filename (String): Name of the output file
             config (optional): Defaults to CALLGRAPH_CONFIG.
         """
-        self.dot = None
+        self.dot: Digraph = None
         self.config = config
         self.format = format
         self.filename = filename
         self._generate_call_flow_graph(functions)
 
-    def _call_flow_graph_generate_nodes(self, functions):
+    def _call_flow_graph_generate_nodes(self, functions: List[Function]) -> None:
         """Create all the function nodes
 
         Args:
@@ -40,6 +42,7 @@ class CallFlowGraph:
             "raw_output",
             "known_ap_change",
         ]
+
         for function in functions:
 
             # Default values
@@ -84,7 +87,7 @@ class CallFlowGraph:
                 fillcolor=fillcolor,
             )
 
-    def _generate_call_flow_graph(self, functions):
+    def _generate_call_flow_graph(self, functions: List[Function]) -> None:
         """Create the complete CallFlowGraph's dot
 
         Args:
@@ -98,22 +101,24 @@ class CallFlowGraph:
             graph_attr=CALLGRAPH_GRAPH_ATTR,
             edge_attr=CALLGRAPH_EDGE_ATTR,
         )
+
         self.dot.format = self.format
+
         # First, we create the nodes
         self._call_flow_graph_generate_nodes(functions)
 
         edges = []
         # Build the edges btw functions (nodes)
         for function in functions:
-            for inst in function.instructions:
-                if inst.is_call_direct():
+            for instruction in function.instructions:
+                if instruction.is_call_direct():
                     # direct CALL to a fonction
-                    if inst.call_xref_func_name is not None:
-                        edges.append((function.offset_start, inst.call_offset))
+                    if instruction.call_xref_func_name is not None:
+                        edges.append((function.offset_start, instruction.call_offset))
                     else:
                         # relative CALL
                         pass
-                elif inst.is_call_indirect():
+                elif instruction.is_call_indirect():
                     # indirect call
                     # we can't create any edges without evaluating the stack
                     pass
@@ -130,9 +135,9 @@ class CallFlowGraph:
             # Unique edge
             else:
                 self.dot.edge(str(edges[0][0]), str(edges[0][1]))
-            edges = list(filter(lambda x: x != edges[0], edges))
+            edges = list(filter(lambda edge: edge != edges[0], edges))
 
-    def print(self, view=True):
+    def print(self, view: bool = True) -> Digraph:
         """Print the dot
 
         Args:

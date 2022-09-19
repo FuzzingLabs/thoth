@@ -6,6 +6,7 @@ CFG_NODE_ATTR = {
     "color": "gray95",
     "fontname": "Helvetica,Arial,sans-serif",
 }
+
 CFG_GRAPH_ATTR = {
     "overlap": "scale",
     "fontname": "Helvetica,Arial,sans-serif",
@@ -13,6 +14,7 @@ CFG_GRAPH_ATTR = {
     "layout": "dot",
     "newrank": "true",
 }
+
 CFG_EDGE_ATTR = {
     "arrowsize": "0.5",
     "fontname": "Helvetica,Arial,sans-serif",
@@ -39,12 +41,14 @@ CALLGRAPH_CONFIG = {
     "raw_output": {"style": "filled", "fillcolor": "tomato"},
     "known_ap_change": {"style": "filled", "fillcolor": "yellow"},
 }
+
 CALLGRAPH_NODE_ATTR = {
     "style": "filled",
     "shape": "rect, plaintext",
     "pencolor": "#00000044",
     "fontname": "Helvetica,Arial,sans-serif",
 }
+
 CALLGRAPH_GRAPH_ATTR = {
     "fontname": "Helvetica,Arial,sans-serif",
     "fontsize": "20",
@@ -52,6 +56,7 @@ CALLGRAPH_GRAPH_ATTR = {
     "rankdir": "LR",
     "newrank": "true",
 }
+
 CALLGRAPH_EDGE_ATTR = {
     "arrowsize": "0.5",
     "fontname": "Helvetica,Arial,sans-serif",

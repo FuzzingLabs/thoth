@@ -1,42 +1,45 @@
 #!/usr/bin/env python3
 
 import re
+from typing import List
 from graphviz import Digraph
+from thoth.app.decompiler.instruction import Instruction
 
 
 class BasicBlock:
-    """Basic Block class object."""
+    """
+    Basic Block class object.
+    """
 
-    def __init__(self, start_instr):
+    def __init__(self, start_instruction: Instruction) -> None:
         """Create the basic block object from the given instruction.
 
         Args:
             start_instr (Instruction): The given instruction.
         """
-        self.start_instr = start_instr
-        self.start_offset = self.start_instr.id
-        self.name = format_bb_name(self.start_instr.id)
+        self.start_instruction = start_instruction
+        self.start_offset = self.start_instruction.id
 
         self.end_offset = None
-        self.end_instr = None
-        self.instructions = []
-        self.edges_offset = []
+        self.end_instruction = None
+        self.instructions: List[Instruction] = []
+        self.edges_offset: List[Instruction] = []
 
-    def set_instructions(self, instrs):
+    @staticmethod
+    def format_bb_name(instruction_offset: int) -> str:
+        return f"bb_{instruction_offset}"
+
+    def set_instructions(self, instructions: List[Instruction]) -> None:
         """Set the instruction list of the basic block.
 
         Args:
             instrs (Instruction List): The list containing all the instructions.
         """
-        self.instructions = instrs
+        self.instructions = instructions
 
-    def print(self):
+    def print(self) -> str:
         # TODO - replace by instr code
-        return format_bb_name(self.start_offset)
-
-
-def format_bb_name(instr_offset):
-    return f"bb_{instr_offset}"
+        return BasicBlock.format_bb_name(self.start_offset)
 
 
 class CFG:
@@ -46,7 +49,7 @@ class CFG:
     Create a Control Flow Graph per Function
     """
 
-    def __init__(self, func_name, instructions):
+    def __init__(self, function_name: str, instructions: List[Instruction]) -> None:
         """Create the CFG object
 
         Args:
@@ -54,22 +57,22 @@ class CFG:
             instructions (List): List of instructions
         """
         self.dot = None
-        self.func_name = func_name
-        self.basicblocks = []
-        self.name = f"CFG {self.func_name}"
+        self.function_name = function_name
+        self.basicblocks: List[BasicBlock] = []
+        self.name = f"CFG {self.function_name}"
 
         self._generate_basicblocks(instructions)
         self.generate_cfg()
 
-    def set_basicblocks(self, bbs):
+    def set_basicblocks(self, basic_blocks: List[BasicBlock]) -> None:
         """Set the list of basicblocks
 
         Args:
             bbs (List): The basicblocks list
         """
-        self.basicblocks = bbs
+        self.basicblocks = basic_blocks
 
-    def _generate_basicblocks(self, instructions):
+    def _generate_basicblocks(self, instructions: List[Instruction]):
         """Generate the internal list of BasicBlock
 
 
@@ -79,85 +82,83 @@ class CFG:
         Raises:
             AssertionError: Should never happen, all function finish by RET
         """
-        list_bb = []
-        last_func_instr = instructions[-1]
-        new_bb = True
-        current_bb = None
+        list_basic_block: List[BasicBlock] = []
+        last_function_instruction = instructions[-1]
+        new_basic_block = True
+        current_basic_block: BasicBlock = None
 
-        for instr in instructions:
+        for instruction in instructions:
 
             # Create a basicblock
-            if new_bb:
-                current_bb = BasicBlock(instr)
-                new_bb = False
+            if new_basic_block:
+                current_basic_block = BasicBlock(instruction)
+                new_basic_block = False
 
-            current_bb.instructions.append(instr)
+            current_basic_block.instructions.append(instruction)
 
             # Direct CALL
-            if instr.is_call_direct():
+            if instruction.is_call_direct():
                 # CALL direct to function
                 pass
                 # TODO - relative CALL to label
                 pass
 
             # Indirect CALL
-            elif instr.is_call_indirect():
+            elif instruction.is_call_indirect():
                 # Not interesting for the CFG
                 pass
 
             # Return - Stop the execution
-            elif instr.is_return():
-                current_bb.end_instr = instr
-                current_bb.end_offset = instr.id
-                list_bb.append(current_bb)
-                new_bb = True
+            elif instruction.is_return():
+                current_basic_block.end_instruction = instruction
+                current_basic_block.end_offset = instruction.id
+                list_basic_block.append(current_basic_block)
+                new_basic_block = True
 
             # Jump to instr offset + instr.imm
-            elif ("JUMP" in instr.pcUpdate) or (
-                "JUMP_REL" in instr.pcUpdate and "CALL" not in instr.opcode
+            elif ("JUMP" in instruction.pcUpdate) or (
+                "JUMP_REL" in instruction.pcUpdate and "CALL" not in instr.opcode
             ):
-                current_bb.end_instr = instr
-                current_bb.end_offset = instr.id
-                current_bb.edges_offset.append(
-                    str(int(instr.id) + int(instr.imm))
+                current_basic_block.end_instruction = instruction
+                current_basic_block.end_offset = instruction.id
+                current_basic_block.edges_offset.append(
+                    str(int(instruction.id) + int(instruction.imm))
                 )
-                list_bb.append(current_bb)
-                new_bb = True
+                list_basic_block.append(current_basic_block)
+                new_basic_block = True
 
             # Jump to instr offset + instr.imm
             # or instr offset + 2
-            elif "JNZ" in instr.pcUpdate:
-                current_bb.end_instr = instr
-                current_bb.end_offset = instr.id
-                current_bb.edges_offset.append(
-                    str(int(instr.id) + int(instr.imm))
+            elif "JNZ" in instruction.pcUpdate:
+                current_basic_block.end_instruction = instruction
+                current_basic_block.end_offset = instruction.id
+                current_basic_block.edges_offset.append(
+                    str(int(instruction.id) + int(instruction.imm))
                 )
-                current_bb.edges_offset.append(str(int(instr.id) + int(2)))
-                list_bb.append(current_bb)
+                current_basic_block.edges_offset.append(str(int(instruction.id) + int(2)))
+                list_basic_block.append(current_basic_block)
                 new_bb = True
 
             else:
-                if instr is last_func_instr:
+                if instruction is last_function_instruction:
                     raise AssertionError
 
         # TODO - how to handle if we have `jmp rel` to the middle of other basicblock
         # ex: tests/json_files/cairo_jmp.json
 
-        self.set_basicblocks(list_bb)
+        self.set_basicblocks(list_basic_block)
 
-    def print_bb(self):
+    def print_bb(self) -> None:
         """Print the list of basic blocks in textual form"""
         # TODO - issue #45
         print()
         for block in self.basicblocks:
-            print(
-                f"-- BB {block.name, len(block.instructions)} {block.edges_offset} --"
-            )
-            for instr in block.instructions:
-                print(instr.print())
+            print(f"-- BB {block.name, len(block.instructions)} {block.edges_offset} --")
+            for instruction in block.instructions:
+                print(instruction.print())
             print()
 
-    def generate_cfg(self):
+    def generate_cfg(self) -> None:
         """Create the basicblock nodes and the edges"""
         # Create the directed graph
         cluster_name = "cluster_" + self.name
@@ -174,12 +175,8 @@ class CFG:
             shape = "square"
             label_instruction = ""
             for instr in block.instructions:
-                label_instruction += re.sub(
-                    "\s+", " ", instr.print().replace("\n", "\\l")
-                )
-            self.dot.node(
-                block.name, label=label_instruction + "\\l", shape=shape
-            )
+                label_instruction += re.sub("\s+", " ", instr.print().replace("\n", "\\l"))
+            self.dot.node(block.name, label=label_instruction + "\\l", shape=shape)
 
             # Iterate over edges_offset
             for offset in block.edges_offset:
@@ -192,12 +189,12 @@ class CFG:
                 # TODO - issue #43
                 if offset in bb_offsets:
                     self.dot.edge(
-                        format_bb_name(block.start_offset),
-                        format_bb_name(offset),
+                        BasicBlock.format_bb_name(block.start_offset),
+                        BasicBlock.format_bb_name(offset),
                         color=color,
                     )
 
-    def print(self, view=True):
+    def print(self, view: bool = True) -> Digraph:
         """Print the dot
 
         Args:
