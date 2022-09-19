@@ -2,9 +2,8 @@
 
 import collections
 import re
-import sys
-from .cairo_instruction import decode_instruction
-from .utils import DEFAULT_PRIME
+from thoth.app.decompiler.cairo_instruction import decode_instruction
+from thoth.app.utils import DEFAULT_PRIME
 
 
 def decode_to_json(decoded):

@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 
-from thoth import utils
-from .instruction import Instruction
-from .cfg import CFG
+from thoth.app import utils
+from thoth.app.decompiler.instruction import Instruction
+from thoth.app.decompiler.cfg import CFG
 
 
 class Function:

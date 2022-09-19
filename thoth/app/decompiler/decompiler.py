@@ -1,5 +1,5 @@
 import re
-from thoth import utils
+from thoth.app import utils
 
 
 class Decompiler:

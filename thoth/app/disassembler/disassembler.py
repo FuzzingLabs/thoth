@@ -4,7 +4,7 @@ import json
 
 from graphviz import Digraph
 from thoth import utils
-from .abi_parser import (
+from thoth.app.decompiler.abi_parser import (
     detect_type_input_json,
     extract_hints,
     parse_to_json,
@@ -15,10 +15,10 @@ from .abi_parser import (
     extract_references,
     extract_labels,
 )
-from .decompiler import Decompiler
-from .callgraph import CallFlowGraph
-from .utils import CFG_NODE_ATTR, CFG_GRAPH_ATTR, CFG_EDGE_ATTR, DEFAULT_PRIME
-from .function import Function
+from thoth.app.decompiler.decompiler import Decompiler
+from thoth.app.cfg.callgraph import CallFlowGraph
+from thoth.app.cfg.utils import CFG_NODE_ATTR, CFG_GRAPH_ATTR, CFG_EDGE_ATTR, DEFAULT_PRIME
+from thoth.app.decompiler.function import Function
 
 
 class Disassembler:

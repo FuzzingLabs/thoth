@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
 import re
-from .utils import field_element_repr, value_to_string
+from thoth.app.utils import field_element_repr, value_to_string
 from thoth import utils
 
 

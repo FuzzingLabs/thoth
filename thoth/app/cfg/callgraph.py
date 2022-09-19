@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
 from graphviz import Digraph
-from .utils import (
+from thoth.app.cfg.config import (
     CALLGRAPH_CONFIG,
     CALLGRAPH_NODE_ATTR,
     CALLGRAPH_GRAPH_ATTR,

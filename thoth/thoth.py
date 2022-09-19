@@ -1,6 +1,6 @@
 import os
-from .arguments import parse_args
-from .disassembler import Disassembler
+from thoth.arguments import parse_args
+from thoth.disassembler import Disassembler
 
 def main() -> int:
     """Main function of Thoth
