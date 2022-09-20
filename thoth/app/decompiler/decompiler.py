@@ -27,7 +27,7 @@ class Decompiler:
             String: The formated ASSERT_EQ instruction
         """
         source_code = ""
-
+        
         OPERATORS = {"ADD": "+", "MUL": "*"}
 
         if "OP1" in instruction.res:

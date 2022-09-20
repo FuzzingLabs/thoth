@@ -122,6 +122,26 @@ class Function:
             )
         return prototype
 
+    def arguments_list(self) -> List[str]:
+        """
+        Return:
+            function_arguments (list): a list of the function arguments (implicits or not)
+        """
+        function_arguments = []
+
+        # Merge implicitargs and args
+        arguments_dict = {}
+        for dict in (self.args, self.implicitargs):
+            if dict is not None:
+                arguments_dict |= dict
+        
+        # Get arguments names
+        arguments_list = [*arguments_dict.values()]
+        for argument in arguments_list:
+            function_arguments.append(list(argument.keys())[0])
+
+        return function_arguments
+
     def print(self) -> None:
         """
         Iterate over each instruction and print the disassembly

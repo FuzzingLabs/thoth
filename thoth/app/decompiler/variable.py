@@ -1,10 +1,12 @@
+from typing import Optional
+
 class Variable:
     """
     Variable class
     """
     counter = 0
 
-    def __init__(self, variable_name: str = None) -> None:
+    def __init__(self, variable_name: Optional[str] = None) -> None:
         """
         Initialize a new variable
         """
