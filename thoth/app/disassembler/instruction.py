@@ -6,15 +6,16 @@ from thoth import utils
 
 
 class Instruction:
-    def __init__(self, inst_id, instruction_data, prime, labels):
+    def __init__(self, instruction_id: str, instruction_data: str, prime: int, labels: dict) -> None:
         """Create the instruction object
 
         Args:
-            inst_id (String): Offset of the instruction
-            instruction_data (Dictionnary): Dictionnary containing the instruction data
+            instruction_id (String): Offset of the instruction
+            instruction_data (Dictionary): Dictionnary containing the instruction data
             prime (Int): The prime number
+            labels (Dictionary): Dictionary containing the labels
         """
-        self.id = inst_id
+        self.id = instruction_id
         self.instruction_data = instruction_data
         self.prime = prime
         self.labels = labels
@@ -55,7 +56,7 @@ class Instruction:
         self.call_xref_func_name = None
         self.call_offset = self._find_call_offset()
 
-    def _find_call_offset(self):
+    def _find_call_offset(self) -> int:
         """Find the offset of the call
 
         Returns:
@@ -66,10 +67,9 @@ class Instruction:
                 return int(self.id) + int(
                     field_element_repr(int(self.imm), self.prime)
                 )
-        else:
-            None
+        return 0
 
-    def is_call_indirect(self):
+    def is_call_indirect(self) -> bool:
         """Check if the instruction is a CALL INDIRECT
 
         Returns:
@@ -77,7 +77,7 @@ class Instruction:
         """
         return ("CALL" == self.opcode) and (self.imm == "None")
 
-    def is_call_direct(self):
+    def is_call_direct(self) -> bool:
         """Check if the instruction is a CALL DIRECT
 
         Returns:
@@ -85,10 +85,15 @@ class Instruction:
         """
         return ("CALL" == self.opcode) and (self.imm != "None")
 
-    def is_call_abs(self):
+    def is_call_abs(self) -> bool:
+        """Check if the instruction is a absolute CALL 
+        
+        Returns:
+            Boolean: True 
+        """
         return ("CALL" == self.opcode) and (self.pcUpdate == "JUMP")
 
-    def is_return(self):
+    def is_return(self) -> bool:
         """Check if the instruction is a RET
 
         Returns:
@@ -96,81 +101,83 @@ class Instruction:
         """
         return "RET" == self.opcode
 
-    def _handle_assert_eq(self):
+    def _handle_assert_eq(self) -> str:
         """Handle the ASSERT_EQ opcode
 
         Returns:
             String: The formated ASSERT_EQ instruction
         """
+        assembly = ""
+
         OPERATORS = {"ADD": "+", "MUL": "*"}
 
-        disass_str = ""
-        disass_str += self.print_instruction(
+        assembly += self.print_instruction(
             f"{self.opcode}", color=utils.color.GREEN
         )
         if "OP1" in self.res:
             if "IMM" in self.op1Addr:
-                disass_str += self.print_instruction(
+                assembly += self.print_instruction(
                     f"[{self.dstRegister}{self.offDest}], {field_element_repr(int(self.imm), self.prime)}"
                 )
                 value = value_to_string(int(self.imm), self.prime)
                 if value != "":
-                    disass_str += self.print_instruction(
+                    assembly += self.print_instruction(
                         f"# {value_to_string(int(self.imm), self.prime)}",
                         color=utils.color.CYAN,
                     )
             elif "OP0" in self.op1Addr:
-                disass_str += self.print_instruction(
+                assembly += self.print_instruction(
                     f"[{self.dstRegister}{self.offDest}], [[{self.op0Register}{self.off1}]{self.off2}]"
                 )
             else:
-                disass_str += self.print_instruction(
+                assembly += self.print_instruction(
                     f"[{self.dstRegister}{self.offDest}], [{self.op1Addr}{self.off2}]"
                 )
         else:
             op = OPERATORS[self.res]
             if "IMM" not in self.op1Addr:
-                disass_str += self.print_instruction(
+                assembly += self.print_instruction(
                     f"[{self.dstRegister}{self.offDest}], [{self.op0Register}{self.off1}] {op} [{self.op1Addr}{self.off2}]"
                 )
             else:
-                disass_str += self.print_instruction(
+                assembly += self.print_instruction(
                     f"[{self.dstRegister}{self.offDest}], [{self.op0Register}{self.off1}] {op} {field_element_repr(int(self.imm), self.prime)}"
                 )
-        return disass_str
+        return assembly
 
-    def _handle_nop(self):
+    def _handle_nop(self) -> str:
         """Handle the NOP opcode
 
         Returns:
             String: The formated NOP instruction
         """
-        disass_str = ""
+        assembly = ""
+
         if "REGULAR" not in self.pcUpdate:
-            disass_str += self.print_instruction(
+            assembly += self.print_instruction(
                 f"{self.pcUpdate}", color=utils.color.RED
             )
-            disass_str += self.print_instruction(
+            assembly += self.print_instruction(
                 field_element_repr(int(self.imm), self.prime), utils.color.BLUE
             )
             jump_to = int(field_element_repr(int(self.imm), self.prime)) + int(
                 self.id
             )
             if str(jump_to) in self.labels:
-                disass_str += self.print_instruction(
+                assembly += self.print_instruction(
                     f"# JMP {self.labels[str(jump_to)]}",
                     color=utils.color.CYAN,
                 )
             else:
-                disass_str += self.print_instruction(
+                assembly += self.print_instruction(
                     f"# JMP {jump_to}",
                     color=utils.color.CYAN,
                 )
         else:
-            disass_str += self.print_instruction(
+            assembly += self.print_instruction(
                 f"{self.opcode}", color=utils.color.RED
             )
-        return disass_str
+        return assembly
 
     def _handle_call(self):
         """Handle the CALL opcode
@@ -178,7 +185,7 @@ class Instruction:
         Returns:
             String: The formated CALL instruction
         """
-        disass_str = "" + self.print_instruction(
+        assembly = "" + self.print_instruction(
             f"{self.opcode}", color=utils.color.RED
         )
         call_type = "abs" if self.is_call_abs() else "rel"
@@ -190,35 +197,35 @@ class Instruction:
             )
             # direct CALL to a fonction
             if self.call_xref_func_name is not None:
-                disass_str += self.print_instruction(
+                assembly += self.print_instruction(
                     f"{offset}", color=utils.color.CYAN
                 )
-                disass_str += self.print_instruction(
+                assembly += self.print_instruction(
                     f"# {self.call_xref_func_name}", color=utils.color.CYAN
                 )
             # relative CALL to a label
             # e.g. call rel (123)
             else:
-                disass_str += self.print_instruction(
+                assembly += self.print_instruction(
                     f"{call_type} ({offset})", color=utils.color.BEIGE
                 )
                 if str(offset) in self.labels:
-                    disass_str += self.print_instruction(
+                    assembly += self.print_instruction(
                         f"# {self.labels[str(offset)]}", color=utils.color.CYAN
                     )
         # Indirect CALL
         # e.g. call rel [fp + 4]
         elif self.is_call_indirect():
-            disass_str += self.print_instruction(
+            assembly += self.print_instruction(
                 f"{call_type} [{self.op1Addr}{self.off2}]",
                 color=utils.color.BEIGE,
             )
         else:
             raise NotImplementedError
 
-        return disass_str
+        return assembly
 
-    def _handle_ret(self):
+    def _handle_ret(self) -> str:
         """Handle the RET opcode
 
         Returns:
@@ -226,7 +233,7 @@ class Instruction:
         """
         return self.print_instruction(f"{self.opcode}", color=utils.color.RED)
 
-    def print(self):
+    def print(self) -> str:
         """Read the instruction and print each element of it
 
         Raises:
@@ -235,17 +242,17 @@ class Instruction:
         Returns:
             String: String containing the instruction line with the offset ...
         """
-        disass_str = ""
+        assembly = ""
         if self.id in self.labels:
-            disass_str += self.print_instruction(
+            assembly += self.print_instruction(
                 f"\nLABEL : {self.labels[self.id]}", color=utils.color.GREEN
             )
-        disass_str += self.print_instruction(
+        assembly += self.print_instruction(
             f"\noffset {self.id}:", color=utils.color.HEADER
         )
 
         if "ASSERT_EQ" in self.opcode:
-            disass_str += self._handle_assert_eq()
+            assembly += self._handle_assert_eq()
             if "REGULAR" not in self.apUpdate:
                 op = list(filter(None, re.split(r"(\d+)", self.apUpdate)))
                 APopcode = op[0]
@@ -254,40 +261,33 @@ class Instruction:
                     if (len(op) > 1)
                     else int(field_element_repr(int(self.imm), self.prime))
                 )
-                disass_str += self.print_instruction(
+                assembly += self.print_instruction(
                     f"\noffset {self.id}:", color=utils.color.HEADER
                 )
-                disass_str += self.print_instruction(
+                assembly += self.print_instruction(
                     f"{APopcode}", color=utils.color.YELLOW
                 )
-                disass_str += self.print_instruction(f"AP, {APval}")
+                assembly += self.print_instruction(f"AP, {APval}")
 
         elif "NOP" in self.opcode:
-            disass_str += self._handle_nop()
+            assembly += self._handle_nop()
 
         elif "CALL" in self.opcode:
-            disass_str += self._handle_call()
+            assembly += self._handle_call()
 
         elif "RET" in self.opcode:
-            disass_str += self._handle_ret()
+            assembly += self._handle_ret()
 
         else:
             raise AssertionError
 
-        # if self.hint and self.ref:
-        #    disass_str += self.print_instruction(
-        #        f" # {self.hint} | {self.ref}", color=utils.color.BEIGE
-        #    )
         if self.hint:
-            disass_str += self.print_instruction(
+            assembly += self.print_instruction(
                 f" # {self.hint}", color=utils.color.BEIGE
             )
-        # elif self.ref:
-        #    disass_str += self.print_instruction(f" # {self.ref}", color=utils.color.BEIGE)
+        return assembly
 
-        return disass_str
-
-    def print_instruction(self, data, color="", end=""):
+    def print_instruction(self, data:  str, color: str = "", end: str = "") -> str:
         """format the instruction
 
         Args:

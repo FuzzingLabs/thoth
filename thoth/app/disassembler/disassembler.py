@@ -1,8 +1,10 @@
 #!/usr/bin/env python3
 
 import json
+from optparse import Option
 
 from graphviz import Digraph
+from typing import IO, Optional
 from thoth import utils
 from thoth.app.disassembler.abi_parser import (
     detect_type_input_json,
@@ -29,12 +31,12 @@ class Disassembler:
     Analyze and disassemble
     """
 
-    def __init__(self, file, color=False):
+    def __init__(self, file: IO, color: bool = False) -> None:
         """Init the disassembler object and run the analyzer.
 
         Args:
             file (file): The smart contract file
-            color (bool, optional): Enable or disable coloring of the output. Defaults to False.
+            color (bool): Enable or disable coloring of the output. Defaults to False.
         """
         self.file = file
         self.json = None
@@ -48,7 +50,7 @@ class Disassembler:
         utils.color = utils.bcolors(color=color)
         self.analyze()
 
-    def analyze(self):
+    def analyze(self) -> None:
         """Run the analyze of the file.
 
         Raises:
@@ -128,7 +130,7 @@ class Disassembler:
                     xref_func = self.get_function_by_offset(
                         str(inst.call_offset)
                     )
-                    inst.call_xref_func_name = (
+                    inst.call_xref_function_name = (
                         xref_func.name if xref_func is not None else None
                     )
                 if inst.id in self.references:
@@ -136,12 +138,12 @@ class Disassembler:
                 if inst.id in self.hints:
                     inst.hint = self.hints[inst.id]
 
-    def print_disassembly(self, func_name=None, func_offset=None):
+    def print_disassembly(self, function_name: Optional[str] = None, function_offset: Optional[str] = None) -> None:
         """Print the disassembly of all the bytecodes or a given function.
 
         Args:
-            func_name (string, optional): The function name to disassemble. Defaults to None.
-            func_offset (string, optional): The function offset to disassemble. Defaults to None.
+            function_name (string, optional): The function name to disassemble. Defaults to None.
+            function_offset (string, optional): The function offset to disassemble. Defaults to None.
 
         Raises:
             SystemExit: If the function name or offset does not exist.
@@ -160,32 +162,35 @@ class Disassembler:
         if self.functions == []:
             return
 
-        elif func_name is None and func_offset is None:
+        elif function_name is None and function_offset is None:
             for function in self.functions:
                 function.print()
 
         else:
-            if func_name is not None:
-                function = self.get_function_by_name(func_name)
-            elif func_offset is not None:
-                function = self.get_function_by_offset(func_offset)
+            if function_name is not None:
+                function = self.get_function_by_name(function_name)
+            elif function_offset is not None:
+                function = self.get_function_by_offset(function_offset)
 
             if function is not None:
                 function.print()
             else:
                 raise SystemExit("Error: Function does not exist.")
 
-    def print_structs(self, decompiler=False):
+    def print_structs(self, decompiler: bool = False) -> str:
         """Print the structures parsed from the ABI.
 
+        Args:
+            decompiler (bool): decompile the struct 
         Returns:
             string: Return a string containing the output of the parsed structures.
         """
-        struct_str = ""
+        parsed_string = ""
+
         for struct in self.structs:
             if decompiler == True and len(self.structs[struct]) == 0:
                 continue
-            struct_str += (
+            parsed_string += (
                 "struct "
                 + utils.color.BEIGE
                 + struct
@@ -193,31 +198,31 @@ class Disassembler:
                 + ":\n"
             )
             for attribut in self.structs[struct]:
-                struct_str += (
+                parsed_string += (
                     "\tmember "
                     + utils.color.GREEN
                     + self.structs[struct][attribut]["attribut"]
                     + utils.color.ENDC
                 )
-                struct_str += (
+                parsed_string += (
                     " : "
                     + utils.color.YELLOW
                     + self.structs[struct][attribut]["cairo_type"]
                     + utils.color.ENDC
                     + "\n"
                 )
-            struct_str += "end\n\n"
-        return struct_str
+            parsed_string += "end\n\n"
+        return parsed_string
 
-    def print_events(self):
+    def print_events(self) -> str:
         """Print the events parsed from the ABI.
 
         Returns:
             string: Return a string containing the output of the parsed events.
         """
-        events_str = ""
+        events = ""
         for event_name, data in self.events.items():
-            events_str += (
+            events += (
                 "\n\t event: "
                 + utils.color.BEIGE
                 + event_name
@@ -225,61 +230,61 @@ class Disassembler:
                 + "\n"
             )
             for attribut in data:
-                events_str += (
+                events += (
                     "\t    "
                     + utils.color.GREEN
                     + attribut["name"]
                     + utils.color.ENDC
                 )
-                events_str += (
+                events += (
                     "   : "
                     + utils.color.YELLOW
                     + attribut["type"]
                     + utils.color.ENDC
                     + "\n"
                 )
-        return events_str
+        return events
 
-    def print_builtins(self):
+    def print_builtins(self) -> str:
         """Print the builtins parsed from the ABI.
 
         Returns:
             string: Return a string containing the output of the parsed builtins.
         """
-        builtins_str = ""
+        builtins = ""
         if self.builtins != []:
-            builtins_str += "\n%builtins "
+            builtins += "\n%builtins "
             return (
-                builtins_str
+                builtins
                 + utils.color.RED
                 + " ".join(self.builtins)
                 + utils.color.ENDC
             )
-        return builtins_str
+        return builtins
 
-    def dump_json(self):
+    def dump_json(self) -> None:
         """Print the JSON containing the datas parsed from the ABI."""
         print("\n", json.dumps(self.json, indent=3))
 
-    def get_function_by_name(self, func_name):
+    def get_function_by_name(self, function_name: str) -> Optional[Function]:
         """Get the function object from it name.
 
         Args:
-            func_name (string): The name of the function to return.
+            function_name (string): The name of the function to return.
 
         Returns:
             Function: Function object.
         """
         for function in self.functions:
-            if func_name == function.name:
+            if function_name == function.name:
                 return function
         return None
 
-    def get_function_by_offset(self, offset):
+    def get_function_by_offset(self, offset: str) -> Optional[Function]:
         """Get the function object from it offset.
 
         Args:
-            func_offset (string): The offset of the function to return.
+            function_offset (string): The offset of the function to return.
 
         Returns:
             Function: Function object.
@@ -289,7 +294,7 @@ class Disassembler:
                 return function
         return None
 
-    def print_call_flow_graph(self, filename, view=True, format="pdf"):
+    def print_call_flow_graph(self, filename: str, view: bool = True, format: str = "pdf") -> Digraph:
         """Print the call flow graph.
 
         Args:
@@ -310,19 +315,19 @@ class Disassembler:
 
     def print_cfg(
         self,
-        filename,
-        format="pdf",
-        func_name=None,
-        func_offset=None,
-        view=True,
-    ):
+        filename: str,
+        format: str = "pdf",
+        function_name: Optional[str] = None,
+        function_offset: Optional[str] = None,
+        view: bool = True,
+    ) -> None:
         """Print the CFG.
 
         Args:
             filename (string): The name of the output file.
             format (str, optional): The format of the output file. Defaults to "pdf".
-            func_name (string, optional): Build the CFG of the given function name. Defaults to None.
-            func_offset (string, optional): Build the CFG of the given function offset. Defaults to None.
+            function_name (string, optional): Build the CFG of the given function name. Defaults to None.
+            function_offset (string, optional): Build the CFG of the given function offset. Defaults to None.
             view (bool, optional): Set if the output file should be opened or not. Defaults to True.
         """
         graph = Digraph(
@@ -332,17 +337,17 @@ class Disassembler:
             edge_attr=CFG_EDGE_ATTR,
         )
         graph.format = format
-        if func_name is None and func_offset is None:
+        if function_name is None and function_offset is None:
             for function in self.functions:
                 function.generate_cfg()
                 graph.subgraph(function.cfg.dot)
             graph.render(directory="output-cfg", view=view)
 
         else:
-            if func_name is not None:
-                function = self.get_function_by_name(func_name)
-            elif func_offset is not None:
-                function = self.get_function_by_offset(func_offset)
+            if function_name is not None:
+                function = self.get_function_by_name(function_name)
+            elif function_offset is not None:
+                function = self.get_function_by_offset(function_offset)
 
             if function is not None:
                 function.generate_cfg()
@@ -351,7 +356,7 @@ class Disassembler:
             else:
                 print("Error : Function does not exist.")
 
-    def analytics(self):
+    def analytics(self) -> dict:
         """Analyze and get some datas for unit tests.
 
         Returns:
@@ -375,13 +380,16 @@ class Disassembler:
         # print(json.dumps(analytics, indent=3))
         return analytics
 
-    def decompiler(self):
+    def decompiler(self) -> None:
+        """
+        Decompile the functions
+        """
         print(self.print_builtins())
         for function in self.functions:
             if function.is_import:
-                func_name = function.name.split(".")[-1]
+                function_name = function.name.split(".")[-1]
                 package = ".".join(function.name.split(".")[:-1])
-                print(f"from {package} import {func_name}")
+                print(f"from {package} import {function_name}")
         print(self.print_structs(decompiler=True))
         decomp = Decompiler(functions=self.functions)
         print(decomp.decompile_code())

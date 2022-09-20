@@ -1,8 +1,9 @@
-#!/usr/bin/env python3
-
+from graphviz import Digraph
+from typing import List
 from thoth.app import utils
 from thoth.app.disassembler.instruction import Instruction
 from thoth.app.disassembler.cfg import CFG
+
 
 
 class Function:
@@ -10,18 +11,18 @@ class Function:
 
     def __init__(
         self,
-        prime,
-        offset_start,
-        offset_end,
-        name,
-        instructions,
-        args,
-        implicitargs,
-        ret,
-        decorators,
-        labels,
-        is_import=False,
-        entry_point=False,
+        prime: int,
+        offset_start: int,
+        offset_end: int,
+        name: str,
+        instructions: Instruction,
+        args: dict,
+        implicitargs: dict,
+        ret: dict,
+        decorators: List,
+        labels: dict,
+        is_import: bool = False,
+        entry_point: bool = False,
     ) -> None:
         """Create the function object
 
@@ -35,6 +36,7 @@ class Function:
             implicitargs (Dictionnary): Dict containing the implicit arguments
             ret (Dictionnary): Dict containing the return
             decorators (List): Dict containing the decorators
+            labels (Dictionnary): Dictionary containing the labels
             is_import (bool, optional): Set to true if the function is an import. Defaults to False.
             entry_point (bool, optional): Set to true if the function is an entry_point. Defaults to False.
         """
@@ -43,7 +45,7 @@ class Function:
         self.offset_end = offset_end
         self.name = name
         self.instructions_dict = instructions
-        self.instructions = []
+        self.instructions: List = []
         self.args = args if args != {} else None
         self.implicitargs = implicitargs if implicitargs != {} else None
         self.ret = ret if ret != {} else None
@@ -52,10 +54,9 @@ class Function:
         self.entry_point = entry_point
         self.cfg = None
         self.labels = labels
-
         self._generate_instruction()
 
-    def _generate_instruction(self):
+    def _generate_instruction(self) -> List[Instruction]:
         """Create a list of the instruction with its datas
 
         Returns:
@@ -73,7 +74,7 @@ class Function:
                 )
         return self.instructions
 
-    def get_prototype(self):
+    def get_prototype(self) -> str:
         """Build the string of the prototype
 
         Returns:
@@ -121,19 +122,21 @@ class Function:
             )
         return prototype
 
-    def print(self):
-        """Iterate over each instruction and print the disassembly"""
+    def print(self) -> None:
+        """
+        Iterate over each instruction and print the disassembly
+        """
         prototype = self.get_prototype()
         print(f"\n\t{utils.color.BLUE + prototype + utils.color.ENDC}")
         for instr in self.instructions:
             print(instr.print(), end="")
         print()
 
-    def generate_cfg(self):
+    def generate_cfg(self) -> None:
         """Generate the CFG"""
         self.cfg = CFG(self.name, self.instructions)
 
-    def print_cfg(self, view=True):
+    def print_cfg(self, view: bool = True) -> Digraph:
         """Print the dot
 
         Args:

@@ -4,11 +4,10 @@
 
 import dataclasses
 from enum import Enum, auto
-from typing import Optional, List
+from typing import Optional, Tuple
 
 OFFSET_BITS = 16
 N_FLAGS = 15
-
 
 class Register(Enum):
     AP = 0
@@ -114,11 +113,11 @@ class Instruction(BytecodeElement):
     opcode: Opcode
 
     @property
-    def size(self):
+    def size(self) -> int:
         return 2 if self.imm is not None else 1
 
 
-def decode_instruction_values(encoded_instruction):
+def decode_instruction_values(encoded_instruction: str) -> Tuple:
     """Returns a tuple (flags, off0, off1, off2) according to the given encoded instruction.
 
 
