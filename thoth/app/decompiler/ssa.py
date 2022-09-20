@@ -1,9 +1,11 @@
 from thoth.app.decompiler.variable import Variable
 
+
 class SSA:
     """
     Decompiler SSA
     """
+
     def __init__(self):
         """
         Initialize the registers values and memory
@@ -26,7 +28,6 @@ class SSA:
             position = self.ap_position + offset
         else:
             position = self.fp_position + offset
-        
+
         self.memory.append(Variable())
         return self.memory[position].name
-        

@@ -1,9 +1,9 @@
-from dis import Instruction
 import re
 from typing import List
 from thoth.app import utils
 from thoth.app.disassembler.function import Function
 from thoth.app.disassembler.instruction import Instruction
+
 
 class Decompiler:
     """
@@ -11,6 +11,7 @@ class Decompiler:
 
     decompile bytecodes
     """
+
     def __init__(self, functions: List[Function]) -> None:
         self.tab_count = 1
         self.end_else = []
@@ -27,18 +28,14 @@ class Decompiler:
             String: The formated ASSERT_EQ instruction
         """
         source_code = ""
-        
+
         OPERATORS = {"ADD": "+", "MUL": "*"}
 
         if "OP1" in instruction.res:
             if "IMM" in instruction.op1Addr:
-                value = utils.value_to_string(
-                    int(instruction.imm), (instruction.prime)
-                )
+                value = utils.value_to_string(int(instruction.imm), (instruction.prime))
                 if value == "":
-                    value = utils.field_element_repr(
-                        int(instruction.imm), instruction.prime
-                    )
+                    value = utils.field_element_repr(int(instruction.imm), instruction.prime)
                 source_code += self.print_instruction_decomp(
                     f"# {utils.field_element_repr(int(instruction.imm), instruction.prime)} -> {value}",
                     end="\n",
@@ -90,38 +87,25 @@ class Decompiler:
                 self.ifcount += 1
                 # Detect if there is an else later
                 jump_to = int(
-                    utils.field_element_repr(
-                        int(instruction.imm), instruction.prime
-                    )
+                    utils.field_element_repr(int(instruction.imm), instruction.prime)
                 ) + int(instruction.id)
                 for inst in self.decompiled_function.instructions:
-                    if (
-                        int(inst.id) == int(jump_to) - 2
-                        or int(inst.id) == int(jump_to) - 1
-                    ):
+                    if int(inst.id) == int(jump_to) - 2 or int(inst.id) == int(jump_to) - 1:
                         if inst.pcUpdate != "JUMP_REL":
                             self.end_if = int(jump_to)
                             self.ifcount -= 1
             elif instruction.pcUpdate == "JUMP_REL":
                 if self.ifcount != 0:
                     self.tab_count -= 1
-                    source_code += self.print_instruction_decomp(
-                        "else:", color=utils.color.RED
-                    )
+                    source_code += self.print_instruction_decomp("else:", color=utils.color.RED)
                     self.tab_count += 1
                     self.end_else.append(
-                        int(
-                            utils.field_element_repr(
-                                int(instruction.imm), instruction.prime
-                            )
-                        )
+                        int(utils.field_element_repr(int(instruction.imm), instruction.prime))
                         + int(instruction.id)
                     )
                     self.ifcount -= 1
                 else:
-                    source_code += self.print_instruction_decomp(
-                        f"jmp rel {instruction.imm}"
-                    )
+                    source_code += self.print_instruction_decomp(f"jmp rel {instruction.imm}")
         return source_code
 
     def _handle_call_decomp(self, instruction: Instruction) -> str:
@@ -135,11 +119,7 @@ class Decompiler:
 
         call_type = "call abs" if instruction.is_call_abs() else "call rel"
         if instruction.is_call_direct():
-            offset = int(
-                utils.field_element_repr(
-                    int(instruction.imm), instruction.prime
-                )
-            )
+            offset = int(utils.field_element_repr(int(instruction.imm), instruction.prime))
             # direct CALL to a fonction
             if instruction.call_xref_func_name is not None:
                 call_name = instruction.call_xref_func_name.split(".")
@@ -157,9 +137,7 @@ class Decompiler:
                         args_str += ", "
                     args -= 1
                 source_code += (
-                    self.print_instruction_decomp(
-                        f"{call_name[-1]}", color=utils.color.RED
-                    )
+                    self.print_instruction_decomp(f"{call_name[-1]}", color=utils.color.RED)
                     + f"({args_str})"
                 )
             # CALL to a label
@@ -192,17 +170,12 @@ class Decompiler:
         source_code = ""
 
         if self.return_values == None:
-            source_code += self.print_instruction_decomp(
-                "ret", end="\n", color=utils.color.RED
-            )
+            source_code += self.print_instruction_decomp("ret", end="\n", color=utils.color.RED)
             if last:
                 self.tab_count -= 1
         else:
             idx = len(self.return_values)
-            source_code += (
-                self.print_instruction_decomp("return", color=utils.color.RED)
-                + "("
-            )
+            source_code += self.print_instruction_decomp("return", color=utils.color.RED) + "("
             while idx:
                 source_code += f"[ap-{idx}]"
                 if idx != 1:
@@ -211,9 +184,7 @@ class Decompiler:
             source_code += ")\n"
         if last:
             self.tab_count = 0
-            source_code += self.print_instruction_decomp(
-                "end", color=utils.color.RED
-            )
+            source_code += self.print_instruction_decomp("end", color=utils.color.RED)
         return source_code
 
     def _handle_hint_decomp(self, instruction: Instruction) -> str:
@@ -243,7 +214,7 @@ class Decompiler:
             String: String containing the instruction line with the offset ...
         """
         source_code = ""
-        
+
         if instruction.id in instruction.labels:
             source_code += self.print_instruction_decomp(
                 f"\nLABEL : {instruction.labels[instruction.id]}",
@@ -256,21 +227,15 @@ class Decompiler:
             source_code += self._handle_assert_eq_decomp(instruction)
             if "REGULAR" not in instruction.apUpdate:
                 source_code += ";"
-                op = list(
-                    filter(None, re.split(r"(\d+)", instruction.apUpdate))
-                )
+                op = list(filter(None, re.split(r"(\d+)", instruction.apUpdate)))
                 APval = (
                     op[1]
                     if (len(op) > 1)
-                    else int(
-                        utils.field_element_repr(
-                            int(instruction.imm), instruction.prime
-                        )
-                    )
+                    else int(utils.field_element_repr(int(instruction.imm), instruction.prime))
                 )
                 for i in range(int(APval)):
                     source_code += self.print_instruction_decomp(
-                        f"ap ++", tab=self.tab_count, color=utils.color.YELLOW
+                        f"ap ++", tab_count=self.tab_count, color=utils.color.YELLOW
                     )
                     if i != int(APval) - 1:
                         source_code += "\n"
@@ -284,7 +249,9 @@ class Decompiler:
             raise AssertionError
         return source_code
 
-    def print_instruction_decomp(self, data: str, color: str = "", end: str = "", tab_count: int = None) -> str:
+    def print_instruction_decomp(
+        self, data: str, color: str = "", end: str = "", tab_count: int = None
+    ) -> str:
         """format the instruction
 
         Args:
@@ -311,7 +278,7 @@ class Decompiler:
         for function in self.functions:
             self.tab_count = 0
             count = 0
-            
+
             if function.is_import is False:
                 source_code += "\n"
                 self.decompiled_function = function
@@ -335,9 +302,7 @@ class Decompiler:
                                 )
                             if self.end_else != []:
                                 for idx in range(len(self.end_else)):
-                                    if self.end_else[idx] == int(
-                                        instruction.id
-                                    ):
+                                    if self.end_else[idx] == int(instruction.id):
                                         self.tab_count -= 1
                                         source_code += self.print_instruction_decomp(
                                             "end",

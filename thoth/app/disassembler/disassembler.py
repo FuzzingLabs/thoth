@@ -1,11 +1,11 @@
-#!/usr/bin/env python3
-
 import json
-from optparse import Option
-
 from graphviz import Digraph
 from typing import IO, Optional
-from thoth import utils
+from thoth.app import utils
+from thoth.app.cfg.callgraph import CallFlowGraph
+from thoth.app.cfg.config import CFG_NODE_ATTR, CFG_GRAPH_ATTR, CFG_EDGE_ATTR
+from thoth.app.decompiler.decompiler import Decompiler
+from thoth.app.disassembler.function import Function
 from thoth.app.disassembler.abi_parser import (
     detect_type_input_json,
     extract_hints,
@@ -17,10 +17,6 @@ from thoth.app.disassembler.abi_parser import (
     extract_references,
     extract_labels,
 )
-from thoth.app.decompiler.decompiler import Decompiler
-from thoth.app.cfg.callgraph import CallFlowGraph
-from thoth.app.cfg.utils import CFG_NODE_ATTR, CFG_GRAPH_ATTR, CFG_EDGE_ATTR, DEFAULT_PRIME
-from thoth.app.decompiler.function import Function
 
 
 class Disassembler:
@@ -127,18 +123,16 @@ class Disassembler:
             for inst in func.instructions:
                 # Only for direct call
                 if inst.is_call_direct():
-                    xref_func = self.get_function_by_offset(
-                        str(inst.call_offset)
-                    )
-                    inst.call_xref_function_name = (
-                        xref_func.name if xref_func is not None else None
-                    )
+                    xref_func = self.get_function_by_offset(str(inst.call_offset))
+                    inst.call_xref_function_name = xref_func.name if xref_func is not None else None
                 if inst.id in self.references:
                     inst.ref = self.references[inst.id]
                 if inst.id in self.hints:
                     inst.hint = self.hints[inst.id]
 
-    def print_disassembly(self, function_name: Optional[str] = None, function_offset: Optional[str] = None) -> None:
+    def print_disassembly(
+        self, function_name: Optional[str] = None, function_offset: Optional[str] = None
+    ) -> None:
         """Print the disassembly of all the bytecodes or a given function.
 
         Args:
@@ -181,7 +175,7 @@ class Disassembler:
         """Print the structures parsed from the ABI.
 
         Args:
-            decompiler (bool): decompile the struct 
+            decompiler (bool): decompile the struct
         Returns:
             string: Return a string containing the output of the parsed structures.
         """
@@ -190,13 +184,7 @@ class Disassembler:
         for struct in self.structs:
             if decompiler == True and len(self.structs[struct]) == 0:
                 continue
-            parsed_string += (
-                "struct "
-                + utils.color.BEIGE
-                + struct
-                + utils.color.ENDC
-                + ":\n"
-            )
+            parsed_string += "struct " + utils.color.BEIGE + struct + utils.color.ENDC + ":\n"
             for attribut in self.structs[struct]:
                 parsed_string += (
                     "\tmember "
@@ -222,27 +210,10 @@ class Disassembler:
         """
         events = ""
         for event_name, data in self.events.items():
-            events += (
-                "\n\t event: "
-                + utils.color.BEIGE
-                + event_name
-                + utils.color.ENDC
-                + "\n"
-            )
+            events += "\n\t event: " + utils.color.BEIGE + event_name + utils.color.ENDC + "\n"
             for attribut in data:
-                events += (
-                    "\t    "
-                    + utils.color.GREEN
-                    + attribut["name"]
-                    + utils.color.ENDC
-                )
-                events += (
-                    "   : "
-                    + utils.color.YELLOW
-                    + attribut["type"]
-                    + utils.color.ENDC
-                    + "\n"
-                )
+                events += "\t    " + utils.color.GREEN + attribut["name"] + utils.color.ENDC
+                events += "   : " + utils.color.YELLOW + attribut["type"] + utils.color.ENDC + "\n"
         return events
 
     def print_builtins(self) -> str:
@@ -254,12 +225,7 @@ class Disassembler:
         builtins = ""
         if self.builtins != []:
             builtins += "\n%builtins "
-            return (
-                builtins
-                + utils.color.RED
-                + " ".join(self.builtins)
-                + utils.color.ENDC
-            )
+            return builtins + utils.color.RED + " ".join(self.builtins) + utils.color.ENDC
         return builtins
 
     def dump_json(self) -> None:
@@ -294,7 +260,9 @@ class Disassembler:
                 return function
         return None
 
-    def print_call_flow_graph(self, filename: str, view: bool = True, format: str = "pdf") -> Digraph:
+    def print_call_flow_graph(
+        self, filename: str, view: bool = True, format: str = "pdf"
+    ) -> Digraph:
         """Print the call flow graph.
 
         Args:
@@ -306,9 +274,7 @@ class Disassembler:
             dot: The call graph dot.
         """
         if self.call_graph is None:
-            self.call_graph = CallFlowGraph(
-                self.functions, filename=filename, format=format
-            )
+            self.call_graph = CallFlowGraph(self.functions, filename=filename, format=format)
 
         self.call_graph.print(view)
         return self.call_graph.dot

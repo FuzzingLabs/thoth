@@ -1,5 +1,7 @@
-# Graphical stuff for the CFG's dot
+# Default prime value
+DEFAULT_PRIME = (2**251) + (17 * (2**192)) + 1
 
+# Graphical stuff for the CFG's dot
 CFG_NODE_ATTR = {
     "style": "filled, solid",
     "shape": "rect, plaintext",

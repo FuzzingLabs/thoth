@@ -1,12 +1,12 @@
 from graphviz import Digraph
 from typing import List
-from thoth.app.decompiler.function import Function
 from thoth.app.cfg.config import (
     CALLGRAPH_CONFIG,
     CALLGRAPH_NODE_ATTR,
     CALLGRAPH_GRAPH_ATTR,
     CALLGRAPH_EDGE_ATTR,
 )
+from thoth.app.disassembler.function import Function
 
 
 class CallFlowGraph:

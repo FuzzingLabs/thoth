@@ -1,5 +1,6 @@
 import argparse
 
+
 def parse_args() -> argparse.Namespace:
     """Parse the program arguments
 
@@ -76,5 +77,5 @@ def parse_args() -> argparse.Namespace:
         help="Dump a Json file containing debug information",
     )
     m.add_argument("-d", "-decomp", "--decomp", action="store_true")
-    
+
     return parser.parse_args()

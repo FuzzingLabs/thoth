@@ -1,9 +1,8 @@
 from graphviz import Digraph
 from typing import List
 from thoth.app import utils
+from thoth.app.cfg.cfg import CFG
 from thoth.app.disassembler.instruction import Instruction
-from thoth.app.disassembler.cfg import CFG
-
 
 
 class Function:
@@ -105,17 +104,12 @@ class Function:
                 for idarg in data_content:
                     if data_content[idarg] != {}:
                         for args in data_content[idarg]:
-                            prototype += (
-                                args + " : " + data_content[idarg][args]
-                            )
+                            prototype += args + " : " + data_content[idarg][args]
                             if int(idarg) != len(data_content) - 1:
                                 prototype += ", "
             prototype += (
                 ")"
-                if (
-                    data_name == "args"
-                    or (data_name == "ret" and data_content is not None)
-                )
+                if (data_name == "args" or (data_name == "ret" and data_content is not None))
                 else "}"
                 if data_name == "implicitargs"
                 else ""
@@ -134,7 +128,7 @@ class Function:
         for dict in (self.args, self.implicitargs):
             if dict is not None:
                 arguments_dict |= dict
-        
+
         # Get arguments names
         arguments_list = [*arguments_dict.values()]
         for argument in arguments_list:

@@ -1,9 +1,11 @@
 from typing import Optional
 
+
 class Variable:
     """
     Variable class
     """
+
     counter = 0
 
     def __init__(self, variable_name: Optional[str] = None) -> None:
@@ -14,7 +16,7 @@ class Variable:
         self.variable_name = variable_name
         self.instance = Variable.counter
 
-    @property 
+    @property
     def name(self) -> str:
         """
         Return the variable name
@@ -23,7 +25,7 @@ class Variable:
         # If the variable has a name
         if self.variable_name is not None:
             return self.name
-        
+
         # Use default name (v_<n>)
         name = "v_%s" % self.instance
         return name

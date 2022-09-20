@@ -1,12 +1,12 @@
-#!/usr/bin/env python3
-
 import re
+from thoth.app import utils
 from thoth.app.utils import field_element_repr, value_to_string
-from thoth import utils
 
 
 class Instruction:
-    def __init__(self, instruction_id: str, instruction_data: str, prime: int, labels: dict) -> None:
+    def __init__(
+        self, instruction_id: str, instruction_data: str, prime: int, labels: dict
+    ) -> None:
         """Create the instruction object
 
         Args:
@@ -38,12 +38,8 @@ class Instruction:
         )
         self.off2 = self.off2 if int(self.off2) != 0 else ""
         self.imm = instruction_data.get("imm")
-        self.dstRegister = instruction_data.get("dst_register").split(
-            "Register."
-        )[1]
-        self.op0Register = instruction_data.get("op0_register").split(
-            "Register."
-        )[1]
+        self.dstRegister = instruction_data.get("dst_register").split("Register.")[1]
+        self.op0Register = instruction_data.get("op0_register").split("Register.")[1]
         self.op1Addr = instruction_data.get("op1_addr").split("Op1Addr.")[1]
         self.res = instruction_data.get("res").split("Res.")[1]
         self.pcUpdate = instruction_data.get("pc_update").split("PcUpdate.")[1]
@@ -64,9 +60,7 @@ class Instruction:
         """
         if self.is_call_direct():
             if self.imm != None:
-                return int(self.id) + int(
-                    field_element_repr(int(self.imm), self.prime)
-                )
+                return int(self.id) + int(field_element_repr(int(self.imm), self.prime))
         return 0
 
     def is_call_indirect(self) -> bool:
@@ -86,10 +80,10 @@ class Instruction:
         return ("CALL" == self.opcode) and (self.imm != "None")
 
     def is_call_abs(self) -> bool:
-        """Check if the instruction is a absolute CALL 
-        
+        """Check if the instruction is a absolute CALL
+
         Returns:
-            Boolean: True 
+            Boolean: True
         """
         return ("CALL" == self.opcode) and (self.pcUpdate == "JUMP")
 
@@ -111,9 +105,7 @@ class Instruction:
 
         OPERATORS = {"ADD": "+", "MUL": "*"}
 
-        assembly += self.print_instruction(
-            f"{self.opcode}", color=utils.color.GREEN
-        )
+        assembly += self.print_instruction(f"{self.opcode}", color=utils.color.GREEN)
         if "OP1" in self.res:
             if "IMM" in self.op1Addr:
                 assembly += self.print_instruction(
@@ -154,15 +146,11 @@ class Instruction:
         assembly = ""
 
         if "REGULAR" not in self.pcUpdate:
-            assembly += self.print_instruction(
-                f"{self.pcUpdate}", color=utils.color.RED
-            )
+            assembly += self.print_instruction(f"{self.pcUpdate}", color=utils.color.RED)
             assembly += self.print_instruction(
                 field_element_repr(int(self.imm), self.prime), utils.color.BLUE
             )
-            jump_to = int(field_element_repr(int(self.imm), self.prime)) + int(
-                self.id
-            )
+            jump_to = int(field_element_repr(int(self.imm), self.prime)) + int(self.id)
             if str(jump_to) in self.labels:
                 assembly += self.print_instruction(
                     f"# JMP {self.labels[str(jump_to)]}",
@@ -174,9 +162,7 @@ class Instruction:
                     color=utils.color.CYAN,
                 )
         else:
-            assembly += self.print_instruction(
-                f"{self.opcode}", color=utils.color.RED
-            )
+            assembly += self.print_instruction(f"{self.opcode}", color=utils.color.RED)
         return assembly
 
     def _handle_call(self):
@@ -185,21 +171,15 @@ class Instruction:
         Returns:
             String: The formated CALL instruction
         """
-        assembly = "" + self.print_instruction(
-            f"{self.opcode}", color=utils.color.RED
-        )
+        assembly = "" + self.print_instruction(f"{self.opcode}", color=utils.color.RED)
         call_type = "abs" if self.is_call_abs() else "rel"
 
         # Direct CALL or Relative CALL
         if self.is_call_direct():
-            offset = int(self.id) + int(
-                field_element_repr(int(self.imm), self.prime)
-            )
+            offset = int(self.id) + int(field_element_repr(int(self.imm), self.prime))
             # direct CALL to a fonction
             if self.call_xref_func_name is not None:
-                assembly += self.print_instruction(
-                    f"{offset}", color=utils.color.CYAN
-                )
+                assembly += self.print_instruction(f"{offset}", color=utils.color.CYAN)
                 assembly += self.print_instruction(
                     f"# {self.call_xref_func_name}", color=utils.color.CYAN
                 )
@@ -247,9 +227,7 @@ class Instruction:
             assembly += self.print_instruction(
                 f"\nLABEL : {self.labels[self.id]}", color=utils.color.GREEN
             )
-        assembly += self.print_instruction(
-            f"\noffset {self.id}:", color=utils.color.HEADER
-        )
+        assembly += self.print_instruction(f"\noffset {self.id}:", color=utils.color.HEADER)
 
         if "ASSERT_EQ" in self.opcode:
             assembly += self._handle_assert_eq()
@@ -257,16 +235,10 @@ class Instruction:
                 op = list(filter(None, re.split(r"(\d+)", self.apUpdate)))
                 APopcode = op[0]
                 APval = (
-                    op[1]
-                    if (len(op) > 1)
-                    else int(field_element_repr(int(self.imm), self.prime))
+                    op[1] if (len(op) > 1) else int(field_element_repr(int(self.imm), self.prime))
                 )
-                assembly += self.print_instruction(
-                    f"\noffset {self.id}:", color=utils.color.HEADER
-                )
-                assembly += self.print_instruction(
-                    f"{APopcode}", color=utils.color.YELLOW
-                )
+                assembly += self.print_instruction(f"\noffset {self.id}:", color=utils.color.HEADER)
+                assembly += self.print_instruction(f"{APopcode}", color=utils.color.YELLOW)
                 assembly += self.print_instruction(f"AP, {APval}")
 
         elif "NOP" in self.opcode:
@@ -282,12 +254,10 @@ class Instruction:
             raise AssertionError
 
         if self.hint:
-            assembly += self.print_instruction(
-                f" # {self.hint}", color=utils.color.BEIGE
-            )
+            assembly += self.print_instruction(f" # {self.hint}", color=utils.color.BEIGE)
         return assembly
 
-    def print_instruction(self, data:  str, color: str = "", end: str = "") -> str:
+    def print_instruction(self, data: str, color: str = "", end: str = "") -> str:
         """format the instruction
 
         Args:

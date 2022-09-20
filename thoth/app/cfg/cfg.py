@@ -1,9 +1,7 @@
-#!/usr/bin/env python3
-
 import re
-from typing import List
 from graphviz import Digraph
-from thoth.app.decompiler.instruction import Instruction
+from typing import List
+from thoth.app.disassembler.instruction import Instruction
 
 
 class BasicBlock:
@@ -19,6 +17,7 @@ class BasicBlock:
         """
         self.start_instruction = start_instruction
         self.start_offset = self.start_instruction.id
+        self.name = BasicBlock.format_bb_name(self.start_instruction.id)
 
         self.end_offset = None
         self.end_instruction = None

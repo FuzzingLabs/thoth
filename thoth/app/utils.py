@@ -1,6 +1,3 @@
-# Default prime value
-DEFAULT_PRIME = (2**251) + (17 * (2**192)) + 1
-
 class bcolors:
     def __init__(self, color=False):
         self.HEADER = "\033[95m" if color else ""
@@ -13,6 +10,7 @@ class bcolors:
         self.BOLD = "\033[1m" if color else ""
         self.BEIGE = "\033[36m" if color else ""
         self.UNDERLINE = "\033[4m" if color else ""
+
 
 def globals():
     global color

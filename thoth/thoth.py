@@ -1,6 +1,7 @@
 import os
-from thoth.arguments import parse_args
-from thoth.disassembler import Disassembler
+from thoth.app.arguments import parse_args
+from thoth.app.disassembler.disassembler import Disassembler
+
 
 def main() -> int:
     """Main function of Thoth
@@ -19,7 +20,7 @@ def main() -> int:
         disassembler.decompiler()
     else:
         disassembler.print_disassembly()
-    
+
     filename = os.path.basename(args.file[0].name).split(".")[0]
     format = "pdf" if args.format is None else str(args.format)
 
@@ -29,9 +30,7 @@ def main() -> int:
 
     # print CFG
     if args.cfg:
-        disassembler.print_cfg(
-            filename=filename, format=format, func_name=args.function
-        )
+        disassembler.print_cfg(filename=filename, format=format, func_name=args.function)
 
     # print analytics
     if args.analytics:
