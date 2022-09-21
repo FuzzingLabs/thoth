@@ -5,13 +5,10 @@ from thoth.app.disassembler.instruction import Instruction
 
 
 class BasicBlock:
-    """
-    Basic Block class object.
-    """
+    """Basic Block class object."""
 
     def __init__(self, start_instruction: Instruction) -> None:
         """Create the basic block object from the given instruction.
-
         Args:
             start_instr (Instruction): The given instruction.
         """
@@ -30,7 +27,6 @@ class BasicBlock:
 
     def set_instructions(self, instructions: List[Instruction]) -> None:
         """Set the instruction list of the basic block.
-
         Args:
             instrs (Instruction List): The list containing all the instructions.
         """
@@ -50,7 +46,6 @@ class CFG:
 
     def __init__(self, function_name: str, instructions: List[Instruction]) -> None:
         """Create the CFG object
-
         Args:
             func_name (String): The name of the function
             instructions (List): List of instructions
@@ -65,9 +60,8 @@ class CFG:
 
     def set_basicblocks(self, basic_blocks: List[BasicBlock]) -> None:
         """Set the list of basicblocks
-
         Args:
-            bbs (List): The basicblocks list
+            basic_blocks (List): The basicblocks list
         """
         self.basicblocks = basic_blocks
 
@@ -84,16 +78,16 @@ class CFG:
         list_basic_block: List[BasicBlock] = []
         last_function_instruction = instructions[-1]
         new_basic_block = True
-        current_basic_block: BasicBlock = None
+        current_bb = None
 
         for instruction in instructions:
 
             # Create a basicblock
             if new_basic_block:
-                current_basic_block = BasicBlock(instruction)
+                current_bb = BasicBlock(instruction)
                 new_basic_block = False
 
-            current_basic_block.instructions.append(instruction)
+            current_bb.instructions.append(instruction)
 
             # Direct CALL
             if instruction.is_call_direct():
@@ -109,34 +103,30 @@ class CFG:
 
             # Return - Stop the execution
             elif instruction.is_return():
-                current_basic_block.end_instruction = instruction
-                current_basic_block.end_offset = instruction.id
-                list_basic_block.append(current_basic_block)
+                current_bb.end_instr = instruction
+                current_bb.end_offset = instruction.id
+                list_basic_block.append(current_bb)
                 new_basic_block = True
 
             # Jump to instr offset + instr.imm
             elif ("JUMP" in instruction.pcUpdate) or (
-                "JUMP_REL" in instruction.pcUpdate and "CALL" not in instr.opcode
+                "JUMP_REL" in instruction.pcUpdate and "CALL" not in instruction.opcode
             ):
-                current_basic_block.end_instruction = instruction
-                current_basic_block.end_offset = instruction.id
-                current_basic_block.edges_offset.append(
-                    str(int(instruction.id) + int(instruction.imm))
-                )
-                list_basic_block.append(current_basic_block)
+                current_bb.end_instr = instruction
+                current_bb.end_offset = instruction.id
+                current_bb.edges_offset.append(str(int(instruction.id) + int(instruction.imm)))
+                list_basic_block.append(current_bb)
                 new_basic_block = True
 
             # Jump to instr offset + instr.imm
             # or instr offset + 2
             elif "JNZ" in instruction.pcUpdate:
-                current_basic_block.end_instruction = instruction
-                current_basic_block.end_offset = instruction.id
-                current_basic_block.edges_offset.append(
-                    str(int(instruction.id) + int(instruction.imm))
-                )
-                current_basic_block.edges_offset.append(str(int(instruction.id) + int(2)))
-                list_basic_block.append(current_basic_block)
-                new_bb = True
+                current_bb.instruction = instruction
+                current_bb.end_offset = instruction.id
+                current_bb.edges_offset.append(str(int(instruction.id) + int(instruction.imm)))
+                current_bb.edges_offset.append(str(int(instruction.id) + int(2)))
+                list_basic_block.append(current_bb)
+                new_basic_block = True
 
             else:
                 if instruction is last_function_instruction:
@@ -193,7 +183,7 @@ class CFG:
                         color=color,
                     )
 
-    def print(self, view: bool = True) -> Digraph:
+    def print(self) -> Digraph:
         """Print the dot
 
         Args:

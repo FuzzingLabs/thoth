@@ -5,6 +5,7 @@ from thoth.app.disassembler.function import Function
 from thoth.app.disassembler.instruction import Instruction
 from thoth.app.decompiler.ssa import SSA
 
+
 class Decompiler:
     """
     Decompiler class
@@ -35,10 +36,10 @@ class Decompiler:
         destination_register = instruction.dstRegister.lower()
         destination_offset = int(instruction.offDest) if instruction.offDest else 0
         op0_register = instruction.op0Register.lower()
-        offset_1 = int(instruction.off1) if instruction.off1 else 0   
+        offset_1 = int(instruction.off1) if instruction.off1 else 0
         op1_register = instruction.op1Addr.lower()
-        offset_2 = int(instruction.off2) if instruction.off2 else 0   
-        
+        offset_2 = int(instruction.off2) if instruction.off2 else 0
+
         OPERATORS = {"ADD": "+", "MUL": "*"}
 
         if "OP1" in instruction.res:
@@ -53,29 +54,29 @@ class Decompiler:
                 )
                 source_code += self.print_instruction_decomp(
                     f"{self.ssa.get_variable(destination_register, destination_offset)} = {utils.field_element_repr(int(instruction.imm), instruction.prime)}",
-                    color=utils.color.GREEN
+                    color=utils.color.GREEN,
                 )
             elif "OP0" in instruction.op1Addr:
                 source_code += self.print_instruction_decomp(
                     f"{self.ssa.get_variable(destination_register, destination_offset)} = [{self.ssa.get_variable(op0_register, offset_1)}{instruction.off2}]",
-                    color=utils.color.GREEN
+                    color=utils.color.GREEN,
                 )
             else:
                 source_code += self.print_instruction_decomp(
                     f"{self.ssa.get_variable(destination_register, destination_offset)} = {self.ssa.get_variable(op1_register, offset_2)}",
-                    color=utils.color.GREEN
+                    color=utils.color.GREEN,
                 )
         else:
             op = OPERATORS[instruction.res]
             if "IMM" not in instruction.op1Addr:
-                source_code += self.print_instruction_decomp(           
+                source_code += self.print_instruction_decomp(
                     f"{self.ssa.get_variable(destination_register, destination_offset)} =  {self.ssa.get_variable(op0_register, offset_1)} {op} {self.ssa.get_variable(op1_register, offset_2)}",
-                    color=utils.color.GREEN
+                    color=utils.color.GREEN,
                 )
             else:
                 source_code += self.print_instruction_decomp(
                     f"{self.ssa.get_variable(destination_register, destination_offset)} = {self.ssa.get_variable(op0_register, offset_1)} {op} {utils.field_element_repr(int(instruction.imm), instruction.prime)}",
-                    color=utils.color.GREEN
+                    color=utils.color.GREEN,
                 )
         return source_code
 
@@ -292,14 +293,14 @@ class Decompiler:
             count = 0
 
             if function.is_import is False:
-                
+
                 # Create new variables in memory for function arguments
                 if len(function.arguments_list()) != 0:
                     for argument in function.arguments_list():
                         self.ssa.new_variable(variable_name=argument)
                     self.ssa.new_variable()
                     self.ssa.new_variable()
-                # Set fp equal to ap 
+                # Set fp equal to ap
                 self.ssa.new_function_init()
 
                 source_code += "\n"
