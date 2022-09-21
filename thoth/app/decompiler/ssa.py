@@ -1,3 +1,4 @@
+from typing import Optional
 from thoth.app.decompiler.variable import Variable
 
 
@@ -20,6 +21,13 @@ class SSA:
         """
         self.fp_position = self.ap_position
 
+    def new_variable(self, variable_name: Optional[str] = None) -> None:
+        """
+        Create a new variable in memory
+        """
+        self.ap_position += 1
+        self.memory.append(Variable(variable_name=variable_name))
+
     def get_variable(self, register: str, offset: int) -> Variable:
         """
         Get a variable name given a register and an offset
@@ -29,5 +37,8 @@ class SSA:
         else:
             position = self.fp_position + offset
 
-        self.memory.append(Variable())
+        # Create a new variable
+        if position == len(self.memory):
+            self.ap_position += 1
+            self.memory.append(Variable())
         return self.memory[position].name

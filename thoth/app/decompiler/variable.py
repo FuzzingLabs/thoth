@@ -24,7 +24,7 @@ class Variable:
         """
         # If the variable has a name
         if self.variable_name is not None:
-            return self.name
+            return self.variable_name
 
         # Use default name (v_<n>)
         name = "v_%s" % self.instance
