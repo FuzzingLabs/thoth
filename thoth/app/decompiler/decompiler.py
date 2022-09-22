@@ -48,13 +48,13 @@ class Decompiler:
                 if value == "":
                     value = utils.field_element_repr(int(instruction.imm), instruction.prime)
                 source_code += self.print_instruction_decomp(
-                    f"# {utils.field_element_repr(int(instruction.imm), instruction.prime)} -> {value}",
-                    end="\n",
-                    color=utils.color.CYAN,
-                )
-                source_code += self.print_instruction_decomp(
                     f"{self.ssa.get_variable(destination_register, destination_offset)} = {utils.field_element_repr(int(instruction.imm), instruction.prime)}",
                     color=utils.color.GREEN
+                )
+                # Variable value (hex or string)
+                source_code += self.print_instruction_decomp(
+                    f" -> {value}",
+                    color=utils.color.CYAN,
                 )
             elif "OP0" in instruction.op1Addr:
                 source_code += self.print_instruction_decomp(
@@ -251,12 +251,6 @@ class Decompiler:
                     if (len(op) > 1)
                     else int(utils.field_element_repr(int(instruction.imm), instruction.prime))
                 )
-                for i in range(int(APval)):
-                    source_code += self.print_instruction_decomp(
-                        f"ap ++", tab_count=1, color=utils.color.YELLOW
-                    )
-                    if i != int(APval) - 1:
-                        source_code += "\n"
         elif "NOP" in instruction.opcode:
             source_code += self._handle_nop_decomp(instruction)
         elif "CALL" in instruction.opcode:
