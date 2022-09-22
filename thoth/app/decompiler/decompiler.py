@@ -291,15 +291,13 @@ class Decompiler:
             self.tab_count = 0
             count = 0
 
+            # Create new variables in memory for function arguments and return values
+            if len(function.arguments_list()) != 0:
+                for argument in function.arguments_list():
+                    self.ssa.new_variable(variable_name=argument)
+            self.ssa.new_function_init()
+            
             if function.is_import is False:
-                # Create new variables in memory for function arguments
-                if len(function.arguments_list()) != 0:
-                    for argument in function.arguments_list():
-                        self.ssa.new_variable(variable_name=argument)
-                self.ssa.new_variable()
-                self.ssa.new_variable()
-                # Set fp equal to ap 
-                self.ssa.new_function_init()
 
                 source_code += "\n"
                 self.decompiled_function = function

@@ -119,21 +119,20 @@ class Function:
     def arguments_list(self) -> List[str]:
         """
         Return:
-            function_arguments (list): a list of the function arguments (implicits or not)
+            function_arguments (list): a list of the function arguments (implicits or not) and return values names
         """
         function_arguments = []
 
-        # Merge implicitargs and args
-        arguments_dict = {}
-        for dict in (self.args, self.implicitargs):
+        # Merge implicitargs, args and ret 
+        arguments_list = []
+        for dict in (self.args, self.implicitargs, self.ret):
             if dict is not None:
-                arguments_dict |= dict
+                arguments_list.append(dict)
 
         # Get arguments names
-        arguments_list = [*arguments_dict.values()]
         for argument in arguments_list:
-            function_arguments.append(list(argument.keys())[0])
-
+            for _ in [*argument.values()]:
+                function_arguments.append([*_.keys()][0])
         return function_arguments
 
     def print(self) -> None:

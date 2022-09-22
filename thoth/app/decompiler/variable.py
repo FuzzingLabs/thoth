@@ -12,9 +12,14 @@ class Variable:
         """
         Initialize a new variable
         """
-        Variable.counter += 1
         self.variable_name = variable_name
+        self.is_set = False
+        self.instance = Variable.counter if self.is_set else None
+
+    def set(self) -> None:
+        self.is_set = True
         self.instance = Variable.counter
+        Variable.counter += 1
 
     @property
     def name(self) -> str:
@@ -25,6 +30,9 @@ class Variable:
         # If the variable has a name
         if self.variable_name is not None:
             return self.variable_name
+
+        if not self.is_set:
+            self.set()
 
         # Use default name (v_<n>)
         name = "v_%s" % self.instance
