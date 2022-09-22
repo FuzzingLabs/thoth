@@ -39,6 +39,5 @@ class SSA:
 
         # Create a new variable
         if position == len(self.memory):
-            self.ap_position += 1
             self.memory.append(Variable())
         return self.memory[position].name
