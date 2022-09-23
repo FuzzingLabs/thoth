@@ -123,7 +123,7 @@ class Function:
         """
         function_arguments = []
 
-        # Merge implicitargs, args and ret 
+        # Merge implicitargs, args and ret
         arguments_list = []
         for dict in (self.args, self.implicitargs, self.ret):
             if dict is not None:

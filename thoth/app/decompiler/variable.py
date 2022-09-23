@@ -17,6 +17,9 @@ class Variable:
         self.instance = Variable.counter if self.is_set else None
 
     def set(self) -> None:
+        """
+        A variable is set when it's accessed
+        """
         self.is_set = True
         self.instance = Variable.counter
         Variable.counter += 1
@@ -25,7 +28,7 @@ class Variable:
     def name(self) -> str:
         """
         Return the variable name
-        Either a custom name (function arguments) or v_<n> by default
+        Either a custom name (function arguments/return value) or v_<n> by default
         """
         if not self.is_set:
             self.set()
