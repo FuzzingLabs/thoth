@@ -16,6 +16,17 @@ func array_sum(arr : felt*, size) -> (sum):
     return (sum=[arr] + sum_of_rest)
 end
 
+func array_sum2(arr : felt*, size) -> (sum):
+    if size == 0:
+        return (sum=0)
+    end
+
+    # size is not zero.
+    let (sum_of_rest) = array_sum(arr=arr + 1, size=size - 1)
+    return (sum=[arr] + sum_of_rest)
+end
+
+
 func main{output_ptr : felt*}():
     const ARRAY_SIZE = 3
 

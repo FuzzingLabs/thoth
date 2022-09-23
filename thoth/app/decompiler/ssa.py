@@ -19,7 +19,7 @@ class SSA:
         """
         When a function starts, fp is equal to ap
         """
-        self.fp_position = self.ap_position + 1
+        self.fp_position = self.ap_position
 
     def new_variable(self, variable_name: Optional[str] = None) -> None:
         """
@@ -40,12 +40,10 @@ class SSA:
 
         # Create a new variable
         if position == len(self.memory):
-            v = Variable()
-            self.memory.append(v)
+            self.new_variable()
 
         # Pad intermediate values with unset variables
         elif position > len(self.memory):
             for i in range(len(self.memory), position + 1):
-                v = Variable()
-                self.memory.append(v)
+                self.new_variable()
         return self.memory[position].name

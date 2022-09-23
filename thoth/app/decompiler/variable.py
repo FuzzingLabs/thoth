@@ -27,12 +27,12 @@ class Variable:
         Return the variable name
         Either a custom name (function arguments) or v_<n> by default
         """
+        if not self.is_set:
+            self.set()
+
         # If the variable has a name
         if self.variable_name is not None:
             return self.variable_name
-
-        if not self.is_set:
-            self.set()
 
         # Use default name (v_<n>)
         name = "v_%s" % self.instance

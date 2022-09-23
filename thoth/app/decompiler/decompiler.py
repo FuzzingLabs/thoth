@@ -30,7 +30,6 @@ class Decompiler:
             String: The formated ASSERT_EQ instruction
         """
         source_code = ""
-        start_memory_size = len(self.ssa.memory)
 
         # Registers and offsets
         destination_register = instruction.dstRegister.lower()
@@ -79,10 +78,6 @@ class Decompiler:
                     color=utils.color.GREEN
                 )
                 
-        end_memory_size = len(self.ssa.memory)
-        # If a new variable was declared
-        if end_memory_size > start_memory_size:
-            self.ssa.ap_position += 1
         return source_code
 
     def _handle_nop_decomp(self, instruction: Instruction) -> str:
@@ -143,6 +138,7 @@ class Decompiler:
                 call_name = instruction.call_xref_func_name.split(".")
                 args = 0
                 for function in self.functions:
+                    # print(function.name, [_.name for _ in self.ssa.memory], self.ssa.ap_position)
                     if function.name == instruction.call_xref_func_name:
                         if function.args != None:
                             args += len(function.args)
@@ -150,7 +146,7 @@ class Decompiler:
                             args += len(function.implicitargs)
                 args_str = ""
                 while args != 0:
-                    args_str += f"[ap-{args}]"
+                    args_str += f"{self.ssa.get_variable('ap', -1 * int(args))}"
                     if args != 1:
                         args_str += ", "
                     args -= 1
@@ -295,6 +291,7 @@ class Decompiler:
             if len(function.arguments_list()) != 0:
                 for argument in function.arguments_list():
                     self.ssa.new_variable(variable_name=argument)
+            self.ssa.new_variable()
             self.ssa.new_function_init()
             
             if function.is_import is False:

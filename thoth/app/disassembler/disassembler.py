@@ -124,7 +124,7 @@ class Disassembler:
                 # Only for direct call
                 if inst.is_call_direct():
                     xref_func = self.get_function_by_offset(str(inst.call_offset))
-                    inst.call_xref_function_name = xref_func.name if xref_func is not None else None
+                    inst.call_xref_func_name = xref_func.name if xref_func is not None else None
                 if inst.id in self.references:
                     inst.ref = self.references[inst.id]
                 if inst.id in self.hints:
