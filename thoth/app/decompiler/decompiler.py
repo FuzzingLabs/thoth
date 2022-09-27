@@ -42,13 +42,17 @@ class Decompiler:
 
         OPERATORS = {"ADD": "+", "MUL": "*"}
 
+        destination_offset = int(instruction.offDest) if instruction.offDest else 0
+
         if "OP1" in instruction.res:
             if "IMM" in instruction.op1Addr:
                 value = utils.value_to_string(int(instruction.imm), (instruction.prime))
                 if value == "":
                     value = utils.field_element_repr(int(instruction.imm), instruction.prime)
+
+                variable = self.ssa.get_variable(destination_register, destination_offset)
                 source_code += self.print_instruction_decomp(
-                    f"{self.ssa.get_variable(destination_register, destination_offset)} = {utils.field_element_repr(int(instruction.imm), instruction.prime)}",
+                    f"{variable[1]} = {utils.field_element_repr(int(instruction.imm), instruction.prime)}",
                     color=utils.color.GREEN,
                 )
                 # Variable value (hex or string)
@@ -57,29 +61,31 @@ class Decompiler:
                     color=utils.color.CYAN,
                 )
             elif "OP0" in instruction.op1Addr:
+                variable = self.ssa.get_variable(destination_register, destination_offset)
                 source_code += self.print_instruction_decomp(
-                    f"{self.ssa.get_variable(destination_register, destination_offset)} = [{self.ssa.get_variable(op0_register, offset_1)}{instruction.off2}]",
+                    f"{variable[1]} = [{self.ssa.get_variable(op0_register, offset_1)[1]}{instruction.off2}]",
                     color=utils.color.GREEN,
                 )
             else:
+                variable = self.ssa.get_variable(destination_register, destination_offset)
                 source_code += self.print_instruction_decomp(
-                    f"{self.ssa.get_variable(destination_register, destination_offset)} = {self.ssa.get_variable(op1_register, offset_2)}",
+                    f"{variable[1]} = {self.ssa.get_variable(op1_register, offset_2)[1]}",
                     color=utils.color.GREEN,
                 )
         else:
             op = OPERATORS[instruction.res]
             if "IMM" not in instruction.op1Addr:
+                variable = self.ssa.get_variable(destination_register, destination_offset)
                 source_code += self.print_instruction_decomp(
-                    f"{self.ssa.get_variable(destination_register, destination_offset)} = {self.ssa.get_variable(op0_register, offset_1)} {op} {self.ssa.get_variable(op1_register, offset_2)}",
+                    f"{variable[1]} = {self.ssa.get_variable(op0_register, offset_1)[1]} {op} {self.ssa.get_variable(op1_register, offset_2)[1]}",
                     color=utils.color.GREEN,
-                )
+                    )
             else:
+                variable = self.ssa.get_variable(destination_register, destination_offset)
                 source_code += self.print_instruction_decomp(
-                    f"{self.ssa.get_variable(destination_register, destination_offset)} = {self.ssa.get_variable(op0_register, offset_1)} {op} {utils.field_element_repr(int(instruction.imm), instruction.prime)}",
+                    f"{variable[1]} = {self.ssa.get_variable(op0_register, offset_1)[1]} {op} {utils.field_element_repr(int(instruction.imm), instruction.prime)}",
                     color=utils.color.GREEN,
                 )
-        # Update AP register value
-        self.ssa.update_ap()
         return source_code
 
     def _handle_nop_decomp(self, instruction: Instruction) -> str:
@@ -94,9 +100,10 @@ class Decompiler:
 
         if "REGULAR" not in instruction.pcUpdate:
             if instruction.pcUpdate == "JNZ":
+                self.ssa.new_if_branch()
                 source_code += (
                     self.print_instruction_decomp(f"if ", color=utils.color.RED)
-                    + f"{self.ssa.get_variable('ap', destination_offset)} == 0:"
+                    + f"{self.ssa.get_variable('ap', destination_offset)[1]} == 0:"
                 )
                 self.tab_count += 1
                 self.ifcount += 1
@@ -114,6 +121,7 @@ class Decompiler:
                     self.tab_count -= 1
                     source_code += self.print_instruction_decomp("else:", color=utils.color.RED)
                     self.tab_count += 1
+                    self.ssa.new_else_branch()
                     self.end_else.append(
                         int(utils.field_element_repr(int(instruction.imm), instruction.prime))
                         + int(instruction.id)
@@ -140,7 +148,6 @@ class Decompiler:
                 call_name = instruction.call_xref_func_name.split(".")
                 args = 0
                 for function in self.functions:
-                    # print(function.name, [_.name for _ in self.ssa.memory], self.ssa.ap_position)
                     if function.name == instruction.call_xref_func_name:
                         if function.args != None:
                             args += len(function.args)
@@ -148,7 +155,7 @@ class Decompiler:
                             args += len(function.implicitargs)
                 args_str = ""
                 while args != 0:
-                    args_str += f"{self.ssa.get_variable('ap', -1 * int(args))}"
+                    args_str += f"{self.ssa.get_variable('ap', -1 * int(args))[1]}"
                     if args != 1:
                         args_str += ", "
                     args -= 1
@@ -193,7 +200,7 @@ class Decompiler:
             idx = len(self.return_values)
             source_code += self.print_instruction_decomp("return", color=utils.color.RED) + "("
             while idx:
-                source_code += f"{self.ssa.get_variable('ap', -1 * int(idx))}"
+                source_code += f"{self.ssa.get_variable('ap', -1 * int(idx))[1]}"
                 if idx != 1:
                     source_code += ", "
                 idx -= 1
@@ -240,6 +247,7 @@ class Decompiler:
             source_code += self._handle_hint_decomp(instruction)
 
         if "ASSERT_EQ" in instruction.opcode:
+
             source_code += self._handle_assert_eq_decomp(instruction)
             if "REGULAR" not in instruction.apUpdate:
                 source_code += ";"
@@ -249,6 +257,10 @@ class Decompiler:
                     if (len(op) > 1)
                     else int(utils.field_element_repr(int(instruction.imm), instruction.prime))
                 )
+                # Update AP register value
+                for i in range(int(APval)):
+                    self.ssa.ap_position += 1
+                    pass
         elif "NOP" in instruction.opcode:
             source_code += self._handle_nop_decomp(instruction)
         elif "CALL" in instruction.opcode:
@@ -292,17 +304,12 @@ class Decompiler:
             # Create new variables in memory for function arguments and return values
             if len(function.arguments_list()) != 0:
                 for argument in function.arguments_list():
-                    self.ssa.new_instruction()
                     self.ssa.new_variable(variable_name=argument)
-                    self.ssa.update_ap()
-            self.ssa.new_instruction()
-            self.ssa.new_variable()
-            # Update AP register
-            self.ssa.update_ap()
-            # Initialize FP register value at the  beginning of the function
-            self.ssa.new_function_init()
+                    self.ssa.ap_position += 1
 
             if function.is_import is False:
+                # Initialize AP and FP registers values at the  beginning of the function
+                self.ssa.new_function_init()
 
                 source_code += "\n"
                 self.decompiled_function = function
@@ -318,7 +325,7 @@ class Decompiler:
                 if function.cfg.basicblocks != []:
                     for block in function.cfg.basicblocks:
                         for instruction in block.instructions:
-                            self.ssa.new_instruction()
+                            # self.ssa.new_instruction()
                             if int(instruction.id) == self.end_if:
                                 self.end_if = None
                                 self.tab_count -= 1
@@ -329,12 +336,12 @@ class Decompiler:
                                 for idx in range(len(self.end_else)):
                                     if self.end_else[idx] == int(instruction.id):
                                         self.tab_count -= 1
+                                        self.ssa.end_if_branch()
                                         source_code += self.print_instruction_decomp(
                                             "end",
                                             end="\n",
                                             color=utils.color.RED,
                                         )
-                                        # del self.end_else[idx]
 
                             count += 1
                             instruction = self.print_build_code(

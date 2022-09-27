@@ -14,6 +14,7 @@ class Variable:
         """
         self.variable_name = variable_name
         self.is_set = False
+        self.used_in_condition = False
         self.instance = Variable.counter if self.is_set else None
 
     def set(self) -> None:
@@ -30,6 +31,9 @@ class Variable:
         Return the variable name
         Either a custom name (function arguments/return value) or v_<n> by default
         """
+        if not self.used_in_condition:
+            self.used_in_condition = True
+
         if not self.is_set:
             self.set()
 

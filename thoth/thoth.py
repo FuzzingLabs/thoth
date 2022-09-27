@@ -30,7 +30,7 @@ def main() -> int:
 
     # print CFG
     if args.cfg:
-        disassembler.print_cfg(filename=filename, format=format, func_name=args.function)
+        disassembler.print_cfg(filename=filename, format=format, function_name=args.function)
 
     # print analytics
     if args.analytics:

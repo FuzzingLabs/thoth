@@ -2,7 +2,7 @@ import unittest
 import glob
 import os
 import sys
-from thoth.disassembler import Disassembler
+from thoth.app.disassembler.disassembler import Disassembler
 
 
 class TestDisassembler(unittest.TestCase):
