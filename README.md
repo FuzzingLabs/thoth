@@ -40,7 +40,7 @@ thoth -f tests/json_files/cairo_array_sum.json -vvv
 
 
 ```sh
-thoth -f tests/json_files/cairo_test_addition_if.json -d
+thoth -f tests/json_files/cairo_test_addition_if.json --decompile
 ```
 Example 1 with strings:
 <p align="center">
