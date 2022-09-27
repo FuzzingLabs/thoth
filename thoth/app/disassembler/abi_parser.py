@@ -1,13 +1,11 @@
-#!/usr/bin/env python3
-
 import collections
 import re
-import sys
-from .cairo_instruction import decode_instruction
-from .utils import DEFAULT_PRIME
+from typing import Tuple
+from thoth.app.cfg.config import DEFAULT_PRIME
+from thoth.app.disassembler.cairo_instruction import decode_instruction
 
 
-def decode_to_json(decoded):
+def decode_to_json(decoded: str) -> dict:
     """Create a JSON containing the decoded bytecode
 
     Args:
@@ -28,7 +26,7 @@ def decode_to_json(decoded):
     return data_dict
 
 
-def detect_type_input_json(json_data):
+def detect_type_input_json(json_data: str) -> dict:
     """Detect the type of the contract
 
     Args:
@@ -56,12 +54,12 @@ def detect_type_input_json(json_data):
 
 
 def extract_function_prototype(
-    func_offset, identifiers_data, entry_points_by_type
-):
+    function_offset: dict, identifiers_data: dict, entry_points_by_type: dict
+) -> dict:
     """Build the function prototype
 
     Args:
-        func_offset (Dictionnary): Dict containing the function offset and their name
+        function_offset (Dictionnary): Dict containing the function offset and their name
         identifiers_data (Dictionnary): Dict containing the data needed to create the function prototype from the JSON of the contract
         entry_points_by_type (Dictionnary): Dict containing the entry points
 
@@ -70,38 +68,32 @@ def extract_function_prototype(
     """
 
     identifiers_name = [".ImplicitArgs", ".Args", ".Return"]
-    func_identifiers = {}
+    function_identifiers = {}
     data = None
     # get entry_point offsets
     entry_points = []
 
     if entry_points_by_type:
         for entry_type in entry_points_by_type.values():
-            entry_points += [
-                str(int(entry["offset"], base=16)) for entry in entry_type
-            ]
+            entry_points += [str(int(entry["offset"], base=16)) for entry in entry_type]
 
     # Get arguments and return value of function
-    for offset in func_offset:
-        func_name = func_offset[offset]
-        identifiers = func_identifiers[func_name] = {}
+    for offset in function_offset:
+        function_name = function_offset[offset]
+        identifiers = function_identifiers[function_name] = {}
         # get func args values
         for identifier_name in identifiers_name:
             # first create the identifier_name even if content will be empty
             identifiers[identifier_name[1:].lower()] = {}
-            function_identifier = func_name + identifier_name
+            function_identifier = function_name + identifier_name
             if function_identifier in identifiers_data:
                 tmp = {}
                 if "members" in identifiers_data[function_identifier]:
                     data = identifiers_data[function_identifier]["members"]
                     for argument in data:
-                        ret_data = identifiers_data[function_identifier][
-                            "members"
-                        ][argument]
+                        ret_data = identifiers_data[function_identifier]["members"][argument]
                         tmp[ret_data["offset"]] = {}
-                        tmp[ret_data["offset"]][argument] = ret_data[
-                            "cairo_type"
-                        ]
+                        tmp[ret_data["offset"]][argument] = ret_data["cairo_type"]
                 if (
                     identifier_name == ".Return"
                     and "cairo_type" in identifiers_data[function_identifier]
@@ -118,34 +110,27 @@ def extract_function_prototype(
                         if ":" in ret_val:
                             var_name = ret_val.split(":")[0].replace(" ", "")
                             tmp[i] = {}
-                            tmp[i][var_name] = ret_val.split(":")[1].replace(
-                                " ", ""
-                            )
+                            tmp[i][var_name] = ret_val.split(":")[1].replace(" ", "")
                             i += 1
                 identifiers[identifier_name[1:].lower()] = dict(
                     collections.OrderedDict(sorted(tmp.items()))
                 )
         # get decorators
-        if (
-            func_name in identifiers_data
-            and "decorators" in identifiers_data[func_name]
-        ):
-            identifiers["decorators"] = identifiers_data[func_name][
-                "decorators"
-            ]
+        if function_name in identifiers_data and "decorators" in identifiers_data[function_name]:
+            identifiers["decorators"] = identifiers_data[function_name]["decorators"]
 
         # get entry_points
         if offset in entry_points:
             identifiers["entry_point"] = True
         # case of cairo file
-        elif func_name == "__main__.main":
+        elif function_name == "__main__.main":
             identifiers["entry_point"] = True
         else:
             identifiers["entry_point"] = False
-    return func_identifiers
+    return function_identifiers
 
 
-def extract_prime(json_type, json_data):
+def extract_prime(json_type: str, json_data: dict) -> int:
     """Extract the prime number from the JSON or return the default prime number
 
     Args:
@@ -164,7 +149,7 @@ def extract_prime(json_type, json_data):
     return prime
 
 
-def extract_bytecode(json_type, json_data):
+def extract_bytecode(json_type: str, json_data: dict) -> dict:
     """Extract the bytecode from the JSON
 
     Args:
@@ -182,9 +167,7 @@ def extract_bytecode(json_type, json_data):
     if json_type == "cairo":
         bytecode = [int(bytecode, 16) for bytecode in json_data["data"]]
     elif json_type == "starknet":
-        bytecode = [
-            int(bytecode, 16) for bytecode in json_data["program"]["data"]
-        ]
+        bytecode = [int(bytecode, 16) for bytecode in json_data["program"]["data"]]
     elif json_type == "get_code":
         bytecode = [int(bytecode, 16) for bytecode in json_data["bytecode"]]
     else:
@@ -193,7 +176,7 @@ def extract_bytecode(json_type, json_data):
     return bytecode
 
 
-def extract_functions(json_type, json_data):
+def extract_functions(json_type: str, json_data: dict) -> Tuple:
     """Get function name and put it in dictionnary with offset as key
 
     Args:
@@ -204,8 +187,8 @@ def extract_functions(json_type, json_data):
         Dictionnary: Dictionnary containing the functions of the contract
     """
 
-    func_offset = {}
-    func_identifiers = {}
+    function_offset = {}
+    function_identifiers = {}
 
     if json_type != "get_code":
         identifiers_data = (
@@ -214,22 +197,20 @@ def extract_functions(json_type, json_data):
             else json_data["program"]["identifiers"]
         )
         entry_points_by_type = (
-            json_data["entry_points_by_type"]
-            if ("entry_points_by_type" in json_data)
-            else None
+            json_data["entry_points_by_type"] if ("entry_points_by_type" in json_data) else None
         )
         for key, values in identifiers_data.items():
             if values["type"] == "function":
-                func_offset[str(values["pc"])] = key
-        func_identifiers = extract_function_prototype(
-            func_offset, identifiers_data, entry_points_by_type
+                function_offset[str(values["pc"])] = key
+        function_identifiers = extract_function_prototype(
+            function_offset, identifiers_data, entry_points_by_type
         )
     else:
-        func_offset["0"] = "unknown_function"
-    return (func_offset, func_identifiers)
+        function_offset["0"] = "unknown_function"
+    return (function_offset, function_identifiers)
 
 
-def extract_structs(json_type, json_data):
+def extract_structs(json_type: str, json_data: dict) -> dict:
     """Get the structs from the JSON contract
 
     Args:
@@ -254,19 +235,15 @@ def extract_structs(json_type, json_data):
                 tmp = {}
                 for attribut in values["members"]:
                     tmp[values["members"][attribut]["offset"]] = {}
-                    tmp[values["members"][attribut]["offset"]][
-                        "attribut"
-                    ] = attribut
-                    tmp[values["members"][attribut]["offset"]][
-                        "cairo_type"
-                    ] = values["members"][attribut]["cairo_type"]
-                struct_identifiers[key] = dict(
-                    collections.OrderedDict(sorted(tmp.items()))
-                )
+                    tmp[values["members"][attribut]["offset"]]["attribut"] = attribut
+                    tmp[values["members"][attribut]["offset"]]["cairo_type"] = values["members"][
+                        attribut
+                    ]["cairo_type"]
+                struct_identifiers[key] = dict(collections.OrderedDict(sorted(tmp.items())))
     return struct_identifiers
 
 
-def extract_builtins(json_type, json_data):
+def extract_builtins(json_type: str, json_data: dict) -> dict:
     """Get the builtins from the JSON contract
 
     Args:
@@ -286,7 +263,7 @@ def extract_builtins(json_type, json_data):
     return builtins
 
 
-def extract_events(json_type, json_data):
+def extract_events(json_type: str, json_data: dict) -> dict:
     """Get the events from the JSON contract
 
     Args:
@@ -310,7 +287,7 @@ def extract_events(json_type, json_data):
     return events
 
 
-def extract_hints(json_type, json_data):
+def extract_hints(json_type: str, json_data: dict) -> dict:
     """Get the hints from the JSON contract
 
     Args:
@@ -324,21 +301,17 @@ def extract_hints(json_type, json_data):
     hints_identifiers = {}
     if json_type != "get_code":
         instruction_data = (
-            json_data["hints"]
-            if ("hints" in json_data)
-            else json_data["program"]["hints"]
+            json_data["hints"] if ("hints" in json_data) else json_data["program"]["hints"]
         )
         for key, values in instruction_data.items():
             for data in values:
                 if "code" in data:
                     hints_identifiers[str(key)] = data["code"]
-        hints_identifiers = dict(
-            collections.OrderedDict(sorted(hints_identifiers.items()))
-        )
+        hints_identifiers = dict(collections.OrderedDict(sorted(hints_identifiers.items())))
     return hints_identifiers
 
 
-def extract_references(json_type, json_data):
+def extract_references(json_type: str, json_data: dict) -> dict:
     """Get the references from the JSON contract
 
     Args:
@@ -366,7 +339,7 @@ def extract_references(json_type, json_data):
     return references_identifiers
 
 
-def extract_labels(json_type, json_data):
+def extract_labels(json_type: str, json_data: dict) -> dict:
     """Get the labels from the JSON contract
 
     Args:
@@ -387,13 +360,11 @@ def extract_labels(json_type, json_data):
         for key, values in identifiers_data.items():
             if values["type"] == "label":
                 labels_identifiers[str(values["pc"])] = key.split(".")[-1]
-        labels_identifiers = dict(
-            collections.OrderedDict(sorted(labels_identifiers.items()))
-        )
+        labels_identifiers = dict(collections.OrderedDict(sorted(labels_identifiers.items())))
     return labels_identifiers
 
 
-def parse_to_json(json_data, json_type):
+def parse_to_json(json_data: str, json_type: dict) -> dict:
     """Get bytecodes and decode it.
     Also get informations about return values, arguments and decorators
     Build a generic Json.
@@ -408,21 +379,21 @@ def parse_to_json(json_data, json_type):
     # get the bytecode data
     bytecode_data = extract_bytecode(json_type, json_data)
     # extract function info like offset and name
-    func_offset, func_identifiers = extract_functions(json_type, json_data)
+    function_offset, function_identifiers = extract_functions(json_type, json_data)
     size = len(bytecode_data)
     offset = 0
     bytecodes_to_json = {}
     actual_function = ""
     incr = 0
     while offset < size:
-        if (json_type != "get_code" and str(offset) in func_offset) or (
+        if (json_type != "get_code" and str(offset) in function_offset) or (
             json_type == "get_code" and actual_function not in bytecodes_to_json
         ):
-            actual_function = func_offset[str(offset)]
+            actual_function = function_offset[str(offset)]
             bytecodes_to_json[actual_function] = {}
             bytecodes_to_json[actual_function]["data"] = (
-                func_identifiers[actual_function]
-                if (actual_function in func_identifiers)
+                function_identifiers[actual_function]
+                if (actual_function in function_identifiers)
                 else {}
             )
             bytecodes_to_json[actual_function]["instruction"] = {}
@@ -431,9 +402,7 @@ def parse_to_json(json_data, json_type):
             incr = 1
         except AssertionError:
             # l[offset + 1] -> imm value
-            decoded = decode_instruction(
-                bytecode_data[offset], bytecode_data[offset + 1]
-            )
+            decoded = decode_instruction(bytecode_data[offset], bytecode_data[offset + 1])
             incr = 2
         key = str(offset)
         bytecodes_to_json[actual_function]["instruction"][key] = {}

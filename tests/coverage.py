@@ -1,9 +1,7 @@
 import glob
 import sys
 import os, io
-from thoth.disassembler import Disassembler
-from difflib import SequenceMatcher
-from pathlib import Path
+from thoth.app.disassembler.disassembler import Disassembler
 
 
 def disassembler_coverage():
@@ -16,9 +14,7 @@ def disassembler_coverage():
             disassembler.print_disassembly()
             for function in disassembler.functions:
                 disassembler.print_disassembly(func_name=function.name)
-                disassembler.print_disassembly(
-                    func_offset=function.offset_start
-                )
+                disassembler.print_disassembly(func_offset=function.offset_start)
                 disassembler.print_cfg(
                     filename=filename + "cfg",
                     view=False,

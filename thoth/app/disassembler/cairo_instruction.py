@@ -1,10 +1,8 @@
-#!/usr/bin/env python3
-
 # https://github.com/starkware-libs/cairo-lang/blob/4e233516f52477ad158bc81a86ec2760471c1b65/src/starkware/cairo/lang/compiler/instruction.py
 
 import dataclasses
 from enum import Enum, auto
-from typing import Optional, List
+from typing import Optional, Tuple
 
 OFFSET_BITS = 16
 N_FLAGS = 15
@@ -114,11 +112,11 @@ class Instruction(BytecodeElement):
     opcode: Opcode
 
     @property
-    def size(self):
+    def size(self) -> int:
         return 2 if self.imm is not None else 1
 
 
-def decode_instruction_values(encoded_instruction):
+def decode_instruction_values(encoded_instruction: str) -> Tuple:
     """Returns a tuple (flags, off0, off1, off2) according to the given encoded instruction.
 
 
@@ -128,9 +126,7 @@ def decode_instruction_values(encoded_instruction):
     Returns:
         Tuple: Decoded instruction
     """
-    assert (
-        0 <= encoded_instruction < 2 ** (3 * OFFSET_BITS + N_FLAGS)
-    ), "Unsupported instruction."
+    assert 0 <= encoded_instruction < 2 ** (3 * OFFSET_BITS + N_FLAGS), "Unsupported instruction."
     off0 = encoded_instruction & (2**OFFSET_BITS - 1)
     off1 = (encoded_instruction >> OFFSET_BITS) & (2**OFFSET_BITS - 1)
     off2 = (encoded_instruction >> (2 * OFFSET_BITS)) & (2**OFFSET_BITS - 1)
@@ -188,9 +184,7 @@ def decode_instruction(encoding: int, imm: Optional[int] = None) -> Instruction:
     ]
 
     if op1_addr is Instruction.Op1Addr.IMM:
-        assert (
-            imm is not None
-        ), "op1_addr is Op1Addr.IMM, but no immediate given"
+        assert imm is not None, "op1_addr is Op1Addr.IMM, but no immediate given"
     else:
         imm = None
 
@@ -243,9 +237,7 @@ def decode_instruction(encoding: int, imm: Optional[int] = None) -> Instruction:
 
     # CALL opcode means ap_update must be ADD2.
     if opcode is Instruction.Opcode.CALL:
-        assert (
-            ap_update is Instruction.ApUpdate.REGULAR
-        ), "CALL must have update_ap is ADD2"
+        assert ap_update is Instruction.ApUpdate.REGULAR, "CALL must have update_ap is ADD2"
         ap_update = Instruction.ApUpdate.ADD2
 
     # Get fp_update.
