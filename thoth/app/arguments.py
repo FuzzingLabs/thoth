@@ -60,14 +60,14 @@ def parse_args() -> argparse.Namespace:
         "-color",
         "--color",
         action="store_true",
-        help="Print disassembler with color",
+        help="Print disassembler/decompiler with color",
     )
     m.add_argument(
         "-function",
         "--function",
         type=str,
         required=False,
-        help="Print disassembler with color",
+        help="Print disassembler/decompiler with color",
     )
     m.add_argument(
         "-a",
@@ -76,6 +76,8 @@ def parse_args() -> argparse.Namespace:
         action="store_true",
         help="Dump a Json file containing debug information",
     )
-    m.add_argument("-d", "-decomp", "--decomp", action="store_true")
+    m.add_argument(
+        "-d", "-decompile", "--decompile", action="store_true", help="Print decompiled code"
+    )
 
     return parser.parse_args()

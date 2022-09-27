@@ -16,7 +16,7 @@ def main() -> int:
         disassembler.dump_json()
 
     # print assembly code
-    if args.decomp:
+    if args.decompile:
         disassembler.decompiler()
     else:
         disassembler.print_disassembly()
