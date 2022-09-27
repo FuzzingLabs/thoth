@@ -57,7 +57,7 @@ class Decompiler:
                 )
                 # Variable value (hex or string)
                 source_code += self.print_instruction_decomp(
-                    f" -> {value}",
+                    f" # {value}",
                     color=utils.color.CYAN,
                 )
             elif "OP0" in instruction.op1Addr:
