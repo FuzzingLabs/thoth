@@ -11,7 +11,7 @@ setup(
     url="https://github.com/FuzzingLabs/thoth",
     keywords="cairo-lang starknet disassembler decompiler analysis security reversing cfg callflow",
     author="FuzzingLabs",
-    version="0.2.0",
+    version="0.3.0",
     packages=find_packages(),
     python_requires=">=3.6",
     install_requires=[
