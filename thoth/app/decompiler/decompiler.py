@@ -34,9 +34,7 @@ class Decompiler:
 
         # Registers and offsets
         destination_register = instruction.dstRegister.lower()
-        destination_offset = (
-            int(instruction.offDest) if instruction.offDest else 0
-        )
+        destination_offset = int(instruction.offDest) if instruction.offDest else 0
         op0_register = instruction.op0Register.lower()
         offset_1 = int(instruction.off1) if instruction.off1 else 0
         op1_register = instruction.op1Addr.lower()
@@ -44,23 +42,15 @@ class Decompiler:
 
         OPERATORS = {"ADD": "+", "MUL": "*"}
 
-        destination_offset = (
-            int(instruction.offDest) if instruction.offDest else 0
-        )
+        destination_offset = int(instruction.offDest) if instruction.offDest else 0
 
         if "OP1" in instruction.res:
             if "IMM" in instruction.op1Addr:
-                value = utils.value_to_string(
-                    int(instruction.imm), (instruction.prime)
-                )
+                value = utils.value_to_string(int(instruction.imm), (instruction.prime))
                 if value == "":
-                    value = utils.field_element_repr(
-                        int(instruction.imm), instruction.prime
-                    )
+                    value = utils.field_element_repr(int(instruction.imm), instruction.prime)
 
-                variable = self.ssa.get_variable(
-                    destination_register, destination_offset
-                )
+                variable = self.ssa.get_variable(destination_register, destination_offset)
                 source_code += self.print_instruction_decomp(
                     f"{variable[1]} = {utils.field_element_repr(int(instruction.imm), instruction.prime)}",
                     color=utils.color.GREEN,
@@ -71,9 +61,7 @@ class Decompiler:
                     color=utils.color.CYAN,
                 )
             elif "OP0" in instruction.op1Addr:
-                variable = self.ssa.get_variable(
-                    destination_register, destination_offset
-                )
+                variable = self.ssa.get_variable(destination_register, destination_offset)
                 value_off2 = instruction.off2
                 sign = ""
                 try:
@@ -86,9 +74,7 @@ class Decompiler:
                     color=utils.color.GREEN,
                 )
             else:
-                variable = self.ssa.get_variable(
-                    destination_register, destination_offset
-                )
+                variable = self.ssa.get_variable(destination_register, destination_offset)
                 source_code += self.print_instruction_decomp(
                     f"{variable[1]} = {self.ssa.get_variable(op1_register, offset_2)[1]}",
                     color=utils.color.GREEN,
@@ -96,22 +82,14 @@ class Decompiler:
         else:
             op = OPERATORS[instruction.res]
             if "IMM" not in instruction.op1Addr:
-                variable = self.ssa.get_variable(
-                    destination_register, destination_offset
-                )
+                variable = self.ssa.get_variable(destination_register, destination_offset)
                 source_code += self.print_instruction_decomp(
                     f"{variable[1]} = {self.ssa.get_variable(op0_register, offset_1)[1]} {op} {self.ssa.get_variable(op1_register, offset_2)[1]}",
                     color=utils.color.GREEN,
                 )
             else:
-                variable = self.ssa.get_variable(
-                    destination_register, destination_offset
-                )
-                value = int(
-                    utils.field_element_repr(
-                        int(instruction.imm), instruction.prime
-                    )
-                )
+                variable = self.ssa.get_variable(destination_register, destination_offset)
+                value = int(utils.field_element_repr(int(instruction.imm), instruction.prime))
                 if value < 0 and op == "+":
                     op = "-"
                     value = -value
@@ -129,9 +107,7 @@ class Decompiler:
         """
         source_code = ""
 
-        destination_offset = (
-            int(instruction.offDest) if instruction.offDest else 0
-        )
+        destination_offset = int(instruction.offDest) if instruction.offDest else 0
 
         if "REGULAR" not in instruction.pcUpdate:
             if instruction.pcUpdate == "JNZ":
@@ -144,39 +120,26 @@ class Decompiler:
                 self.ifcount += 1
                 # Detect if there is an else later
                 jump_to = int(
-                    utils.field_element_repr(
-                        int(instruction.imm), instruction.prime
-                    )
+                    utils.field_element_repr(int(instruction.imm), instruction.prime)
                 ) + int(instruction.id)
                 for inst in self.decompiled_function.instructions:
-                    if (
-                        int(inst.id) == int(jump_to) - 2
-                        or int(inst.id) == int(jump_to) - 1
-                    ):
+                    if int(inst.id) == int(jump_to) - 2 or int(inst.id) == int(jump_to) - 1:
                         if inst.pcUpdate != "JUMP_REL":
                             self.end_if = int(jump_to)
                             self.ifcount -= 1
             elif instruction.pcUpdate == "JUMP_REL":
                 if self.ifcount != 0:
                     self.tab_count -= 1
-                    source_code += self.print_instruction_decomp(
-                        "else:", color=utils.color.RED
-                    )
+                    source_code += self.print_instruction_decomp("else:", color=utils.color.RED)
                     self.tab_count += 1
                     self.ssa.new_else_branch()
                     self.end_else.append(
-                        int(
-                            utils.field_element_repr(
-                                int(instruction.imm), instruction.prime
-                            )
-                        )
+                        int(utils.field_element_repr(int(instruction.imm), instruction.prime))
                         + int(instruction.id)
                     )
                     self.ifcount -= 1
                 else:
-                    source_code += self.print_instruction_decomp(
-                        f"jmp rel {instruction.imm}"
-                    )
+                    source_code += self.print_instruction_decomp(f"jmp rel {instruction.imm}")
         return source_code
 
     def _handle_call_decomp(self, instruction: Instruction) -> str:
@@ -190,11 +153,7 @@ class Decompiler:
 
         call_type = "call abs" if instruction.is_call_abs() else "call rel"
         if instruction.is_call_direct():
-            offset = int(
-                utils.field_element_repr(
-                    int(instruction.imm), instruction.prime
-                )
-            )
+            offset = int(utils.field_element_repr(int(instruction.imm), instruction.prime))
             # direct CALL to a fonction
             if instruction.call_xref_func_name is not None:
                 call_name = instruction.call_xref_func_name.split(".")
@@ -207,16 +166,12 @@ class Decompiler:
                             args += len(function.implicitargs)
                 args_str = ""
                 while args != 0:
-                    args_str += (
-                        f"{self.ssa.get_variable('ap', -1 * int(args))[1]}"
-                    )
+                    args_str += f"{self.ssa.get_variable('ap', -1 * int(args))[1]}"
                     if args != 1:
                         args_str += ", "
                     args -= 1
                 source_code += (
-                    self.print_instruction_decomp(
-                        f"{call_name[-1]}", color=utils.color.RED
-                    )
+                    self.print_instruction_decomp(f"{call_name[-1]}", color=utils.color.RED)
                     + f"({args_str})"
                 )
             # CALL to a label
@@ -249,30 +204,21 @@ class Decompiler:
         source_code = ""
 
         if self.return_values == None:
-            source_code += self.print_instruction_decomp(
-                "ret", end="\n", color=utils.color.RED
-            )
+            source_code += self.print_instruction_decomp("ret", end="\n", color=utils.color.RED)
             if last:
                 self.tab_count -= 1
         else:
             idx = len(self.return_values)
-            source_code += (
-                self.print_instruction_decomp("return", color=utils.color.RED)
-                + "("
-            )
+            source_code += self.print_instruction_decomp("return", color=utils.color.RED) + "("
             while idx:
-                source_code += (
-                    f"{self.ssa.get_variable('ap', -1 * int(idx))[1]}"
-                )
+                source_code += f"{self.ssa.get_variable('ap', -1 * int(idx))[1]}"
                 if idx != 1:
                     source_code += ", "
                 idx -= 1
             source_code += ")\n"
         if last:
             self.tab_count = 0
-            source_code += self.print_instruction_decomp(
-                "end", color=utils.color.RED
-            )
+            source_code += self.print_instruction_decomp("end", color=utils.color.RED)
         return source_code
 
     def _handle_hint_decomp(self, instruction: Instruction) -> str:
@@ -292,9 +238,7 @@ class Decompiler:
         source_code += self.print_instruction_decomp("%} ", end="\n")
         return source_code
 
-    def print_build_code(
-        self, instruction: Instruction, last: bool = False
-    ) -> str:
+    def print_build_code(self, instruction: Instruction, last: bool = False) -> str:
         """Read the instruction and print each element of it
 
         Raises:
@@ -318,17 +262,11 @@ class Decompiler:
             source_code += self._handle_assert_eq_decomp(instruction)
             if "REGULAR" not in instruction.apUpdate:
                 source_code += ";"
-                op = list(
-                    filter(None, re.split(r"(\d+)", instruction.apUpdate))
-                )
+                op = list(filter(None, re.split(r"(\d+)", instruction.apUpdate)))
                 APval = (
                     op[1]
                     if (len(op) > 1)
-                    else int(
-                        utils.field_element_repr(
-                            int(instruction.imm), instruction.prime
-                        )
-                    )
+                    else int(utils.field_element_repr(int(instruction.imm), instruction.prime))
                 )
                 # Update AP register value
                 for i in range(int(APval)):
@@ -364,9 +302,7 @@ class Decompiler:
         else:
             tabulations = tabulation * self.tab_count
 
-        decompiled_instruction = (
-            color + tabulations + data + utils.color.ENDC + end
-        )
+        decompiled_instruction = color + tabulations + data + utils.color.ENDC + end
         return decompiled_instruction
 
     def decompile_code(self) -> str:
@@ -409,17 +345,13 @@ class Decompiler:
                                 )
                             if self.end_else != []:
                                 for idx in range(len(self.end_else)):
-                                    if self.end_else[idx] == int(
-                                        instruction.id
-                                    ):
+                                    if self.end_else[idx] == int(instruction.id):
                                         self.tab_count -= 1
                                         self.ssa.end_if_branch()
-                                        source_code += (
-                                            self.print_instruction_decomp(
-                                                "end",
-                                                end="\n",
-                                                color=utils.color.RED,
-                                            )
+                                        source_code += self.print_instruction_decomp(
+                                            "end",
+                                            end="\n",
+                                            color=utils.color.RED,
                                         )
 
                             count += 1

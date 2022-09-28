@@ -54,7 +54,7 @@ class Disassembler:
             SystemExit: if the JSON is empty.
         """
         json_data = ""
-        with self.file[0] as f:
+        with self.file as f:
             try:
                 json_data = json.load(f)
             except json.decoder.JSONDecodeError:
