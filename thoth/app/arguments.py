@@ -15,7 +15,7 @@ def parse_args() -> argparse.Namespace:
     )
 
     # Use a JSON File
-    contract_subparser = parser.add_subparsers(help="The contract", dest="contract")
+    contract_subparser = parser.add_subparsers(help="Load cairo", dest="contract")
     file = contract_subparser.add_parser("file")
     file.add_argument(
         "-path",
@@ -23,7 +23,6 @@ def parse_args() -> argparse.Namespace:
         "--path",
         metavar="file",
         type=argparse.FileType("r"),
-        nargs="+",
         required=True,
         help="Cairo compiler JSON",
     )
@@ -32,11 +31,11 @@ def parse_args() -> argparse.Namespace:
     contract = contract_subparser.add_parser("starknet")
     contract.add_argument(
         "-a",
-        "-adress",
-        "--adress",
-        metavar="adress",
+        "-address",
+        "--address",
+        metavar="address",
         required=True,
-        help="Adress of the contract",
+        help="address of the contract e.g 0x111111111111111111111111111111111111111111111111111111111111111",
     )
     contract.add_argument(
         "-n",
@@ -45,7 +44,7 @@ def parse_args() -> argparse.Namespace:
         metavar="network",
         choices=["mainnet", "goerli"],
         required=True,
-        help="Network of the contract",
+        help="Network of the contract, mainnet or goerli",
     )
 
     m = parser.add_argument_group("optional arguments")
