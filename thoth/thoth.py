@@ -13,11 +13,11 @@ def main() -> int:
     """
     args = parse_args()
 
-    # Load compiled contract from a file 
+    # Load compiled contract from a file
     if args.contract == "file":
         file = args.path
         filename = os.path.basename(args.path.name).split(".")[0]
-    # Load compiled contract from starknet API 
+    # Load compiled contract from starknet API
     else:
         try:
             contract = StarkNet(args.network).get_full_contract(args.adress)

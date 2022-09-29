@@ -30,6 +30,7 @@ class Decompiler:
         Returns:
             String: The formated ASSERT_EQ instruction
         """
+
         source_code = ""
 
         # Registers and offsets
@@ -43,7 +44,6 @@ class Decompiler:
         OPERATORS = {"ADD": "+", "MUL": "*"}
 
         destination_offset = int(instruction.offDest) if instruction.offDest else 0
-
         if "OP1" in instruction.res:
             if "IMM" in instruction.op1Addr:
                 value = utils.value_to_string(int(instruction.imm), (instruction.prime))
@@ -70,13 +70,13 @@ class Decompiler:
                 except Exception:
                     pass
                 source_code += self.print_instruction_decomp(
-                    f"{variable[1]} = [{self.ssa.get_variable(op0_register, offset_1)[1]}{sign}{value_off2}]",
+                    f"{variable[1]} = [{self.ssa.get_variable(op0_register, offset_1, True)[1]}{sign}{value_off2}]",
                     color=utils.color.GREEN,
                 )
             else:
                 variable = self.ssa.get_variable(destination_register, destination_offset)
                 source_code += self.print_instruction_decomp(
-                    f"{variable[1]} = {self.ssa.get_variable(op1_register, offset_2)[1]}",
+                    f"{variable[1]} = {self.ssa.get_variable(op1_register, offset_2, True)[1]}",
                     color=utils.color.GREEN,
                 )
         else:
@@ -84,7 +84,7 @@ class Decompiler:
             if "IMM" not in instruction.op1Addr:
                 variable = self.ssa.get_variable(destination_register, destination_offset)
                 source_code += self.print_instruction_decomp(
-                    f"{variable[1]} = {self.ssa.get_variable(op0_register, offset_1)[1]} {op} {self.ssa.get_variable(op1_register, offset_2)[1]}",
+                    f"{variable[1]} = {self.ssa.get_variable(op0_register, offset_1, True)[1]} {op} {self.ssa.get_variable(op1_register, offset_2, True)[1]}",
                     color=utils.color.GREEN,
                 )
             else:
@@ -94,7 +94,7 @@ class Decompiler:
                     op = "-"
                     value = -value
                 source_code += self.print_instruction_decomp(
-                    f"{variable[1]} = {self.ssa.get_variable(op0_register, offset_1)[1]} {op} {value}",
+                    f"{variable[1]} = {self.ssa.get_variable(op0_register, offset_1, True)[1]} {op} {value}",
                     color=utils.color.GREEN,
                 )
         return source_code

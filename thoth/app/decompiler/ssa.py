@@ -15,6 +15,7 @@ class SSA:
         self.ap_position = 0
         self.fp_position = self.ap_position
         self.stack_size_backup = []
+        self.new_ap_position = 0
 
     def new_function_init(self) -> None:
         """
@@ -46,6 +47,7 @@ class SSA:
         self.ap_position = len(self.memory) - (len(self.memory) - self.stack_size_backup[-1])
         for i in range(self.stack_size_backup[-1], len(self.memory)):
             self.memory[i].used_in_condition = False
+            self.memory[i].used_in_branch = False
 
     def new_variable(self, variable_name: Optional[str] = None) -> None:
         """
@@ -54,7 +56,9 @@ class SSA:
         variable = Variable(variable_name=variable_name)
         self.memory.append(variable)
 
-    def get_variable(self, register: str, offset: int) -> Tuple[bool, Variable, bool]:
+    def get_variable(
+        self, register: str, offset: int, value: bool = False
+    ) -> Tuple[bool, Variable, bool]:
         """
         Get a variable name given a register and an offset
         """
@@ -79,5 +83,5 @@ class SSA:
                 self.new_variable()
                 new_variable = True
         used_in_condition = self.memory[position].used_in_condition
-        name = self.memory[position].name
+        name = self.memory[position].name(value=value)
         return (new_variable, name, used_in_condition)
