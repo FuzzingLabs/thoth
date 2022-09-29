@@ -333,31 +333,39 @@ class Decompiler:
                 )
                 self.tab_count += 1
 
-                if function.cfg.basicblocks != []:
-                    for block in function.cfg.basicblocks:
-                        for instruction in block.instructions:
-                            # self.ssa.new_instruction()
-                            if int(instruction.id) == self.end_if:
-                                self.end_if = None
-                                self.tab_count -= 1
-                                source_code += self.print_instruction_decomp(
-                                    "end", end="\n", color=utils.color.RED
-                                )
-                            if self.end_else != []:
-                                for idx in range(len(self.end_else)):
-                                    if self.end_else[idx] == int(instruction.id):
-                                        self.tab_count -= 1
-                                        self.ssa.end_if_branch()
-                                        source_code += self.print_instruction_decomp(
-                                            "end",
-                                            end="\n",
-                                            color=utils.color.RED,
-                                        )
+                # If there are no basic blocks
+                if function.cfg.basicblocks == []:
+                    return source_code
 
-                            count += 1
-                            instruction = self.print_build_code(
-                                instruction,
-                                last=(count == len(function.instructions)),
-                            )
-                            source_code += instruction + "\n"
+                # Create an list with all instructions
+                instructions = []
+                for block in function.cfg.basicblocks:
+                    instructions.append(block.instructions)
+                instructions = sum(instructions, [])
+
+                # Iterate through intructions
+                for i in range(len(instructions)):
+                    if int(instructions[i].id) == self.end_if:
+                        self.end_if = None
+                        self.tab_count -= 1
+                        source_code += self.print_instruction_decomp(
+                            "end", end="\n", color=utils.color.RED
+                        )
+                    if self.end_else != []:
+                        for idx in range(len(self.end_else)):
+                            if self.end_else[idx] == int(instructions[i].id):
+                                self.tab_count -= 1
+                                self.ssa.end_if_branch()
+                                source_code += self.print_instruction_decomp(
+                                    "end",
+                                    end="\n",
+                                    color=utils.color.RED,
+                                )
+
+                    count += 1
+                    instructions[i] = self.print_build_code(
+                        instructions[i],
+                        last=(count == len(function.instructions)),
+                    )
+                    source_code += instructions[i] + "\n"
         return source_code
