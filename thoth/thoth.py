@@ -13,7 +13,7 @@ def main() -> int:
     """
     args = parse_args()
     if (args.call or args.cfg) and ("view" not in args):
-        print("help")
+        print("Need to set -view option")
         sys.exit()
     disassembler = Disassembler(args.file, color=args.color)
 
