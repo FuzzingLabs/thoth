@@ -10,16 +10,6 @@ class TestDisassembler(unittest.TestCase):
     Testing class
     """
 
-    # def test_all_files_tested(self):
-    #     """
-    #     Check that all the json files have been analyzed manually and added in tests
-    #     """
-    #    all_test = glob.glob("./tests/json_files/*")
-    #    number_of_tests = len(
-    #        [method for method in dir(TestDisassembler) if method.startswith("test_")]
-    #   )
-    #    self.assertEqual(len(all_test), number_of_tests - 1)
-
     def test_no_file_should_crash(self):
         """test_no_file_should_crash"""
         all_test = glob.glob("./tests/json_files/*")
@@ -34,7 +24,12 @@ class TestDisassembler(unittest.TestCase):
                     disassembler.print_disassembly()
                     filename = os.path.basename(file.name).split(".")[0]
                     format = "pdf"
-                    disassembler.print_call_flow_graph(filename=filename, format=format, view=False)
+                    disassembler.print_call_flow_graph(
+                        folder="output_graph",
+                        filename=filename,
+                        format=format,
+                        view=False,
+                    )
             except Exception as e:
                 sys.stderr.write(str(e))
                 crash += 1
@@ -76,7 +71,9 @@ class TestDisassembler(unittest.TestCase):
         """
         test_cairo_direct_and_indirect_recursion
         """
-        with open("./tests/json_files/cairo_direct_and_indirect_recursion.json", "r") as file:
+        with open(
+            "./tests/json_files/cairo_direct_and_indirect_recursion.json", "r"
+        ) as file:
             disassembler = Disassembler([file])
         analytics = disassembler.analytics()
         self.assertEqual(analytics["entry_point"], ["__main__.main"])
@@ -107,7 +104,9 @@ class TestDisassembler(unittest.TestCase):
         self.assertEqual(analytics["entry_point"], ["__main__.main"])
         self.assertEqual(analytics["functions"], "18")
         self.assertEqual(analytics["builtins"], "2")
-        self.assertEqual(analytics["decorators"], ["known_ap_change", "known_ap_change"])
+        self.assertEqual(
+            analytics["decorators"], ["known_ap_change", "known_ap_change"]
+        )
         self.assertEqual(analytics["call_nbr"], "30")
         self.assertEqual(analytics["structs"], 59)
 
@@ -119,13 +118,21 @@ class TestDisassembler(unittest.TestCase):
             disassembler = Disassembler([file])
         analytics = disassembler.analytics()
         self.assertEqual(
-            analytics["entry_point"], ["__wrappers__.increase_balance", "__wrappers__.get_balance"]
+            analytics["entry_point"],
+            ["__wrappers__.increase_balance", "__wrappers__.get_balance"],
         )
         self.assertEqual(analytics["functions"], "15")
         self.assertEqual(analytics["builtins"], "2")
         self.assertEqual(
             analytics["decorators"],
-            ["known_ap_change", "known_ap_change", "external", "external", "view", "view"],
+            [
+                "known_ap_change",
+                "known_ap_change",
+                "external",
+                "external",
+                "view",
+                "view",
+            ],
         )
         self.assertEqual(analytics["call_nbr"], "18")
         self.assertEqual(analytics["structs"], 88)
@@ -169,7 +176,9 @@ class TestDisassembler(unittest.TestCase):
 
     def test_starknet_get_code_l2_dai_bridge(self):
         """test_starknet_get_code_l2_dai_bridge"""
-        with open("./tests/json_files/starknet_get_code_l2_dai_bridge.json", "r") as file:
+        with open(
+            "./tests/json_files/starknet_get_code_l2_dai_bridge.json", "r"
+        ) as file:
             disassembler = Disassembler([file])
         analytics = disassembler.analytics()
         self.assertEqual(analytics["entry_point"], ["unknown_function"])
