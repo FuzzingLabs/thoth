@@ -1,4 +1,5 @@
 import argparse
+from .. import __version__
 
 
 def parse_args() -> argparse.Namespace:
@@ -48,6 +49,7 @@ def parse_args() -> argparse.Namespace:
     )
 
     m = parser.add_argument_group("optional arguments")
+    m.add_argument("-v", "--version", action="version", version=f"%(prog)s {__version__}")
     m.add_argument(
         "-vvv",
         "-verbose",
@@ -68,6 +70,24 @@ def parse_args() -> argparse.Namespace:
         "--cfg",
         action="store_true",
         help="Print control flow graph",
+    )
+    m.add_argument(
+        "-view",
+        choices=("True", "False"),
+        default=argparse.SUPPRESS,
+        help="Set if Thoth should open the output graph or not",
+    )
+    m.add_argument(
+        "-output_cfg_folder",
+        type=str,
+        default="output-cfg",
+        help="Set the output folder of the cfg",
+    )
+    m.add_argument(
+        "-output_callgraph_folder",
+        type=str,
+        default="output-callgraph",
+        help="Set the output folder of the callflowgraph",
     )
     m.add_argument(
         "-format",
@@ -98,7 +118,11 @@ def parse_args() -> argparse.Namespace:
         help="Dump a Json file containing debug information",
     )
     m.add_argument(
-        "-d", "-decompile", "--decompile", action="store_true", help="Print decompiled code"
+        "-d",
+        "-decompile",
+        "--decompile",
+        action="store_true",
+        help="Print decompiled code",
     )
 
     return parser.parse_args()

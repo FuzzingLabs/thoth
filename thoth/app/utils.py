@@ -1,3 +1,6 @@
+import sys
+
+
 class bcolors:
     def __init__(self, color=False):
         self.HEADER = "\033[95m" if color else ""
@@ -15,6 +18,16 @@ class bcolors:
 def globals():
     global color
     color = bcolors()
+
+
+def str_to_bool(str):
+    if str == "True":
+        return True
+    elif str == "False":
+        return False
+    else:
+        print("Wrong value in str_to_bool")
+        sys.exit(1)
 
 
 # Copy from cairo-lang

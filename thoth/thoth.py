@@ -1,5 +1,7 @@
 import os
+import sys
 import tempfile
+from thoth.app.utils import str_to_bool
 from thoth.app.arguments import parse_args
 from thoth.app.disassembler.disassembler import Disassembler
 from thoth.app.starknet.starknet import StarkNet
@@ -12,6 +14,9 @@ def main() -> int:
         Int: Return 0
     """
     args = parse_args()
+    if (args.call or args.cfg) and ("view" not in args):
+        print("Need to set -view option")
+        sys.exit()
 
     # Load compiled contract from a file
     if args.contract == "file":
@@ -44,11 +49,22 @@ def main() -> int:
 
     # print call flow graph
     if args.call:
-        disassembler.print_call_flow_graph(filename=filename, format=format)
+        disassembler.print_call_flow_graph(
+            folder=args.output_callgraph_folder,
+            filename=filename,
+            format=format,
+            view=str_to_bool(args.view),
+        )
 
     # print CFG
     if args.cfg:
-        disassembler.print_cfg(filename=filename, format=format, function_name=args.function)
+        disassembler.print_cfg(
+            folder=args.output_cfg_folder,
+            filename=filename,
+            format=format,
+            function_name=args.function,
+            view=str_to_bool(args.view),
+        )
 
     # print analytics
     if args.analytics:

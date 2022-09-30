@@ -24,7 +24,7 @@ class SSA:
         self.ap_position += 1
         self.fp_position = self.ap_position
 
-    def new_if_branch(self) -> None:
+    def new_if_branch(self, offset: int) -> None:
         """
         Create a backup of the stack size at the beginning of an if branch
         """
@@ -32,6 +32,7 @@ class SSA:
             for i in range(self.stack_size_backup[-1], len(self.memory)):
                 self.memory[i].used_in_condition = False
         self.stack_size_backup.append(len(self.memory))
+        self.ap_position += offset
 
     def end_if_branch(self) -> None:
         """
@@ -40,11 +41,13 @@ class SSA:
         self.stack_size_backup.pop()
         self.ap_position = len(self.memory)
 
-    def new_else_branch(self) -> None:
+    def new_else_branch(self, offset: int) -> None:
         """
         Move AP at the same level as at the beginning of the if branch
         """
-        self.ap_position = len(self.memory) - (len(self.memory) - self.stack_size_backup[-1])
+        self.ap_position = (
+            len(self.memory) - (len(self.memory) - self.stack_size_backup[-1]) + offset
+        )
         for i in range(self.stack_size_backup[-1], len(self.memory)):
             self.memory[i].used_in_condition = False
             self.memory[i].used_in_branch = False

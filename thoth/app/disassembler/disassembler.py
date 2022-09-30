@@ -131,7 +131,9 @@ class Disassembler:
                     inst.hint = self.hints[inst.id]
 
     def print_disassembly(
-        self, function_name: Optional[str] = None, function_offset: Optional[str] = None
+        self,
+        function_name: Optional[str] = None,
+        function_offset: Optional[str] = None,
     ) -> None:
         """Print the disassembly of all the bytecodes or a given function.
 
@@ -261,7 +263,7 @@ class Disassembler:
         return None
 
     def print_call_flow_graph(
-        self, filename: str, view: bool = True, format: str = "pdf"
+        self, folder: str, filename: str, view: bool = True, format: str = "pdf"
     ) -> Digraph:
         """Print the call flow graph.
 
@@ -276,11 +278,12 @@ class Disassembler:
         if self.call_graph is None:
             self.call_graph = CallFlowGraph(self.functions, filename=filename, format=format)
 
-        self.call_graph.print(view)
+        self.call_graph.print(folder, view)
         return self.call_graph.dot
 
     def print_cfg(
         self,
+        folder: str,
         filename: str,
         format: str = "pdf",
         function_name: Optional[str] = None,
@@ -307,7 +310,7 @@ class Disassembler:
             for function in self.functions:
                 function.generate_cfg()
                 graph.subgraph(function.cfg.dot)
-            graph.render(directory="output-cfg", view=view)
+            graph.render(directory=folder, view=view)
 
         else:
             if function_name is not None:
@@ -318,7 +321,7 @@ class Disassembler:
             if function is not None:
                 function.generate_cfg()
                 graph.subgraph(function.cfg.dot)
-                graph.render(directory="output-cfg", view=view)
+                graph.render(directory=folder, view=view)
             else:
                 print("Error : Function does not exist.")
 

@@ -16,11 +16,13 @@ def disassembler_coverage():
                 disassembler.print_disassembly(func_name=function.name)
                 disassembler.print_disassembly(func_offset=function.offset_start)
                 disassembler.print_cfg(
+                    folder="output_graph",
                     filename=filename + "cfg",
                     view=False,
                     func_name=function.name,
                 )
                 disassembler.print_cfg(
+                    folder="output_graph",
                     filename=filename + "cfg",
                     view=False,
                     func_name=function.offset_start,
@@ -30,8 +32,8 @@ def disassembler_coverage():
                 except BaseException:
                     print("error")
             disassembler.dump_json()
-            disassembler.print_call_flow_graph(filename=filename, view=True)
-            disassembler.print_cfg(filename=filename + "cfg", view=True)
+            disassembler.print_call_flow_graph(folder="output_graph", filename=filename, view=True)
+            disassembler.print_cfg(folder="output_graph", filename=filename + "cfg", view=True)
             disassembler.analytics()
 
 
