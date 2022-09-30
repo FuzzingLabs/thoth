@@ -11,7 +11,11 @@ from thoth.app.disassembler.function import Function
 
 class CallFlowGraph:
     def __init__(
-        self, functions: List[Function], format: str, filename: str, config: dict = CALLGRAPH_CONFIG
+        self,
+        functions: List[Function],
+        format: str,
+        filename: str,
+        config: dict = CALLGRAPH_CONFIG,
     ) -> None:
         """Create the Call Flow Graph object
 
@@ -27,7 +31,9 @@ class CallFlowGraph:
         self.filename = filename
         self._generate_call_flow_graph(functions)
 
-    def _call_flow_graph_generate_nodes(self, functions: List[Function]) -> None:
+    def _call_flow_graph_generate_nodes(
+        self, functions: List[Function]
+    ) -> None:
         """Create all the function nodes
 
         Args:
@@ -114,7 +120,9 @@ class CallFlowGraph:
                 if instruction.is_call_direct():
                     # direct CALL to a fonction
                     if instruction.call_xref_func_name is not None:
-                        edges.append((function.offset_start, instruction.call_offset))
+                        edges.append(
+                            (function.offset_start, instruction.call_offset)
+                        )
                     else:
                         # relative CALL
                         pass
@@ -137,7 +145,7 @@ class CallFlowGraph:
                 self.dot.edge(str(edges[0][0]), str(edges[0][1]))
             edges = list(filter(lambda edge: edge != edges[0], edges))
 
-    def print(self, view: bool = True) -> Digraph:
+    def print(self, folder: str, view: bool = True) -> Digraph:
         """Print the dot
 
         Args:
@@ -146,5 +154,5 @@ class CallFlowGraph:
         Returns:
             Dot: the output Dot
         """
-        self.dot.render(directory="output-callgraph", view=view)
+        self.dot.render(directory=folder, view=view)
         return self.dot

@@ -123,15 +123,21 @@ class Disassembler:
             for inst in func.instructions:
                 # Only for direct call
                 if inst.is_call_direct():
-                    xref_func = self.get_function_by_offset(str(inst.call_offset))
-                    inst.call_xref_func_name = xref_func.name if xref_func is not None else None
+                    xref_func = self.get_function_by_offset(
+                        str(inst.call_offset)
+                    )
+                    inst.call_xref_func_name = (
+                        xref_func.name if xref_func is not None else None
+                    )
                 if inst.id in self.references:
                     inst.ref = self.references[inst.id]
                 if inst.id in self.hints:
                     inst.hint = self.hints[inst.id]
 
     def print_disassembly(
-        self, function_name: Optional[str] = None, function_offset: Optional[str] = None
+        self,
+        function_name: Optional[str] = None,
+        function_offset: Optional[str] = None,
     ) -> None:
         """Print the disassembly of all the bytecodes or a given function.
 
@@ -184,7 +190,13 @@ class Disassembler:
         for struct in self.structs:
             if decompiler == True and len(self.structs[struct]) == 0:
                 continue
-            parsed_string += "struct " + utils.color.BEIGE + struct + utils.color.ENDC + ":\n"
+            parsed_string += (
+                "struct "
+                + utils.color.BEIGE
+                + struct
+                + utils.color.ENDC
+                + ":\n"
+            )
             for attribut in self.structs[struct]:
                 parsed_string += (
                     "\tmember "
@@ -210,10 +222,27 @@ class Disassembler:
         """
         events = ""
         for event_name, data in self.events.items():
-            events += "\n\t event: " + utils.color.BEIGE + event_name + utils.color.ENDC + "\n"
+            events += (
+                "\n\t event: "
+                + utils.color.BEIGE
+                + event_name
+                + utils.color.ENDC
+                + "\n"
+            )
             for attribut in data:
-                events += "\t    " + utils.color.GREEN + attribut["name"] + utils.color.ENDC
-                events += "   : " + utils.color.YELLOW + attribut["type"] + utils.color.ENDC + "\n"
+                events += (
+                    "\t    "
+                    + utils.color.GREEN
+                    + attribut["name"]
+                    + utils.color.ENDC
+                )
+                events += (
+                    "   : "
+                    + utils.color.YELLOW
+                    + attribut["type"]
+                    + utils.color.ENDC
+                    + "\n"
+                )
         return events
 
     def print_builtins(self) -> str:
@@ -225,7 +254,12 @@ class Disassembler:
         builtins = ""
         if self.builtins != []:
             builtins += "\n%builtins "
-            return builtins + utils.color.RED + " ".join(self.builtins) + utils.color.ENDC
+            return (
+                builtins
+                + utils.color.RED
+                + " ".join(self.builtins)
+                + utils.color.ENDC
+            )
         return builtins
 
     def dump_json(self) -> None:
@@ -261,7 +295,7 @@ class Disassembler:
         return None
 
     def print_call_flow_graph(
-        self, filename: str, view: bool = True, format: str = "pdf"
+        self, folder: str, filename: str, view: bool = True, format: str = "pdf"
     ) -> Digraph:
         """Print the call flow graph.
 
@@ -274,13 +308,16 @@ class Disassembler:
             dot: The call graph dot.
         """
         if self.call_graph is None:
-            self.call_graph = CallFlowGraph(self.functions, filename=filename, format=format)
+            self.call_graph = CallFlowGraph(
+                self.functions, filename=filename, format=format
+            )
 
-        self.call_graph.print(view)
+        self.call_graph.print(folder, view)
         return self.call_graph.dot
 
     def print_cfg(
         self,
+        folder: str,
         filename: str,
         format: str = "pdf",
         function_name: Optional[str] = None,
@@ -307,7 +344,7 @@ class Disassembler:
             for function in self.functions:
                 function.generate_cfg()
                 graph.subgraph(function.cfg.dot)
-            graph.render(directory="output-cfg", view=view)
+            graph.render(directory=folder, view=view)
 
         else:
             if function_name is not None:
@@ -318,7 +355,7 @@ class Disassembler:
             if function is not None:
                 function.generate_cfg()
                 graph.subgraph(function.cfg.dot)
-                graph.render(directory="output-cfg", view=view)
+                graph.render(directory=folder, view=view)
             else:
                 print("Error : Function does not exist.")
 
