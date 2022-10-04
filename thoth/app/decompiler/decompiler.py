@@ -176,7 +176,6 @@ class Decompiler:
                 self.max_new_variables.append(self.get_max_new_variables(self.instructions, offset))
                 ap_offset = max(self.max_new_variables[-1]) - self.max_new_variables[-1][0]
                 self.ssa.new_if_branch(ap_offset)
-                # print(self.max_new_variables)
                 source_code += (
                     self.print_instruction_decomp(f"if ", color=utils.color.RED)
                     + f"{self.ssa.get_variable('ap', destination_offset)[1]} == 0:"
@@ -417,34 +416,35 @@ class Decompiler:
             instructions = sum(instructions, [])
             self.instructions = instructions
 
-            # Iterate through intructions
-            for i in range(len(instructions)):
+            # Iterate through basic blocks
+            for block in function.cfg.basicblocks:
+                instructions = block.instructions
+                for i in range(len(instructions)):
+                    if int(instructions[i].id) == self.end_if:
+                        self.max_new_variables.pop()
+                        self.end_if = None
+                        self.tab_count -= 1
+                        source_code += self.print_instruction_decomp(
+                            "end", end="\n", color=utils.color.RED
+                        )
+                    if self.end_else != []:
+                        for idx in range(len(self.end_else)):
+                            if self.end_else[idx] == int(instructions[i].id):
+                                self.tab_count -= 1
+                                self.ssa.end_if_branch()
+                                source_code += self.print_instruction_decomp(
+                                    "end",
+                                    end="\n",
+                                    color=utils.color.RED,
+                                )
 
-                if int(instructions[i].id) == self.end_if:
-                    self.max_new_variables.pop()
-                    self.end_if = None
-                    self.tab_count -= 1
-                    source_code += self.print_instruction_decomp(
-                        "end", end="\n", color=utils.color.RED
+                    count += 1
+                    instructions[i] = self.print_build_code(
+                        instructions[i],
+                        i,
+                        last=(count == len(function.instructions)),
                     )
-                if self.end_else != []:
-                    for idx in range(len(self.end_else)):
-                        if self.end_else[idx] == int(instructions[i].id):
-                            self.tab_count -= 1
-                            self.ssa.end_if_branch()
-                            source_code += self.print_instruction_decomp(
-                                "end",
-                                end="\n",
-                                color=utils.color.RED,
-                            )
-
-                count += 1
-                instructions[i] = self.print_build_code(
-                    instructions[i],
-                    i,
-                    last=(count == len(function.instructions)),
-                )
-                source_code += instructions[i]
+                    source_code += instructions[i]
+                    source_code += "\n"
                 source_code += "\n"
-            source_code += "\n"
         return source_code
