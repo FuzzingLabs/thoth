@@ -107,14 +107,17 @@ class Decompiler:
                 variable = self.ssa.get_variable(
                     destination_register, destination_offset
                 )
-                value = int(
-                    utils.field_element_repr(
-                        int(instruction.imm), instruction.prime
+                try:
+                    value = int(
+                        utils.field_element_repr(
+                            int(instruction.imm), instruction.prime
+                        )
                     )
-                )
-                if value < 0 and op == "+":
-                    op = "-"
-                    value = -value
+                    if value < 0 and op == "+":
+                        op = "-"
+                        value = -value
+                except Exception:
+                    value = instruction.imm
                 source_code += self.print_instruction_decomp(
                     f"{variable[1]} = {self.ssa.get_variable(op0_register, offset_1)[1]} {op} {value}",
                     color=utils.color.GREEN,
