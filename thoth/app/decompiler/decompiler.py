@@ -25,6 +25,7 @@ class Decompiler:
         # Static single assignment
         self.ssa = SSA()
         self.max_new_variables: List[int] = []
+        self.current_basic_block = BasicBlock
 
     def get_max_new_variables(
         self, instructions: List[Instruction], instruction_offset: int
@@ -419,6 +420,7 @@ class Decompiler:
             # Iterate through basic blocks
             for block in function.cfg.basicblocks:
                 instructions = block.instructions
+                is_phi_node = block.is_phi_node
                 for i in range(len(instructions)):
                     if int(instructions[i].id) == self.end_if:
                         self.max_new_variables.pop()

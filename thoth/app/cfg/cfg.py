@@ -21,6 +21,7 @@ class BasicBlock:
         self.instructions: List[Instruction] = []
         self.edges_offset: List[Instruction] = []
         self.is_phi_node = None
+        self.variables: List = []
 
     @staticmethod
     def format_bb_name(instruction_offset: int) -> str:
@@ -196,6 +197,21 @@ class CFG:
         """
         self.print_bb()
         return self.dot
+
+    def parents(self, basic_block: BasicBlock) -> List[BasicBlock]:
+        """
+        Return a list of the parents of a basic_block
+        """
+        parents = []
+
+        start_offset = int(basic_block.start_offset)
+        end_offset = int(basic_block.end_offset)
+        for basic_block in self.basicblocks:
+            edges_offset = [int(offset) for offset in basic_block.edges_offset]
+            for offset in edges_offset:
+                if start_offset <= offset <= end_offset:
+                    parents.append(basic_block)
+        return parents
 
     def find_phi_nodes(self) -> None:
         """
