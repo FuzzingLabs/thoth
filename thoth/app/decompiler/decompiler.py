@@ -1,6 +1,7 @@
 import re
 from typing import List, Tuple
 from thoth.app import utils
+from thoth.app.cfg.cfg import BasicBlock
 from thoth.app.disassembler.function import Function
 from thoth.app.disassembler.instruction import Instruction
 from thoth.app.decompiler.ssa import SSA
@@ -410,7 +411,8 @@ class Decompiler:
 
             # Create a list with all instructions
             instructions = []
-            for block in function.cfg.basicblocks:
+            for i in range(len(function.cfg.basicblocks)):
+                block = function.cfg.basicblocks[i]
                 instructions.append(block.instructions)
             instructions = sum(instructions, [])
             self.instructions = instructions

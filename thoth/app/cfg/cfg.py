@@ -20,6 +20,7 @@ class BasicBlock:
         self.end_instruction = None
         self.instructions: List[Instruction] = []
         self.edges_offset: List[Instruction] = []
+        self.is_phi_node = None
 
     @staticmethod
     def format_bb_name(instruction_offset: int) -> str:
@@ -57,6 +58,7 @@ class CFG:
 
         self._generate_basicblocks(instructions)
         self.generate_cfg()
+        self.find_phi_nodes()
 
     def set_basicblocks(self, basic_blocks: List[BasicBlock]) -> None:
         """Set the list of basicblocks
@@ -194,3 +196,14 @@ class CFG:
         """
         self.print_bb()
         return self.dot
+
+    def find_phi_nodes(self) -> None:
+        """
+        Find the basic blocks that are phi nodes
+        """
+        for i in range(len(self.basicblocks)):
+            block = self.basicblocks[i]
+            block.is_phi_node = False
+            if i > 0:
+                if len(block.edges_offset) == 2:
+                    block.is_phi_node = True
