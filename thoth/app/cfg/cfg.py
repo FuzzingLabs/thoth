@@ -119,10 +119,14 @@ class CFG:
         basic_blocks_starts = [int(start) for start in basic_blocks_starts]
         basic_blocks_end = [int(end) for end in basic_blocks_end]
 
-        new_basic_block = True
+        # Init the first basic block
         current_basic_block = BasicBlock(instructions[0])
+
+        phi_node_block = None
+        new_basic_block = True
         for i in range(1, len(instructions)):
             instruction = instructions[i]
+
             # If the instruction is at the beginning of a basic block
             if int(instruction.id) in basic_blocks_starts:
                 new_basic_block = True
@@ -139,15 +143,23 @@ class CFG:
             # Create edges
             if instruction.is_return():
                 pass
-            elif ("JUMP" in instruction.pcUpdate) or (
+            # JUMP
+            elif ("JUMP" in instruction.pcUpdate) and (
                 "JUMP_REL" in instruction.pcUpdate and "CALL" not in instruction.opcode
             ):
                 current_basic_block.edges_offset.append((str(int(instruction.id) + imm)))
+                phi_node_block = str(int(instruction.id) + imm)
+            # JNZ
             elif "JNZ" in instruction.pcUpdate:
                 current_basic_block.edges_offset.append(str(int(instruction.id) + imm))
                 current_basic_block.edges_offset.append(str(int(instruction.id) + int(2)))
+            # End of block
+            elif i < (len(instructions) - 1):
+                if int(instructions[i + 1].id) in basic_blocks_starts:
+                    current_basic_block.edges_offset.append(phi_node_block)
             new_basic_block = False
 
+        # Append the last basic block to the list
         list_basic_block.append(current_basic_block)
         self.set_basicblocks(list_basic_block)
 
