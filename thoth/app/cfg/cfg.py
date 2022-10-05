@@ -77,18 +77,13 @@ class CFG:
         """
         list_basic_block: List[BasicBlock] = []
         last_function_instruction = instructions[-1]
-        new_basic_block = True
-        current_bb = None
+
+        # List of block beginnings
+        basic_blocks_starts = [0]
+        # List of block ends
+        basic_blocks_end = []
 
         for instruction in instructions:
-
-            # Create a basicblock
-            if new_basic_block:
-                current_bb = BasicBlock(instruction)
-                new_basic_block = False
-
-            current_bb.instructions.append(instruction)
-
             # Direct CALL
             if instruction.is_call_direct():
                 # CALL direct to function
@@ -103,38 +98,57 @@ class CFG:
 
             # Return - Stop the execution
             elif instruction.is_return():
-                current_bb.end_instr = instruction
-                current_bb.end_offset = instruction.id
-                list_basic_block.append(current_bb)
-                new_basic_block = True
+                basic_blocks_end.append(instruction.id)
 
             # Jump to instr offset + instr.imm
             elif ("JUMP" in instruction.pcUpdate) or (
                 "JUMP_REL" in instruction.pcUpdate and "CALL" not in instruction.opcode
             ):
-                current_bb.end_instr = instruction
-                current_bb.end_offset = instruction.id
-                current_bb.edges_offset.append(str(int(instruction.id) + int(instruction.imm)))
-                list_basic_block.append(current_bb)
-                new_basic_block = True
+                basic_blocks_starts.append((str(int(instruction.id) + int(instruction.imm))))
 
             # Jump to instr offset + instr.imm
             # or instr offset + 2
             elif "JNZ" in instruction.pcUpdate:
-                current_bb.instruction = instruction
-                current_bb.end_offset = instruction.id
-                current_bb.edges_offset.append(str(int(instruction.id) + int(instruction.imm)))
-                current_bb.edges_offset.append(str(int(instruction.id) + int(2)))
-                list_basic_block.append(current_bb)
-                new_basic_block = True
+                basic_blocks_starts.append(str(int(instruction.id) + int(instruction.imm)))
+                basic_blocks_starts.append(str(int(instruction.id) + int(2)))
 
             else:
                 if instruction is last_function_instruction:
                     raise AssertionError
 
-        # TODO - how to handle if we have `jmp rel` to the middle of other basicblock
-        # ex: tests/json_files/cairo_jmp.json
+        basic_blocks_starts = [int(start) for start in basic_blocks_starts]
+        basic_blocks_end = [int(end) for end in basic_blocks_end]
 
+        new_basic_block = True
+        current_basic_block = BasicBlock(instructions[0])
+        for i in range(1, len(instructions)):
+            instruction = instructions[i]
+            # If the instruction is at the beginning of a basic block
+            if int(instruction.id) in basic_blocks_starts:
+                new_basic_block = True
+                list_basic_block.append(current_basic_block)
+            # Create a new Basic Block
+            if new_basic_block:
+                current_basic_block = BasicBlock(instruction)
+                new_basic_block = False
+
+            # Add instruction to the current block
+            current_basic_block.instructions.append(instruction)
+
+            imm = int(instruction.imm) if instruction.imm != "None" else 0
+            # Create edges
+            if instruction.is_return():
+                pass
+            elif ("JUMP" in instruction.pcUpdate) or (
+                "JUMP_REL" in instruction.pcUpdate and "CALL" not in instruction.opcode
+            ):
+                current_basic_block.edges_offset.append((str(int(instruction.id) + imm)))
+            elif "JNZ" in instruction.pcUpdate:
+                current_basic_block.edges_offset.append(str(int(instruction.id) + imm))
+                current_basic_block.edges_offset.append(str(int(instruction.id) + int(2)))
+            new_basic_block = False
+
+        list_basic_block.append(current_basic_block)
         self.set_basicblocks(list_basic_block)
 
     def print_bb(self) -> None:
