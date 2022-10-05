@@ -151,8 +151,14 @@ class Decompiler:
                     color=utils.color.GREEN,
                 )
             else:
-                variable = self.ssa.get_variable(destination_register, destination_offset)
-                value = int(utils.field_element_repr(int(instruction.imm), instruction.prime))
+                variable = self.ssa.get_variable(
+                    destination_register, destination_offset
+                )
+                value = int(
+                    utils.field_element_repr(
+                        int(instruction.imm), instruction.prime
+                    )
+                )
                 if value < 0 and op == "+":
                     op = "-"
                     value = -value
