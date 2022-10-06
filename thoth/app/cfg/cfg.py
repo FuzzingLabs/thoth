@@ -4,6 +4,16 @@ from typing import List
 from thoth.app.disassembler.instruction import Instruction
 
 
+class Edge:
+    """
+    Edge class object
+    """
+
+    def __init__(self, destination: str, fallthrough: bool = False) -> None:
+        self.destination = destination
+        self.fallthrough = fallthrough
+
+
 class BasicBlock:
     """Basic Block class object."""
 
@@ -19,7 +29,7 @@ class BasicBlock:
         self.end_offset = None
         self.end_instruction = None
         self.instructions: List[Instruction] = []
-        self.edges_offset: List[Instruction] = []
+        self.edges_offset: List[Edge] = []
 
     @staticmethod
     def format_bb_name(instruction_offset: int) -> str:
@@ -147,16 +157,18 @@ class CFG:
             elif ("JUMP" in instruction.pcUpdate) and (
                 "JUMP_REL" in instruction.pcUpdate and "CALL" not in instruction.opcode
             ):
-                current_basic_block.edges_offset.append((str(int(instruction.id) + imm)))
+                current_basic_block.edges_offset.append(
+                    Edge((str(int(instruction.id) + imm)), True)
+                )
                 phi_node_block = str(int(instruction.id) + imm)
             # JNZ
             elif "JNZ" in instruction.pcUpdate:
-                current_basic_block.edges_offset.append(str(int(instruction.id) + imm))
-                current_basic_block.edges_offset.append(str(int(instruction.id) + int(2)))
+                current_basic_block.edges_offset.append(Edge(str(int(instruction.id) + imm)))
+                current_basic_block.edges_offset.append(Edge(str(int(instruction.id) + int(2))))
             # End of block
             elif i < (len(instructions) - 1):
                 if int(instructions[i + 1].id) in basic_blocks_starts:
-                    current_basic_block.edges_offset.append(phi_node_block)
+                    current_basic_block.edges_offset.append(Edge(phi_node_block, True))
             new_basic_block = False
 
         # Append the last basic block to the list
@@ -194,10 +206,15 @@ class CFG:
             self.dot.node(block.name, label=label_instruction + "\\l", shape=shape)
 
             # Iterate over edges_offset
-            for offset in block.edges_offset:
+            for edge in block.edges_offset:
+                offset = edge.destination
+                # If/Else edge
                 color = "green"
-                if offset is block.edges_offset[-1]:
+                if offset is block.edges_offset[-1].destination:
                     color = "red"
+                # Fallthrough edge
+                if edge.fallthrough:
+                    color = "blue"
 
                 # We check that we are not creating an edge
                 # to an offset that is not a block start offset
