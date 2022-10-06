@@ -134,9 +134,9 @@ class CFG:
 
         phi_node_block = None
         new_basic_block = True
-        for i in range(1, len(instructions)):
+        for i in range(0, len(instructions)):
             instruction = instructions[i]
-
+            
             # If the instruction is at the beginning of a basic block
             if int(instruction.id) in basic_blocks_starts:
                 new_basic_block = True
