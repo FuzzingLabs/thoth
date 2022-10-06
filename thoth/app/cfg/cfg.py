@@ -1,7 +1,17 @@
 import re
 from graphviz import Digraph
-from typing import List
+from typing import List, Literal
 from thoth.app.disassembler.instruction import Instruction
+
+
+class Edge:
+    """
+    Edge class object
+    """
+
+    def __init__(self, destination: int, type: Literal["fallthrough", "standard"]) -> None:
+        self.destination = destination
+        self.type = type
 
 
 class BasicBlock:
