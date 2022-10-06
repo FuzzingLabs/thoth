@@ -85,22 +85,22 @@ thoth -f tests/json_files/cairo_array_sum.json -call -format png
 ## Print the contract's control-flow graph (CFG)
 
 ```sh
-thoth -f tests/json_files/cairo_array_sum.json -cfg
+thoth -f tests/json_files/cairo_double_function_and_if.json -cfg
 ```
 The output file (pdf/svg/png) and the dot file are inside the `output-cfg` folder.
 
 <p align="center">
-	<img src="/images/cairo_array_sum.gv.png"/>
+	<img src="/images/cairo_double_function_and_if_cfg.png"/>
 </p>
 
 For a specific function:
 ```sh
-thoth -f tests/json_files/cairo_array_sum.json -cfg -function "__main__.main"
+thoth -f tests/json_files/cairo_double_function_and_if.json -cfg -function "__main__.main"
 ```
 
 For a specific output format (pdf/svg/png):
 ```sh
-thoth -f tests/json_files/cairo_array_sum.json -cfg -format png
+thoth -f tests/json_files/cairo_double_function_and_if.json -cfg -format png
 ```
 # F.A.Q
 
