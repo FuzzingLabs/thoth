@@ -1,5 +1,7 @@
+import copy
 import re
-from typing import List, Tuple
+from typing import List, Optional
+from pyparsing import Optional
 from thoth.app import utils
 from thoth.app.cfg.cfg import BasicBlock
 from thoth.app.disassembler.function import Function
@@ -15,6 +17,10 @@ class Decompiler:
     """
 
     def __init__(self, functions: List[Function]) -> None:
+        """
+        Args:
+            functions (List Function): list of the functions to decompile
+        """
         self.tab_count = 1
         self.end_else = []
         self.ifcount = 0
@@ -24,77 +30,30 @@ class Decompiler:
         self.return_values = None
         # Static single assignment
         self.ssa = SSA()
-        self.max_new_variables: List[int] = []
-        self.current_basic_block = BasicBlock
-
-    def get_max_new_variables(
-        self, instructions: List[Instruction], instruction_offset: int
-    ) -> Tuple[int]:
-        """ """
-        if_count = 0
-        max_new_variables = [0, 0]
-        branch = 0
-
-        end_if = []
-        end_else = []
-        # Is there an else
-        for i in range(instruction_offset, len(instructions)):
-            # If instructions
-            if instructions[i].pcUpdate == "JNZ":
-                jump_to = int(
-                    utils.field_element_repr(int(instructions[i].imm), instructions[i].prime)
-                ) + int(instructions[i].id)
-                for j in range(i, len(instructions)):
-                    if (
-                        int(instructions[j].id) == int(jump_to) - 2
-                        or int(instructions[j].id) == int(jump_to) - 1
-                    ):
-                        if instructions[j].pcUpdate != "JUMP_REL":
-                            end_if.append(int(jump_to))
-                if_count += 1
-            elif instructions[i].pcUpdate == "JUMP_REL":
-                if if_count != 0:
-                    branch = 1
-                    jump_to = int(
-                        utils.field_element_repr(int(instructions[i].imm), instructions[i].prime)
-                    ) + int(instructions[i].id)
-                    for j in range(i, len(instructions)):
-                        if (
-                            int(instructions[j].id) == int(jump_to) - 2
-                            or int(instructions[j].id) == int(jump_to) - 1
-                        ):
-                            end_else.append(int(jump_to))
-            # Ap incrementations
-            elif "REGULAR" not in instructions[i].apUpdate:
-                op = list(filter(None, re.split(r"(\d+)", instructions[i].apUpdate)))
-                APval = (
-                    op[1]
-                    if (len(op) > 1)
-                    else int(
-                        utils.field_element_repr(int(instructions[i].imm), instructions[i].prime)
-                    )
-                )
-                # Update AP register value
-                max_new_variables[branch] += int(APval)
-            if len(end_else) != 0:
-                if int(instructions[i].id) == int(end_else[-1]):
-                    if_count -= 1
-            if len(end_if) != 0:
-                if int(instructions[i].id) == int(end_if[-1]):
-                    if_count -= 1
-                    end_if.pop()
-            if if_count == 0:
-                break
-        return max_new_variables
+        self.current_basic_block: Optional[BasicBlock] = None
+        self.first_pass = True
 
     def _handle_assert_eq_decomp(self, instruction: Instruction) -> str:
         """Handle the ASSERT_EQ opcode
-
+        Args:
+            instruction (Instruction): intruction to decompile
         Returns:
             String: The formated ASSERT_EQ instruction
         """
-
         source_code = ""
+
+        # Generate the phi function representation
+        phi_node_variables = []
+        if self.current_basic_block.is_phi_node and not self.first_pass:
+            # Parents blocks last defined variabled
+            # Phi function always use variables stored in [AP - 1]
+            phi_node_variables = [
+                block.variables[-1]
+                for block in self.current_function.cfg.parents(self.current_basic_block)
+            ]
+            variables_names = [variable.name for variable in phi_node_variables]
+            # Phi function is represented in the form Φ(var1, var2)
+            phi_node_representation = "Φ(%s)" % ", ".join(variables_names)
 
         # Registers and offsets
         destination_register = instruction.dstRegister.lower()
@@ -107,6 +66,7 @@ class Decompiler:
         OPERATORS = {"ADD": "+", "MUL": "*"}
 
         destination_offset = int(instruction.offDest) if instruction.offDest else 0
+
         if "OP1" in instruction.res:
             if "IMM" in instruction.op1Addr:
                 value = utils.value_to_string(int(instruction.imm), (instruction.prime))
@@ -114,6 +74,7 @@ class Decompiler:
                     value = utils.field_element_repr(int(instruction.imm), instruction.prime)
 
                 variable = self.ssa.get_variable(destination_register, destination_offset)
+
                 source_code += self.print_instruction_decomp(
                     f"{variable[1]} = {utils.field_element_repr(int(instruction.imm), instruction.prime)}",
                     color=utils.color.GREEN,
@@ -125,6 +86,12 @@ class Decompiler:
                 )
             elif "OP0" in instruction.op1Addr:
                 variable = self.ssa.get_variable(destination_register, destination_offset)
+
+                if self.ssa.get_variable(op0_register, offset_1)[2] in phi_node_variables:
+                    operand = phi_node_representation
+                else:
+                    operand = self.ssa.get_variable(op0_register, offset_1)[1]
+
                 value_off2 = instruction.off2
                 sign = ""
                 try:
@@ -133,44 +100,63 @@ class Decompiler:
                 except Exception:
                     pass
                 source_code += self.print_instruction_decomp(
-                    f"{variable[1]} = [{self.ssa.get_variable(op0_register, offset_1, True)[1]}{sign}{value_off2}]",
+                    f"{variable[1]} = [{operand}{sign}{value_off2}]",
                     color=utils.color.GREEN,
                 )
             else:
                 variable = self.ssa.get_variable(destination_register, destination_offset)
+                if self.ssa.get_variable(op1_register, offset_2)[2] in phi_node_variables:
+                    variable_value = phi_node_representation
+                else:
+                    variable_value = self.ssa.get_variable(op1_register, offset_2)[1]
+
                 source_code += self.print_instruction_decomp(
-                    f"{variable[1]} = {self.ssa.get_variable(op1_register, offset_2, True)[1]}",
+                    f"{variable[1]} = {variable_value}",
                     color=utils.color.GREEN,
                 )
         else:
             op = OPERATORS[instruction.res]
             if "IMM" not in instruction.op1Addr:
                 variable = self.ssa.get_variable(destination_register, destination_offset)
+
+                if self.ssa.get_variable(op0_register, offset_1)[2] in phi_node_variables:
+                    operand_1 = phi_node_representation
+                else:
+                    operand_1 = self.ssa.get_variable(op0_register, offset_1)[1]
+                if self.ssa.get_variable(op1_register, offset_2)[2] in phi_node_variables:
+                    operand_2 = phi_node_representation
+                else:
+                    operand_2 = self.ssa.get_variable(op1_register, offset_2)[1]
+
                 source_code += self.print_instruction_decomp(
-                    f"{variable[1]} = {self.ssa.get_variable(op0_register, offset_1, True)[1]} {op} {self.ssa.get_variable(op1_register, offset_2, True)[1]}",
+                    f"{variable[1]} = {operand_1} {op} {operand_2}",
                     color=utils.color.GREEN,
                 )
             else:
-                variable = self.ssa.get_variable(
-                    destination_register, destination_offset
-                )
-                value = int(
-                    utils.field_element_repr(
-                        int(instruction.imm), instruction.prime
-                    )
-                )
-                if value < 0 and op == "+":
-                    op = "-"
-                    value = -value
+                variable = self.ssa.get_variable(destination_register, destination_offset)
+                try:
+                    value = int(utils.field_element_repr(int(instruction.imm), instruction.prime))
+                    if value < 0 and op == "+":
+                        op = "-"
+                        value = -value
+                except Exception:
+                    value = instruction.imm
+
+                if self.ssa.get_variable(op0_register, offset_1)[2] in phi_node_variables:
+                    operand = phi_node_representation
+                else:
+                    operand = self.ssa.get_variable(op0_register, offset_1)[1]
+
                 source_code += self.print_instruction_decomp(
-                    f"{variable[1]} = {self.ssa.get_variable(op0_register, offset_1, True)[1]} {op} {value}",
+                    f"{variable[1]} = {operand} {op} {value}",
                     color=utils.color.GREEN,
                 )
         return source_code
 
-    def _handle_nop_decomp(self, instruction: Instruction, offset: int) -> str:
+    def _handle_nop_decomp(self, instruction: Instruction) -> str:
         """Handle the NOP opcode
-
+        Args:
+                instruction (Instruction): intruction to decompile
         Returns:
             String: The formated NOP instruction
         """
@@ -180,9 +166,6 @@ class Decompiler:
 
         if "REGULAR" not in instruction.pcUpdate:
             if instruction.pcUpdate == "JNZ":
-                self.max_new_variables.append(self.get_max_new_variables(self.instructions, offset))
-                ap_offset = max(self.max_new_variables[-1]) - self.max_new_variables[-1][0]
-                self.ssa.new_if_branch(ap_offset)
                 source_code += (
                     self.print_instruction_decomp(f"if ", color=utils.color.RED)
                     + f"{self.ssa.get_variable('ap', destination_offset)[1]} == 0:"
@@ -203,8 +186,6 @@ class Decompiler:
                     self.tab_count -= 1
                     source_code += self.print_instruction_decomp("else:", color=utils.color.RED)
                     self.tab_count += 1
-                    ap_offset = max(self.max_new_variables[-1]) - self.max_new_variables[-1][1]
-                    self.ssa.new_else_branch(ap_offset)
                     self.end_else.append(
                         int(utils.field_element_repr(int(instruction.imm), instruction.prime))
                         + int(instruction.id)
@@ -216,7 +197,8 @@ class Decompiler:
 
     def _handle_call_decomp(self, instruction: Instruction) -> str:
         """Handle the CALL opcode
-
+        Args:
+                instruction (Instruction): intruction to decompile
         Returns:
             String: The formated CALL instruction
         """
@@ -269,7 +251,8 @@ class Decompiler:
 
     def _handle_ret_decomp(self, last: bool = False) -> str:
         """Handle the RET opcode
-
+        Args:
+            last (Instruction): intruction to decompile
         Returns:
             String: The formated RET instruction
         """
@@ -295,7 +278,8 @@ class Decompiler:
 
     def _handle_hint_decomp(self, instruction: Instruction) -> str:
         """Handle the hint
-
+        Args:
+            instruction (Instruction): intruction to decompile
         Returns:
             String: The formated hint
         """
@@ -310,12 +294,13 @@ class Decompiler:
         source_code += self.print_instruction_decomp("%} ", end="\n")
         return source_code
 
-    def print_build_code(self, instruction: Instruction, offset: int, last: bool = False) -> str:
+    def print_build_code(self, instruction: Instruction, last: bool = False) -> str:
         """Read the instruction and print each element of it
-
+        Args:
+            instruction (Instruction): intruction to decompile
+            offset (int):
         Raises:
             AssertionError: Should never happen - Unknown opcode
-
         Returns:
             String: String containing the instruction line with the offset ...
         """
@@ -345,7 +330,7 @@ class Decompiler:
                     self.ssa.ap_position += 1
                     pass
         elif "NOP" in instruction.opcode:
-            source_code += self._handle_nop_decomp(instruction, offset)
+            source_code += self._handle_nop_decomp(instruction)
         elif "CALL" in instruction.opcode:
             source_code += self._handle_call_decomp(instruction)
         elif "RET" in instruction.opcode:
@@ -385,6 +370,7 @@ class Decompiler:
         source_code = ""
 
         for function in self.functions:
+            self.current_function = function
             self.tab_count = 0
             count = 0
 
@@ -400,6 +386,10 @@ class Decompiler:
 
             # Initialize AP and FP registers values at the  beginning of the function
             self.ssa.new_function_init()
+
+            # Create a backup value of AP and FP registers
+            ap_backup_value = self.ssa.ap_position
+            fp_backup_value = self.ssa.fp_position
 
             self.decompiled_function = function
             self.return_values = function.ret
@@ -423,13 +413,32 @@ class Decompiler:
             instructions = sum(instructions, [])
             self.instructions = instructions
 
-            # Iterate through basic blocks
+            # First pass
             for block in function.cfg.basicblocks:
+                self.current_basic_block = block
+                memory_backup = copy.deepcopy(self.ssa.memory)
                 instructions = block.instructions
-                is_phi_node = block.is_phi_node
+                for i in range(len(instructions)):
+                    self.print_build_code(
+                        instructions[i],
+                        last=(count == len(function.instructions)),
+                    )
+                block.variables = self.ssa.memory[len(memory_backup) :]
+
+            # Initialize the SSA for the second pass
+            self.ssa.ap_position = ap_backup_value
+            self.ssa.fp_position = fp_backup_value
+            self.tab_count = 1
+            self.end_else = []
+            self.ifcount = 0
+            self.end_if = None
+
+            self.first_pass = False
+            for block in function.cfg.basicblocks:
+                self.current_basic_block = block
+                instructions = block.instructions
                 for i in range(len(instructions)):
                     if int(instructions[i].id) == self.end_if:
-                        self.max_new_variables.pop()
                         self.end_if = None
                         self.tab_count -= 1
                         source_code += self.print_instruction_decomp(
@@ -439,20 +448,18 @@ class Decompiler:
                         for idx in range(len(self.end_else)):
                             if self.end_else[idx] == int(instructions[i].id):
                                 self.tab_count -= 1
-                                self.ssa.end_if_branch()
                                 source_code += self.print_instruction_decomp(
                                     "end",
                                     end="\n",
                                     color=utils.color.RED,
                                 )
-
                     count += 1
                     instructions[i] = self.print_build_code(
                         instructions[i],
-                        i,
                         last=(count == len(function.instructions)),
                     )
                     source_code += instructions[i]
                     source_code += "\n"
                 source_code += "\n"
+
         return source_code
