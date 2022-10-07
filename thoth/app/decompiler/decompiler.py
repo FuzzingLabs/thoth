@@ -345,7 +345,6 @@ class Decompiler:
 
             source_code += self._handle_assert_eq_decomp(instruction)
             if "REGULAR" not in instruction.apUpdate:
-                source_code += ";"
                 op = list(filter(None, re.split(r"(\d+)", instruction.apUpdate)))
                 APval = (
                     op[1]
