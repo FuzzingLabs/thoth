@@ -34,6 +34,6 @@ class StarkNet:
         # If the contract does not exist
         if full_contract.status_code != 200:
             raise ValueError(
-                f"Thoth could not find contract at adress {contract_adress} in {self.network} network"
+                f"Thoth could not find contract at address {contract_adress} in {self.network} network"
             )
         return full_contract.text

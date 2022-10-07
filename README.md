@@ -17,15 +17,22 @@ thoth -h
 
 ## Disassemble the contract's compilation artifact (json)
 
+#### From a JSON file
 
 ```sh
-thoth -f tests/json_files/cairo_array_sum.json
+thoth file -p tests/json_files/cairo_array_sum.json
+```
+
+#### From starknet 
+
+```sh
+thoth starknet --address 0x0323D18E2401DDe9aFFE1908e9863cbfE523791690F32a2ff6aa66959841D31D --network mainnet
 ```
 
 To get a pretty colored version:
 
 ```sh
-thoth -f tests/json_files/cairo_array_sum.json -color
+thoth -color file -p tests/json_files/cairo_array_sum.json
 ```
 <p align="center">
 	<img src="/images/thoth_disas_color.png"/>
@@ -33,14 +40,14 @@ thoth -f tests/json_files/cairo_array_sum.json -color
 
 To get a verbose version with more details about decoded bytecodes:
 ```sh
-thoth -f tests/json_files/cairo_array_sum.json -vvv
+thoth -vvv file -p tests/json_files/cairo_array_sum.json
 ```
 
 ## Decompile the contract's compilation artifact (json)
 
 
 ```sh
-thoth -f tests/json_files/cairo_test_addition_if.json --decompile
+thoth --decompile file -p tests/json_files/cairo_test_addition_if.json
 ```
 Example 1 with strings:
 <p align="center">
@@ -62,7 +69,7 @@ Example 2 with function call:
 The call flow graph represents calling relationships between functions of the contract. We tried to provide a maximum of information, such as the entry-point functions, the imports, decorators, etc.
 
 ```sh
-thoth -f tests/json_files/cairo_array_sum.json -call
+thoth -call -view True file -p tests/json_files/cairo_array_sum.json
 ```
 The output file (pdf/svg/png) and the dot file are inside the `output-callgraph` folder.
 If needed, you can also visualize dot files online using [this](https://dreampuf.github.io/GraphvizOnline/) website. The legend can be found [here](images/callgraph_legend.png).
@@ -79,13 +86,13 @@ A more complexe callgraph:
 
 For a specific output format (pdf/svg/png):
 ```sh
-thoth -f tests/json_files/cairo_array_sum.json -call -format png
+thoth -call -view True -format png file -p tests/json_files/cairo_array_sum.json
 ```
 
 ## Print the contract's control-flow graph (CFG)
 
 ```sh
-thoth -f tests/json_files/cairo_double_function_and_if.json -cfg
+thoth -cfg -view True file -p tests/json_files/cairo_double_function_and_if.json
 ```
 The output file (pdf/svg/png) and the dot file are inside the `output-cfg` folder.
 
@@ -95,12 +102,12 @@ The output file (pdf/svg/png) and the dot file are inside the `output-cfg` folde
 
 For a specific function:
 ```sh
-thoth -f tests/json_files/cairo_double_function_and_if.json -cfg -function "__main__.main"
+thoth -cfg -view True -function "__main__.main" file -p tests/json_files/cairo_double_function_and_if.json
 ```
 
 For a specific output format (pdf/svg/png):
 ```sh
-thoth -f tests/json_files/cairo_double_function_and_if.json -cfg -format png
+thoth -cfg -view True -format png file -p tests/json_files/cairo_double_function_and_if.json
 ```
 # F.A.Q
 

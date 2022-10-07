@@ -236,6 +236,7 @@ class Decompiler:
                             args += len(function.implicitargs)
                 args_str = ""
                 while args != 0:
+                    phi_node_variables = []
                     # Generate the phi function representation
                     if self.current_basic_block.is_phi_node and not self.first_pass:
                         phi_node_variables = self.get_phi_node_variables()

@@ -25,14 +25,14 @@ def main() -> int:
     # Load compiled contract from starknet API
     else:
         try:
-            contract = StarkNet(args.network).get_full_contract(args.adress)
+            contract = StarkNet(args.network).get_full_contract(args.address)
         except Exception as e:
             print(e)
             exit()
         file = tempfile.NamedTemporaryFile()
         with open(file.name, "w") as f:
             f.write(contract)
-        filename = args.adress
+        filename = args.address
 
     disassembler = Disassembler(file, color=args.color)
 

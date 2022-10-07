@@ -20,7 +20,7 @@ class Edge:
         Args:
             source (String): Offset of last instruction of the current block
             destination (String): Offset of first instruction of the following block
-            type (String): Type of the edge 
+            type (String): Type of the edge
         """
         self.source = source
         self.destination = destination
@@ -183,23 +183,27 @@ class CFG:
             # JNZ
             elif "JNZ" in instruction.pcUpdate:
                 current_basic_block.edges_offset.append(
-                    Edge(int(instruction.id), str(int(instruction.id) + imm), EDGE_CONDITIONAL_TRUE)
-                )
-                current_basic_block.edges_offset.append(
                     Edge(
                         int(instruction.id),
                         str(int(instruction.id) + int(2)),
-                        EDGE_CONDITIONAL_FALSE,
+                        EDGE_CONDITIONAL_TRUE,
+                    )
+                )
+                current_basic_block.edges_offset.append(
+                    Edge(
+                        int(instruction.id), str(int(instruction.id) + imm), EDGE_CONDITIONAL_FALSE
                     )
                 )
             # End of block
             elif i < (len(instructions) - 1):
-                if int(instructions[i + 1].id) in basic_blocks_starts:
+                if (
+                    int(instructions[i + 1].id) in basic_blocks_starts
+                    and phi_node_block is not None
+                ):
                     current_basic_block.edges_offset.append(
                         Edge(int(instruction.id), phi_node_block, EDGE_FALLTHROUGH)
                     )
             new_basic_block = False
-
         # Append the last basic block to the list
         list_basic_block.append(current_basic_block)
         self.set_basicblocks(list_basic_block)

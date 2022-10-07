@@ -15,17 +15,20 @@ def parse_args() -> argparse.Namespace:
         formatter_class=argparse.ArgumentDefaultsHelpFormatter,
     )
 
-    # Use a JSON File
-    contract_subparser = parser.add_subparsers(help="Load cairo", dest="contract")
+    contract_subparser = parser.add_subparsers(
+        help="Load a cairo contract compilation artifact from a file or from starknet",
+        dest="contract",
+        required=True,
+    )
+    # Use a JSON file
     file = contract_subparser.add_parser("file")
     file.add_argument(
         "-path",
         "-path",
         "--path",
-        metavar="file",
         type=argparse.FileType("r"),
         required=True,
-        help="Cairo compiler JSON",
+        help="Cairo compiled JSON file",
     )
 
     # Download a contract from StarkNet mainnet/goerli
@@ -34,7 +37,6 @@ def parse_args() -> argparse.Namespace:
         "-a",
         "-address",
         "--address",
-        metavar="address",
         required=True,
         help="address of the contract e.g 0x111111111111111111111111111111111111111111111111111111111111111",
     )
@@ -42,7 +44,6 @@ def parse_args() -> argparse.Namespace:
         "-n",
         "-network",
         "--network",
-        metavar="network",
         choices=["mainnet", "goerli"],
         required=True,
         help="Network of the contract, mainnet or goerli",
@@ -108,7 +109,7 @@ def parse_args() -> argparse.Namespace:
         "--function",
         type=str,
         required=False,
-        help="Print disassembler/decompiler with color",
+        help="Analyse a specific function",
     )
     m.add_argument(
         "-a",
