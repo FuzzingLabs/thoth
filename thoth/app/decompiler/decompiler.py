@@ -44,15 +44,19 @@ class Decompiler:
 
         # Generate the phi function representation
         phi_node_variables = []
+
         if self.current_basic_block.is_phi_node and not self.first_pass:
+            parents_list = self.current_function.cfg.parents(self.current_basic_block)
             # Parents blocks last defined variabled
             # Phi function always use variables stored in [AP - 1]
-            phi_node_variables = [
-                block.variables[-1]
-                for block in self.current_function.cfg.parents(self.current_basic_block)
-            ]
+            while parents_list != []:
+                if len(parents_list[0].variables) != 0:
+                    phi_node_variables.append(parents_list[0].variables[-1])
+                else:
+                    parents_list += self.current_function.cfg.parents(parents_list[0])
+                parents_list.remove(parents_list[0])
             variables_names = [variable.name for variable in phi_node_variables]
-            # Phi function is represented in the form Φ(var1, var2)
+            # Phi function is represented in the form Φ(var1, var2, ..., var<n>)
             phi_node_representation = "Φ(%s)" % ", ".join(variables_names)
 
         # Registers and offsets
@@ -435,6 +439,7 @@ class Decompiler:
 
             self.first_pass = False
             for block in function.cfg.basicblocks:
+
                 self.current_basic_block = block
                 instructions = block.instructions
                 for i in range(len(instructions)):
@@ -460,6 +465,6 @@ class Decompiler:
                     )
                     source_code += instructions[i]
                     source_code += "\n"
-                source_code += "\n"
+            source_code += "\n"
 
         return source_code

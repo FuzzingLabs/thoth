@@ -4,24 +4,22 @@ end
 
 func main{}():
 	[ap] = 3; ap++
-
 	if [ap-1] == 3:
-		[ap] = 10; ap++
+		[ap] = 10
 
 		if [ap-1] == 5:
-			[ap-2] = 6
+			[ap] = 6; ap++
 		else:
-			[ap-2] = 1
+			[ap] = 1; ap++
 		end
 	else:
 		if [ap-1] == 4:
-			[ap-2] = 7
+			[ap] = 7; ap++
 		else:
-			[ap-2] = 2
+			[ap] = 2; ap++
 		end
 	end
-
-    let phi_node = [ap-2]
-    testfunc(phi_node)
-    ret
+    let var = [ap-1] + 1
+	testfunc(var)
+	ret
 end

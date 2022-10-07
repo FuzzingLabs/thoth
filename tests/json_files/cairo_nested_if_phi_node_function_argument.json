@@ -33,8 +33,8 @@
         "0x4",
         "0x480680017fff8000",
         "0x2",
-        "0x482480017fff8000",
-        "0x1",
+        "0x480680017fff8000",
+        "0x2",
         "0x1104800180018000",
         "0x800000000000010ffffffffffffffffffffffffffffffffffffffffffffffe0",
         "0x208b7fff7fff7ffe"
@@ -53,7 +53,8 @@
                         "offset": 0
                     },
                     "reference_ids": {
-                        "__main__.testfunc.arg": 0
+                        "__main__.testfunc.arg": 0,
+                        "__main__.testfunc.arg2": 1
                     }
                 },
                 "hints": [],
@@ -61,7 +62,7 @@
                     "end_col": 8,
                     "end_line": 2,
                     "input_file": {
-                        "filename": "./tests/cairo_files/cairo_nested_if_phi_node.cairo"
+                        "filename": "./tests/cairo_files/cairo_nested_if_phi_node_function_argument.cairo"
                     },
                     "start_col": 5,
                     "start_line": 2
@@ -84,7 +85,7 @@
                     "end_col": 16,
                     "end_line": 6,
                     "input_file": {
-                        "filename": "./tests/cairo_files/cairo_nested_if_phi_node.cairo"
+                        "filename": "./tests/cairo_files/cairo_nested_if_phi_node_function_argument.cairo"
                     },
                     "start_col": 2,
                     "start_line": 6
@@ -107,7 +108,7 @@
                     "end_col": 16,
                     "end_line": 7,
                     "input_file": {
-                        "filename": "./tests/cairo_files/cairo_nested_if_phi_node.cairo"
+                        "filename": "./tests/cairo_files/cairo_nested_if_phi_node_function_argument.cairo"
                     },
                     "start_col": 5,
                     "start_line": 7
@@ -124,7 +125,7 @@
                         "offset": 2
                     },
                     "reference_ids": {
-                        "__main__.main.__temp0": 1
+                        "__main__.main.__temp0": 2
                     }
                 },
                 "hints": [],
@@ -132,7 +133,7 @@
                     "end_col": 4,
                     "end_line": 7,
                     "input_file": {
-                        "filename": "./tests/cairo_files/cairo_nested_if_phi_node.cairo"
+                        "filename": "./tests/cairo_files/cairo_nested_if_phi_node_function_argument.cairo"
                     },
                     "start_col": 2,
                     "start_line": 7
@@ -149,7 +150,7 @@
                         "offset": 2
                     },
                     "reference_ids": {
-                        "__main__.main.__temp0": 1
+                        "__main__.main.__temp0": 2
                     }
                 },
                 "hints": [],
@@ -157,7 +158,7 @@
                     "end_col": 12,
                     "end_line": 8,
                     "input_file": {
-                        "filename": "./tests/cairo_files/cairo_nested_if_phi_node.cairo"
+                        "filename": "./tests/cairo_files/cairo_nested_if_phi_node_function_argument.cairo"
                     },
                     "start_col": 3,
                     "start_line": 8
@@ -174,7 +175,7 @@
                         "offset": 2
                     },
                     "reference_ids": {
-                        "__main__.main.__temp0": 1
+                        "__main__.main.__temp0": 2
                     }
                 },
                 "hints": [],
@@ -182,7 +183,7 @@
                     "end_col": 17,
                     "end_line": 10,
                     "input_file": {
-                        "filename": "./tests/cairo_files/cairo_nested_if_phi_node.cairo"
+                        "filename": "./tests/cairo_files/cairo_nested_if_phi_node_function_argument.cairo"
                     },
                     "start_col": 6,
                     "start_line": 10
@@ -199,8 +200,8 @@
                         "offset": 3
                     },
                     "reference_ids": {
-                        "__main__.main.__temp0": 1,
-                        "__main__.main.__temp1": 2
+                        "__main__.main.__temp0": 2,
+                        "__main__.main.__temp1": 3
                     }
                 },
                 "hints": [],
@@ -208,7 +209,7 @@
                     "end_col": 5,
                     "end_line": 10,
                     "input_file": {
-                        "filename": "./tests/cairo_files/cairo_nested_if_phi_node.cairo"
+                        "filename": "./tests/cairo_files/cairo_nested_if_phi_node_function_argument.cairo"
                     },
                     "start_col": 3,
                     "start_line": 10
@@ -225,8 +226,8 @@
                         "offset": 3
                     },
                     "reference_ids": {
-                        "__main__.main.__temp0": 1,
-                        "__main__.main.__temp1": 2
+                        "__main__.main.__temp0": 2,
+                        "__main__.main.__temp1": 3
                     }
                 },
                 "hints": [],
@@ -234,7 +235,7 @@
                     "end_col": 18,
                     "end_line": 11,
                     "input_file": {
-                        "filename": "./tests/cairo_files/cairo_nested_if_phi_node.cairo"
+                        "filename": "./tests/cairo_files/cairo_nested_if_phi_node_function_argument.cairo"
                     },
                     "start_col": 4,
                     "start_line": 11
@@ -251,8 +252,8 @@
                         "offset": 4
                     },
                     "reference_ids": {
-                        "__main__.main.__temp0": 1,
-                        "__main__.main.__temp1": 2
+                        "__main__.main.__temp0": 2,
+                        "__main__.main.__temp1": 3
                     }
                 },
                 "hints": [],
@@ -260,7 +261,7 @@
                     "end_col": 5,
                     "end_line": 10,
                     "input_file": {
-                        "filename": "./tests/cairo_files/cairo_nested_if_phi_node.cairo"
+                        "filename": "./tests/cairo_files/cairo_nested_if_phi_node_function_argument.cairo"
                     },
                     "start_col": 3,
                     "start_line": 10
@@ -277,8 +278,8 @@
                         "offset": 3
                     },
                     "reference_ids": {
-                        "__main__.main.__temp0": 1,
-                        "__main__.main.__temp1": 2
+                        "__main__.main.__temp0": 2,
+                        "__main__.main.__temp1": 3
                     }
                 },
                 "hints": [],
@@ -286,7 +287,7 @@
                     "end_col": 18,
                     "end_line": 13,
                     "input_file": {
-                        "filename": "./tests/cairo_files/cairo_nested_if_phi_node.cairo"
+                        "filename": "./tests/cairo_files/cairo_nested_if_phi_node_function_argument.cairo"
                     },
                     "start_col": 4,
                     "start_line": 13
@@ -303,8 +304,8 @@
                         "offset": 4
                     },
                     "reference_ids": {
-                        "__main__.main.__temp0": 1,
-                        "__main__.main.__temp1": 2
+                        "__main__.main.__temp0": 2,
+                        "__main__.main.__temp1": 3
                     }
                 },
                 "hints": [],
@@ -312,7 +313,7 @@
                     "end_col": 4,
                     "end_line": 7,
                     "input_file": {
-                        "filename": "./tests/cairo_files/cairo_nested_if_phi_node.cairo"
+                        "filename": "./tests/cairo_files/cairo_nested_if_phi_node_function_argument.cairo"
                     },
                     "start_col": 2,
                     "start_line": 7
@@ -329,7 +330,7 @@
                         "offset": 2
                     },
                     "reference_ids": {
-                        "__main__.main.__temp0": 1
+                        "__main__.main.__temp0": 2
                     }
                 },
                 "hints": [],
@@ -337,7 +338,7 @@
                     "end_col": 17,
                     "end_line": 16,
                     "input_file": {
-                        "filename": "./tests/cairo_files/cairo_nested_if_phi_node.cairo"
+                        "filename": "./tests/cairo_files/cairo_nested_if_phi_node_function_argument.cairo"
                     },
                     "start_col": 6,
                     "start_line": 16
@@ -354,8 +355,8 @@
                         "offset": 3
                     },
                     "reference_ids": {
-                        "__main__.main.__temp0": 1,
-                        "__main__.main.__temp2": 3
+                        "__main__.main.__temp0": 2,
+                        "__main__.main.__temp2": 4
                     }
                 },
                 "hints": [],
@@ -363,7 +364,7 @@
                     "end_col": 5,
                     "end_line": 16,
                     "input_file": {
-                        "filename": "./tests/cairo_files/cairo_nested_if_phi_node.cairo"
+                        "filename": "./tests/cairo_files/cairo_nested_if_phi_node_function_argument.cairo"
                     },
                     "start_col": 3,
                     "start_line": 16
@@ -380,8 +381,8 @@
                         "offset": 3
                     },
                     "reference_ids": {
-                        "__main__.main.__temp0": 1,
-                        "__main__.main.__temp2": 3
+                        "__main__.main.__temp0": 2,
+                        "__main__.main.__temp2": 4
                     }
                 },
                 "hints": [],
@@ -389,7 +390,7 @@
                     "end_col": 18,
                     "end_line": 17,
                     "input_file": {
-                        "filename": "./tests/cairo_files/cairo_nested_if_phi_node.cairo"
+                        "filename": "./tests/cairo_files/cairo_nested_if_phi_node_function_argument.cairo"
                     },
                     "start_col": 4,
                     "start_line": 17
@@ -406,8 +407,8 @@
                         "offset": 4
                     },
                     "reference_ids": {
-                        "__main__.main.__temp0": 1,
-                        "__main__.main.__temp2": 3
+                        "__main__.main.__temp0": 2,
+                        "__main__.main.__temp2": 4
                     }
                 },
                 "hints": [],
@@ -415,7 +416,7 @@
                     "end_col": 5,
                     "end_line": 16,
                     "input_file": {
-                        "filename": "./tests/cairo_files/cairo_nested_if_phi_node.cairo"
+                        "filename": "./tests/cairo_files/cairo_nested_if_phi_node_function_argument.cairo"
                     },
                     "start_col": 3,
                     "start_line": 16
@@ -432,8 +433,8 @@
                         "offset": 3
                     },
                     "reference_ids": {
-                        "__main__.main.__temp0": 1,
-                        "__main__.main.__temp2": 3
+                        "__main__.main.__temp0": 2,
+                        "__main__.main.__temp2": 4
                     }
                 },
                 "hints": [],
@@ -441,7 +442,7 @@
                     "end_col": 18,
                     "end_line": 19,
                     "input_file": {
-                        "filename": "./tests/cairo_files/cairo_nested_if_phi_node.cairo"
+                        "filename": "./tests/cairo_files/cairo_nested_if_phi_node_function_argument.cairo"
                     },
                     "start_col": 4,
                     "start_line": 19
@@ -458,30 +459,17 @@
                         "offset": 4
                     },
                     "reference_ids": {
-                        "__main__.main.__temp0": 1,
-                        "__main__.main.var": 4
+                        "__main__.main.__temp0": 2
                     }
                 },
                 "hints": [],
                 "inst": {
-                    "end_col": 25,
+                    "end_col": 23,
                     "end_line": 22,
                     "input_file": {
-                        "filename": "./tests/cairo_files/cairo_nested_if_phi_node.cairo"
+                        "filename": "./tests/cairo_files/cairo_nested_if_phi_node_function_argument.cairo"
                     },
-                    "parent_location": [
-                        {
-                            "end_col": 14,
-                            "end_line": 23,
-                            "input_file": {
-                                "filename": "./tests/cairo_files/cairo_nested_if_phi_node.cairo"
-                            },
-                            "start_col": 11,
-                            "start_line": 23
-                        },
-                        "While expanding the reference 'var' in:"
-                    ],
-                    "start_col": 15,
+                    "start_col": 22,
                     "start_line": 22
                 }
             },
@@ -496,19 +484,18 @@
                         "offset": 5
                     },
                     "reference_ids": {
-                        "__main__.main.__temp0": 1,
-                        "__main__.main.var": 4
+                        "__main__.main.__temp0": 2
                     }
                 },
                 "hints": [],
                 "inst": {
-                    "end_col": 15,
-                    "end_line": 23,
+                    "end_col": 24,
+                    "end_line": 22,
                     "input_file": {
-                        "filename": "./tests/cairo_files/cairo_nested_if_phi_node.cairo"
+                        "filename": "./tests/cairo_files/cairo_nested_if_phi_node_function_argument.cairo"
                     },
-                    "start_col": 2,
-                    "start_line": 23
+                    "start_col": 5,
+                    "start_line": 22
                 }
             },
             "35": {
@@ -522,19 +509,18 @@
                         "offset": 7
                     },
                     "reference_ids": {
-                        "__main__.main.__temp0": 1,
-                        "__main__.main.var": 4
+                        "__main__.main.__temp0": 2
                     }
                 },
                 "hints": [],
                 "inst": {
                     "end_col": 5,
-                    "end_line": 24,
+                    "end_line": 23,
                     "input_file": {
-                        "filename": "./tests/cairo_files/cairo_nested_if_phi_node.cairo"
+                        "filename": "./tests/cairo_files/cairo_nested_if_phi_node_function_argument.cairo"
                     },
                     "start_col": 2,
-                    "start_line": 24
+                    "start_line": 23
                 }
             }
         }
@@ -611,21 +597,6 @@
             ],
             "type": "reference"
         },
-        "__main__.main.var": {
-            "cairo_type": "felt",
-            "full_name": "__main__.main.var",
-            "references": [
-                {
-                    "ap_tracking_data": {
-                        "group": 1,
-                        "offset": 4
-                    },
-                    "pc": 31,
-                    "value": "cast([ap + (-1)] + 1, felt)"
-                }
-            ],
-            "type": "reference"
-        },
         "__main__.testfunc": {
             "decorators": [],
             "pc": 0,
@@ -637,9 +608,13 @@
                 "arg": {
                     "cairo_type": "felt",
                     "offset": 0
+                },
+                "arg2": {
+                    "cairo_type": "felt",
+                    "offset": 1
                 }
             },
-            "size": 1,
+            "size": 2,
             "type": "struct"
         },
         "__main__.testfunc.ImplicitArgs": {
@@ -666,6 +641,21 @@
                         "offset": 0
                     },
                     "pc": 0,
+                    "value": "[cast(fp + (-4), felt*)]"
+                }
+            ],
+            "type": "reference"
+        },
+        "__main__.testfunc.arg2": {
+            "cairo_type": "felt",
+            "full_name": "__main__.testfunc.arg2",
+            "references": [
+                {
+                    "ap_tracking_data": {
+                        "group": 0,
+                        "offset": 0
+                    },
+                    "pc": 0,
                     "value": "[cast(fp + (-3), felt*)]"
                 }
             ],
@@ -676,6 +666,14 @@
     "prime": "0x800000000000011000000000000000000000000000000000000000000000001",
     "reference_manager": {
         "references": [
+            {
+                "ap_tracking_data": {
+                    "group": 0,
+                    "offset": 0
+                },
+                "pc": 0,
+                "value": "[cast(fp + (-4), felt*)]"
+            },
             {
                 "ap_tracking_data": {
                     "group": 0,
@@ -707,14 +705,6 @@
                 },
                 "pc": 23,
                 "value": "[cast(ap + (-1), felt*)]"
-            },
-            {
-                "ap_tracking_data": {
-                    "group": 1,
-                    "offset": 4
-                },
-                "pc": 31,
-                "value": "cast([ap + (-1)] + 1, felt)"
             }
         ]
     }
