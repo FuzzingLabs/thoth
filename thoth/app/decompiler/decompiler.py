@@ -7,6 +7,7 @@ from thoth.app.cfg.cfg import BasicBlock
 from thoth.app.disassembler.function import Function
 from thoth.app.disassembler.instruction import Instruction
 from thoth.app.decompiler.ssa import SSA
+from thoth.app.decompiler.variable import Variable
 
 
 class Decompiler:
@@ -33,6 +34,24 @@ class Decompiler:
         self.current_basic_block: Optional[BasicBlock] = None
         self.first_pass = True
 
+    def get_phi_node_variables(self) -> List[Variable]:
+        """
+        Returns:
+            phi_node_variables (List Variable): A list of the variables used in the phi node
+        """
+        phi_node_variables = []
+
+        parents_list = self.current_function.cfg.parents(self.current_basic_block)
+        # Recursively get parents blocks last defined variables
+        # Phi function always use variables stored in [AP - 1]
+        while parents_list != []:
+            if len(parents_list[0].variables) != 0:
+                phi_node_variables.append(parents_list[0].variables[-1])
+            else:
+                parents_list += self.current_function.cfg.parents(parents_list[0])
+            parents_list.remove(parents_list[0])
+        return phi_node_variables
+
     def _handle_assert_eq_decomp(self, instruction: Instruction) -> str:
         """Handle the ASSERT_EQ opcode
         Args:
@@ -45,17 +64,10 @@ class Decompiler:
         # Generate the phi function representation
         phi_node_variables = []
 
+        # Generate the phi function representation
         if self.current_basic_block.is_phi_node and not self.first_pass:
-            parents_list = self.current_function.cfg.parents(self.current_basic_block)
-            # Parents blocks last defined variabled
-            # Phi function always use variables stored in [AP - 1]
-            while parents_list != []:
-                if len(parents_list[0].variables) != 0:
-                    phi_node_variables.append(parents_list[0].variables[-1])
-                else:
-                    parents_list += self.current_function.cfg.parents(parents_list[0])
-                parents_list.remove(parents_list[0])
-            variables_names = [variable.name for variable in phi_node_variables]
+            phi_node_variables = self.get_phi_node_variables()
+            variables_names = [variable.name for variable in self.get_phi_node_variables()]
             # Phi function is represented in the form Φ(var1, var2, ..., var<n>)
             phi_node_representation = "Φ(%s)" % ", ".join(variables_names)
 
@@ -224,7 +236,18 @@ class Decompiler:
                             args += len(function.implicitargs)
                 args_str = ""
                 while args != 0:
-                    args_str += f"{self.ssa.get_variable('ap', -1 * int(args))[1]}"
+                    # Generate the phi function representation
+                    if self.current_basic_block.is_phi_node and not self.first_pass:
+                        phi_node_variables = self.get_phi_node_variables()
+                        variables_names = [
+                            variable.name for variable in self.get_phi_node_variables()
+                        ]
+                        # Phi function is represented in the form Φ(var1, var2, ..., var<n>)
+                        phi_node_representation = "Φ(%s)" % ", ".join(variables_names)
+                    if self.ssa.get_variable("ap", -1 * int(args))[2] in phi_node_variables:
+                        args_str += f"{phi_node_representation}"
+                    else:
+                        args_str += f"{self.ssa.get_variable('ap', -1 * int(args))[1]}"
                     if args != 1:
                         args_str += ", "
                     args -= 1
