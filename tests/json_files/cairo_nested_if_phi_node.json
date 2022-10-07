@@ -1,0 +1,720 @@
+{
+    "attributes": [],
+    "builtins": [],
+    "data": [
+        "0x208b7fff7fff7ffe",
+        "0x480680017fff8000",
+        "0x3",
+        "0x482480017fff8000",
+        "0x800000000000010fffffffffffffffffffffffffffffffffffffffffffffffe",
+        "0x20680017fff7fff",
+        "0x10",
+        "0x480680017fff8000",
+        "0xa",
+        "0x482480017fff8000",
+        "0x800000000000010fffffffffffffffffffffffffffffffffffffffffffffffc",
+        "0x20680017fff7fff",
+        "0x6",
+        "0x400680017fff7ffe",
+        "0x6",
+        "0x10780017fff7fff",
+        "0x4",
+        "0x400680017fff7ffe",
+        "0x1",
+        "0x10780017fff7fff",
+        "0xc",
+        "0x482480017fff8000",
+        "0x800000000000010fffffffffffffffffffffffffffffffffffffffffffffffd",
+        "0x20680017fff7fff",
+        "0x6",
+        "0x400680017fff7ffe",
+        "0x7",
+        "0x10780017fff7fff",
+        "0x4",
+        "0x400680017fff7ffe",
+        "0x2",
+        "0x48127ffe7fff8000",
+        "0x1104800180018000",
+        "0x800000000000010ffffffffffffffffffffffffffffffffffffffffffffffe1",
+        "0x208b7fff7fff7ffe"
+    ],
+    "debug_info": {
+        "file_contents": {},
+        "instruction_locations": {
+            "0": {
+                "accessible_scopes": [
+                    "__main__",
+                    "__main__.testfunc"
+                ],
+                "flow_tracking_data": {
+                    "ap_tracking": {
+                        "group": 0,
+                        "offset": 0
+                    },
+                    "reference_ids": {
+                        "__main__.testfunc.arg": 0
+                    }
+                },
+                "hints": [],
+                "inst": {
+                    "end_col": 8,
+                    "end_line": 2,
+                    "input_file": {
+                        "filename": "cairo_nested_if_phi_node.cairo"
+                    },
+                    "start_col": 5,
+                    "start_line": 2
+                }
+            },
+            "1": {
+                "accessible_scopes": [
+                    "__main__",
+                    "__main__.main"
+                ],
+                "flow_tracking_data": {
+                    "ap_tracking": {
+                        "group": 1,
+                        "offset": 0
+                    },
+                    "reference_ids": {}
+                },
+                "hints": [],
+                "inst": {
+                    "end_col": 16,
+                    "end_line": 6,
+                    "input_file": {
+                        "filename": "cairo_nested_if_phi_node.cairo"
+                    },
+                    "start_col": 2,
+                    "start_line": 6
+                }
+            },
+            "3": {
+                "accessible_scopes": [
+                    "__main__",
+                    "__main__.main"
+                ],
+                "flow_tracking_data": {
+                    "ap_tracking": {
+                        "group": 1,
+                        "offset": 1
+                    },
+                    "reference_ids": {}
+                },
+                "hints": [],
+                "inst": {
+                    "end_col": 16,
+                    "end_line": 8,
+                    "input_file": {
+                        "filename": "cairo_nested_if_phi_node.cairo"
+                    },
+                    "start_col": 5,
+                    "start_line": 8
+                }
+            },
+            "5": {
+                "accessible_scopes": [
+                    "__main__",
+                    "__main__.main"
+                ],
+                "flow_tracking_data": {
+                    "ap_tracking": {
+                        "group": 1,
+                        "offset": 2
+                    },
+                    "reference_ids": {
+                        "__main__.main.__temp0": 1
+                    }
+                },
+                "hints": [],
+                "inst": {
+                    "end_col": 4,
+                    "end_line": 8,
+                    "input_file": {
+                        "filename": "cairo_nested_if_phi_node.cairo"
+                    },
+                    "start_col": 2,
+                    "start_line": 8
+                }
+            },
+            "7": {
+                "accessible_scopes": [
+                    "__main__",
+                    "__main__.main"
+                ],
+                "flow_tracking_data": {
+                    "ap_tracking": {
+                        "group": 1,
+                        "offset": 2
+                    },
+                    "reference_ids": {
+                        "__main__.main.__temp0": 1
+                    }
+                },
+                "hints": [],
+                "inst": {
+                    "end_col": 18,
+                    "end_line": 9,
+                    "input_file": {
+                        "filename": "cairo_nested_if_phi_node.cairo"
+                    },
+                    "start_col": 3,
+                    "start_line": 9
+                }
+            },
+            "9": {
+                "accessible_scopes": [
+                    "__main__",
+                    "__main__.main"
+                ],
+                "flow_tracking_data": {
+                    "ap_tracking": {
+                        "group": 1,
+                        "offset": 3
+                    },
+                    "reference_ids": {
+                        "__main__.main.__temp0": 1
+                    }
+                },
+                "hints": [],
+                "inst": {
+                    "end_col": 17,
+                    "end_line": 11,
+                    "input_file": {
+                        "filename": "cairo_nested_if_phi_node.cairo"
+                    },
+                    "start_col": 6,
+                    "start_line": 11
+                }
+            },
+            "11": {
+                "accessible_scopes": [
+                    "__main__",
+                    "__main__.main"
+                ],
+                "flow_tracking_data": {
+                    "ap_tracking": {
+                        "group": 1,
+                        "offset": 4
+                    },
+                    "reference_ids": {
+                        "__main__.main.__temp0": 1,
+                        "__main__.main.__temp1": 2
+                    }
+                },
+                "hints": [],
+                "inst": {
+                    "end_col": 5,
+                    "end_line": 11,
+                    "input_file": {
+                        "filename": "cairo_nested_if_phi_node.cairo"
+                    },
+                    "start_col": 3,
+                    "start_line": 11
+                }
+            },
+            "13": {
+                "accessible_scopes": [
+                    "__main__",
+                    "__main__.main"
+                ],
+                "flow_tracking_data": {
+                    "ap_tracking": {
+                        "group": 1,
+                        "offset": 4
+                    },
+                    "reference_ids": {
+                        "__main__.main.__temp0": 1,
+                        "__main__.main.__temp1": 2
+                    }
+                },
+                "hints": [],
+                "inst": {
+                    "end_col": 14,
+                    "end_line": 12,
+                    "input_file": {
+                        "filename": "cairo_nested_if_phi_node.cairo"
+                    },
+                    "start_col": 4,
+                    "start_line": 12
+                }
+            },
+            "15": {
+                "accessible_scopes": [
+                    "__main__",
+                    "__main__.main"
+                ],
+                "flow_tracking_data": {
+                    "ap_tracking": {
+                        "group": 1,
+                        "offset": 4
+                    },
+                    "reference_ids": {
+                        "__main__.main.__temp0": 1,
+                        "__main__.main.__temp1": 2
+                    }
+                },
+                "hints": [],
+                "inst": {
+                    "end_col": 5,
+                    "end_line": 11,
+                    "input_file": {
+                        "filename": "cairo_nested_if_phi_node.cairo"
+                    },
+                    "start_col": 3,
+                    "start_line": 11
+                }
+            },
+            "17": {
+                "accessible_scopes": [
+                    "__main__",
+                    "__main__.main"
+                ],
+                "flow_tracking_data": {
+                    "ap_tracking": {
+                        "group": 1,
+                        "offset": 4
+                    },
+                    "reference_ids": {
+                        "__main__.main.__temp0": 1,
+                        "__main__.main.__temp1": 2
+                    }
+                },
+                "hints": [],
+                "inst": {
+                    "end_col": 14,
+                    "end_line": 14,
+                    "input_file": {
+                        "filename": "cairo_nested_if_phi_node.cairo"
+                    },
+                    "start_col": 4,
+                    "start_line": 14
+                }
+            },
+            "19": {
+                "accessible_scopes": [
+                    "__main__",
+                    "__main__.main"
+                ],
+                "flow_tracking_data": {
+                    "ap_tracking": {
+                        "group": 1,
+                        "offset": 4
+                    },
+                    "reference_ids": {
+                        "__main__.main.__temp0": 1,
+                        "__main__.main.__temp1": 2
+                    }
+                },
+                "hints": [],
+                "inst": {
+                    "end_col": 4,
+                    "end_line": 8,
+                    "input_file": {
+                        "filename": "cairo_nested_if_phi_node.cairo"
+                    },
+                    "start_col": 2,
+                    "start_line": 8
+                }
+            },
+            "21": {
+                "accessible_scopes": [
+                    "__main__",
+                    "__main__.main"
+                ],
+                "flow_tracking_data": {
+                    "ap_tracking": {
+                        "group": 1,
+                        "offset": 2
+                    },
+                    "reference_ids": {
+                        "__main__.main.__temp0": 1
+                    }
+                },
+                "hints": [],
+                "inst": {
+                    "end_col": 17,
+                    "end_line": 17,
+                    "input_file": {
+                        "filename": "cairo_nested_if_phi_node.cairo"
+                    },
+                    "start_col": 6,
+                    "start_line": 17
+                }
+            },
+            "23": {
+                "accessible_scopes": [
+                    "__main__",
+                    "__main__.main"
+                ],
+                "flow_tracking_data": {
+                    "ap_tracking": {
+                        "group": 1,
+                        "offset": 3
+                    },
+                    "reference_ids": {
+                        "__main__.main.__temp0": 1,
+                        "__main__.main.__temp2": 3
+                    }
+                },
+                "hints": [],
+                "inst": {
+                    "end_col": 5,
+                    "end_line": 17,
+                    "input_file": {
+                        "filename": "cairo_nested_if_phi_node.cairo"
+                    },
+                    "start_col": 3,
+                    "start_line": 17
+                }
+            },
+            "25": {
+                "accessible_scopes": [
+                    "__main__",
+                    "__main__.main"
+                ],
+                "flow_tracking_data": {
+                    "ap_tracking": {
+                        "group": 1,
+                        "offset": 3
+                    },
+                    "reference_ids": {
+                        "__main__.main.__temp0": 1,
+                        "__main__.main.__temp2": 3
+                    }
+                },
+                "hints": [],
+                "inst": {
+                    "end_col": 14,
+                    "end_line": 18,
+                    "input_file": {
+                        "filename": "cairo_nested_if_phi_node.cairo"
+                    },
+                    "start_col": 4,
+                    "start_line": 18
+                }
+            },
+            "27": {
+                "accessible_scopes": [
+                    "__main__",
+                    "__main__.main"
+                ],
+                "flow_tracking_data": {
+                    "ap_tracking": {
+                        "group": 1,
+                        "offset": 3
+                    },
+                    "reference_ids": {
+                        "__main__.main.__temp0": 1,
+                        "__main__.main.__temp2": 3
+                    }
+                },
+                "hints": [],
+                "inst": {
+                    "end_col": 5,
+                    "end_line": 17,
+                    "input_file": {
+                        "filename": "cairo_nested_if_phi_node.cairo"
+                    },
+                    "start_col": 3,
+                    "start_line": 17
+                }
+            },
+            "29": {
+                "accessible_scopes": [
+                    "__main__",
+                    "__main__.main"
+                ],
+                "flow_tracking_data": {
+                    "ap_tracking": {
+                        "group": 1,
+                        "offset": 3
+                    },
+                    "reference_ids": {
+                        "__main__.main.__temp0": 1,
+                        "__main__.main.__temp2": 3
+                    }
+                },
+                "hints": [],
+                "inst": {
+                    "end_col": 14,
+                    "end_line": 20,
+                    "input_file": {
+                        "filename": "cairo_nested_if_phi_node.cairo"
+                    },
+                    "start_col": 4,
+                    "start_line": 20
+                }
+            },
+            "31": {
+                "accessible_scopes": [
+                    "__main__",
+                    "__main__.main"
+                ],
+                "flow_tracking_data": {
+                    "ap_tracking": {
+                        "group": 2,
+                        "offset": 0
+                    },
+                    "reference_ids": {
+                        "__main__.main.__temp0": 1,
+                        "__main__.main.phi_node": 4
+                    }
+                },
+                "hints": [],
+                "inst": {
+                    "end_col": 26,
+                    "end_line": 24,
+                    "input_file": {
+                        "filename": "cairo_nested_if_phi_node.cairo"
+                    },
+                    "parent_location": [
+                        {
+                            "end_col": 22,
+                            "end_line": 25,
+                            "input_file": {
+                                "filename": "cairo_nested_if_phi_node.cairo"
+                            },
+                            "start_col": 14,
+                            "start_line": 25
+                        },
+                        "While expanding the reference 'phi_node' in:"
+                    ],
+                    "start_col": 20,
+                    "start_line": 24
+                }
+            },
+            "32": {
+                "accessible_scopes": [
+                    "__main__",
+                    "__main__.main"
+                ],
+                "flow_tracking_data": {
+                    "ap_tracking": {
+                        "group": 2,
+                        "offset": 1
+                    },
+                    "reference_ids": {
+                        "__main__.main.__temp0": 1,
+                        "__main__.main.phi_node": 4
+                    }
+                },
+                "hints": [],
+                "inst": {
+                    "end_col": 23,
+                    "end_line": 25,
+                    "input_file": {
+                        "filename": "cairo_nested_if_phi_node.cairo"
+                    },
+                    "start_col": 5,
+                    "start_line": 25
+                }
+            },
+            "34": {
+                "accessible_scopes": [
+                    "__main__",
+                    "__main__.main"
+                ],
+                "flow_tracking_data": {
+                    "ap_tracking": {
+                        "group": 2,
+                        "offset": 3
+                    },
+                    "reference_ids": {
+                        "__main__.main.__temp0": 1,
+                        "__main__.main.phi_node": 4
+                    }
+                },
+                "hints": [],
+                "inst": {
+                    "end_col": 8,
+                    "end_line": 26,
+                    "input_file": {
+                        "filename": "cairo_nested_if_phi_node.cairo"
+                    },
+                    "start_col": 5,
+                    "start_line": 26
+                }
+            }
+        }
+    },
+    "hints": {},
+    "identifiers": {
+        "__main__.main": {
+            "decorators": [],
+            "pc": 1,
+            "type": "function"
+        },
+        "__main__.main.Args": {
+            "full_name": "__main__.main.Args",
+            "members": {},
+            "size": 0,
+            "type": "struct"
+        },
+        "__main__.main.ImplicitArgs": {
+            "full_name": "__main__.main.ImplicitArgs",
+            "members": {},
+            "size": 0,
+            "type": "struct"
+        },
+        "__main__.main.Return": {
+            "cairo_type": "()",
+            "type": "type_definition"
+        },
+        "__main__.main.SIZEOF_LOCALS": {
+            "type": "const",
+            "value": 0
+        },
+        "__main__.main.__temp0": {
+            "cairo_type": "felt",
+            "full_name": "__main__.main.__temp0",
+            "references": [
+                {
+                    "ap_tracking_data": {
+                        "group": 1,
+                        "offset": 2
+                    },
+                    "pc": 5,
+                    "value": "[cast(ap + (-1), felt*)]"
+                }
+            ],
+            "type": "reference"
+        },
+        "__main__.main.__temp1": {
+            "cairo_type": "felt",
+            "full_name": "__main__.main.__temp1",
+            "references": [
+                {
+                    "ap_tracking_data": {
+                        "group": 1,
+                        "offset": 4
+                    },
+                    "pc": 11,
+                    "value": "[cast(ap + (-1), felt*)]"
+                }
+            ],
+            "type": "reference"
+        },
+        "__main__.main.__temp2": {
+            "cairo_type": "felt",
+            "full_name": "__main__.main.__temp2",
+            "references": [
+                {
+                    "ap_tracking_data": {
+                        "group": 1,
+                        "offset": 3
+                    },
+                    "pc": 23,
+                    "value": "[cast(ap + (-1), felt*)]"
+                }
+            ],
+            "type": "reference"
+        },
+        "__main__.main.phi_node": {
+            "cairo_type": "felt",
+            "full_name": "__main__.main.phi_node",
+            "references": [
+                {
+                    "ap_tracking_data": {
+                        "group": 2,
+                        "offset": 0
+                    },
+                    "pc": 31,
+                    "value": "[cast(ap + (-2), felt*)]"
+                }
+            ],
+            "type": "reference"
+        },
+        "__main__.testfunc": {
+            "decorators": [],
+            "pc": 0,
+            "type": "function"
+        },
+        "__main__.testfunc.Args": {
+            "full_name": "__main__.testfunc.Args",
+            "members": {
+                "arg": {
+                    "cairo_type": "felt",
+                    "offset": 0
+                }
+            },
+            "size": 1,
+            "type": "struct"
+        },
+        "__main__.testfunc.ImplicitArgs": {
+            "full_name": "__main__.testfunc.ImplicitArgs",
+            "members": {},
+            "size": 0,
+            "type": "struct"
+        },
+        "__main__.testfunc.Return": {
+            "cairo_type": "()",
+            "type": "type_definition"
+        },
+        "__main__.testfunc.SIZEOF_LOCALS": {
+            "type": "const",
+            "value": 0
+        },
+        "__main__.testfunc.arg": {
+            "cairo_type": "felt",
+            "full_name": "__main__.testfunc.arg",
+            "references": [
+                {
+                    "ap_tracking_data": {
+                        "group": 0,
+                        "offset": 0
+                    },
+                    "pc": 0,
+                    "value": "[cast(fp + (-3), felt*)]"
+                }
+            ],
+            "type": "reference"
+        }
+    },
+    "main_scope": "__main__",
+    "prime": "0x800000000000011000000000000000000000000000000000000000000000001",
+    "reference_manager": {
+        "references": [
+            {
+                "ap_tracking_data": {
+                    "group": 0,
+                    "offset": 0
+                },
+                "pc": 0,
+                "value": "[cast(fp + (-3), felt*)]"
+            },
+            {
+                "ap_tracking_data": {
+                    "group": 1,
+                    "offset": 2
+                },
+                "pc": 5,
+                "value": "[cast(ap + (-1), felt*)]"
+            },
+            {
+                "ap_tracking_data": {
+                    "group": 1,
+                    "offset": 4
+                },
+                "pc": 11,
+                "value": "[cast(ap + (-1), felt*)]"
+            },
+            {
+                "ap_tracking_data": {
+                    "group": 1,
+                    "offset": 3
+                },
+                "pc": 23,
+                "value": "[cast(ap + (-1), felt*)]"
+            },
+            {
+                "ap_tracking_data": {
+                    "group": 2,
+                    "offset": 0
+                },
+                "pc": 31,
+                "value": "[cast(ap + (-2), felt*)]"
+            }
+        ]
+    }
+}
