@@ -6,18 +6,25 @@ from pyparsing import Optional
 from thoth.app.decompiler.variable import Variable
 from thoth.app.disassembler.instruction import Instruction
 
+EDGE_UNCONDITIONAL = "unconditional"
+EDGE_CONDITIONAL_TRUE = "conditional_true"
+EDGE_CONDITIONAL_FALSE = "conditional_false"
+EDGE_FALLTHROUGH = "fallthrough"
+
 
 class Edge:
     """Edge class object"""
 
-    def __init__(self, destination: str, fallthrough: bool = False) -> None:
+    def __init__(self, source: str, destination: str, type: str = EDGE_UNCONDITIONAL) -> None:
         """
         Args:
+            source (String): Offset of last instruction of the current block
             destination (String): Offset of first instruction of the following block
-            fallthrough (bool): A fall-through block is a block that jumps only in a single block
+            type (String): Type of the edge 
         """
+        self.source = source
         self.destination = destination
-        self.fallthrough = fallthrough
+        self.type = type
 
 
 class BasicBlock:
@@ -170,17 +177,27 @@ class CFG:
                 "JUMP_REL" in instruction.pcUpdate and "CALL" not in instruction.opcode
             ):
                 current_basic_block.edges_offset.append(
-                    Edge((str(int(instruction.id) + imm)), True)
+                    Edge(int(instruction.id), (str(int(instruction.id) + imm)), EDGE_UNCONDITIONAL)
                 )
                 phi_node_block = str(int(instruction.id) + imm)
             # JNZ
             elif "JNZ" in instruction.pcUpdate:
-                current_basic_block.edges_offset.append(Edge(str(int(instruction.id) + imm)))
-                current_basic_block.edges_offset.append(Edge(str(int(instruction.id) + int(2))))
+                current_basic_block.edges_offset.append(
+                    Edge(int(instruction.id), str(int(instruction.id) + imm), EDGE_CONDITIONAL_TRUE)
+                )
+                current_basic_block.edges_offset.append(
+                    Edge(
+                        int(instruction.id),
+                        str(int(instruction.id) + int(2)),
+                        EDGE_CONDITIONAL_FALSE,
+                    )
+                )
             # End of block
             elif i < (len(instructions) - 1):
                 if int(instructions[i + 1].id) in basic_blocks_starts:
-                    current_basic_block.edges_offset.append(Edge(phi_node_block, True))
+                    current_basic_block.edges_offset.append(
+                        Edge(int(instruction.id), phi_node_block, EDGE_FALLTHROUGH)
+                    )
             new_basic_block = False
 
         # Append the last basic block to the list
@@ -220,14 +237,18 @@ class CFG:
             # Iterate over edges_offset
             for edge in block.edges_offset:
                 offset = edge.destination
-                # If/Else edge
-                color = "green"
-                if offset is block.edges_offset[-1].destination:
+                # If branch
+                if edge.type == EDGE_CONDITIONAL_TRUE:
+                    color = "green"
+                # Else branch
+                elif edge.type == EDGE_CONDITIONAL_FALSE:
                     color = "red"
-                # Fallthrough edge
-                if edge.fallthrough:
+                # Jump rel
+                elif edge.type == EDGE_UNCONDITIONAL:
+                    color = "yellow"
+                # Fall-through
+                else:
                     color = "blue"
-
                 # We check that we are not creating an edge
                 # to an offset that is not a block start offset
                 # TODO - issue #43
