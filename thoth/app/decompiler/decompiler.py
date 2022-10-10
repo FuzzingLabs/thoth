@@ -1,7 +1,6 @@
 import copy
 import re
 from typing import List, Optional
-from pyparsing import Optional
 from thoth.app import utils
 from thoth.app.cfg.cfg import BasicBlock
 from thoth.app.disassembler.function import Function
@@ -33,6 +32,7 @@ class Decompiler:
         self.ssa = SSA()
         self.current_basic_block: Optional[BasicBlock] = None
         self.first_pass = True
+        self.block_new_variables = 0
 
     def get_phi_node_variables(self) -> List[Variable]:
         """
@@ -70,6 +70,10 @@ class Decompiler:
             variables_names = [variable.name for variable in self.get_phi_node_variables()]
             # Phi function is represented in the form Φ(var1, var2, ..., var<n>)
             phi_node_representation = "Φ(%s)" % ", ".join(variables_names)
+        elif self.block_new_variables == 0 and len(self.current_function.cfg.parents(self.current_basic_block)) != 0:
+            phi_node_variables = self.get_phi_node_variables()
+            if len(phi_node_variables) != 0:
+                phi_node_representation = phi_node_variables[-1].name
 
         # Registers and offsets
         destination_register = instruction.dstRegister.lower()
@@ -161,6 +165,11 @@ class Decompiler:
 
                 if self.ssa.get_variable(op0_register, offset_1)[2] in phi_node_variables:
                     operand = phi_node_representation
+                elif self.block_new_variables == 0 and len(self.current_function.cfg.parents(self.current_basic_block)) != 0:
+                    if len(phi_node_variables) != 0:
+                        operand = phi_node_representation
+                    else: 
+                        operand = self.ssa.get_variable(op0_register, offset_1)[1]
                 else:
                     operand = self.ssa.get_variable(op0_register, offset_1)[1]
 
@@ -168,6 +177,7 @@ class Decompiler:
                     f"{variable[1]} = {operand} {op} {value}",
                     color=utils.color.GREEN,
                 )
+                self.block_new_variables += 1
         return source_code
 
     def _handle_nop_decomp(self, instruction: Instruction) -> str:
@@ -444,6 +454,7 @@ class Decompiler:
             # First pass
             for block in function.cfg.basicblocks:
                 self.current_basic_block = block
+                self.block_new_variables = 0
                 memory_backup = copy.deepcopy(self.ssa.memory)
                 instructions = block.instructions
                 for i in range(len(instructions)):
@@ -465,6 +476,7 @@ class Decompiler:
             for block in function.cfg.basicblocks:
 
                 self.current_basic_block = block
+                self.block_new_variables = 0
                 instructions = block.instructions
                 for i in range(len(instructions)):
                     if int(instructions[i].id) == self.end_if:

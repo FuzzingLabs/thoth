@@ -16,11 +16,11 @@
         "0x800000000000010fffffffffffffffffffffffffffffffffffffffffffffffc",
         "0x20680017fff7fff",
         "0x6",
-        "0x400680017fff7ffe",
+        "0x480680017fff8000",
         "0x800000000000010fffffffffffffffffffffffffffffffffffffffffffffffb",
         "0x10780017fff7fff",
         "0x4",
-        "0x400680017fff7ffe",
+        "0x480680017fff8000",
         "0x800000000000011000000000000000000000000000000000000000000000000",
         "0x10780017fff7fff",
         "0xf",
@@ -31,11 +31,11 @@
         "0x48307fff80007ffe",
         "0x20680017fff7fff",
         "0x6",
-        "0x400680017fff7ffe",
+        "0x480680017fff8000",
         "0x800000000000010fffffffffffffffffffffffffffffffffffffffffffffffa",
         "0x10780017fff7fff",
         "0x4",
-        "0x400680017fff7ffe",
+        "0x480680017fff8000",
         "0x800000000000010ffffffffffffffffffffffffffffffffffffffffffffffff",
         "0x208b7fff7fff7ffe"
     ],
@@ -236,7 +236,7 @@
                 },
                 "hints": [],
                 "inst": {
-                    "end_col": 15,
+                    "end_col": 19,
                     "end_line": 8,
                     "input_file": {
                         "filename": "tests/cairo_files/cairo_if_negative.cairo"
@@ -253,7 +253,7 @@
                 "flow_tracking_data": {
                     "ap_tracking": {
                         "group": 0,
-                        "offset": 5
+                        "offset": 6
                     },
                     "reference_ids": {
                         "__main__.main.__temp0": 0,
@@ -290,7 +290,7 @@
                 },
                 "hints": [],
                 "inst": {
-                    "end_col": 15,
+                    "end_col": 19,
                     "end_line": 10,
                     "input_file": {
                         "filename": "tests/cairo_files/cairo_if_negative.cairo"
@@ -307,7 +307,7 @@
                 "flow_tracking_data": {
                     "ap_tracking": {
                         "group": 0,
-                        "offset": 5
+                        "offset": 6
                     },
                     "reference_ids": {
                         "__main__.main.__temp0": 0,
@@ -456,7 +456,7 @@
                 },
                 "hints": [],
                 "inst": {
-                    "end_col": 15,
+                    "end_col": 19,
                     "end_line": 14,
                     "input_file": {
                         "filename": "tests/cairo_files/cairo_if_negative.cairo"
@@ -473,7 +473,7 @@
                 "flow_tracking_data": {
                     "ap_tracking": {
                         "group": 0,
-                        "offset": 6
+                        "offset": 7
                     },
                     "reference_ids": {
                         "__main__.main.__temp0": 0,
@@ -514,7 +514,7 @@
                 },
                 "hints": [],
                 "inst": {
-                    "end_col": 15,
+                    "end_col": 19,
                     "end_line": 16,
                     "input_file": {
                         "filename": "tests/cairo_files/cairo_if_negative.cairo"
@@ -571,10 +571,8 @@
             "type": "struct"
         },
         "__main__.main.Return": {
-            "full_name": "__main__.main.Return",
-            "members": {},
-            "size": 0,
-            "type": "struct"
+            "cairo_type": "()",
+            "type": "type_definition"
         },
         "__main__.main.SIZEOF_LOCALS": {
             "type": "const",
