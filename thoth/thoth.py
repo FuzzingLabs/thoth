@@ -19,7 +19,7 @@ def main() -> int:
         sys.exit()
 
     # Load compiled contract from a file
-    if args.contract == "file":
+    if args.contract == "local":
         file = args.path
         filename = os.path.basename(args.path.name).split(".")[0]
     # Load compiled contract from starknet API
@@ -42,7 +42,7 @@ def main() -> int:
     # print assembly code
     if args.decompile:
         disassembler.decompiler()
-    else:
+    elif args.disassembly:
         disassembler.print_disassembly()
 
     format = "pdf" if args.format is None else str(args.format)

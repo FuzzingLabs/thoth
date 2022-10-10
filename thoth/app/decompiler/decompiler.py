@@ -99,6 +99,7 @@ class Decompiler:
                 source_code += self.print_instruction_decomp(
                     f" # {value}",
                     color=utils.color.CYAN,
+                    tab_count=1,
                 )
             elif "OP0" in instruction.op1Addr:
                 variable = self.ssa.get_variable(destination_register, destination_offset)

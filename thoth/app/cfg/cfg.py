@@ -2,7 +2,6 @@ import re
 from graphviz import Digraph
 from typing import List
 
-from pyparsing import Optional
 from thoth.app.decompiler.variable import Variable
 from thoth.app.disassembler.instruction import Instruction
 
@@ -249,10 +248,10 @@ class CFG:
                     color = "red"
                 # Jump rel
                 elif edge.type == EDGE_UNCONDITIONAL:
-                    color = "yellow"
+                    color = "blue"
                 # Fall-through
                 else:
-                    color = "blue"
+                    color = "black"
                 # We check that we are not creating an edge
                 # to an offset that is not a block start offset
                 # TODO - issue #43

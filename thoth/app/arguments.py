@@ -21,18 +21,11 @@ def parse_args() -> argparse.Namespace:
         required=True,
     )
     # Use a JSON file
-    file = contract_subparser.add_parser("file")
-    file.add_argument(
-        "-path",
-        "-path",
-        "--path",
-        type=argparse.FileType("r"),
-        required=True,
-        help="Cairo compiled JSON file",
-    )
+    file = contract_subparser.add_parser("local")
+    file.add_argument("path", type=argparse.FileType("r"), help="Cairo compiled JSON file")
 
     # Download a contract from StarkNet mainnet/goerli
-    contract = contract_subparser.add_parser("starknet")
+    contract = contract_subparser.add_parser("remote")
     contract.add_argument(
         "-a",
         "-address",
@@ -58,15 +51,14 @@ def parse_args() -> argparse.Namespace:
         action="store_true",
         help="Print JSON with details of all instructions",
     )
+
     m.add_argument(
-        "-c",
         "-call",
         "--call",
         action="store_true",
         help="Print call flow graph",
     )
     m.add_argument(
-        "-g",
         "-cfg",
         "--cfg",
         action="store_true",
@@ -120,10 +112,17 @@ def parse_args() -> argparse.Namespace:
     )
     m.add_argument(
         "-d",
-        "-decompile",
+        "-decomp",
         "--decompile",
         action="store_true",
         help="Print decompiled code",
+    )
+    m.add_argument(
+        "-b",
+        "-disas",
+        "--disassembly",
+        action="store_true",
+        help="Disassemble bytecode",
     )
 
     return parser.parse_args()
