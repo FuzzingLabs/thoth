@@ -41,9 +41,12 @@ def main() -> int:
 
     # print assembly code
     if args.decompile:
-        disassembler.decompiler()
+        output = disassembler.decompiler()
     elif args.disassembly:
-        disassembler.print_disassembly()
+        output = disassembler.print_disassembly()
+    if args.output:
+        with open(args.output, "w") as f:
+            f.write(output)
 
     format = "pdf" if args.format is None else str(args.format)
 

@@ -139,11 +139,16 @@ class Function:
         """
         Iterate over each instruction and print the disassembly
         """
+        function_str = ""
         prototype = self.get_prototype()
         print(f"\n\t{utils.color.BLUE + prototype + utils.color.ENDC}")
+        function_str += "\n\t%s\n" % prototype
         for instr in self.instructions:
-            print(instr.print(), end="")
+            instruction_str = instr.print()
+            print(instruction_str, end="")
+            function_str += instruction_str
         print()
+        return function_str
 
     def generate_cfg(self) -> None:
         """Generate the CFG"""

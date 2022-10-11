@@ -134,7 +134,7 @@ class Disassembler:
         self,
         function_name: Optional[str] = None,
         function_offset: Optional[str] = None,
-    ) -> None:
+    ) -> str:
         """Print the disassembly of all the bytecodes or a given function.
 
         Args:
@@ -144,23 +144,36 @@ class Disassembler:
         Raises:
             SystemExit: If the function name or offset does not exist.
         """
+        disassembly_code = ""
+
         if self.builtins:
             print("_" * 75)
-            print(self.print_builtins())
+            builtins = self.print_builtins()
+            disassembly_code += "_" * 75 + "\n"
+            print(builtins)
+            disassembly_code += builtins + "\n"
         if self.structs:
             print("_" * 75)
-            print(self.print_structs())
+            disassembly_code += "_" * 75 + "\n"
+            structs = self.print_structs()
+            print(structs)
+            disassembly_code += structs + "\n"
         if self.events:
             print("_" * 75)
-            print(self.print_events())
+            disassembly_code += "_" * 75 + "\n"
+            events = self.print_events()
+            print(events)
+            disassembly_code += events + "\n"
         print("_" * 75)
+        disassembly_code += "_" * 75 + "\n"
 
         if self.functions == []:
             return
 
         elif function_name is None and function_offset is None:
             for function in self.functions:
-                function.print()
+                function_str = function.print()
+                disassembly_code += function_str + "\n"
 
         else:
             if function_name is not None:
@@ -169,9 +182,11 @@ class Disassembler:
                 function = self.get_function_by_offset(function_offset)
 
             if function is not None:
-                function.print()
+                function_str = function.print()
+                disassembly_code += function_str + "\n"
             else:
                 raise SystemExit("Error: Function does not exist.")
+        return disassembly_code
 
     def print_structs(self, decompiler: bool = False) -> str:
         """Print the structures parsed from the ABI.
@@ -349,7 +364,7 @@ class Disassembler:
         # print(json.dumps(analytics, indent=3))
         return analytics
 
-    def decompiler(self) -> None:
+    def decompiler(self) -> str:
         """
         Decompile the functions
         """
@@ -361,4 +376,6 @@ class Disassembler:
                 print(f"from {package} import {function_name}")
         print(self.print_structs(decompiler=True))
         decomp = Decompiler(functions=self.functions)
-        print(decomp.decompile_code())
+        decompiled_code = decomp.decompile_code()
+        print(decompiled_code)
+        return decompiled_code
