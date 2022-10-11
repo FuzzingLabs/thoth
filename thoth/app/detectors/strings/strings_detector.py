@@ -7,8 +7,8 @@ class DetectString(AbstractDetector):
     Detect strings inside a contract
     """
 
-    NAME = "Detect Strings"
-    ARGUMENT = "detect_strings"
+    NAME = "Strings"
+    ARGUMENT = "strings"
     HELP = "Detect strings inside a contract"
     IMPACT = DetectorClassification.INFORMATIONAL
 
@@ -23,9 +23,9 @@ class DetectString(AbstractDetector):
                     if representation[:2] != "0x":
                         try:
                             representation_hex = hex(int(representation))
-                            representation_str = bytearray.fromhex(
-                                representation_hex[2:]
-                            ).decode("utf-8")
+                            representation_str = bytearray.fromhex(representation_hex[2:]).decode(
+                                "utf-8"
+                            )
                             if representation_str.isprintable():
                                 self.detected = True
                                 self.result.append(representation_str)

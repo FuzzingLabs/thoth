@@ -3,6 +3,7 @@ import sys
 import tempfile
 from thoth.app.utils import str_to_bool
 from thoth.app.arguments import parse_args
+from thoth.app.detectors import all_detectors
 from thoth.app.disassembler.disassembler import Disassembler
 from thoth.app.starknet.starknet import StarkNet
 
@@ -69,4 +70,11 @@ def main() -> int:
     # print analytics
     if args.analytics:
         print(disassembler.analytics())
+
+    # Run detectors
+    if args.detectors:
+        for detector in all_detectors:
+            d = detector(disassembler)
+            d._detect()
+            d._print()
     return 0

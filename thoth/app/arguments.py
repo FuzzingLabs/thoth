@@ -99,6 +99,12 @@ def parse_args() -> argparse.Namespace:
         action="store_true",
         help="Disassemble bytecode",
     )
+    root_parser.add_argument(
+        "-detect",
+        "--detectors",
+        action="store_true",
+        help="Run detectors",
+    )
 
     contract_subparser = parser.add_subparsers(
         help="Load a cairo contract compilation artifact from a file or from starknet",
