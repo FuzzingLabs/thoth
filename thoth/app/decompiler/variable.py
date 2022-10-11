@@ -11,10 +11,11 @@ class Variable:
     def __init__(self, variable_name: Optional[str] = None) -> None:
         """
         Initialize a new variable
+        Args:
+            variable_name (Optional String): the name of the variable
         """
         self.variable_name = variable_name
         self.is_set = False
-        self.used_in_condition = False
         self.instance = Variable.counter if self.is_set else None
 
     def set(self) -> None:
@@ -29,11 +30,10 @@ class Variable:
     def name(self) -> str:
         """
         Return the variable name
-        Either a custom name (function arguments/return value) or v_<n> by default
+        Either a custom name (function arguments/return value) or v<n> by default
+        Returns:
+            name (String): name of the variable
         """
-        if not self.used_in_condition:
-            self.used_in_condition = True
-
         if not self.is_set:
             self.set()
 
@@ -42,5 +42,5 @@ class Variable:
             return self.variable_name
 
         # Use default name (v_<n>)
-        name = "v_%s" % self.instance
+        name = "v%s" % self.instance
         return name

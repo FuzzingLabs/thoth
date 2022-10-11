@@ -54,7 +54,7 @@ class Disassembler:
             SystemExit: if the JSON is empty.
         """
         json_data = ""
-        with self.file[0] as f:
+        with self.file as f:
             try:
                 json_data = json.load(f)
             except json.decoder.JSONDecodeError:
@@ -123,12 +123,8 @@ class Disassembler:
             for inst in func.instructions:
                 # Only for direct call
                 if inst.is_call_direct():
-                    xref_func = self.get_function_by_offset(
-                        str(inst.call_offset)
-                    )
-                    inst.call_xref_func_name = (
-                        xref_func.name if xref_func is not None else None
-                    )
+                    xref_func = self.get_function_by_offset(str(inst.call_offset))
+                    inst.call_xref_func_name = xref_func.name if xref_func is not None else None
                 if inst.id in self.references:
                     inst.ref = self.references[inst.id]
                 if inst.id in self.hints:
@@ -190,13 +186,7 @@ class Disassembler:
         for struct in self.structs:
             if decompiler == True and len(self.structs[struct]) == 0:
                 continue
-            parsed_string += (
-                "struct "
-                + utils.color.BEIGE
-                + struct
-                + utils.color.ENDC
-                + ":\n"
-            )
+            parsed_string += "struct " + utils.color.BEIGE + struct + utils.color.ENDC + ":\n"
             for attribut in self.structs[struct]:
                 parsed_string += (
                     "\tmember "
@@ -222,27 +212,10 @@ class Disassembler:
         """
         events = ""
         for event_name, data in self.events.items():
-            events += (
-                "\n\t event: "
-                + utils.color.BEIGE
-                + event_name
-                + utils.color.ENDC
-                + "\n"
-            )
+            events += "\n\t event: " + utils.color.BEIGE + event_name + utils.color.ENDC + "\n"
             for attribut in data:
-                events += (
-                    "\t    "
-                    + utils.color.GREEN
-                    + attribut["name"]
-                    + utils.color.ENDC
-                )
-                events += (
-                    "   : "
-                    + utils.color.YELLOW
-                    + attribut["type"]
-                    + utils.color.ENDC
-                    + "\n"
-                )
+                events += "\t    " + utils.color.GREEN + attribut["name"] + utils.color.ENDC
+                events += "   : " + utils.color.YELLOW + attribut["type"] + utils.color.ENDC + "\n"
         return events
 
     def print_builtins(self) -> str:
@@ -254,12 +227,7 @@ class Disassembler:
         builtins = ""
         if self.builtins != []:
             builtins += "\n%builtins "
-            return (
-                builtins
-                + utils.color.RED
-                + " ".join(self.builtins)
-                + utils.color.ENDC
-            )
+            return builtins + utils.color.RED + " ".join(self.builtins) + utils.color.ENDC
         return builtins
 
     def dump_json(self) -> None:
@@ -308,9 +276,7 @@ class Disassembler:
             dot: The call graph dot.
         """
         if self.call_graph is None:
-            self.call_graph = CallFlowGraph(
-                self.functions, filename=filename, format=format
-            )
+            self.call_graph = CallFlowGraph(self.functions, filename=filename, format=format)
 
         self.call_graph.print(folder, view)
         return self.call_graph.dot

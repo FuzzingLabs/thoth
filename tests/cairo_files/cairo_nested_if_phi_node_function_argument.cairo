@@ -1,3 +1,7 @@
+func testfunc(arg, arg2):
+    ret
+end
+
 func main{}():
 	[ap] = 3; ap++
 	if [ap-1] == 3:
@@ -15,5 +19,6 @@ func main{}():
 			[ap] = 2; ap++
 		end
 	end
+    testfunc([ap-1], 2)
 	ret
 end

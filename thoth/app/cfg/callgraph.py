@@ -31,9 +31,7 @@ class CallFlowGraph:
         self.filename = filename
         self._generate_call_flow_graph(functions)
 
-    def _call_flow_graph_generate_nodes(
-        self, functions: List[Function]
-    ) -> None:
+    def _call_flow_graph_generate_nodes(self, functions: List[Function]) -> None:
         """Create all the function nodes
 
         Args:
@@ -120,9 +118,7 @@ class CallFlowGraph:
                 if instruction.is_call_direct():
                     # direct CALL to a fonction
                     if instruction.call_xref_func_name is not None:
-                        edges.append(
-                            (function.offset_start, instruction.call_offset)
-                        )
+                        edges.append((function.offset_start, instruction.call_offset))
                     else:
                         # relative CALL
                         pass

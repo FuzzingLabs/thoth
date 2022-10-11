@@ -1,8 +1,10 @@
 import os
 import sys
+import tempfile
 from thoth.app.utils import str_to_bool
 from thoth.app.arguments import parse_args
 from thoth.app.disassembler.disassembler import Disassembler
+from thoth.app.starknet.starknet import StarkNet
 
 
 def main() -> int:
@@ -15,7 +17,24 @@ def main() -> int:
     if (args.call or args.cfg) and ("view" not in args):
         print("Need to set -view option")
         sys.exit()
-    disassembler = Disassembler(args.file, color=args.color)
+
+    # Load compiled contract from a file
+    if args.contract == "local":
+        file = args.path
+        filename = os.path.basename(args.path.name).split(".")[0]
+    # Load compiled contract from starknet API
+    else:
+        try:
+            contract = StarkNet(args.network).get_full_contract(args.address)
+        except Exception as e:
+            print(e)
+            exit()
+        file = tempfile.NamedTemporaryFile()
+        with open(file.name, "w") as f:
+            f.write(contract)
+        filename = args.address
+
+    disassembler = Disassembler(file, color=args.color)
 
     if args.verbose:
         disassembler.dump_json()
@@ -23,10 +42,9 @@ def main() -> int:
     # print assembly code
     if args.decompile:
         disassembler.decompiler()
-    else:
+    elif args.disassembly:
         disassembler.print_disassembly()
 
-    filename = os.path.basename(args.file[0].name).split(".")[0]
     format = "pdf" if args.format is None else str(args.format)
 
     # print call flow graph
