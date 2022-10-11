@@ -1,17 +1,29 @@
 import re
 from graphviz import Digraph
 from typing import List
+
+from thoth.app.decompiler.variable import Variable
 from thoth.app.disassembler.instruction import Instruction
+
+EDGE_UNCONDITIONAL = "unconditional"
+EDGE_CONDITIONAL_TRUE = "conditional_true"
+EDGE_CONDITIONAL_FALSE = "conditional_false"
+EDGE_FALLTHROUGH = "fallthrough"
 
 
 class Edge:
-    """
-    Edge class object
-    """
+    """Edge class object"""
 
-    def __init__(self, destination: str, fallthrough: bool = False) -> None:
+    def __init__(self, source: str, destination: str, type: str = EDGE_UNCONDITIONAL) -> None:
+        """
+        Args:
+            source (String): Offset of last instruction of the current block
+            destination (String): Offset of first instruction of the following block
+            type (String): Type of the edge
+        """
+        self.source = source
         self.destination = destination
-        self.fallthrough = fallthrough
+        self.type = type
 
 
 class BasicBlock:
@@ -29,7 +41,9 @@ class BasicBlock:
         self.end_offset = None
         self.end_instruction = None
         self.instructions: List[Instruction] = []
-        self.edges_offset: List[Edge] = []
+        self.edges_offset: List[Instruction] = []
+        self.is_phi_node: Optional[bool] = None
+        self.variables: List[Variable] = []
 
     @staticmethod
     def format_bb_name(instruction_offset: int) -> str:
@@ -67,6 +81,7 @@ class CFG:
 
         self._generate_basicblocks(instructions)
         self.generate_cfg()
+        self.find_phi_nodes()
 
     def set_basicblocks(self, basic_blocks: List[BasicBlock]) -> None:
         """Set the list of basicblocks
@@ -77,8 +92,6 @@ class CFG:
 
     def _generate_basicblocks(self, instructions: List[Instruction]):
         """Generate the internal list of BasicBlock
-
-
         Args:
             instructions (List): List of instructions
 
@@ -88,11 +101,13 @@ class CFG:
         list_basic_block: List[BasicBlock] = []
         last_function_instruction = instructions[-1]
 
-        # List of block beginnings
+        # List of start-of-block offsets
         basic_blocks_starts = [0]
-        # List of block ends
+        # List of end-of-block offsets
         basic_blocks_end = []
 
+        # Find all the starts and ends of blocks
+        # Using JUMP/JUMP REL/CALL/JNZ/RET
         for instruction in instructions:
             # Direct CALL
             if instruction.is_call_direct():
@@ -134,14 +149,17 @@ class CFG:
 
         phi_node_block = None
         new_basic_block = True
+        # Create basic block objects
         for i in range(0, len(instructions)):
             instruction = instructions[i]
-            
+
             # If the instruction is at the beginning of a basic block
             if int(instruction.id) in basic_blocks_starts:
                 new_basic_block = True
+                current_basic_block.end_offset = instruction.id
                 list_basic_block.append(current_basic_block)
-            # Create a new Basic Block
+
+            # Create a new basic block
             if new_basic_block:
                 current_basic_block = BasicBlock(instruction)
                 new_basic_block = False
@@ -158,19 +176,33 @@ class CFG:
                 "JUMP_REL" in instruction.pcUpdate and "CALL" not in instruction.opcode
             ):
                 current_basic_block.edges_offset.append(
-                    Edge((str(int(instruction.id) + imm)), True)
+                    Edge(int(instruction.id), (str(int(instruction.id) + imm)), EDGE_UNCONDITIONAL)
                 )
                 phi_node_block = str(int(instruction.id) + imm)
             # JNZ
             elif "JNZ" in instruction.pcUpdate:
-                current_basic_block.edges_offset.append(Edge(str(int(instruction.id) + imm)))
-                current_basic_block.edges_offset.append(Edge(str(int(instruction.id) + int(2))))
+                current_basic_block.edges_offset.append(
+                    Edge(
+                        int(instruction.id),
+                        str(int(instruction.id) + int(2)),
+                        EDGE_CONDITIONAL_TRUE,
+                    )
+                )
+                current_basic_block.edges_offset.append(
+                    Edge(
+                        int(instruction.id), str(int(instruction.id) + imm), EDGE_CONDITIONAL_FALSE
+                    )
+                )
             # End of block
             elif i < (len(instructions) - 1):
-                if int(instructions[i + 1].id) in basic_blocks_starts:
-                    current_basic_block.edges_offset.append(Edge(phi_node_block, True))
+                if (
+                    int(instructions[i + 1].id) in basic_blocks_starts
+                    and phi_node_block is not None
+                ):
+                    current_basic_block.edges_offset.append(
+                        Edge(int(instruction.id), phi_node_block, EDGE_FALLTHROUGH)
+                    )
             new_basic_block = False
-
         # Append the last basic block to the list
         list_basic_block.append(current_basic_block)
         self.set_basicblocks(list_basic_block)
@@ -208,14 +240,18 @@ class CFG:
             # Iterate over edges_offset
             for edge in block.edges_offset:
                 offset = edge.destination
-                # If/Else edge
-                color = "green"
-                if offset is block.edges_offset[-1].destination:
+                # If branch
+                if edge.type == EDGE_CONDITIONAL_TRUE:
+                    color = "green"
+                # Else branch
+                elif edge.type == EDGE_CONDITIONAL_FALSE:
                     color = "red"
-                # Fallthrough edge
-                if edge.fallthrough:
+                # Jump rel
+                elif edge.type == EDGE_UNCONDITIONAL:
                     color = "blue"
-
+                # Fall-through
+                else:
+                    color = "black"
                 # We check that we are not creating an edge
                 # to an offset that is not a block start offset
                 # TODO - issue #43
@@ -228,12 +264,44 @@ class CFG:
 
     def print(self) -> Digraph:
         """Print the dot
-
         Args:
             view (bool, optional): Set if the disassembler should open the output file or not. Defaults to True.
-
         Returns:
             Dot: the output Dot
         """
         self.print_bb()
         return self.dot
+
+    def parents(self, basic_block: BasicBlock) -> List[BasicBlock]:
+        """
+        Return a list of the parents of a basic_block
+        Args:
+            basic_block (BasicBlock): A basic block
+        Returns:
+            parents (List BasicBlock): A list of the parents of a basic_block
+        """
+        parents = []
+
+        start_offset = int(basic_block.start_offset)
+        # Find all blocks having an edge with the current block as destination
+        for basic_block in self.basicblocks:
+            edges_offset = [int(edge.destination) for edge in basic_block.edges_offset]
+            for offset in edges_offset:
+                if start_offset == offset:
+                    parents.append(basic_block)
+        return parents
+
+    def find_phi_nodes(self) -> None:
+        """
+        Find the basic blocks that are phi nodes
+        """
+        for i in range(len(self.basicblocks)):
+            block = self.basicblocks[i]
+            block.is_phi_node = False
+            # First block can't be a phi node
+            if i > 0:
+                block_parents = self.parents(block)
+                # A phi node has
+                # At least 2 parents
+                if len(block_parents) >= 2:
+                    block.is_phi_node = True

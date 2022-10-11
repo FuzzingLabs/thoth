@@ -5,15 +5,15 @@ func main{}():
 		[ap] = 10; ap++
 
 		if [ap-1] == 5:
-			[ap-2] = -6
+			[ap] = -6; ap++
 		else:
-			[ap-2] = -1
+			[ap] = -1; ap++
 		end
 	else:
 		if -1 - [ap-1] == - 4:
-			[ap-2] = -7
+			[ap] = -7; ap++
 		else:
-			[ap-2] = -2
+			[ap] = -2; ap++
 		end
 	end
 	ret

@@ -15,22 +15,35 @@ def parse_args() -> argparse.Namespace:
         formatter_class=argparse.ArgumentDefaultsHelpFormatter,
     )
 
-    c = parser.add_argument_group("mandatory arguments")
-    c.add_argument(
-        "-f",
-        "-file",
-        "--file",
-        metavar="file",
-        type=argparse.FileType("r"),
-        nargs="+",
+    contract_subparser = parser.add_subparsers(
+        help="Load a cairo contract compilation artifact from a file or from starknet",
+        dest="contract",
         required=True,
-        help="Cairo compiler JSON",
+    )
+    # Use a JSON file
+    file = contract_subparser.add_parser("local")
+    file.add_argument("path", type=argparse.FileType("r"), help="Cairo compiled JSON file")
+
+    # Download a contract from StarkNet mainnet/goerli
+    contract = contract_subparser.add_parser("remote")
+    contract.add_argument(
+        "-a",
+        "-address",
+        "--address",
+        required=True,
+        help="address of the contract e.g 0x111111111111111111111111111111111111111111111111111111111111111",
+    )
+    contract.add_argument(
+        "-n",
+        "-network",
+        "--network",
+        choices=["mainnet", "goerli"],
+        required=True,
+        help="Network of the contract, mainnet or goerli",
     )
 
     m = parser.add_argument_group("optional arguments")
-    m.add_argument(
-        "-v", "--version", action="version", version=f"%(prog)s {__version__}"
-    )
+    m.add_argument("-v", "--version", action="version", version=f"%(prog)s {__version__}")
     m.add_argument(
         "-vvv",
         "-verbose",
@@ -38,15 +51,14 @@ def parse_args() -> argparse.Namespace:
         action="store_true",
         help="Print JSON with details of all instructions",
     )
+
     m.add_argument(
-        "-c",
         "-call",
         "--call",
         action="store_true",
         help="Print call flow graph",
     )
     m.add_argument(
-        "-g",
         "-cfg",
         "--cfg",
         action="store_true",
@@ -89,7 +101,7 @@ def parse_args() -> argparse.Namespace:
         "--function",
         type=str,
         required=False,
-        help="Print disassembler/decompiler with color",
+        help="Analyse a specific function",
     )
     m.add_argument(
         "-a",
@@ -100,10 +112,17 @@ def parse_args() -> argparse.Namespace:
     )
     m.add_argument(
         "-d",
-        "-decompile",
+        "-decomp",
         "--decompile",
         action="store_true",
         help="Print decompiled code",
+    )
+    m.add_argument(
+        "-b",
+        "-disas",
+        "--disassembly",
+        action="store_true",
+        help="Disassemble bytecode",
     )
 
     return parser.parse_args()
