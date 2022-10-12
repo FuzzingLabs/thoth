@@ -39,11 +39,16 @@ def main() -> int:
     if args.verbose:
         disassembler.dump_json()
 
-    # print assembly code
+    # Decompiler
     if args.decompile:
-        disassembler.decompiler()
+        output = disassembler.decompiler()
+    # Disassembler
     elif args.disassembly:
-        disassembler.print_disassembly()
+        output = disassembler.print_disassembly()
+    # Save output to file
+    if args.output and (args.decompile or args.disassembly):
+        with args.output as output_file:
+            output_file.write(output)
 
     format = "pdf" if args.format is None else str(args.format)
 

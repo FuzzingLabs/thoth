@@ -70,7 +70,10 @@ class Decompiler:
             variables_names = [variable.name for variable in self.get_phi_node_variables()]
             # Phi function is represented in the form Φ(var1, var2, ..., var<n>)
             phi_node_representation = "Φ(%s)" % ", ".join(variables_names)
-        elif self.block_new_variables == 0 and len(self.current_function.cfg.parents(self.current_basic_block)) != 0:
+        elif (
+            self.block_new_variables == 0
+            and len(self.current_function.cfg.parents(self.current_basic_block)) != 0
+        ):
             phi_node_variables = self.get_phi_node_variables()
             if len(phi_node_variables) != 0:
                 phi_node_representation = phi_node_variables[-1].name
@@ -165,10 +168,13 @@ class Decompiler:
 
                 if self.ssa.get_variable(op0_register, offset_1)[2] in phi_node_variables:
                     operand = phi_node_representation
-                elif self.block_new_variables == 0 and len(self.current_function.cfg.parents(self.current_basic_block)) != 0:
+                elif (
+                    self.block_new_variables == 0
+                    and len(self.current_function.cfg.parents(self.current_basic_block)) != 0
+                ):
                     if len(phi_node_variables) != 0:
                         operand = phi_node_representation
-                    else: 
+                    else:
                         operand = self.ssa.get_variable(op0_register, offset_1)[1]
                 else:
                     operand = self.ssa.get_variable(op0_register, offset_1)[1]
