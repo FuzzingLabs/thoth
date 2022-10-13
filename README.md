@@ -64,6 +64,18 @@ Example 2 with function call:
 	<img src="/images/thoth_decompile_2.png"/></br>
 </p>
 
+## Run the static analysis with the detectors
+
+The static analysis is performed using *detectors* which can be either informative or security related.
+
+```sh
+# Run all the detectors
+thoth local tests/json_files/cairo_array_sum.json --detectors
+
+# Selects which detectors to run
+thoth local tests/json_files/cairo_array_sum.json --detectors erc20 erc721
+```
+
 ## Print the contract's call graph 
 
 The call flow graph represents calling relationships between functions of the contract. We tried to provide a maximum of information, such as the entry-point functions, the imports, decorators, etc.
