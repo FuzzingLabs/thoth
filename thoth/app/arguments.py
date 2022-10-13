@@ -1,5 +1,6 @@
 import argparse
 from .. import __version__
+from thoth.app.detectors import all_detectors
 
 
 def parse_args() -> argparse.Namespace:
@@ -106,11 +107,10 @@ def parse_args() -> argparse.Namespace:
         action="store_true",
         help="Disassemble bytecode",
     )
+
+    detectors_names = [detector.ARGUMENT for detector in all_detectors]
     root_parser.add_argument(
-        "-detect",
-        "--detectors",
-        action="store_true",
-        help="Run detectors",
+        "-detect", "--detectors", choices=detectors_names, help="Run detectors", nargs="*"
     )
 
     contract_subparser = parser.add_subparsers(

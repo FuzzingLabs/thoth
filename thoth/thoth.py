@@ -77,9 +77,18 @@ def main() -> int:
         print(disassembler.analytics())
 
     # Run detectors
-    if args.detectors:
-        for detector in all_detectors:
-            d = detector(disassembler)
-            d._detect()
-            d._print()
+    if args.detectors is not None:
+        if args.detectors:
+            for detector_name in args.detectors:
+                detector = [
+                    detector for detector in all_detectors if detector.ARGUMENT == detector_name
+                ][0]
+                d = detector(disassembler)
+                d._detect()
+                d._print()
+        else:
+            for detector in all_detectors:
+                d = detector(disassembler)
+                d._detect()
+                d._print()
     return 0

@@ -443,9 +443,7 @@ class Decompiler:
             source_code += self.print_instruction_decomp(
                 function.get_prototype(), color=utils.color.BLUE
             )
-            source_code += self.print_instruction_decomp(
-                "{", end="\n", color=utils.color.ENDC
-            )
+            source_code += self.print_instruction_decomp("{", end="\n", color=utils.color.ENDC)
             self.tab_count += 1
 
             # If there are no basic blocks
@@ -511,7 +509,7 @@ class Decompiler:
                     source_code += instructions[i]
                     source_code += "\n"
             source_code += "\n"
-        
+
         # Remove useless spaces
         source_code = source_code.strip()
         return source_code
