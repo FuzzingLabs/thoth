@@ -28,6 +28,13 @@ def parse_args() -> argparse.Namespace:
     )
 
     root_parser.add_argument(
+        "-o",
+        "--output",
+        action="store",
+        type=argparse.FileType("w"),
+        help="Output the result of the disassembler/decompiler to a file",
+    )
+    root_parser.add_argument(
         "-call",
         "--call",
         action="store_true",

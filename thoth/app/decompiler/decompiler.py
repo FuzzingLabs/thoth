@@ -104,7 +104,7 @@ class Decompiler:
                 )
                 # Variable value (hex or string)
                 source_code += self.print_instruction_decomp(
-                    f" # {value}",
+                    f"// {value}",
                     color=utils.color.CYAN,
                     tab_count=1,
                 )
@@ -201,7 +201,7 @@ class Decompiler:
             if instruction.pcUpdate == "JNZ":
                 source_code += (
                     self.print_instruction_decomp(f"if ", color=utils.color.RED)
-                    + f"{self.ssa.get_variable('ap', destination_offset)[1]} == 0:"
+                    + f"({self.ssa.get_variable('ap', destination_offset)[1]} == 0) {{"
                 )
                 self.tab_count += 1
                 self.ifcount += 1
@@ -281,7 +281,7 @@ class Decompiler:
                 )
                 if str(offset) in instruction.labels:
                     source_code += self.print_instruction_decomp(
-                        f"# {instruction.labels[str(offset)]}",
+                        f"// {instruction.labels[str(offset)]}",
                         color=utils.color.CYAN,
                     )
         # CALL
@@ -318,7 +318,7 @@ class Decompiler:
             source_code += ")\n"
         if last:
             self.tab_count = 0
-            source_code += self.print_instruction_decomp("end", color=utils.color.RED)
+            source_code += self.print_instruction_decomp("}", color=utils.color.ENDC)
         return source_code
 
     def _handle_hint_decomp(self, instruction: Instruction) -> str:
@@ -441,7 +441,10 @@ class Decompiler:
             function.generate_cfg()
 
             source_code += self.print_instruction_decomp(
-                function.get_prototype(), end="\n", color=utils.color.BLUE
+                function.get_prototype(), color=utils.color.BLUE
+            )
+            source_code += self.print_instruction_decomp(
+                "{", end="\n", color=utils.color.ENDC
             )
             self.tab_count += 1
 
@@ -489,16 +492,16 @@ class Decompiler:
                         self.end_if = None
                         self.tab_count -= 1
                         source_code += self.print_instruction_decomp(
-                            "end", end="\n", color=utils.color.RED
+                            "}", end="\n", color=utils.color.ENDC
                         )
                     if self.end_else != []:
                         for idx in range(len(self.end_else)):
                             if self.end_else[idx] == int(instructions[i].id):
                                 self.tab_count -= 1
                                 source_code += self.print_instruction_decomp(
-                                    "end",
+                                    "}",
                                     end="\n",
-                                    color=utils.color.RED,
+                                    color=utils.color.ENDC,
                                 )
                     count += 1
                     instructions[i] = self.print_build_code(
@@ -508,5 +511,7 @@ class Decompiler:
                     source_code += instructions[i]
                     source_code += "\n"
             source_code += "\n"
-
+        
+        # Remove useless spaces
+        source_code = source_code.strip()
         return source_code
