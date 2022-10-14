@@ -19,17 +19,16 @@ class TestDisassembler(unittest.TestCase):
         sys.stdout = f
         for test in all_test:
             try:
-                with open(test, "r") as file:
-                    disassembler = Disassembler(file)
-                    disassembler.print_disassembly()
-                    filename = os.path.basename(file.name).split(".")[0]
-                    format = "pdf"
-                    disassembler.print_call_flow_graph(
-                        folder="output_graph",
-                        filename=filename,
-                        format=format,
-                        view=False,
-                    )
+                disassembler = Disassembler(test)
+                disassembler.print_disassembly()
+                filename = os.path.basename(test).split(".")[0]
+                format = "pdf"
+                disassembler.print_call_flow_graph(
+                    folder="output_graph",
+                    filename=filename,
+                    format=format,
+                    view=False,
+                )
             except Exception as e:
                 sys.stderr.write(str(e))
                 crash += 1
@@ -45,8 +44,7 @@ class TestDisassembler(unittest.TestCase):
         """
         test_cairo_return
         """
-        with open("./tests/json_files/cairo_return.json", "r") as file:
-            disassembler = Disassembler(file)
+        disassembler = Disassembler("./tests/json_files/cairo_return.json")
         analytics = disassembler.analytics()
         self.assertEqual(analytics["entry_point"], ["__main__.main"])
         self.assertEqual(analytics["functions"], "2")
@@ -58,8 +56,7 @@ class TestDisassembler(unittest.TestCase):
         """
         test_cairo_all_builtins
         """
-        with open("./tests/json_files/cairo_all_builtins.json", "r") as file:
-            disassembler = Disassembler(file)
+        disassembler = Disassembler("./tests/json_files/cairo_all_builtins.json")
         analytics = disassembler.analytics()
         self.assertEqual(analytics["entry_point"], ["__main__.main"])
         self.assertEqual(analytics["functions"], "1")
@@ -71,8 +68,7 @@ class TestDisassembler(unittest.TestCase):
         """
         test_cairo_direct_and_indirect_recursion
         """
-        with open("./tests/json_files/cairo_direct_and_indirect_recursion.json", "r") as file:
-            disassembler = Disassembler(file)
+        disassembler = Disassembler("./tests/json_files/cairo_direct_and_indirect_recursion.json")
         analytics = disassembler.analytics()
         self.assertEqual(analytics["entry_point"], ["__main__.main"])
         self.assertEqual(analytics["functions"], "5")
@@ -84,8 +80,7 @@ class TestDisassembler(unittest.TestCase):
         """
         test_cairo_struct
         """
-        with open("./tests/json_files/cairo_struct.json", "r") as file:
-            disassembler = Disassembler(file)
+        disassembler = Disassembler("./tests/json_files/cairo_struct.json")
         analytics = disassembler.analytics()
         self.assertEqual(analytics["entry_point"], ["__main__.main"])
         self.assertEqual(analytics["functions"], "1")
@@ -96,8 +91,7 @@ class TestDisassembler(unittest.TestCase):
 
     def test_cairo_puzzle(self):
         """test_cairo_puzzle"""
-        with open("./tests/json_files/cairo_puzzle.json", "r") as file:
-            disassembler = Disassembler(file)
+        disassembler = Disassembler("./tests/json_files/cairo_puzzle.json")
         analytics = disassembler.analytics()
         self.assertEqual(analytics["entry_point"], ["__main__.main"])
         self.assertEqual(analytics["functions"], "18")
@@ -110,8 +104,7 @@ class TestDisassembler(unittest.TestCase):
         """
         test_starknet_decorators3
         """
-        with open("./tests/json_files/starknet_decorators3.json", "r") as file:
-            disassembler = Disassembler(file)
+        disassembler = Disassembler("./tests/json_files/starknet_decorators3.json")
         analytics = disassembler.analytics()
         self.assertEqual(
             analytics["entry_point"],
@@ -137,8 +130,7 @@ class TestDisassembler(unittest.TestCase):
         """
         test_starknet_l1_default
         """
-        with open("./tests/json_files/starknet_l1_default.json", "r") as file:
-            disassembler = Disassembler(file)
+        disassembler = Disassembler("./tests/json_files/starknet_l1_default.json")
         analytics = disassembler.analytics()
         self.assertEqual(
             analytics["entry_point"],
@@ -172,8 +164,7 @@ class TestDisassembler(unittest.TestCase):
 
     def test_starknet_get_code_l2_dai_bridge(self):
         """test_starknet_get_code_l2_dai_bridge"""
-        with open("./tests/json_files/starknet_get_code_l2_dai_bridge.json", "r") as file:
-            disassembler = Disassembler(file)
+        disassembler = Disassembler("./tests/json_files/starknet_get_code_l2_dai_bridge.json")
         analytics = disassembler.analytics()
         self.assertEqual(analytics["entry_point"], ["unknown_function"])
         self.assertEqual(analytics["functions"], "1")
