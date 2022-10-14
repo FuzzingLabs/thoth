@@ -1,5 +1,6 @@
 from typing import Optional, Tuple
 from thoth.app.decompiler.variable import Variable
+from thoth.app.disassembler.function import Function
 
 
 class SSA:
@@ -16,11 +17,23 @@ class SSA:
         self.fp_position = self.ap_position
         self.stack_size_backup = []
 
-    def new_function_init(self) -> None:
+    def new_function_init(self, function: Function) -> None:
         """
         Initialize AP and FP at the beginning of a function
+        Reference : https://eprint.iacr.org/2021/1063.pdf page 38 / Section 6.1 - Function call stack
         """
+        arguments = function.arguments_list()
+        # [fp - 3], [fp - 4], ...
+        for argument in arguments:
+            self.new_variable(variable_name=argument)
+            self.ap_position += 1
+        # [fp - 2]
+        self.new_variable(variable_name="callers function's frame")
         self.ap_position += 1
+        # [fp - 1]
+        self.new_variable(variable_name="return instruction")
+        self.ap_position += 1
+
         self.fp_position = self.ap_position
 
     def new_variable(self, variable_name: Optional[str] = None) -> None:

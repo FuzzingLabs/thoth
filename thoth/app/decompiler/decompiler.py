@@ -418,18 +418,12 @@ class Decompiler:
             self.tab_count = 0
             count = 0
 
-            # Create new variables in memory for function arguments and return values
-            if len(function.arguments_list()) != 0:
-                for argument in function.arguments_list():
-                    self.ssa.new_variable(variable_name=argument)
-                    self.ssa.ap_position += 1
-
             # Imported function
             if function.is_import:
                 continue
 
             # Initialize AP and FP registers values at the  beginning of the function
-            self.ssa.new_function_init()
+            self.ssa.new_function_init(function)
 
             # Create a backup value of AP and FP registers
             ap_backup_value = self.ssa.ap_position

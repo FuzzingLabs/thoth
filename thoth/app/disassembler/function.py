@@ -125,7 +125,7 @@ class Function:
 
         # Merge implicitargs, args and ret
         arguments_list = []
-        for dict in (self.args, self.implicitargs, self.ret):
+        for dict in (self.args, self.implicitargs):
             if dict is not None:
                 arguments_list.append(dict)
 
