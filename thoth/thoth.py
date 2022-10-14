@@ -20,7 +20,7 @@ def main() -> int:
 
     # Load compiled contract from a file
     if args.contract == "local":
-        file = args.path
+        file = args.path.name
         filename = os.path.basename(args.path.name).split(".")[0]
     # Load compiled contract from starknet API
     else:
@@ -29,8 +29,8 @@ def main() -> int:
         except Exception as e:
             print(e)
             exit()
-        file = tempfile.NamedTemporaryFile()
-        with open(file.name, "w") as f:
+        file = tempfile.NamedTemporaryFile().name
+        with open(file, "w") as f:
             f.write(contract)
         filename = args.address
 
@@ -41,14 +41,18 @@ def main() -> int:
 
     # Decompiler
     if args.decompile:
-        output = disassembler.decompiler()
+        print(disassembler.decompiler())
+        if args.output:
+            output = Disassembler(file, color=False).decompiler()
+            with args.output as output_file:
+                output_file.write(output)
     # Disassembler
     elif args.disassembly:
-        output = disassembler.print_disassembly()
-    # Save output to file
-    if args.output and (args.decompile or args.disassembly):
-        with args.output as output_file:
-            output_file.write(output)
+        print(disassembler.print_disassembly())
+        if args.output:
+            output = Disassembler(file, color=False).print_disassembly()
+            with args.output as output_file:
+                output_file.write(output)
 
     format = "pdf" if args.format is None else str(args.format)
 
@@ -63,6 +67,8 @@ def main() -> int:
 
     # print CFG
     if args.cfg:
+        if args.color:
+            disassembler = Disassembler(file, color=False)
         disassembler.print_cfg(
             folder=args.output_cfg_folder,
             filename=filename,
