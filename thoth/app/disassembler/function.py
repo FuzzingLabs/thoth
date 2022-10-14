@@ -116,24 +116,29 @@ class Function:
             )
         return prototype
 
-    def arguments_list(self) -> List[str]:
+    def arguments_list(self, implicit: bool = True) -> List[str]:
         """
+        Args:
+            implicit (bool): Also return implicits arguments if true
         Return:
-            function_arguments (list): a list of the function arguments (implicits or not) and return values names
+            arguments_names (list): a list of the function arguments (implicits or not) names
         """
-        function_arguments = []
+        arguments = [self.args]
+        if implicit:
+            arguments = [self.implicitargs] + arguments
 
-        # Merge implicitargs, args and ret
+        # List arguments
         arguments_list = []
-        for dict in (self.args, self.implicitargs):
+        for dict in arguments:
             if dict is not None:
                 arguments_list.append(dict)
 
         # Get arguments names
+        arguments_names = []
         for argument in arguments_list:
             for _ in [*argument.values()]:
-                function_arguments.append([*_.keys()][0])
-        return function_arguments
+                arguments_names.append([*_.keys()][0])
+        return arguments_names
 
     def print(self) -> None:
         """

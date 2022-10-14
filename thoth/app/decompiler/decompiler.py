@@ -37,7 +37,6 @@ class Decompiler:
         self.return_values = None
         # Static single assignment
         self.ssa = SSA()
-        self.variables = []
         self.current_basic_block: Optional[BasicBlock] = None
         self.first_pass = True
         self.block_new_variables = 0
@@ -99,6 +98,7 @@ class Decompiler:
         destination_offset = int(instruction.offDest) if instruction.offDest else 0
 
         if "OP1" in instruction.res:
+            # <Variable> = <integer>
             if "IMM" in instruction.op1Addr:
                 value = utils.value_to_string(int(instruction.imm), (instruction.prime))
                 if value == "":
@@ -107,6 +107,7 @@ class Decompiler:
                 variable = self.ssa.get_variable(destination_register, destination_offset)
                 variable_value = utils.field_element_repr(int(instruction.imm), instruction.prime)
 
+                # Set variable value
                 try:
                     variable_value_int = int(variable_value)
                 except:
@@ -126,6 +127,7 @@ class Decompiler:
                     color=utils.color.CYAN,
                     tab_count=1,
                 )
+            # <variable> = [<variable> +/- <integer>]
             elif "OP0" in instruction.op1Addr:
                 variable = self.ssa.get_variable(destination_register, destination_offset)
 
@@ -137,21 +139,21 @@ class Decompiler:
                     )
                 else:
                     operand = self.ssa.get_variable(op0_register, offset_1)[1]
-                    # print(operand)
-                    variable_operand_1 = Operand(type=OperandType.VARIABLE, value=operand)
+                    variable_operand_1 = Operand(type=OperandType.VARIABLE, value=[operand])
 
                 operator = Operator.ADDITION
-                variable_operand_2 = Operand(type=OperandType.INTEGER, value=0)
+                variable_operand_2 = Operand(type=OperandType.INTEGER, value=[0])
 
                 value_off2 = instruction.off2
                 sign = ""
                 try:
                     value_off2 = int(value_off2)
-                    variable_operand_2 = Operand(type=OperandType.INTEGER, value=value_off2)
+                    variable_operand_2 = Operand(type=OperandType.INTEGER, value=[value_off2])
                     sign = " + " if value_off2 >= 0 else " - "
                 except Exception:
                     pass
 
+                # Set variable value
                 variable[2].value = VariableValue(
                     type=VariableValueType.ADDRESS,
                     operation=[variable_operand_1, operator, variable_operand_2],
@@ -160,10 +162,12 @@ class Decompiler:
                     f"{variable[1]} = [{operand}{sign}{value_off2}]",
                     color=utils.color.GREEN,
                 )
+            # <variable> = <variable>
             else:
                 variable = self.ssa.get_variable(destination_register, destination_offset)
                 if self.ssa.get_variable(op1_register, offset_2)[2] in phi_node_variables:
                     variable_value = phi_node_representation
+                    # Set variable value
                     variable[2].value = VariableValue(
                         type=VariableValueType.ABSOLUTE,
                         operation=[
@@ -175,14 +179,16 @@ class Decompiler:
                     )
                 else:
                     variable_value = self.ssa.get_variable(op1_register, offset_2)[1]
+                    # Set variable value
                     variable[2].value = VariableValue(
                         type=VariableValueType.ABSOLUTE,
-                        operation=[Operand(type=OperandType.VARIABLE, value=variable_value)],
+                        operation=[Operand(type=OperandType.VARIABLE, value=[variable_value])],
                     )
                 source_code += self.print_instruction_decomp(
                     f"{variable[1]} = {variable_value}",
                     color=utils.color.GREEN,
                 )
+        # <variable> = <variable> +/- <variable>
         else:
             op = OPERATORS[instruction.res]
             if "IMM" not in instruction.op1Addr:
@@ -196,7 +202,7 @@ class Decompiler:
                     )
                 else:
                     operand_1 = self.ssa.get_variable(op0_register, offset_1)[1]
-                    variable_operand_1 = Operand(type=OperandType.VARIABLE, value=operand_1)
+                    variable_operand_1 = Operand(type=OperandType.VARIABLE, value=[operand_1])
                 if self.ssa.get_variable(op1_register, offset_2)[2] in phi_node_variables:
                     operand_2 = phi_node_representation
                     variable_operand_2 = Operand(
@@ -205,9 +211,10 @@ class Decompiler:
                     )
                 else:
                     operand_2 = self.ssa.get_variable(op1_register, offset_2)[1]
-                    variable_operand_2 = Operand(type=OperandType.VARIABLE, value=operand_2)
+                    variable_operand_2 = Operand(type=OperandType.VARIABLE, value=[operand_2])
 
                 operator = Operator.ADDITION if op == "+" else Operator.MULTIPLICATION
+                # Set variable value
                 variable[2].value = VariableValue(
                     type=VariableValueType.ABSOLUTE,
                     operation=[variable_operand_1, operator, variable_operand_2],
@@ -216,6 +223,7 @@ class Decompiler:
                     f"{variable[1]} = {operand_1} {op} {operand_2}",
                     color=utils.color.GREEN,
                 )
+            # <variable> = <variable> +/- <integer>
             else:
                 variable = self.ssa.get_variable(destination_register, destination_offset)
                 try:
@@ -251,6 +259,7 @@ class Decompiler:
 
                 operator = Operator.ADDITION if op == "+" else Operator.MULTIPLICATION
                 variable_operand_2 = Operand(type=OperandType.INTEGER, value=value)
+                # Set variable value
                 variable[2].value = VariableValue(
                     type=VariableValueType.ABSOLUTE,
                     operation=[variable_operand_1, operator, variable_operand_2],
@@ -262,9 +271,8 @@ class Decompiler:
                 )
                 self.block_new_variables += 1
 
-        # Add newly created variable object to the list
-        self.variables.append(variable[2])
-
+        # Set variable function (scope for local variables)
+        variable[2].function = self.current_function
         return source_code
 
     def _handle_nop_decomp(self, instruction: Instruction) -> str:
@@ -499,12 +507,12 @@ class Decompiler:
             self.tab_count = 0
             count = 0
 
+            # Initialize AP and FP registers values at the  beginning of the function
+            self.ssa.new_function_init(function)
+
             # Imported function
             if function.is_import:
                 continue
-
-            # Initialize AP and FP registers values at the  beginning of the function
-            self.ssa.new_function_init(function)
 
             # Create a backup value of AP and FP registers
             ap_backup_value = self.ssa.ap_position

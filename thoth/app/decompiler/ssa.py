@@ -25,7 +25,7 @@ class SSA:
         arguments = function.arguments_list()
         # [fp - 3], [fp - 4], ...
         for argument in arguments:
-            self.new_variable(variable_name=argument)
+            self.new_variable(variable_name=argument, function=function)
             self.ap_position += 1
         # [fp - 2]
         self.new_variable(variable_name="callers function's frame")
@@ -36,13 +36,13 @@ class SSA:
 
         self.fp_position = self.ap_position
 
-    def new_variable(self, variable_name: Optional[str] = None) -> None:
+    def new_variable(self, variable_name: Optional[str] = None, function: Function = None) -> None:
         """
         Create a new variable in memory
         Args:
             variable_name (Optional String): name of the variable
         """
-        variable = Variable(variable_name=variable_name)
+        variable = Variable(variable_name=variable_name, function=function)
         self.memory.append(variable)
 
     def get_variable(self, register: str, offset: int) -> Tuple[bool, Variable, bool]:

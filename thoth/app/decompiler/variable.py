@@ -1,22 +1,27 @@
 from enum import Enum
 from typing import List, Optional, Union
 
+
 class OperandType(Enum):
     VARIABLE = 0
     INTEGER = 1
+
 
 class Operator(Enum):
     ADDITION = 0
     MULTIPLICATION = 1
 
+
 class VariableValueType(Enum):
     ADDRESS = 0
     ABSOLUTE = 1
+
 
 class Operand:
     """
     Element of an operation, either a variable/list of variables or an integer
     """
+
     def __init__(self, type: OperandType, value: Union[str, int, List[str]]) -> None:
         self.type = type
         self.value = value
@@ -30,13 +35,16 @@ class Operand:
             return True
         return False
 
+
 class VariableValue:
     """
     Value assigned to an SSA variable
     """
+
     def __init__(self, type: VariableValueType, operation: List) -> None:
-        self.type = type 
+        self.type = type
         self.operation = operation
+
 
 class Variable:
     """
@@ -45,7 +53,7 @@ class Variable:
 
     counter = 0
 
-    def __init__(self, variable_name: Optional[str] = None, value: VariableValue = None) -> None:
+    def __init__(self, variable_name: Optional[str] = None, function=None) -> None:
         """
         Initialize a new variable
         Args:
@@ -55,6 +63,10 @@ class Variable:
         self.value = None
         self.is_set = False
         self.instance = Variable.counter if self.is_set else None
+        # Local or global variable
+        self.local = True
+        # Function where the variable is defined
+        self.function = function
 
     def set(self) -> None:
         """
