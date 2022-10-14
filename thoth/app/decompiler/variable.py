@@ -1,5 +1,42 @@
-from typing import Optional
+from enum import Enum
+from typing import List, Optional, Union
 
+class OperandType(Enum):
+    VARIABLE = 0
+    INTEGER = 1
+
+class Operator(Enum):
+    ADDITION = 0
+    MULTIPLICATION = 1
+
+class VariableValueType(Enum):
+    ADDRESS = 0
+    ABSOLUTE = 1
+
+class Operand:
+    """
+    Element of an operation, either a variable/list of variables or an integer
+    """
+    def __init__(self, type: OperandType, value: Union[str, int, List[str]]) -> None:
+        self.type = type
+        self.value = value
+
+    @property
+    def phi_function(self) -> bool:
+        """
+        Check if a variable operand has several possible values
+        """
+        if self.type == OperandType.VARIABLE and type(self.value) is list:
+            return True
+        return False
+
+class VariableValue:
+    """
+    Value assigned to an SSA variable
+    """
+    def __init__(self, type: VariableValueType, operation: List) -> None:
+        self.type = type 
+        self.operation = operation
 
 class Variable:
     """
@@ -8,13 +45,14 @@ class Variable:
 
     counter = 0
 
-    def __init__(self, variable_name: Optional[str] = None) -> None:
+    def __init__(self, variable_name: Optional[str] = None, value: VariableValue = None) -> None:
         """
         Initialize a new variable
         Args:
             variable_name (Optional String): the name of the variable
         """
         self.variable_name = variable_name
+        self.value = None
         self.is_set = False
         self.instance = Variable.counter if self.is_set else None
 

@@ -6,7 +6,14 @@ from thoth.app.cfg.cfg import BasicBlock
 from thoth.app.disassembler.function import Function
 from thoth.app.disassembler.instruction import Instruction
 from thoth.app.decompiler.ssa import SSA
-from thoth.app.decompiler.variable import Variable
+from thoth.app.decompiler.variable import (
+    Operand,
+    OperandType,
+    Operator,
+    Variable,
+    VariableValue,
+    VariableValueType,
+)
 
 
 class Decompiler:
@@ -30,6 +37,7 @@ class Decompiler:
         self.return_values = None
         # Static single assignment
         self.ssa = SSA()
+        self.variables = []
         self.current_basic_block: Optional[BasicBlock] = None
         self.first_pass = True
         self.block_new_variables = 0
@@ -97,9 +105,19 @@ class Decompiler:
                     value = utils.field_element_repr(int(instruction.imm), instruction.prime)
 
                 variable = self.ssa.get_variable(destination_register, destination_offset)
+                variable_value = utils.field_element_repr(int(instruction.imm), instruction.prime)
+
+                try:
+                    variable_value_int = int(variable_value)
+                except:
+                    variable_value_int = int(variable_value, base=16)
+                variable[2].value = VariableValue(
+                    type=VariableValueType.ABSOLUTE,
+                    operation=[Operand(type=OperandType.INTEGER, value=variable_value_int)],
+                )
 
                 source_code += self.print_instruction_decomp(
-                    f"{variable[1]} = {utils.field_element_repr(int(instruction.imm), instruction.prime)}",
+                    f"{variable[1]} = {variable_value}",
                     color=utils.color.GREEN,
                 )
                 # Variable value (hex or string)
@@ -113,16 +131,31 @@ class Decompiler:
 
                 if self.ssa.get_variable(op0_register, offset_1)[2] in phi_node_variables:
                     operand = phi_node_representation
+                    variable_operand_1 = Operand(
+                        type=OperandType.VARIABLE,
+                        value=[variable.name for variable in self.get_phi_node_variables()],
+                    )
                 else:
                     operand = self.ssa.get_variable(op0_register, offset_1)[1]
+                    # print(operand)
+                    variable_operand_1 = Operand(type=OperandType.VARIABLE, value=operand)
+
+                operator = Operator.ADDITION
+                variable_operand_2 = Operand(type=OperandType.INTEGER, value=0)
 
                 value_off2 = instruction.off2
                 sign = ""
                 try:
                     value_off2 = int(value_off2)
+                    variable_operand_2 = Operand(type=OperandType.INTEGER, value=value_off2)
                     sign = " + " if value_off2 >= 0 else " - "
                 except Exception:
                     pass
+
+                variable[2].value = VariableValue(
+                    type=VariableValueType.ADDRESS,
+                    operation=[variable_operand_1, operator, variable_operand_2],
+                )
                 source_code += self.print_instruction_decomp(
                     f"{variable[1]} = [{operand}{sign}{value_off2}]",
                     color=utils.color.GREEN,
@@ -131,9 +164,21 @@ class Decompiler:
                 variable = self.ssa.get_variable(destination_register, destination_offset)
                 if self.ssa.get_variable(op1_register, offset_2)[2] in phi_node_variables:
                     variable_value = phi_node_representation
+                    variable[2].value = VariableValue(
+                        type=VariableValueType.ABSOLUTE,
+                        operation=[
+                            Operand(
+                                type=OperandType.VARIABLE,
+                                value=[variable.name for variable in phi_node_variables],
+                            )
+                        ],
+                    )
                 else:
                     variable_value = self.ssa.get_variable(op1_register, offset_2)[1]
-
+                    variable[2].value = VariableValue(
+                        type=VariableValueType.ABSOLUTE,
+                        operation=[Operand(type=OperandType.VARIABLE, value=variable_value)],
+                    )
                 source_code += self.print_instruction_decomp(
                     f"{variable[1]} = {variable_value}",
                     color=utils.color.GREEN,
@@ -145,13 +190,28 @@ class Decompiler:
 
                 if self.ssa.get_variable(op0_register, offset_1)[2] in phi_node_variables:
                     operand_1 = phi_node_representation
+                    variable_operand_1 = Operand(
+                        type=OperandType.VARIABLE,
+                        value=[variable.name for variable in phi_node_variables],
+                    )
                 else:
                     operand_1 = self.ssa.get_variable(op0_register, offset_1)[1]
+                    variable_operand_1 = Operand(type=OperandType.VARIABLE, value=operand_1)
                 if self.ssa.get_variable(op1_register, offset_2)[2] in phi_node_variables:
                     operand_2 = phi_node_representation
+                    variable_operand_2 = Operand(
+                        type=OperandType.VARIABLE,
+                        value=[variable.name for variable in phi_node_variables],
+                    )
                 else:
                     operand_2 = self.ssa.get_variable(op1_register, offset_2)[1]
+                    variable_operand_2 = Operand(type=OperandType.VARIABLE, value=operand_2)
 
+                operator = Operator.ADDITION if op == "+" else Operator.MULTIPLICATION
+                variable[2].value = VariableValue(
+                    type=VariableValueType.ABSOLUTE,
+                    operation=[variable_operand_1, operator, variable_operand_2],
+                )
                 source_code += self.print_instruction_decomp(
                     f"{variable[1]} = {operand_1} {op} {operand_2}",
                     color=utils.color.GREEN,
@@ -168,22 +228,43 @@ class Decompiler:
 
                 if self.ssa.get_variable(op0_register, offset_1)[2] in phi_node_variables:
                     operand = phi_node_representation
+                    variable_operand_1 = Operand(
+                        type=OperandType.VARIABLE,
+                        value=[variable.name for variable in phi_node_variables],
+                    )
                 elif (
                     self.block_new_variables == 0
                     and len(self.current_function.cfg.parents(self.current_basic_block)) != 0
                 ):
                     if len(phi_node_variables) != 0:
                         operand = phi_node_representation
+                        variable_operand_1 = Operand(
+                            type=OperandType.VARIABLE,
+                            value=[variable.name for variable in phi_node_variables],
+                        )
                     else:
                         operand = self.ssa.get_variable(op0_register, offset_1)[1]
+                        variable_operand_1 = Operand(type=OperandType.VARIABLE, value=operand)
                 else:
                     operand = self.ssa.get_variable(op0_register, offset_1)[1]
+                    variable_operand_1 = Operand(type=OperandType.VARIABLE, value=operand)
+
+                operator = Operator.ADDITION if op == "+" else Operator.MULTIPLICATION
+                variable_operand_2 = Operand(type=OperandType.INTEGER, value=value)
+                variable[2].value = VariableValue(
+                    type=VariableValueType.ABSOLUTE,
+                    operation=[variable_operand_1, operator, variable_operand_2],
+                )
 
                 source_code += self.print_instruction_decomp(
                     f"{variable[1]} = {operand} {op} {value}",
                     color=utils.color.GREEN,
                 )
                 self.block_new_variables += 1
+
+        # Add newly created variable object to the list
+        self.variables.append(variable[2])
+
         return source_code
 
     def _handle_nop_decomp(self, instruction: Instruction) -> str:
@@ -496,6 +577,7 @@ class Decompiler:
                                     color=utils.color.ENDC,
                                 )
                     count += 1
+
                     instructions[i] = self.print_build_code(
                         instructions[i],
                         last=(count == len(function.instructions)),
