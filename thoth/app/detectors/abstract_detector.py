@@ -51,7 +51,7 @@ class AbstractDetector:
     # Detector impact
     IMPACT: DetectorClassification = DetectorClassification.UNIMPLEMENTED
 
-    def __init__(self, disassembler: Disassembler, color: bool = False) -> None:
+    def __init__(self, disassembler: Disassembler) -> None:
         """
         Detector initialization
         """
@@ -80,5 +80,5 @@ class AbstractDetector:
         )
         print(title)
         for result in self.result:
-            print("    - %s" % result)
+            print("  -  %s" % result)
         return True

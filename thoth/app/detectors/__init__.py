@@ -8,6 +8,8 @@ from thoth.app.detectors.naming.variables_naming_detector import DetectVariableN
 
 from thoth.app.detectors.overflow.integer_overflow_detector import DetectIntegerOverflow
 
+from thoth.app.detectors.functions.functions_detector import FunctionsDetector
+
 all_detectors = [
     DetectERC20,
     DetectERC721,
@@ -15,4 +17,5 @@ all_detectors = [
     DetectFunctionNaming,
     DetectVariableNaming,
     DetectIntegerOverflow,
+    FunctionsDetector,
 ]
