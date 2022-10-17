@@ -1,8 +1,13 @@
+from thoth.app.detectors.abstract_analyzer import (
+    AbstractAnalyzer,
+    CategoryClassification,
+    ImpactClassification,
+    PrecisionClassification,
+)
 from thoth.app.utils import field_element_repr
-from thoth.app.detectors.abstract_detector import AbstractDetector, DetectorClassification
 
 
-class DetectString(AbstractDetector):
+class StringsAnalyzer(AbstractAnalyzer):
     """
     Detect strings inside a contract
     """
@@ -10,7 +15,9 @@ class DetectString(AbstractDetector):
     NAME = "Strings"
     ARGUMENT = "strings"
     HELP = "Detect strings inside a contract"
-    IMPACT = DetectorClassification.INFORMATIONAL
+    IMPACT: ImpactClassification = ImpactClassification.NONE
+    PRECISION: PrecisionClassification = PrecisionClassification.HIGH
+    CATEGORY: CategoryClassification = CategoryClassification.INFORMATIONAL
 
     def _detect(self) -> None:
         contract_functions = self.disassembler.functions

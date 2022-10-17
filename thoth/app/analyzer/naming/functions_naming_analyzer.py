@@ -1,8 +1,13 @@
 import re
-from thoth.app.detectors.abstract_detector import AbstractDetector, DetectorClassification
+from thoth.app.detectors.abstract_analyzer import (
+    AbstractAnalyzer,
+    CategoryClassification,
+    ImpactClassification,
+    PrecisionClassification,
+)
 
 
-class DetectFunctionNaming(AbstractDetector):
+class FunctionNamingAnalyzer(AbstractAnalyzer):
     """
     Detect function names that are not in snake case
     """
@@ -10,7 +15,9 @@ class DetectFunctionNaming(AbstractDetector):
     NAME = "Function naming"
     ARGUMENT = "function_naming"
     HELP = "Detects function names that are not in snake case"
-    IMPACT = DetectorClassification.INFORMATIONAL
+    IMPACT: ImpactClassification = ImpactClassification.NONE
+    PRECISION: PrecisionClassification = PrecisionClassification.HIGH
+    CATEGORY: CategoryClassification = CategoryClassification.OPTIMIZATION
 
     def _detect(self) -> None:
         snake_case_regexp = r"^([a-z0-9]*_*[a-z0-9]*)*$"

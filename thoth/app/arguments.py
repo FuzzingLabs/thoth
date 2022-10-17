@@ -1,6 +1,6 @@
 import argparse
 from .. import __version__
-from thoth.app.detectors import all_detectors
+from thoth.app.analyzer import all_analyzers
 
 
 def parse_args() -> argparse.Namespace:
@@ -108,7 +108,7 @@ def parse_args() -> argparse.Namespace:
         help="Disassemble bytecode",
     )
 
-    detectors_names = [detector.ARGUMENT for detector in all_detectors]
+    detectors_names = [detector.ARGUMENT for detector in all_analyzers]
     root_parser.add_argument(
         "-detect", "--detectors", choices=detectors_names, help="Run detectors", nargs="*"
     )

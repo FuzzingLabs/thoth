@@ -1,10 +1,15 @@
 from typing import List
 from thoth.app.decompiler.decompiler import Decompiler
-from thoth.app.detectors.abstract_detector import AbstractDetector, DetectorClassification
 from thoth.app.decompiler.variable import OperandType, Operator, Variable
+from thoth.app.detectors.abstract_analyzer import (
+    AbstractAnalyzer,
+    CategoryClassification,
+    ImpactClassification,
+    PrecisionClassification,
+)
 
 
-class DetectIntegerOverflow(AbstractDetector):
+class IntegerOverflowDetector(AbstractAnalyzer):
     """
     Detect integer overflow
     """
@@ -12,7 +17,9 @@ class DetectIntegerOverflow(AbstractDetector):
     NAME = "Integer overflow"
     ARGUMENT = "int_overflow"
     HELP = "Detect integer overflow"
-    IMPACT = DetectorClassification.HIGH
+    IMPACT: ImpactClassification = ImpactClassification.HIGH
+    PRECISION: PrecisionClassification = PrecisionClassification.HIGH
+    CATEGORY: CategoryClassification = CategoryClassification.SECURITY
 
     def find_operands_values(self, root_variable: Variable) -> List:
         """

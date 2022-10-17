@@ -1,15 +1,22 @@
-from thoth.app.detectors.abstract_detector import AbstractDetector, DetectorClassification
+from thoth.app.detectors.abstract_analyzer import (
+    AbstractAnalyzer,
+    CategoryClassification,
+    ImpactClassification,
+    PrecisionClassification,
+)
 
 
-class DetectERC721(AbstractDetector):
+class ERC721Analyzer(AbstractAnalyzer):
     """
-    Detect if a contract is an ERC20 Token
+    Detect if a contract is an ERC20 Token and analyze its properties where applicable
     """
 
     NAME = "ERC721"
     ARGUMENT = "erc721"
     HELP = "Detect if a contract is an ERC721 Token"
-    IMPACT = DetectorClassification.INFORMATIONAL
+    IMPACT: ImpactClassification = ImpactClassification.NONE
+    PRECISION: PrecisionClassification = PrecisionClassification.HIGH
+    CATEGORY: CategoryClassification = CategoryClassification.INFORMATIONAL
 
     def _detect(self) -> None:
         # Cairo naming convention is snake case
