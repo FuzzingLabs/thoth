@@ -1,5 +1,5 @@
 import re
-from thoth.app.detectors.abstract_analyzer import (
+from thoth.app.analyzer.abstract_analyzer import (
     AbstractAnalyzer,
     CategoryClassification,
     ImpactClassification,
@@ -14,7 +14,7 @@ class VariableNamingAnalyzer(AbstractAnalyzer):
 
     NAME = "Variable naming"
     ARGUMENT = "variables_naming"
-    HELP = "Detects variable names that are not in snake case"
+    HELP = "Detect variable names that are not in snake case"
     IMPACT: ImpactClassification = ImpactClassification.NONE
     PRECISION: PrecisionClassification = PrecisionClassification.HIGH
     CATEGORY: CategoryClassification = CategoryClassification.OPTIMIZATION

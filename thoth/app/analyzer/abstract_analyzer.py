@@ -1,5 +1,4 @@
 from enum import Enum
-from sre_constants import CATEGORY
 from typing import Callable, Dict, List
 from thoth.app.disassembler.disassembler import Disassembler
 
@@ -104,6 +103,21 @@ class AbstractAnalyzer:
         Run analyzerdetector on the contract
         """
         pass
+
+    @classmethod
+    def _print_help(cls) -> None:
+        """
+        Print the analyzer documentation
+        """
+        help = "[%s] %s%s%s <%s> - " % (
+            category_classification_text[cls.CATEGORY],
+            category_classification_colors[cls.CATEGORY],
+            cls.NAME,
+            colors.ENDC,
+            cls.ARGUMENT,
+        )
+        help += "%s" % cls.HELP
+        print(help)
 
     def _print(self) -> bool:
         """

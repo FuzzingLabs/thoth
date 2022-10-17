@@ -108,9 +108,13 @@ def parse_args() -> argparse.Namespace:
         help="Disassemble bytecode",
     )
 
-    detectors_names = [detector.ARGUMENT for detector in all_analyzers]
+    analyzers_names = [analyzer.ARGUMENT for analyzer in all_analyzers]
     root_parser.add_argument(
-        "-detect", "--detectors", choices=detectors_names, help="Run detectors", nargs="*"
+        "-analyze", "--analyzers", choices=analyzers_names, help="Run analyzers", nargs="*"
+    )
+
+    root_parser.add_argument(
+        "--analyzers-help", choices=analyzers_names, help="Show analyzers help", nargs="*"
     )
 
     contract_subparser = parser.add_subparsers(

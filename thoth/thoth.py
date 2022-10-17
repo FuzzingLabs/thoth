@@ -3,7 +3,7 @@ import sys
 import tempfile
 from thoth.app.utils import str_to_bool
 from thoth.app.arguments import parse_args
-from thoth.app.detectors import all_detectors
+from thoth.app.analyzer import all_analyzers
 from thoth.app.disassembler.disassembler import Disassembler
 from thoth.app.starknet.starknet import StarkNet
 
@@ -18,6 +18,20 @@ def main() -> int:
     if (args.call or args.cfg) and ("view" not in args):
         print("Need to set -view option")
         sys.exit()
+
+    # Show analyzers help
+    if args.analyzers_help is not None:
+        if args.analyzers_help:
+            for analyzer_name in args.analyzers_help:
+                analyzer = [
+                    analyzer for analyzer in all_analyzers if analyzer.ARGUMENT == analyzer_name
+                ][0]
+                analyzer._print_help()
+            return 0
+        else:
+            for analyzer in all_analyzers:
+                analyzer._print_help()
+            return 0
 
     # Load compiled contract from a file
     if args.contract == "local":
@@ -76,19 +90,19 @@ def main() -> int:
     if args.analytics:
         print(disassembler.analytics())
 
-    # Run detectors
-    if args.detectors is not None:
-        if args.detectors:
-            for detector_name in args.detectors:
-                detector = [
-                    detector for detector in all_detectors if detector.ARGUMENT == detector_name
+    # Run analyzers
+    if args.analyzers is not None:
+        if args.analyzers:
+            for analyzer_name in args.analyzers:
+                analyzer = [
+                    analyzer for analyzer in all_analyzers if analyzer.ARGUMENT == analyzer_name
                 ][0]
-                d = detector(disassembler)
-                d._detect()
-                d._print()
+                a = analyzer(disassembler)
+                a._detect()
+                a._print()
         else:
-            for detector in all_detectors:
-                d = detector(disassembler)
-                d._detect()
-                d._print()
+            for analyzer in all_analyzers:
+                a = analyzer(disassembler)
+                a._detect()
+                a._print()
     return 0

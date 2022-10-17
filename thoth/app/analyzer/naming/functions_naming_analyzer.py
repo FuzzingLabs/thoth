@@ -1,5 +1,5 @@
 import re
-from thoth.app.detectors.abstract_analyzer import (
+from thoth.app.analyzer.abstract_analyzer import (
     AbstractAnalyzer,
     CategoryClassification,
     ImpactClassification,
@@ -14,7 +14,7 @@ class FunctionNamingAnalyzer(AbstractAnalyzer):
 
     NAME = "Function naming"
     ARGUMENT = "function_naming"
-    HELP = "Detects function names that are not in snake case"
+    HELP = "Detect function names that are not in snake case"
     IMPACT: ImpactClassification = ImpactClassification.NONE
     PRECISION: PrecisionClassification = PrecisionClassification.HIGH
     CATEGORY: CategoryClassification = CategoryClassification.OPTIMIZATION

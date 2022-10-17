@@ -1,4 +1,4 @@
-from thoth.app.detectors.abstract_analyzer import (
+from thoth.app.analyzer.abstract_analyzer import (
     AbstractAnalyzer,
     CategoryClassification,
     ImpactClassification,

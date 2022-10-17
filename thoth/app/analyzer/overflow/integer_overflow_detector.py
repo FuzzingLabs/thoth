@@ -1,7 +1,7 @@
 from typing import List
 from thoth.app.decompiler.decompiler import Decompiler
 from thoth.app.decompiler.variable import OperandType, Operator, Variable
-from thoth.app.detectors.abstract_analyzer import (
+from thoth.app.analyzer.abstract_analyzer import (
     AbstractAnalyzer,
     CategoryClassification,
     ImpactClassification,

@@ -11,10 +11,14 @@ from thoth.app.analyzer.overflow.integer_overflow_detector import IntegerOverflo
 from thoth.app.analyzer.functions.functions_analyzer import FunctionsAnalyzer
 
 all_analyzers = [
+    # Informational
     ERC20Analyzer,
     ERC721Analyzer,
     StringsAnalyzer,
-    FunctionNamingAnalyzer,
-    IntegerOverflowDetector,
     FunctionsAnalyzer,
+    # Optimization
+    FunctionNamingAnalyzer,
+    VariableNamingAnalyzer,
+    # Security
+    IntegerOverflowDetector,
 ]
