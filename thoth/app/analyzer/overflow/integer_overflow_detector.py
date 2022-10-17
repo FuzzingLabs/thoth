@@ -38,7 +38,7 @@ class IntegerOverflowDetector(AbstractAnalyzer):
                 element for element in root_variable.value.operation if not element in Operator
             ]
             operands_values = [
-                operand.value for operand in operands if operand.type is OperandType.VARIABLE
+                operand.value for operand in operands if operand.type == OperandType.VARIABLE
             ]
             # Flaten the array
             try:

@@ -64,16 +64,19 @@ Example 2 with function call:
 	<img src="/images/thoth_decompile_2.png"/></br>
 </p>
 
-## Run the static analysis with the detectors
+## Run the static analysis with the analyzers
 
-The static analysis is performed using *detectors* which can be either informative or security related.
+The static analysis is performed using *analyzers* which can be either informative or security related.
 
 ```sh
-# Run all the detectors
-thoth local tests/json_files/cairo_array_sum.json --detectors
+# Run all the analyzers
+thoth local tests/json_files/cairo_array_sum.json --analyzers
 
-# Selects which detectors to run
-thoth local tests/json_files/cairo_array_sum.json --detectors erc20 erc721
+# Selects which analyzers to run
+thoth local tests/json_files/cairo_array_sum.json --analyzers erc20 erc721
+
+# Print a list of all the availables analyzers
+thoth local tests/json_files/cairo_array_sum.json --analyzers-help
 ```
 
 ## Print the contract's call graph 
