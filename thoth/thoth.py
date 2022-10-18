@@ -4,6 +4,10 @@ import tempfile
 from thoth.app.utils import str_to_bool
 from thoth.app.arguments import parse_args
 from thoth.app.analyzer import all_analyzers
+from thoth.app.analyzer.abstract_analyzer import (
+    CategoryClassification,
+    category_classification_text,
+)
 from thoth.app.disassembler.disassembler import Disassembler
 from thoth.app.starknet.starknet import StarkNet
 
@@ -90,19 +94,30 @@ def main() -> int:
     if args.analytics:
         print(disassembler.analytics())
 
-    # Run analyzers
+    # Find elected analyzers
+    selected_analyzers = []
     if args.analyzers is not None:
         if args.analyzers:
+            selected_analyzers = []
             for analyzer_name in args.analyzers:
-                analyzer = [
-                    analyzer for analyzer in all_analyzers if analyzer.ARGUMENT == analyzer_name
-                ][0]
-                a = analyzer(disassembler)
-                a._detect()
-                a._print()
+                selected_analyzers.append(
+                    [analyzer for analyzer in all_analyzers if analyzer.ARGUMENT == analyzer_name][
+                        0
+                    ]
+                )
         else:
-            for analyzer in all_analyzers:
-                a = analyzer(disassembler)
-                a._detect()
-                a._print()
+            selected_analyzers = all_analyzers
+
+    # Filter analyzers by category
+    if args.category is not None:
+        filtered_categories = [
+            k for k, v in category_classification_text.items() if v.lower() in args.category
+        ]
+        selected_analyzers = [a for a in selected_analyzers if a.CATEGORY in filtered_categories]
+
+    # Run analyzers
+    for analyzer in selected_analyzers:
+        a = analyzer(disassembler)
+        a._detect()
+        a._print()
     return 0

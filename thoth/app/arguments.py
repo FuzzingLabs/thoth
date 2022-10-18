@@ -1,6 +1,7 @@
 import argparse
 from .. import __version__
 from thoth.app.analyzer import all_analyzers
+from thoth.app.analyzer.abstract_analyzer import category_classification_text
 
 
 def parse_args() -> argparse.Namespace:
@@ -28,44 +29,38 @@ def parse_args() -> argparse.Namespace:
         help="Print JSON with details of all instructions",
     )
 
-    root_parser.add_argument(
-        "-o",
-        "--output",
-        action="store",
-        type=argparse.FileType("w"),
-        help="Output the result of the disassembler/decompiler to a file",
-    )
-    root_parser.add_argument(
+    cfg = root_parser.add_argument_group("CFG and call flow graph")
+    cfg.add_argument(
         "-call",
         "--call",
         action="store_true",
         help="Print call flow graph",
     )
-    root_parser.add_argument(
+    cfg.add_argument(
         "-cfg",
         "--cfg",
         action="store_true",
         help="Print control flow graph",
     )
-    root_parser.add_argument(
+    cfg.add_argument(
         "-view",
         choices=("True", "False"),
         default=argparse.SUPPRESS,
         help="Set if Thoth should open the output graph or not",
     )
-    root_parser.add_argument(
+    cfg.add_argument(
         "-output_cfg_folder",
         type=str,
         default="output-cfg",
         help="Set the output folder of the cfg",
     )
-    root_parser.add_argument(
+    cfg.add_argument(
         "-output_callgraph_folder",
         type=str,
         default="output-callgraph",
         help="Set the output folder of the callflowgraph",
     )
-    root_parser.add_argument(
+    cfg.add_argument(
         "-format",
         "--format",
         metavar="Format of the output file [png-svg-pdf]",
@@ -73,19 +68,43 @@ def parse_args() -> argparse.Namespace:
         choices=["pdf", "png", "svg"],
         help="Format of the graphs",
     )
-    root_parser.add_argument(
-        "-color",
-        "--color",
-        action="store_true",
-        help="Print disassembler/decompiler with color",
-    )
-    root_parser.add_argument(
+
+    disassembler = root_parser.add_argument_group("Disassembler")
+    disassembler.add_argument(
         "-function",
         "--function",
         type=str,
         required=False,
         help="Analyse a specific function",
     )
+    disassembler.add_argument(
+        "-b",
+        "-disas",
+        "--disassembly",
+        action="store_true",
+        help="Disassemble bytecode",
+    )
+    disassembler.add_argument(
+        "-d",
+        "-decomp",
+        "--decompile",
+        action="store_true",
+        help="Print decompiled code",
+    )
+    disassembler.add_argument(
+        "-color",
+        "--color",
+        action="store_true",
+        help="Print disassembler/decompiler with color",
+    )
+    disassembler.add_argument(
+        "-o",
+        "--output",
+        action="store",
+        type=argparse.FileType("w"),
+        help="Output the result of the disassembler/decompiler to a file",
+    )
+
     root_parser.add_argument(
         "-a",
         "-analytics",
@@ -93,27 +112,25 @@ def parse_args() -> argparse.Namespace:
         action="store_true",
         help="Dump a Json file containing debug information",
     )
-    root_parser.add_argument(
-        "-d",
-        "-decomp",
-        "--decompile",
-        action="store_true",
-        help="Print decompiled code",
-    )
-    root_parser.add_argument(
-        "-b",
-        "-disas",
-        "--disassembly",
-        action="store_true",
-        help="Disassemble bytecode",
-    )
 
+    # Analyser
     analyzers_names = [analyzer.ARGUMENT for analyzer in all_analyzers]
-    root_parser.add_argument(
+    analyzers_categories_names = list(
+        [category.lower() for category in category_classification_text.values()]
+    )
+    analyzer = root_parser.add_argument_group("Analyzer")
+
+    analyzer.add_argument(
         "-analyze", "--analyzers", choices=analyzers_names, help="Run analyzers", nargs="*"
     )
-
-    root_parser.add_argument(
+    analyzer.add_argument(
+        "-cat",
+        "--category",
+        choices=analyzers_categories_names,
+        help="Filter analyzers by category",
+        nargs="*",
+    )
+    analyzer.add_argument(
         "--analyzers-help", choices=analyzers_names, help="Show analyzers help", nargs="*"
     )
 
