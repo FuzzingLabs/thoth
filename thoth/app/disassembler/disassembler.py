@@ -332,30 +332,6 @@ class Disassembler:
             else:
                 print("Error : Function does not exist.")
 
-    def analytics(self) -> dict:
-        """Analyze and get some datas for unit tests.
-
-        Returns:
-            Dictionnary: Dictionnary containings datas.
-        """
-        analytics = {}
-        analytics["functions"] = str(len(self.functions))
-        analytics["builtins"] = str(len(self.builtins))
-        analytics["decorators"] = []
-        call = 0
-        analytics["entry_point"] = []
-        for function in self.functions:
-            if function.entry_point:
-                analytics["entry_point"].append(function.name)
-            for instruction in function.instructions:
-                if instruction.opcode == "CALL":
-                    call += 1
-            analytics["decorators"] += function.decorators
-        analytics["call_nbr"] = str(call)
-        analytics["structs"] = len(self.structs)
-        # print(json.dumps(analytics, indent=3))
-        return analytics
-
     def decompiler(self) -> str:
         """
         Decompile the contract

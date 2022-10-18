@@ -46,7 +46,7 @@ class CategoryClassification(Enum):
     UNIMPLEMENTED = 999
 
 
-category_classification_colors: Dict[CategoryClassification, Callable[[str], str]] = {
+category_classification_colors: Dict[CategoryClassification, str] = {
     CategoryClassification.INFORMATIONAL: colors.GREEN,
     CategoryClassification.OPTIMIZATION: colors.CYAN,
     CategoryClassification.SECURITY: colors.RED,
@@ -58,7 +58,7 @@ category_classification_text: Dict[CategoryClassification, str] = {
     CategoryClassification.SECURITY: "Security",
 }
 
-impact_classification_colors: Dict[ImpactClassification, Callable[[str], str]] = {
+impact_classification_colors: Dict[ImpactClassification, str] = {
     ImpactClassification.NONE: colors.CYAN,
     ImpactClassification.LOW: colors.GREEN,
     ImpactClassification.MEDIUM: colors.YELLOW,
@@ -101,7 +101,7 @@ class AbstractAnalyzer:
 
     def _detect(self) -> None:
         """
-        Run analyzerdetector on the contract
+        Run analyzer on the contract
         """
         pass
 

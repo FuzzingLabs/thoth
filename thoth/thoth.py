@@ -96,10 +96,6 @@ def main() -> int:
             view=str_to_bool(args.view),
         )
 
-    # print analytics
-    if args.analytics:
-        print(disassembler.analytics())
-
     # Find elected analyzers
     selected_analyzers = []
     if args.analyzers is not None:

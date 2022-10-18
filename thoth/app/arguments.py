@@ -105,14 +105,6 @@ def parse_args() -> argparse.Namespace:
         help="Output the result of the disassembler/decompiler to a file",
     )
 
-    root_parser.add_argument(
-        "-a",
-        "-analytics",
-        "--analytics",
-        action="store_true",
-        help="Dump a Json file containing debug information",
-    )
-
     # Analyser
     analyzers_names = [analyzer.ARGUMENT for analyzer in all_analyzers]
     analyzers_categories_names = list(
@@ -121,7 +113,7 @@ def parse_args() -> argparse.Namespace:
     analyzer = root_parser.add_argument_group("Analyzer")
 
     analyzer.add_argument(
-        "-analyze", "--analyzers", choices=analyzers_names, help="Run analyzers", nargs="*"
+        "-a", "-analyze", "--analyzers", choices=analyzers_names, help="Run analyzers", nargs="*"
     )
     analyzer.add_argument(
         "-cat",
