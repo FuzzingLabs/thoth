@@ -27,14 +27,14 @@ class Disassembler:
     Analyze and disassemble
     """
 
-    def __init__(self, file: IO, color: bool = False) -> None:
+    def __init__(self, filename: str, color: bool = False) -> None:
         """Init the disassembler object and run the analyzer.
 
         Args:
-            file (file): The smart contract file
+            filename (str): The smart contract file name
             color (bool): Enable or disable coloring of the output. Defaults to False.
         """
-        self.file = file
+        self.filename = filename
         self.json = None
         self.functions = []
         self.builtins = []
@@ -54,7 +54,7 @@ class Disassembler:
             SystemExit: if the JSON is empty.
         """
         json_data = ""
-        with self.file as f:
+        with open(self.filename, "r") as f:
             try:
                 json_data = json.load(f)
             except json.decoder.JSONDecodeError:
@@ -147,28 +147,21 @@ class Disassembler:
         disassembly_code = ""
 
         if self.builtins:
-            print("_" * 75)
             builtins = self.print_builtins()
             disassembly_code += "_" * 75 + "\n"
-            print(builtins)
             disassembly_code += builtins + "\n"
         if self.structs:
-            print("_" * 75)
             disassembly_code += "_" * 75 + "\n"
             structs = self.print_structs()
-            print(structs)
             disassembly_code += structs + "\n"
         if self.events:
-            print("_" * 75)
             disassembly_code += "_" * 75 + "\n"
             events = self.print_events()
-            print(events)
             disassembly_code += events + "\n"
-        print("_" * 75)
         disassembly_code += "_" * 75 + "\n"
 
         if self.functions == []:
-            return
+            return disassembly_code
 
         elif function_name is None and function_offset is None:
             for function in self.functions:
@@ -182,7 +175,6 @@ class Disassembler:
                 function = self.get_function_by_offset(function_offset)
 
             if function is not None:
-                function_str = function.print()
                 disassembly_code += function_str + "\n"
             else:
                 raise SystemExit("Error: Function does not exist.")
@@ -366,16 +358,29 @@ class Disassembler:
 
     def decompiler(self) -> str:
         """
-        Decompile the functions
+        Decompile the contract
         """
-        print(self.print_builtins())
+        decompiler_result = ""
+
+        # Builtins functions
+        decompiler_result += self.print_builtins()
+        decompiler_result += "\n"
+
+        # Imported functions
         for function in self.functions:
             if function.is_import:
                 function_name = function.name.split(".")[-1]
                 package = ".".join(function.name.split(".")[:-1])
-                print(f"from {package} import {function_name}")
-        print(self.print_structs(decompiler=True))
+                decompiler_result += f"from {package} import {function_name}"
+                decompiler_result += "\n"
+
+        # Structs
+        decompiler_result += self.print_structs(decompiler=True)
+        decompiler_result += "\n"
+
+        # Contract functions
         decomp = Decompiler(functions=self.functions)
         decompiled_code = decomp.decompile_code()
-        print(decompiled_code)
+        decompiler_result += decompiled_code
+        decompiler_result += "\n"
         return decompiled_code

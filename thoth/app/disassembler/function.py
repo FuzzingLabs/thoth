@@ -146,13 +146,10 @@ class Function:
         """
         function_str = ""
         prototype = self.get_prototype()
-        print(f"\n\t{utils.color.BLUE + prototype + utils.color.ENDC}")
-        function_str += "\n\t%s\n" % prototype
+        function_str = f"\n\t{utils.color.BLUE + prototype + utils.color.ENDC}\n"
         for instr in self.instructions:
             instruction_str = instr.print()
-            print(instruction_str, end="")
             function_str += instruction_str
-        print()
         return function_str
 
     def generate_cfg(self) -> None:
