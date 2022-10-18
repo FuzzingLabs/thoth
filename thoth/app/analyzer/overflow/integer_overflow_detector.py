@@ -35,11 +35,15 @@ class IntegerOverflowDetector(AbstractAnalyzer):
 
         if root_variable.value is not None:
             operands = [
-                element for element in root_variable.value.operation if not element in Operator
+                element
+                for element in root_variable.value.operation
+                if not element in list(Operator)
             ]
+
             operands_values = [
                 operand.value for operand in operands if operand.type == OperandType.VARIABLE
             ]
+
             # Flaten the array
             try:
                 operands_values = sum(operands_values, [])
