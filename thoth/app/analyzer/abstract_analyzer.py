@@ -4,6 +4,7 @@ from thoth.app.disassembler.disassembler import Disassembler
 
 
 class colors:
+    HEADER = "\033[95m"
     CYAN = "\033[96m"
     GREEN = "\033[92m"
     YELLOW = "\033[93m"
