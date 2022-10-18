@@ -14,7 +14,7 @@ class FunctionNamingAnalyzer(AbstractAnalyzer):
 
     NAME = "Function naming"
     ARGUMENT = "function_naming"
-    HELP = "Detect function names that are not in snake case"
+    HELP = "Detect functions names that are not in snake case"
     IMPACT: ImpactClassification = ImpactClassification.NONE
     PRECISION: PrecisionClassification = PrecisionClassification.HIGH
     CATEGORY: CategoryClassification = CategoryClassification.OPTIMIZATION

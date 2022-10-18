@@ -14,7 +14,7 @@ class VariableNamingAnalyzer(AbstractAnalyzer):
 
     NAME = "Variable naming"
     ARGUMENT = "variables_naming"
-    HELP = "Detect variable names that are not in snake case"
+    HELP = "Detect variables names that are not in snake case"
     IMPACT: ImpactClassification = ImpactClassification.NONE
     PRECISION: PrecisionClassification = PrecisionClassification.HIGH
     CATEGORY: CategoryClassification = CategoryClassification.OPTIMIZATION

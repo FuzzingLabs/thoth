@@ -6,14 +6,14 @@ from thoth.app.analyzer.abstract_analyzer import (
 )
 
 
-class GeneralAnalyzer(AbstractAnalyzer):
+class StatisticsAnalyzer(AbstractAnalyzer):
     """
     Contract general informations
     """
 
-    NAME = "General"
-    ARGUMENT = "general"
-    HELP = "Contract general informations"
+    NAME = "Statistics"
+    ARGUMENT = "statistics"
+    HELP = "General statistics about the contract"
     IMPACT: ImpactClassification = ImpactClassification.NONE
     PRECISION: PrecisionClassification = PrecisionClassification.HIGH
     CATEGORY: CategoryClassification = CategoryClassification.INFORMATIONAL
@@ -27,11 +27,8 @@ class GeneralAnalyzer(AbstractAnalyzer):
         structs_count = len(self.disassembler.structs)
         calls_count = 0
 
-        entry_points = []
-
+        # Count the calls
         for function in self.disassembler.functions:
-            if function.entry_point:
-                entry_points.append(function.name)
             for instruction in function.instructions:
                 if instruction.opcode == "CALL":
                     calls_count += 1
@@ -40,4 +37,3 @@ class GeneralAnalyzer(AbstractAnalyzer):
         self.result.append("builtins : %s" % str(builtins_count))
         self.result.append("structs : %s" % str(structs_count))
         self.result.append("calls : %s" % str(calls_count))
-        self.result.append("Entry points : %s" % ", ".join(entry_points))

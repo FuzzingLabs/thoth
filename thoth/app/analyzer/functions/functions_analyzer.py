@@ -34,6 +34,9 @@ class FunctionsAnalyzer(AbstractAnalyzer):
                 function_name = function.name
             result = colors.HEADER + function_name + colors.ENDC
 
+            if function.entry_point:
+                result += colors.RED + " (entry point)" + colors.ENDC
+
             interact_with_L1 = False
             # Send messages to L1
             for instruction in function.instructions:
