@@ -1,5 +1,6 @@
 from enum import Enum
 from typing import Callable, Dict, List
+from unicodedata import category
 from thoth.app.disassembler.disassembler import Disassembler
 
 
@@ -91,13 +92,14 @@ class AbstractAnalyzer:
     # Analyzer category
     CATEGORY: CategoryClassification = CategoryClassification.UNIMPLEMENTED
 
-    def __init__(self, disassembler: Disassembler) -> None:
+    def __init__(self, disassembler: Disassembler, color: bool = True) -> None:
         """
         Detector initialization
         """
         self.disassembler = disassembler
         self.result: List[str] = []
         self.detected = False
+        self.color = color
 
     def _detect(self) -> None:
         """
@@ -106,13 +108,14 @@ class AbstractAnalyzer:
         pass
 
     @classmethod
-    def _print_help(cls) -> None:
+    def _print_help(cls, color: bool = True) -> None:
         """
         Print the analyzer documentation
         """
+        category_color = category_classification_colors[cls.CATEGORY] if color else ""
         help = "[%s] %s%s%s <%s> - " % (
             category_classification_text[cls.CATEGORY],
-            category_classification_colors[cls.CATEGORY],
+            category_color,
             cls.NAME,
             colors.ENDC,
             cls.ARGUMENT,
@@ -127,8 +130,9 @@ class AbstractAnalyzer:
         if not self.detected:
             return False
 
+        category_color = category_classification_colors[self.CATEGORY] if self.color else ""
         title = "[%s%s%s] %s" % (
-            category_classification_colors[self.CATEGORY],
+            category_color,
             category_classification_text[self.CATEGORY],
             colors.ENDC,
             self.NAME,
