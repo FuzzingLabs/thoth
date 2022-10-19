@@ -25,6 +25,7 @@ class FunctionsAnalyzer(AbstractAnalyzer):
         red_color = colors.RED if self.color else ""
         cyan_color = colors.CYAN if self.color else ""
         yellow_color = colors.YELLOW if self.color else ""
+        end_color = colors.ENDC if self.color else ""
 
         contract_functions = [
             function for function in self.disassembler.functions if not function.is_import
@@ -38,10 +39,10 @@ class FunctionsAnalyzer(AbstractAnalyzer):
                 function_name = function_path[1]
             else:
                 function_name = function.name
-            result = header_color + function_name + colors.ENDC
+            result = header_color + function_name + end_color
 
             if function.entry_point:
-                result += red_color + " (entry point)" + colors.ENDC
+                result += red_color + " (entry point)" + end_color
 
             interact_with_L1 = False
             # Send messages to L1
@@ -50,7 +51,7 @@ class FunctionsAnalyzer(AbstractAnalyzer):
                     if instruction.is_call_direct() and instruction.call_xref_func_name is not None:
                         call_name = instruction.call_xref_func_name.split(".")[-1]
                         if call_name == "send_message_to_l1":
-                            result += cyan_color + " -> L1" + colors.ENDC
+                            result += cyan_color + " -> L1" + end_color
                             interact_with_L1 = True
 
             decorators = [decorator for decorator in function.decorators]
@@ -58,7 +59,7 @@ class FunctionsAnalyzer(AbstractAnalyzer):
             # Receive messages from L1
             if decorators:
                 if "l1_handler" in decorators:
-                    result += yellow_color + " <- L1" + colors.ENDC
+                    result += yellow_color + " <- L1" + end_color
                     interact_with_L1 = True
 
             # Decorators list
