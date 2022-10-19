@@ -123,10 +123,9 @@ class Function:
         Return:
             arguments_names (list): a list of the function arguments (implicits or not) names
         """
-        arguments = [self.args]
+        arguments = [self.ret, self.args]
         if implicit:
-            arguments = [self.implicitargs] + arguments
-
+            arguments = [self.ret] + [self.implicitargs] + [self.args]
         # List arguments
         arguments_list = []
         for dict in arguments:

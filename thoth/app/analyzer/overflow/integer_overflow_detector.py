@@ -18,7 +18,7 @@ class IntegerOverflowDetector(AbstractAnalyzer):
     ARGUMENT = "int_overflow"
     HELP = "Detect integer overflow"
     IMPACT: ImpactClassification = ImpactClassification.HIGH
-    PRECISION: PrecisionClassification = PrecisionClassification.HIGH
+    PRECISION: PrecisionClassification = PrecisionClassification.MEDIUM
     CATEGORY: CategoryClassification = CategoryClassification.SECURITY
 
     def find_operands_values(self, root_variable: Variable) -> List:

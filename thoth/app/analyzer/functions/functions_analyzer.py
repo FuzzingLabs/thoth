@@ -41,9 +41,6 @@ class FunctionsAnalyzer(AbstractAnalyzer):
                 function_name = function.name
             result = header_color + function_name + end_color
 
-            if function.entry_point:
-                result += red_color + " (entry point)" + end_color
-
             interact_with_L1 = False
             # Send messages to L1
             for instruction in function.instructions:
@@ -61,6 +58,10 @@ class FunctionsAnalyzer(AbstractAnalyzer):
                 if "l1_handler" in decorators:
                     result += yellow_color + " <- L1" + end_color
                     interact_with_L1 = True
+
+            # Entry points
+            if function.entry_point:
+                result += red_color + " (entry point)" + end_color
 
             # Decorators list
             if decorators:

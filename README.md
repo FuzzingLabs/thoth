@@ -64,21 +64,21 @@ Example 2 with function call:
 	<img src="/images/thoth_decompile_2.png"/></br>
 </p>
 
-## Run the static analysis with the analyzers
+## Run the static analysis
 
-The static analysis is performed using *analyzers* which can be either informative or security related.
+The static analysis is performed using *analyzers* which can be either informative or security/optimization related.
 
-```sh
+```bash
 # Run all the analyzers
-thoth local tests/json_files/cairo_array_sum.json --analyzers
+thoth local tests/json_files/cairo_array_sum.json -a
 
 # Selects which analyzers to run
-thoth local tests/json_files/cairo_array_sum.json --analyzers erc20 erc721
+thoth local tests/json_files/cairo_array_sum.json -a erc20 erc721
 
 # Only run a specific category of analyzers
-thoth local tests/json_files/cairo_array_sum.json --analyzers -cat security
-thoth local tests/json_files/cairo_array_sum.json --analyzers -cat optimization
-thoth local tests/json_files/cairo_array_sum.json --analyzers -cat informational
+thoth local tests/json_files/cairo_array_sum.json -a -cat security
+thoth local tests/json_files/cairo_array_sum.json -a -cat optimization
+thoth local tests/json_files/cairo_array_sum.json -a -cat informational
 
 # Print a list of all the availables analyzers
 thoth local tests/json_files/cairo_array_sum.json --analyzers-help

@@ -214,7 +214,7 @@ class TestDisassembler(unittest.TestCase):
         )
         self.assertEqual(
             functions_analyzer.result[8],
-            "__wrappers__.__l1_default__ (entry point) <- L1\n\t- decorators : l1_handler, raw_input",
+            "__wrappers__.__l1_default__ <- L1 (entry point)\n\t- decorators : l1_handler, raw_input",
         )
 
     def test_starknet_get_code_l2_dai_bridge_statistics_analyzer(self):
@@ -232,7 +232,7 @@ class TestDisassembler(unittest.TestCase):
 
     def test_starknet_send_message_to_l1_functions_analyzer(self):
         """
-        Test the Layer 1 interactions output on starknet_send_message_to_l1
+        Test Layer 1 interactions output on starknet_send_message_to_l1
         """
         disassembler = Disassembler("./tests/json_files/starknet_send_message_to_l1.json")
         functions_analyzer = analyzer.FunctionsAnalyzer(disassembler, color=False)

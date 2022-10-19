@@ -28,10 +28,10 @@ class SSA:
             self.new_variable(variable_name=argument, function=function)
             self.ap_position += 1
         # [fp - 2]
-        self.new_variable(variable_name="callers function's frame")
+        self.new_variable(variable_name="[callers function's frame]")
         self.ap_position += 1
         # [fp - 1]
-        self.new_variable(variable_name="return instruction")
+        self.new_variable(variable_name="[return instruction]")
         self.ap_position += 1
 
         self.fp_position = self.ap_position

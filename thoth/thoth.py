@@ -59,14 +59,14 @@ def main() -> int:
         disassembler.dump_json()
 
     # Decompiler
-    if args.decompile:
+    if args.decompile and args.analyzers is None:
         print(disassembler.decompiler())
         if args.output:
             output = Disassembler(file, color=False).decompiler()
             with args.output as output_file:
                 output_file.write(output)
     # Disassembler
-    elif args.disassembly:
+    elif args.disassembly and args.analyzers is None:
         print(disassembler.print_disassembly())
         if args.output:
             output = Disassembler(file, color=False).print_disassembly()
@@ -109,6 +109,8 @@ def main() -> int:
                 )
         else:
             selected_analyzers = all_analyzers
+    else:
+        return 0
 
     # Filter analyzers by category
     if args.category is not None:
@@ -122,4 +124,5 @@ def main() -> int:
         a = analyzer(disassembler)
         a._detect()
         a._print()
+    print("\n[+] %s analysers were run" % len(selected_analyzers))
     return 0
