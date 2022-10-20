@@ -16,7 +16,7 @@ class IntegerOverflowDetector(AbstractAnalyzer):
 
     NAME = "Integer overflow"
     ARGUMENT = "int_overflow"
-    HELP = "Detect integer overflow"
+    HELP = "Detect direct integer overflow/underflow"
     IMPACT: ImpactClassification = ImpactClassification.HIGH
     PRECISION: PrecisionClassification = PrecisionClassification.MEDIUM
     CATEGORY: CategoryClassification = CategoryClassification.SECURITY
