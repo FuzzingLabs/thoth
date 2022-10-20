@@ -4,6 +4,7 @@ import sys
 import unittest
 
 import thoth.app.analyzer as analyzer
+from thoth.app.analyzer import all_analyzers
 from thoth.app.disassembler.disassembler import Disassembler
 
 
@@ -42,6 +43,20 @@ class TestDisassembler(unittest.TestCase):
                 crash += 1
         sys.stdout = save_stdout
         f.close()
+        self.assertEqual(crash, 0)
+
+    def test_no_analyzer_should_crash(self):
+        """
+        Test all analyzers
+        """
+        disassembler = Disassembler("./tests/json_files/cairo_amm.json")
+        crash = 0
+
+        for a in all_analyzers:
+            try:
+                a(disassembler)._detect()
+            except:
+                crash += 1
         self.assertEqual(crash, 0)
 
     def test_cairo_return_functions_analyzer(self):
@@ -273,6 +288,36 @@ class TestDisassembler(unittest.TestCase):
         integer_overflow_detector._detect()
 
         self.assertEqual(integer_overflow_detector.detected, True)
+
+    def test_starknet_get_code_l2_dai_bridge_functions_naming_analyzer(self):
+        """
+        Test the variable naming analyzer on starknet_get_code_l2_dai_bridge
+        """
+        disassembler = Disassembler(
+            "./tests/json_files/starknet_get_full_contract_l2_dai_bridge.json"
+        )
+        statistics_analyzer = analyzer.FunctionNamingAnalyzer(disassembler)
+        statistics_analyzer._detect()
+
+        self.assertEqual(
+            statistics_analyzer.result[0], "balanceOf function name needs to be in snake case"
+        )
+        self.assertEqual(
+            statistics_analyzer.result[1], "get_L1_address function name needs to be in snake case"
+        )
+
+    def test_erc20_mintable_variable_naming_analyzer(self):
+        """
+        Test the variable naming analyzer on erc20_mintable
+        """
+        disassembler = Disassembler("./tests/json_files/starknet_erc20_mintable.json")
+        statistics_analyzer = analyzer.VariableNamingAnalyzer(disassembler)
+        statistics_analyzer._detect()
+
+        self.assertEqual(
+            statistics_analyzer.result[0],
+            "newOwner argument name (transferOwnership function) needs to be in snake case",
+        )
 
 
 if __name__ == "__main__":
