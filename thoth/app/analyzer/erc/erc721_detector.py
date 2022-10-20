@@ -16,7 +16,7 @@ class ERC721Analyzer(AbstractAnalyzer):
     HELP = "Detect if a contract is an ERC721 Token"
     IMPACT: ImpactClassification = ImpactClassification.NONE
     PRECISION: PrecisionClassification = PrecisionClassification.HIGH
-    CATEGORY: CategoryClassification = CategoryClassification.INFORMATIONAL
+    CATEGORY: CategoryClassification = CategoryClassification.ANALYTICS
 
     def _detect(self) -> None:
         # Cairo naming convention is snake case

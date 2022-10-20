@@ -26,7 +26,7 @@ class PrecisionClassification(Enum):
 class ImpactClassification(Enum):
     """
     Level of impact of a security detector
-    Informational/Optimization analyzers have a NONE Impact by default
+    Analytics/Optimization analyzers have a NONE Impact by default
     """
 
     NONE = 0
@@ -40,7 +40,7 @@ class CategoryClassification(Enum):
     Analyzer category
     """
 
-    INFORMATIONAL = 0
+    ANALYTICS = 0
     OPTIMIZATION = 1
     SECURITY = 2
 
@@ -48,13 +48,13 @@ class CategoryClassification(Enum):
 
 
 category_classification_colors: Dict[CategoryClassification, str] = {
-    CategoryClassification.INFORMATIONAL: colors.GREEN,
+    CategoryClassification.ANALYTICS: colors.GREEN,
     CategoryClassification.OPTIMIZATION: colors.CYAN,
     CategoryClassification.SECURITY: colors.RED,
 }
 
 category_classification_text: Dict[CategoryClassification, str] = {
-    CategoryClassification.INFORMATIONAL: "Informational",
+    CategoryClassification.ANALYTICS: "Analytics",
     CategoryClassification.OPTIMIZATION: "Optimization",
     CategoryClassification.SECURITY: "Security",
 }

@@ -17,7 +17,7 @@ class FunctionNamingAnalyzer(AbstractAnalyzer):
     HELP = "Detect functions names that are not in snake case"
     IMPACT: ImpactClassification = ImpactClassification.NONE
     PRECISION: PrecisionClassification = PrecisionClassification.HIGH
-    CATEGORY: CategoryClassification = CategoryClassification.OPTIMIZATION
+    CATEGORY: CategoryClassification = CategoryClassification.ANALYTICS
 
     def _detect(self) -> None:
         snake_case_regexp = r"^([a-z0-9]*_*[a-z0-9]*)*$"

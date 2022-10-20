@@ -16,7 +16,7 @@ class StatisticsAnalyzer(AbstractAnalyzer):
     HELP = "General statistics about the contract"
     IMPACT: ImpactClassification = ImpactClassification.NONE
     PRECISION: PrecisionClassification = PrecisionClassification.HIGH
-    CATEGORY: CategoryClassification = CategoryClassification.INFORMATIONAL
+    CATEGORY: CategoryClassification = CategoryClassification.ANALYTICS
 
     def _detect(self) -> None:
         self.detected = True

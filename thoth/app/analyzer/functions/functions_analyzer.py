@@ -17,7 +17,7 @@ class FunctionsAnalyzer(AbstractAnalyzer):
     HELP = "Retrieve informations about the contract's functions"
     IMPACT: ImpactClassification = ImpactClassification.NONE
     PRECISION: PrecisionClassification = PrecisionClassification.HIGH
-    CATEGORY: CategoryClassification = CategoryClassification.INFORMATIONAL
+    CATEGORY: CategoryClassification = CategoryClassification.ANALYTICS
 
     def _detect(self) -> None:
         # Colors

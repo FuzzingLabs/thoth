@@ -17,7 +17,7 @@ class StringsAnalyzer(AbstractAnalyzer):
     HELP = "Detect strings inside a contract"
     IMPACT: ImpactClassification = ImpactClassification.NONE
     PRECISION: PrecisionClassification = PrecisionClassification.HIGH
-    CATEGORY: CategoryClassification = CategoryClassification.INFORMATIONAL
+    CATEGORY: CategoryClassification = CategoryClassification.ANALYTICS
 
     def _detect(self) -> None:
         contract_functions = self.disassembler.functions
