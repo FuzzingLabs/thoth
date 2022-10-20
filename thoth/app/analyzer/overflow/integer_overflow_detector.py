@@ -64,7 +64,7 @@ class IntegerOverflowDetector(AbstractAnalyzer):
         variables = self.decompiler.ssa.memory
         for function in contract_functions:
             # Function arguments
-            arguments = set(function.arguments_list(implicit=False))
+            arguments = set(function.arguments_list(implicit=False, ret=False))
             if function.is_import:
                 continue
 
