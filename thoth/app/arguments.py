@@ -113,13 +113,11 @@ def parse_args() -> argparse.Namespace:
     analyzer = root_parser.add_argument_group("Analyzer")
 
     analyzer.add_argument(
-        "-a", "-analyze", "--analyzers", choices=analyzers_names, help="Run analyzers", nargs="*"
-    )
-    analyzer.add_argument(
-        "-cat",
-        "--category",
-        choices=analyzers_categories_names,
-        help="Filter analyzers by category",
+        "-a",
+        "-analyze",
+        "--analyzers",
+        choices=analyzers_names + analyzers_categories_names,
+        help="Run analyzers",
         nargs="*",
     )
     analyzer.add_argument(

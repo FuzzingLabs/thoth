@@ -4,10 +4,7 @@ import tempfile
 from thoth.app.utils import str_to_bool
 from thoth.app.arguments import parse_args
 from thoth.app.analyzer import all_analyzers
-from thoth.app.analyzer.abstract_analyzer import (
-    CategoryClassification,
-    category_classification_text,
-)
+from thoth.app.analyzer.abstract_analyzer import category_classification_text
 from thoth.app.disassembler.disassembler import Disassembler
 from thoth.app.starknet.starknet import StarkNet
 
@@ -96,33 +93,54 @@ def main() -> int:
             view=str_to_bool(args.view),
         )
 
-    # Find elected analyzers
+    if args.analyzers is None:
+        return 0
+
+    # Find selected analyzers
+    analyzers_names = [analyzer.ARGUMENT for analyzer in all_analyzers]
     selected_analyzers = []
-    if args.analyzers is not None:
-        if args.analyzers:
-            selected_analyzers = []
-            for analyzer_name in args.analyzers:
+
+    if args.analyzers:
+        selected_analyzers = []
+        for analyzer_name in args.analyzers:
+            # Select a single analyzer
+            if analyzer_name in analyzers_names:
                 selected_analyzers.append(
                     [analyzer for analyzer in all_analyzers if analyzer.ARGUMENT == analyzer_name][
                         0
                     ]
                 )
-        else:
-            selected_analyzers = all_analyzers
+            # Select a whole category
+            else:
+                selected_category = [
+                    k
+                    for k, v in category_classification_text.items()
+                    if v == analyzer_name.capitalize()
+                ][0]
+                selected_analyzers.append(
+                    [
+                        analyzer
+                        for analyzer in all_analyzers
+                        if analyzer.CATEGORY == selected_category
+                    ][0]
+                )
+    # Select all analyzers by default
     else:
-        return 0
-
-    # Filter analyzers by category
-    if args.category is not None:
-        filtered_categories = [
-            k for k, v in category_classification_text.items() if v.lower() in args.category
-        ]
-        selected_analyzers = [a for a in selected_analyzers if a.CATEGORY in filtered_categories]
+        selected_analyzers = all_analyzers
 
     # Run analyzers
     for analyzer in selected_analyzers:
         a = analyzer(disassembler)
         a._detect()
         a._print()
-    print("\n[+] %s analysers were run" % len(selected_analyzers))
+
+    selected_analyzers_count = len(selected_analyzers)
+    print(
+        "\n[+] %s analyser%s %s run"
+        % (
+            selected_analyzers_count,
+            "s" if selected_analyzers_count > 1 else "",
+            "were" if selected_analyzers_count > 1 else "was",
+        )
+    )
     return 0
