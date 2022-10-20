@@ -15,7 +15,7 @@ class FunctionsAnalyzer(AbstractAnalyzer):
     NAME = "Functions"
     ARGUMENT = "functions"
     HELP = "Retrieve informations about the contract's functions"
-    IMPACT: ImpactClassification = ImpactClassification.NONE
+    IMPACT: ImpactClassification = ImpactClassification.INFORMATIONAL
     PRECISION: PrecisionClassification = PrecisionClassification.HIGH
     CATEGORY: CategoryClassification = CategoryClassification.ANALYTICS
 

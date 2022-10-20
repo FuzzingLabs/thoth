@@ -14,7 +14,7 @@ class StatisticsAnalyzer(AbstractAnalyzer):
     NAME = "Statistics"
     ARGUMENT = "statistics"
     HELP = "General statistics about the contract"
-    IMPACT: ImpactClassification = ImpactClassification.NONE
+    IMPACT: ImpactClassification = ImpactClassification.INFORMATIONAL
     PRECISION: PrecisionClassification = PrecisionClassification.HIGH
     CATEGORY: CategoryClassification = CategoryClassification.ANALYTICS
 

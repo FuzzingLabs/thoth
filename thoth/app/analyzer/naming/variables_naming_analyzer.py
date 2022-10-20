@@ -15,9 +15,9 @@ class VariableNamingAnalyzer(AbstractAnalyzer):
     NAME = "Variable naming"
     ARGUMENT = "variables_naming"
     HELP = "Detect variables names that are not in snake case"
-    IMPACT: ImpactClassification = ImpactClassification.NONE
+    IMPACT: ImpactClassification = ImpactClassification.INFORMATIONAL
     PRECISION: PrecisionClassification = PrecisionClassification.HIGH
-    CATEGORY: CategoryClassification = CategoryClassification.ANALYTICS
+    CATEGORY: CategoryClassification = CategoryClassification.SECURITY
 
     def _detect(self) -> None:
         snake_case_regexp = r"^([a-z0-9]*_*[a-z0-9]*)*$"

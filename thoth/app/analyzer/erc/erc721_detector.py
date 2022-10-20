@@ -14,7 +14,7 @@ class ERC721Analyzer(AbstractAnalyzer):
     NAME = "ERC721"
     ARGUMENT = "erc721"
     HELP = "Detect if a contract is an ERC721 Token"
-    IMPACT: ImpactClassification = ImpactClassification.NONE
+    IMPACT: ImpactClassification = ImpactClassification.INFORMATIONAL
     PRECISION: PrecisionClassification = PrecisionClassification.HIGH
     CATEGORY: CategoryClassification = CategoryClassification.ANALYTICS
 

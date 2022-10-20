@@ -15,7 +15,7 @@ class StringsAnalyzer(AbstractAnalyzer):
     NAME = "Strings"
     ARGUMENT = "strings"
     HELP = "Detect strings inside a contract"
-    IMPACT: ImpactClassification = ImpactClassification.NONE
+    IMPACT: ImpactClassification = ImpactClassification.INFORMATIONAL
     PRECISION: PrecisionClassification = PrecisionClassification.HIGH
     CATEGORY: CategoryClassification = CategoryClassification.ANALYTICS
 

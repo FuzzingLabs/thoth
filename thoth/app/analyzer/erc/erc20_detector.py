@@ -14,7 +14,7 @@ class ERC20Analyzer(AbstractAnalyzer):
     NAME = "ERC20"
     ARGUMENT = "erc20"
     HELP = "Detect if a contract is an ERC20 Token"
-    IMPACT: ImpactClassification = ImpactClassification.NONE
+    IMPACT: ImpactClassification = ImpactClassification.INFORMATIONAL
     PRECISION: PrecisionClassification = PrecisionClassification.HIGH
     CATEGORY: CategoryClassification = CategoryClassification.ANALYTICS
 

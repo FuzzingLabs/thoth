@@ -1,4 +1,5 @@
 from enum import Enum
+from sre_parse import CATEGORIES
 from typing import Callable, Dict, List
 from unicodedata import category
 from thoth.app.disassembler.disassembler import Disassembler
@@ -29,7 +30,7 @@ class ImpactClassification(Enum):
     Analytics/Optimization analyzers have a NONE Impact by default
     """
 
-    NONE = 0
+    INFORMATIONAL = 0
     HIGH = 1
     MEDIUM = 2
     LOW = 3
@@ -60,14 +61,14 @@ category_classification_text: Dict[CategoryClassification, str] = {
 }
 
 impact_classification_colors: Dict[ImpactClassification, str] = {
-    ImpactClassification.NONE: colors.CYAN,
+    ImpactClassification.INFORMATIONAL: colors.CYAN,
     ImpactClassification.LOW: colors.GREEN,
     ImpactClassification.MEDIUM: colors.YELLOW,
     ImpactClassification.HIGH: colors.RED,
 }
 
 impact_classification_text: Dict[ImpactClassification, str] = {
-    ImpactClassification.NONE: "None",
+    ImpactClassification.INFORMATIONAL: "Informational",
     ImpactClassification.LOW: "Low",
     ImpactClassification.MEDIUM: "Medium",
     ImpactClassification.HIGH: "High",
@@ -86,7 +87,7 @@ class AbstractAnalyzer:
     # Analyzer description
     HELP = ""
     # Analyzer impact
-    IMPACT: ImpactClassification = ImpactClassification.NONE
+    IMPACT: ImpactClassification = ImpactClassification.INFORMATIONAL
     # Analyzer precision
     PRECISION: PrecisionClassification = PrecisionClassification.HIGH
     # Analyzer category
@@ -113,7 +114,7 @@ class AbstractAnalyzer:
         Print the analyzer documentation
         """
         category_color = category_classification_colors[cls.CATEGORY] if color else ""
-        help = "[%s] %s%s%s <%s> - " % (
+        help = "[%s] %s %s%s%s <%s> - " % (
             category_classification_text[cls.CATEGORY],
             category_color,
             cls.NAME,
@@ -130,12 +131,19 @@ class AbstractAnalyzer:
         if not self.detected:
             return False
 
+        # Impact
+        impact = ""
+        if self.CATEGORY == CategoryClassification.SECURITY:
+            impact_color = impact_classification_colors[self.IMPACT]
+            impact = "(%s)" % (impact_color + impact_classification_text[self.IMPACT] + colors.ENDC)
+
         category_color = category_classification_colors[self.CATEGORY] if self.color else ""
-        title = "[%s%s%s] %s" % (
+        title = "[%s%s%s] %s %s" % (
             category_color,
             category_classification_text[self.CATEGORY],
             colors.ENDC,
             self.NAME,
+            impact,
         )
         print(title)
         for result in self.result:

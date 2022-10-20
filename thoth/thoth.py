@@ -117,13 +117,9 @@ def main() -> int:
                     for k, v in category_classification_text.items()
                     if v == analyzer_name.capitalize()
                 ][0]
-                selected_analyzers.append(
-                    [
-                        analyzer
-                        for analyzer in all_analyzers
-                        if analyzer.CATEGORY == selected_category
-                    ][0]
-                )
+                selected_analyzers += [
+                    analyzer for analyzer in all_analyzers if analyzer.CATEGORY == selected_category
+                ]
     # Select all analyzers by default
     else:
         selected_analyzers = all_analyzers
