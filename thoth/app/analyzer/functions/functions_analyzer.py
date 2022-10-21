@@ -9,7 +9,7 @@ from thoth.app.analyzer.abstract_analyzer import (
 
 class FunctionsAnalyzer(AbstractAnalyzer):
     """
-    Detect strings inside a contract
+    Analyze a contract functions
     """
 
     NAME = "Functions"
@@ -67,5 +67,10 @@ class FunctionsAnalyzer(AbstractAnalyzer):
             if decorators:
                 result += "\n"
                 result += "\t- decorators : %s" % ", ".join(decorators)
+
+            # Cyclomatic complexity
+            cyclomatic_complexity = function.cyclomatic_complexity
+            result += "\n"
+            result += "\t- cyclomatic complexity : %s" % cyclomatic_complexity
 
             self.result.append(result)
