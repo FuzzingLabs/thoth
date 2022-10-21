@@ -114,7 +114,7 @@ class AbstractAnalyzer:
         Print the analyzer documentation
         """
         category_color = category_classification_colors[cls.CATEGORY] if color else ""
-        help = "[%s] %s %s%s%s <%s> - " % (
+        help = "[%s] %s%s%s <%s> - " % (
             category_classification_text[cls.CATEGORY],
             category_color,
             cls.NAME,
