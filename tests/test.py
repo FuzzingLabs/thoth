@@ -93,7 +93,9 @@ class TestDisassembler(unittest.TestCase):
         functions_analyzer = analyzer.FunctionsAnalyzer(disassembler, color=False)
         functions_analyzer._detect()
 
-        self.assertEqual(functions_analyzer.result[0], "main (entry point)")
+        self.assertEqual(
+            functions_analyzer.result[0], "main (entry point)\n\t- cyclomatic complexity : 2"
+        )
 
     def test_cairo_direct_and_indirect_recursion_statistics_analyzer(self):
         """
@@ -116,11 +118,13 @@ class TestDisassembler(unittest.TestCase):
         functions_analyzer = analyzer.FunctionsAnalyzer(disassembler, color=False)
         functions_analyzer._detect()
 
-        self.assertEqual(functions_analyzer.result[0], "a")
-        self.assertEqual(functions_analyzer.result[1], "b")
-        self.assertEqual(functions_analyzer.result[2], "c")
-        self.assertEqual(functions_analyzer.result[3], "d")
-        self.assertEqual(functions_analyzer.result[4], "main (entry point)")
+        self.assertEqual(functions_analyzer.result[0], "a\n\t- cyclomatic complexity : 9")
+        self.assertEqual(functions_analyzer.result[1], "b\n\t- cyclomatic complexity : 8")
+        self.assertEqual(functions_analyzer.result[2], "c\n\t- cyclomatic complexity : 8")
+        self.assertEqual(functions_analyzer.result[3], "d\n\t- cyclomatic complexity : 8")
+        self.assertEqual(
+            functions_analyzer.result[4], "main (entry point)\n\t- cyclomatic complexity : 8"
+        )
 
     def test_cairo_struct_statistics_analyzer(self):
         """
@@ -169,21 +173,34 @@ class TestDisassembler(unittest.TestCase):
         functions_analyzer = analyzer.FunctionsAnalyzer(disassembler, color=False)
         functions_analyzer._detect()
 
-        self.assertEqual(functions_analyzer.result[0], "__main__.balance.addr")
-        self.assertEqual(functions_analyzer.result[1], "__main__.balance.read")
-        self.assertEqual(functions_analyzer.result[2], "__main__.balance.write")
         self.assertEqual(
-            functions_analyzer.result[3], "increase_balance\n\t- decorators : external"
+            functions_analyzer.result[0], "__main__.balance.addr\n\t- cyclomatic complexity : 1"
+        )
+        self.assertEqual(
+            functions_analyzer.result[1], "__main__.balance.read\n\t- cyclomatic complexity : 1"
+        )
+        self.assertEqual(
+            functions_analyzer.result[2], "__main__.balance.write\n\t- cyclomatic complexity : 1"
+        )
+        self.assertEqual(
+            functions_analyzer.result[3],
+            "increase_balance\n\t- decorators : external\n\t- cyclomatic complexity : 1",
         )
         self.assertEqual(
             functions_analyzer.result[4],
-            "__wrappers__.increase_balance (entry point)\n\t- decorators : external",
+            "__wrappers__.increase_balance (entry point)\n\t- decorators : external\n\t- cyclomatic complexity : 1",
         )
-        self.assertEqual(functions_analyzer.result[5], "get_balance\n\t- decorators : view")
-        self.assertEqual(functions_analyzer.result[6], "__wrappers__.get_balance_encode_return")
+        self.assertEqual(
+            functions_analyzer.result[5],
+            "get_balance\n\t- decorators : view\n\t- cyclomatic complexity : 1",
+        )
+        self.assertEqual(
+            functions_analyzer.result[6],
+            "__wrappers__.get_balance_encode_return\n\t- cyclomatic complexity : 1",
+        )
         self.assertEqual(
             functions_analyzer.result[7],
-            "__wrappers__.get_balance (entry point)\n\t- decorators : view",
+            "__wrappers__.get_balance (entry point)\n\t- decorators : view\n\t- cyclomatic complexity : 1",
         )
 
     def test_starknet_l1_default_statistics_analyzer(self):
@@ -207,29 +224,41 @@ class TestDisassembler(unittest.TestCase):
         functions_analyzer = analyzer.FunctionsAnalyzer(disassembler, color=False)
         functions_analyzer._detect()
 
-        self.assertEqual(functions_analyzer.result[0], "__main__.impl_address.addr")
-        self.assertEqual(functions_analyzer.result[1], "__main__.impl_address.read")
-        self.assertEqual(functions_analyzer.result[2], "__main__.impl_address.write")
-        self.assertEqual(functions_analyzer.result[3], "constructor\n\t- decorators : external")
+        self.assertEqual(
+            functions_analyzer.result[0],
+            "__main__.impl_address.addr\n\t- cyclomatic complexity : 1",
+        )
+        self.assertEqual(
+            functions_analyzer.result[1],
+            "__main__.impl_address.read\n\t- cyclomatic complexity : 1",
+        )
+        self.assertEqual(
+            functions_analyzer.result[2],
+            "__main__.impl_address.write\n\t- cyclomatic complexity : 1",
+        )
+        self.assertEqual(
+            functions_analyzer.result[3],
+            "constructor\n\t- decorators : external\n\t- cyclomatic complexity : 1",
+        )
         self.assertEqual(
             functions_analyzer.result[4],
-            "__wrappers__.constructor (entry point)\n\t- decorators : external",
+            "__wrappers__.constructor (entry point)\n\t- decorators : external\n\t- cyclomatic complexity : 1",
         )
         self.assertEqual(
             functions_analyzer.result[5],
-            "__default__\n\t- decorators : external, raw_input, raw_output",
+            "__default__\n\t- decorators : external, raw_input, raw_output\n\t- cyclomatic complexity : 1",
         )
         self.assertEqual(
             functions_analyzer.result[6],
-            "__wrappers__.__default__ (entry point)\n\t- decorators : external, raw_input, raw_output",
+            "__wrappers__.__default__ (entry point)\n\t- decorators : external, raw_input, raw_output\n\t- cyclomatic complexity : 1",
         )
         self.assertEqual(
             functions_analyzer.result[7],
-            "__l1_default__ <- L1\n\t- decorators : l1_handler, raw_input",
+            "__l1_default__ <- L1\n\t- decorators : l1_handler, raw_input\n\t- cyclomatic complexity : 1",
         )
         self.assertEqual(
             functions_analyzer.result[8],
-            "__wrappers__.__l1_default__ <- L1 (entry point)\n\t- decorators : l1_handler, raw_input",
+            "__wrappers__.__l1_default__ <- L1 (entry point)\n\t- decorators : l1_handler, raw_input\n\t- cyclomatic complexity : 1",
         )
 
     def test_starknet_get_code_l2_dai_bridge_statistics_analyzer(self):
@@ -253,10 +282,13 @@ class TestDisassembler(unittest.TestCase):
         functions_analyzer = analyzer.FunctionsAnalyzer(disassembler, color=False)
         functions_analyzer._detect()
 
-        self.assertEqual(functions_analyzer.result[0], "generate -> L1\n\t- decorators : external")
+        self.assertEqual(
+            functions_analyzer.result[0],
+            "generate -> L1\n\t- decorators : external\n\t- cyclomatic complexity : 1",
+        )
         self.assertEqual(
             functions_analyzer.result[1],
-            "__wrappers__.generate (entry point)\n\t- decorators : external",
+            "__wrappers__.generate (entry point)\n\t- decorators : external\n\t- cyclomatic complexity : 1",
         )
 
     def test_starknet_erc20_erc20_analyzer(self):
