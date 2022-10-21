@@ -37,6 +37,7 @@ class Decompiler:
         self.return_values = None
         # Static single assignment
         self.ssa = SSA()
+        self.memory_copy = []
         self.assertion = False
         self.current_basic_block: Optional[BasicBlock] = None
         self.first_pass = True
@@ -504,7 +505,7 @@ class Decompiler:
         decompiled_instruction = color + tabulations + data + utils.color.ENDC + end
         return decompiled_instruction
 
-    def decompile_code(self) -> str:
+    def decompile_code(self, first_pass_only: bool = False) -> str:
         """
         Decompile the contract code
         Return the decompiled code
@@ -562,6 +563,12 @@ class Decompiler:
                         last=(count == len(function.instructions)),
                     )
                 block.variables = self.ssa.memory[len(memory_backup) :]
+            self.memory_copy += block.variables
+
+            # Speed the decompilation process for the analyzers by
+            # doing only one pass
+            if first_pass_only:
+                break
 
             # Initialize the SSA for the second pass
             self.ssa.ap_position = ap_backup_value

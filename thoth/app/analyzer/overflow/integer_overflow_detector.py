@@ -59,7 +59,7 @@ class IntegerOverflowDetector(AbstractAnalyzer):
     def _detect(self):
         contract_functions = self.disassembler.functions
         self.decompiler = Decompiler(functions=contract_functions)
-        decompiled_code = self.decompiler.decompile_code()
+        decompiled_code = self.decompiler.decompile_code(first_pass_only=True)
 
         variables = self.decompiler.ssa.memory
         for function in contract_functions:
