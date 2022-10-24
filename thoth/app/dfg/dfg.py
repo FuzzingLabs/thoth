@@ -38,7 +38,7 @@ class DFG:
         self.variables_blocks: List[DFGVariableBlock] = []
         self.edges: List[DFGEdge] = []
 
-    def create_blocks(self) -> None:
+    def _create_blocks(self) -> None:
         """
         Create the DFG blocks from the variables
         """
@@ -55,7 +55,7 @@ class DFG:
                     DFGVariableBlock(variable_name, variable_function, is_function_argument)
                 )
 
-    def create_edges(self) -> None:
+    def _create_edges(self) -> None:
         """
         Create the DFG edges from the variables
         """
@@ -91,16 +91,23 @@ class DFG:
             for source_block in source_blocks:
                 self.edges.append(DFGEdge(source_block, destination_block, variable.function))
 
-    def print_dfg(self) -> str:
+    def _create_dfg(self) -> None:
         """
-        Generate a graph in Dot
+        Create the DFG (Blocks and Edges)
         """
-        self.create_blocks()
-        self.create_edges()
+        self._create_blocks()
+        self._create_edges()
+
+    def _print_dfg(self) -> str:
+        """
+        Generate a graph layout in Dot
+        """
+        self._create_dfg()
 
         dot = graphviz.Digraph("DataFlow Graph", comment="")
         contract_functions = list(set([v.function.name for v in self.variables_blocks]))
 
+        # Create one subgraph per function
         subgraphs = []
         for function in contract_functions:
             subgraph = graphviz.Digraph(name=function, comment=function)
