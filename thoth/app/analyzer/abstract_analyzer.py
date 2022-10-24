@@ -134,7 +134,7 @@ class AbstractAnalyzer:
         # Impact
         impact = ""
         if self.CATEGORY == CategoryClassification.SECURITY:
-            impact_color = impact_classification_colors[self.IMPACT]
+            impact_color = impact_classification_colors[self.IMPACT] if self.color else ""
             impact = "(%s)" % (impact_color + impact_classification_text[self.IMPACT] + colors.ENDC)
 
         category_color = category_classification_colors[self.CATEGORY] if self.color else ""

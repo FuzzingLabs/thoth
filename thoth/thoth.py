@@ -126,7 +126,7 @@ def main() -> int:
 
     # Run analyzers
     for analyzer in selected_analyzers:
-        a = analyzer(disassembler)
+        a = analyzer(disassembler, color=args.color)
         a._detect()
         a._print()
 

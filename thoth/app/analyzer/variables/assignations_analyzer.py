@@ -43,7 +43,7 @@ class AssignationsAnalyzer(AbstractAnalyzer):
     def _detect(self) -> None:
         contract_functions = self.disassembler.functions
         self.decompiler = Decompiler(functions=contract_functions)
-        self.decompiler.decompile_code()
+        self.decompiler.decompile_code(first_pass_only=True)
 
         memory = self.decompiler.ssa.memory
         for variable in memory:
