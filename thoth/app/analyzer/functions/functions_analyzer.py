@@ -77,4 +77,9 @@ class FunctionsAnalyzer(AbstractAnalyzer):
             result += "\n"
             result += "\t- cyclomatic complexity : %s" % cyclomatic_complexity
 
+            # Instructions count
+            instructions_count = len(function.instructions)
+            result += "\n"
+            result += "\t- instructions : %s" % instructions_count
+
             self.result.append(result)
