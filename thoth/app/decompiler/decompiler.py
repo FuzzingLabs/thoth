@@ -69,6 +69,7 @@ class Decompiler:
         """
         source_code = ""
         is_assert = ""
+        equal = "="
         # Generate the phi function representation
         phi_node_variables = []
 
@@ -121,7 +122,7 @@ class Decompiler:
                 )
 
                 source_code += self.print_instruction_decomp(
-                    f"{is_assert}{variable[1]} = {variable_value}",
+                    f"{is_assert}{variable[1]} {equal} {variable_value}",
                     color=utils.color.GREEN,
                 )
                 # Variable value (hex or string)
@@ -135,6 +136,7 @@ class Decompiler:
                 variable = self.ssa.get_variable(destination_register, destination_offset)
                 if variable[2].value is not None or self.assertion:
                     is_assert = "assert "
+                    equal = "=="
                 if self.ssa.get_variable(op0_register, offset_1)[2] in phi_node_variables:
                     operand = phi_node_representation
                     variable_operand_1 = Operand(
@@ -163,7 +165,7 @@ class Decompiler:
                     operation=[variable_operand_1, operator, variable_operand_2],
                 )
                 source_code += self.print_instruction_decomp(
-                    f"{is_assert}{variable[1]} = [{operand}{sign}{value_off2}]",
+                    f"{is_assert}{variable[1]} {equal} [{operand}{sign}{value_off2}]",
                     color=utils.color.GREEN,
                 )
             # <variable> = <variable>
@@ -191,7 +193,7 @@ class Decompiler:
                         operation=[Operand(type=OperandType.VARIABLE, value=[variable_value])],
                     )
                 source_code += self.print_instruction_decomp(
-                    f"{is_assert}{variable[1]} = {variable_value}",
+                    f"{is_assert}{variable[1]} {equal} {variable_value}",
                     color=utils.color.GREEN,
                 )
         # <variable> = <variable> +/- <variable>
@@ -227,7 +229,7 @@ class Decompiler:
                     operation=[variable_operand_1, operator, variable_operand_2],
                 )
                 source_code += self.print_instruction_decomp(
-                    f"{is_assert}{variable[1]} = {operand_1} {op} {operand_2}",
+                    f"{is_assert}{variable[1]} {equal} {operand_1} {op} {operand_2}",
                     color=utils.color.GREEN,
                 )
             # <variable> = <variable> +/- <integer>
@@ -275,7 +277,7 @@ class Decompiler:
                 )
 
                 source_code += self.print_instruction_decomp(
-                    f"{is_assert}{variable[1]} = {operand} {op} {value}",
+                    f"{is_assert}{variable[1]} {equal} {operand} {op} {value}",
                     color=utils.color.GREEN,
                 )
                 self.block_new_variables += 1
