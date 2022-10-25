@@ -534,6 +534,10 @@ class Decompiler:
 
             function.generate_cfg()
 
+            # Print the function ID as a comment before the prototype
+            source_code += self.print_instruction_decomp(
+                f"// Function {function.id}", end="\n", color=utils.color.CYAN
+            )
             source_code += self.print_instruction_decomp(
                 function.get_prototype(), color=utils.color.BLUE
             )

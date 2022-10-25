@@ -15,6 +15,7 @@ class Function:
         offset_start: int,
         offset_end: int,
         name: str,
+        id: int,
         instructions: Instruction,
         args: dict,
         implicitargs: dict,
@@ -31,6 +32,7 @@ class Function:
             offset_start (String): The offset where the function start
             offset_end (String): The offset where the function end
             name (String): The function name
+            id (Int): Id of the function
             instructions (List): List of the instructions
             args (Dictionnary): Dict containing the arguments
             implicitargs (Dictionnary): Dict containing the implicit arguments
@@ -44,6 +46,7 @@ class Function:
         self.offset_start = offset_start
         self.offset_end = offset_end
         self.name = name
+        self.id = id
         self.instructions_dict = instructions
         self.instructions: List = []
         self.args = args if args != {} else None
