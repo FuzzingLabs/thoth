@@ -78,7 +78,7 @@ thoth local tests/json_files/cairo_array_sum.json -a erc20 erc721
 # Only run a specific category of analyzers
 thoth local tests/json_files/cairo_array_sum.json -a security
 thoth local tests/json_files/cairo_array_sum.json -a optimization
-thoth local tests/json_files/cairo_array_sum.json -a informational
+thoth local tests/json_files/cairo_array_sum.json -a analytics
 
 # Print a list of all the availables analyzers
 thoth local tests/json_files/cairo_array_sum.json --analyzers-help

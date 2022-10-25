@@ -12,11 +12,59 @@ def parse_args() -> argparse.Namespace:
     """
     root_parser = argparse.ArgumentParser(add_help=False)
 
+    thoth_examples = """
+Examples:
+
+Disassemble the contract's compilation artifact from a JSON file:    
+    thoth local tests/json_files/cairo_array_sum.json -b
+
+Disassemble the contract's compilation artifact from Starknet:
+    thoth remote --address 0x0323D18E2401DDe9aFFE1908e9863cbfE523791690F32a2ff6aa66959841D31D --network mainnet -b
+
+Get a pretty colored version:
+    thoth local tests/json_files/cairo_array_sum.json -b -color
+
+Get a verbose version with more details about decoded bytecodes:
+    thoth local tests/json_files/cairo_array_sum.json -vvv
+
+Decompile the contract's compilation artifact (json):
+    thoth local tests/json_files/cairo_test_addition_if.json -d
+
+Run all the analyzers:
+    thoth local tests/json_files/cairo_array_sum.json -a
+
+Select which analyzers to run:
+    thoth local tests/json_files/cairo_array_sum.json -a erc20 erc721
+
+Only run a specific category of analyzers:
+    thoth local tests/json_files/cairo_array_sum.json -a security
+    thoth local tests/json_files/cairo_array_sum.json -a optimization
+    thoth local tests/json_files/cairo_array_sum.json -a analytics
+
+Print a list of all the availables analyzers:
+    thoth local tests/json_files/cairo_array_sum.json --analyzers-help
+
+Print the contract's call graph:
+    thoth local tests/json_files/cairo_array_sum.json -call -view True
+
+For a specific output format (pdf/svg/png):
+    thoth local tests/json_files/cairo_array_sum.json -call -view True -format png
+
+Print the contract's control-flow graph (CFG):
+    thoth local tests/json_files/cairo_double_function_and_if.json -cfg -view True
+
+For a specific function:
+    thoth local tests/json_files/cairo_double_function_and_if.json -cfg -view True -function "__main__.main"
+
+For a specific output format (pdf/svg/png):
+    thoth local tests/json_files/cairo_double_function_and_if.json -cfg -view True -format png"""
+
     parser = argparse.ArgumentParser(
         add_help=True,
-        description="Cairo Disassembler",
+        description='Thoth (pronounced "toss") is a Cairo/Starknet analyzer, disassembler & decompiler written in Python 3. Thoth\'s features also include the generation of the call graph and control-flow graph (CFG) of a given Cairo/Starknet compilation artifact.\n\n'
+        + thoth_examples,
         epilog="The exit status is 0 for non-failures and -1 for failures.",
-        formatter_class=argparse.ArgumentDefaultsHelpFormatter,
+        formatter_class=argparse.RawTextHelpFormatter,
         parents=[root_parser],
     )
 
