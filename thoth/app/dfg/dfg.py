@@ -1,4 +1,3 @@
- 
 import graphviz
 from typing import List
 from thoth.app.decompiler.variable import Operand, OperandType, Variable
@@ -176,8 +175,6 @@ class DFG:
         """
         Generate a Dot graph layout
         """
-        self._create_dfg()
-
         dot = graphviz.Digraph("DataFlow Graph", comment="")
         contract_functions = list(set([v.function.name for v in self.variables_blocks]))
 
