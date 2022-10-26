@@ -68,6 +68,18 @@ Example 2 with function call:
 
 The static analysis is performed using *analyzers* which can be either informative or security/optimization related.
 
+|Analyzer|Command-Line argument|Description|Impact|Precision|Category|
+|---|---|---|---|---|---|
+|**ERC20**|`erc20`|Detect if a contract is an ERC20 Token|Informational|High|Analytics|
+|**ERC721**|`erc721`|Detect if a contract is an ERC721 Token|Informational|High|Analytics|
+|**Strings**|`strings`|Detect strings inside a contract|Informational|High|Analytics|
+|**Functions**|`functions`|Retrieve informations about the contract's functions|Informational|High|Analytics|
+|**Statistics**|`statistics`|General statistics about the contract|Informational|High|Analytics|
+|**Assignations**|`assignations`|List of variables assignations|Informational|High|Optimization|
+|**Integer overflow**|`int_overflow`|Detect direct integer overflow/underflow|High|Medium|Security|
+|**Function naming**|`function_naming`|Detect functions names that are not in snake case|Informational|High|Security|
+|**Variable naming**|`variable_naming`|Detect variables names that are not in snake case|Informational|High|Security|
+
 ```bash
 # Run all the analyzers
 thoth local tests/json_files/cairo_array_sum.json -a
@@ -78,7 +90,7 @@ thoth local tests/json_files/cairo_array_sum.json -a erc20 erc721
 # Only run a specific category of analyzers
 thoth local tests/json_files/cairo_array_sum.json -a security
 thoth local tests/json_files/cairo_array_sum.json -a optimization
-thoth local tests/json_files/cairo_array_sum.json -a informational
+thoth local tests/json_files/cairo_array_sum.json -a analytics
 
 # Print a list of all the availables analyzers
 thoth local tests/json_files/cairo_array_sum.json --analyzers-help

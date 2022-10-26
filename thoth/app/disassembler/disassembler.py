@@ -75,10 +75,13 @@ class Disassembler:
         self.labels = extract_labels(json_type, json_data)
 
         # Create the list of Functions
+        functions_counter = 0
         for function in self.json:
             offset_start = list(self.json[function]["instruction"].keys())[0]
             offset_end = list(self.json[function]["instruction"].keys())[-1]
             name = function
+            is_import = not name.startswith("__")
+            id = functions_counter if not is_import else None
             instructions = self.json[function]["instruction"]
             args = (
                 self.json[function]["data"]["args"]
@@ -106,6 +109,7 @@ class Disassembler:
                     offset_start,
                     offset_end,
                     name,
+                    functions_counter,
                     instructions,
                     args,
                     implicitargs,
@@ -115,9 +119,11 @@ class Disassembler:
                     entry_point=self.json[function]["data"]["entry_point"]
                     if json_type != "get_code"
                     else True,
-                    is_import=not name.startswith("__"),
+                    is_import=is_import,
                 )
             )
+            if not is_import:
+                functions_counter += 1
         # Analyze all the CALL to find the corresponding function, also set the references and hints to their instructions
         for func in self.functions:
             for inst in func.instructions:

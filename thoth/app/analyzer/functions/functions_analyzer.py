@@ -33,13 +33,17 @@ class FunctionsAnalyzer(AbstractAnalyzer):
         self.detected = bool(contract_functions)
 
         for function in contract_functions:
+            # Function ID
+            function_id = str(function.id)
+            result = "(%s) " % function_id
+
             # Function name
             function_path = function.name.split(".")
             if len(function_path) == 2 and function_path[0] == "__main__":
                 function_name = function_path[1]
             else:
                 function_name = function.name
-            result = header_color + function_name + end_color
+            result += header_color + function_name + end_color
 
             interact_with_L1 = False
             # Send messages to L1
@@ -72,5 +76,10 @@ class FunctionsAnalyzer(AbstractAnalyzer):
             cyclomatic_complexity = function.cyclomatic_complexity
             result += "\n"
             result += "\t- cyclomatic complexity : %s" % cyclomatic_complexity
+
+            # Instructions count
+            instructions_count = len(function.instructions)
+            result += "\n"
+            result += "\t- instructions : %s" % instructions_count
 
             self.result.append(result)
