@@ -35,6 +35,7 @@ class DFGVariableBlock:
 
     def __init__(self, name: str, function: Function, is_function_argument: bool) -> None:
         self.name = name
+        self.graph_representation_name = None
         self.function = function
         self.is_function_argument = is_function_argument
         self.tainting_coefficient = 0
@@ -64,6 +65,9 @@ class DFG:
         self.variables = variables
         self.variables_blocks: List[DFGVariableBlock] = []
         self.edges: List[DFGEdge] = []
+        # List of all the functions arguments names
+        all_functions: List[Function] = list(filter(None, [v.function for v in self.variables]))
+        self.all_functions_arguments = list(sum([f.arguments_list() for f in all_functions], []))
 
     def _clean_tainting(self) -> None:
         """
@@ -71,6 +75,14 @@ class DFG:
         """
         for block in self.variables_blocks:
             block.tainting_coefficient = 0
+
+    def get_variable_name(self, variable: DFGVariableBlock) -> str:
+        """
+        Get the name of a variable that will be displayed in the graph representation
+        """
+        if variable.name in self.all_functions_arguments:
+            return "f%s_%s" % (variable.function.id, variable.name)
+        return variable.name
 
     @staticmethod
     def taint_children_blocks(parent_block: DFGVariableBlock) -> None:
@@ -122,9 +134,9 @@ class DFG:
                 function_arguments = variable.function.arguments_list(implicit=False, ret=False)
                 is_function_argument = variable_name in function_arguments
                 # Create block
-                self.variables_blocks.append(
-                    DFGVariableBlock(variable_name, variable_function, is_function_argument)
-                )
+                new_block = DFGVariableBlock(variable_name, variable_function, is_function_argument)
+                new_block.graph_representation_name = self.get_variable_name(new_block)
+                self.variables_blocks.append(new_block)
 
     def _create_edges(self) -> None:
         """
@@ -175,29 +187,35 @@ class DFG:
         """
         Generate a Dot graph layout
         """
-        dot = graphviz.Digraph("DataFlow Graph", comment="")
+        dot = graphviz.Digraph("DataFlow Graph", comment="", strict=True)
         contract_functions = list(set([v.function.name for v in self.variables_blocks]))
 
         # Create one subgraph per function
         subgraphs = []
         for function in contract_functions:
-            subgraph = graphviz.Digraph(name=function, comment=function)
+            subgraph = graphviz.Digraph(name="cluster_%s" % function)
+            subgraph.attr(label=function)
             subgraphs.append(subgraph)
 
         # Nodes
         for variable in self.variables_blocks:
-            function_subgraph = [s for s in subgraphs if s.name == variable.function.name][0]
+            function_subgraph = [
+                s for s in subgraphs if s.name == "cluster_%s" % variable.function.name
+            ][0]
             function_subgraph.node(
-                variable.name,
+                self.get_variable_name(variable),
                 style="filled",
                 fillcolor=Tainting._get_taint(variable.tainting_coefficient),
             )
 
         # Edges
         for edge in self.edges:
-            function_subgraph = [s for s in subgraphs if s.name == edge.function.name][0]
-            function_subgraph.edge(edge.source.name, edge.destination.name)
-
+            function_subgraph = [
+                s for s in subgraphs if s.name == "cluster_%s" % edge.function.name
+            ][0]
+            function_subgraph.edge(
+                edge.source.graph_representation_name, edge.destination.graph_representation_name
+            )
         # Join subgraphs
         [dot.subgraph(_) for _ in subgraphs]
 
