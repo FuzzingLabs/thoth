@@ -1,5 +1,7 @@
 import graphviz
 from typing import List
+
+from tomlkit import comment
 from thoth.app.decompiler.variable import Operand, OperandType, Variable
 from thoth.app.disassembler.function import Function
 
@@ -131,7 +133,7 @@ class DFG:
             variable_function = variable.function
             is_function_argument = False
 
-            if variable_function is not None:
+            if variable_function is not None and not variable.function.is_import:
                 function_arguments = variable.function.arguments_list(implicit=False, ret=False)
                 is_function_argument = variable_name in function_arguments
                 # Create block
@@ -196,6 +198,7 @@ class DFG:
         for function in contract_functions:
             subgraph = graphviz.Digraph(name="cluster_%s" % function)
             subgraph.attr(label=function)
+            subgraph.attr(bgcolor="lightgrey")
             subgraphs.append(subgraph)
 
         # Nodes
@@ -207,7 +210,6 @@ class DFG:
                 self.get_variable_name(variable),
                 style="filled",
                 fillcolor=Tainting._get_taint(variable.tainting_coefficient),
-                label=variable.name,
             )
 
         # Edges
