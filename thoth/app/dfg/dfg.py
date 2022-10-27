@@ -228,9 +228,8 @@ class DFG:
 
         return self.dot.source
 
-    def _print_dfg(self, view=False):
+    def _print_dfg(self, folder: str, view=False):
         """
         Open the graph representation
         """
-        if view:
-            self.dot.view()
+        self.dot.render(directory=folder, view=view)

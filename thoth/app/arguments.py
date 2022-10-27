@@ -115,6 +115,12 @@ For a specific output format (pdf/svg/png):
         help="Set the output folder of the callflowgraph",
     )
     cfg.add_argument(
+        "-output_dfg_folder",
+        type=str,
+        default="output-dfg",
+        help="Set the output folder of the data-flow graph",
+    )
+    cfg.add_argument(
         "-format",
         "--format",
         metavar="Format of the output file [png-svg-pdf]",

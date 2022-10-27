@@ -74,7 +74,7 @@ def main() -> int:
 
     format = "pdf" if args.format is None else str(args.format)
 
-    # print call flow graph
+    # Print the call flow graph
     if args.call:
         disassembler.print_call_flow_graph(
             folder=args.output_callgraph_folder,
@@ -83,7 +83,7 @@ def main() -> int:
             view=str_to_bool(args.view),
         )
 
-    # print CFG
+    # Print the CFG
     if args.cfg:
         if args.color:
             disassembler = Disassembler(file, color=False)
@@ -95,6 +95,7 @@ def main() -> int:
             view=str_to_bool(args.view),
         )
 
+    # Print the DFG
     if args.dfg:
         contract_functions = disassembler.functions
         decompiler = Decompiler(functions=contract_functions)
@@ -103,7 +104,7 @@ def main() -> int:
         dfg = DFG(decompiler.ssa.memory)
         dfg._create_dfg()
         dfg._create_graph_representation()
-        dfg._print_dfg(view=str_to_bool(args.view))
+        dfg._print_dfg(view=str_to_bool(args.view), folder=args.output_dfg_folder)
 
     if args.analyzers is None:
         return 0
