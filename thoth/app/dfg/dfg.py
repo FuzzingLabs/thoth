@@ -228,8 +228,8 @@ class DFG:
 
         return self.dot.source
 
-    def _print_dfg(self, folder: str, view=False):
+    def _print_dfg(self, folder: str, view=False, format: str = "pdf"):
         """
         Open the graph representation
         """
-        self.dot.render(directory=folder, view=view)
+        self.dot.render(directory=folder, view=view, format=format)

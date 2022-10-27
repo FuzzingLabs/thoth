@@ -104,7 +104,9 @@ def main() -> int:
         dfg = DFG(decompiler.ssa.memory)
         dfg._create_dfg()
         dfg._create_graph_representation()
-        dfg._print_dfg(view=str_to_bool(args.view), folder=args.output_dfg_folder)
+        dfg._print_dfg(
+            view=str_to_bool(args.view), folder=args.output_dfg_folder, format=args.format
+        )
 
     if args.analyzers is None:
         return 0
