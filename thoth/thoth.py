@@ -125,18 +125,26 @@ def main() -> int:
         selected_analyzers = all_analyzers
 
     # Run analyzers
+    detected_analyzers_count = 0
     for analyzer in selected_analyzers:
+        detected = False
         a = analyzer(disassembler, color=args.color)
-        a._detect()
+        if a._detect():
+            detected = True
+            detected_analyzers_count += 1 
         a._print()
+        if detected:
+            print()
 
     selected_analyzers_count = len(selected_analyzers)
+
     print(
-        "\n[+] %s analyser%s %s run"
+        "[+] %s analyzer%s %s run (%s detected)"
         % (
             selected_analyzers_count,
             "s" if selected_analyzers_count > 1 else "",
             "were" if selected_analyzers_count > 1 else "was",
+            detected_analyzers_count
         )
     )
     return 0

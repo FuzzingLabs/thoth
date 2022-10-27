@@ -102,7 +102,7 @@ class AbstractAnalyzer:
         self.detected = False
         self.color = color
 
-    def _detect(self) -> None:
+    def _detect(self) -> bool:
         """
         Run analyzer on the contract
         """

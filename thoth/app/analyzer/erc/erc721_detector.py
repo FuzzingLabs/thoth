@@ -18,7 +18,7 @@ class ERC721Analyzer(AbstractAnalyzer):
     PRECISION: PrecisionClassification = PrecisionClassification.HIGH
     CATEGORY: CategoryClassification = CategoryClassification.ANALYTICS
 
-    def _detect(self) -> None:
+    def _detect(self) -> bool:
         # Cairo naming convention is snake case
         # https://docs.openzeppelin.com/contracts/2.x/api/token/erc721
         mandatory_erc721_functions_names = set(
@@ -69,3 +69,4 @@ class ERC721Analyzer(AbstractAnalyzer):
                 self.result.append("Pausable token")
             if enumerable:
                 self.result.append("Enumerable token")
+        return self.detected

@@ -60,7 +60,7 @@ class AssignationsAnalyzer(AbstractAnalyzer):
     PRECISION: PrecisionClassification = PrecisionClassification.HIGH
     CATEGORY: CategoryClassification = CategoryClassification.OPTIMIZATION
 
-    def _detect(self) -> None:
+    def _detect(self) -> bool:
         contract_functions = self.disassembler.functions
         self.decompiler = Decompiler(functions=contract_functions)
         self.decompiler.decompile_code(first_pass_only=True)
@@ -75,3 +75,5 @@ class AssignationsAnalyzer(AbstractAnalyzer):
                 )
                 self.result.append(assignation)
         self.detected = True
+
+        return self.detected

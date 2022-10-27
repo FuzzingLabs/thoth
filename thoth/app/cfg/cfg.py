@@ -210,12 +210,10 @@ class CFG:
     def print_bb(self) -> None:
         """Print the list of basic blocks in textual form"""
         # TODO - issue #45
-        print()
         for block in self.basicblocks:
             print(f"-- BB {block.name, len(block.instructions)} {block.edges_offset} --")
             for instruction in block.instructions:
                 print(instruction.print())
-            print()
 
     def generate_cfg(self) -> None:
         """Create the basicblock nodes and the edges"""

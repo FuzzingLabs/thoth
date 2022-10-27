@@ -19,7 +19,7 @@ class VariableNamingAnalyzer(AbstractAnalyzer):
     PRECISION: PrecisionClassification = PrecisionClassification.HIGH
     CATEGORY: CategoryClassification = CategoryClassification.SECURITY
 
-    def _detect(self) -> None:
+    def _detect(self) -> bool:
         snake_case_regexp = r"^([a-z0-9]*_*[a-z0-9]*)*$"
 
         contract_functions = self.disassembler.functions
@@ -48,3 +48,4 @@ class VariableNamingAnalyzer(AbstractAnalyzer):
                         "%s argument name (%s function) needs to be in snake case"
                         % (argument, function.name.split(".")[-1])
                     )
+        return self.detected

@@ -56,7 +56,7 @@ class IntegerOverflowDetector(AbstractAnalyzer):
             ]
         return operands_names
 
-    def _detect(self):
+    def _detect(self) -> bool:
         contract_functions = self.disassembler.functions
         self.decompiler = Decompiler(functions=contract_functions)
         decompiled_code = self.decompiler.decompile_code(first_pass_only=True)
@@ -93,3 +93,4 @@ class IntegerOverflowDetector(AbstractAnalyzer):
                             self.result.append(
                                 "%s : %s" % (function.name, integer_overflow_variables[0])
                             )
+        return self.detected
