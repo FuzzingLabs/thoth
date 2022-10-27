@@ -141,6 +141,24 @@ For a specific output format (pdf/svg/png):
 ```sh
 thoth local tests/json_files/cairo_double_function_and_if.json -cfg -view True -format png
 ```
+
+## Print the contract's data-flow graph (DFG)
+
+```sh
+thoth local tests/json_files/cairo_double_function_and_if.json -dfg -view True
+```
+The output file (pdf/svg/png) and the dot file are inside the `output-dfg` folder.
+
+<p align="center">
+	<img src="/images/thoth_dataflow_graph.png"/>
+</p>
+
+
+For a specific output format (pdf/svg/png):
+```sh
+thoth local tests/json_files/cairo_double_function_and_if.json -dfg -view True -format png
+```
+
 # F.A.Q
 
 ## How to find a Cairo/Starknet compilation artifact (json file)?
