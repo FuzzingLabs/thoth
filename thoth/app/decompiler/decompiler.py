@@ -6,7 +6,14 @@ from thoth.app.cfg.cfg import BasicBlock
 from thoth.app.disassembler.function import Function
 from thoth.app.disassembler.instruction import Instruction
 from thoth.app.decompiler.ssa import SSA
-from thoth.app.decompiler.variable import Variable
+from thoth.app.decompiler.variable import (
+    Operand,
+    OperandType,
+    Operator,
+    Variable,
+    VariableValue,
+    VariableValueType,
+)
 
 
 class Decompiler:
@@ -30,6 +37,7 @@ class Decompiler:
         self.return_values = None
         # Static single assignment
         self.ssa = SSA()
+        self.assertion = False
         self.current_basic_block: Optional[BasicBlock] = None
         self.first_pass = True
         self.block_new_variables = 0
@@ -60,7 +68,8 @@ class Decompiler:
             String: The formated ASSERT_EQ instruction
         """
         source_code = ""
-
+        is_assert = ""
+        equal = "="
         # Generate the phi function representation
         phi_node_variables = []
 
@@ -91,15 +100,29 @@ class Decompiler:
         destination_offset = int(instruction.offDest) if instruction.offDest else 0
 
         if "OP1" in instruction.res:
+            # <Variable> = <integer>
             if "IMM" in instruction.op1Addr:
                 value = utils.value_to_string(int(instruction.imm), (instruction.prime))
                 if value == "":
                     value = utils.field_element_repr(int(instruction.imm), instruction.prime)
 
                 variable = self.ssa.get_variable(destination_register, destination_offset)
+                if variable[2].value is not None or self.assertion:
+                    is_assert = "assert "
+                variable_value = utils.field_element_repr(int(instruction.imm), instruction.prime)
+
+                # Set variable value
+                try:
+                    variable_value_int = int(variable_value)
+                except:
+                    variable_value_int = int(variable_value, base=16)
+                variable[2].value = VariableValue(
+                    type=VariableValueType.ABSOLUTE,
+                    operation=[Operand(type=OperandType.INTEGER, value=variable_value_int)],
+                )
 
                 source_code += self.print_instruction_decomp(
-                    f"{variable[1]} = {utils.field_element_repr(int(instruction.imm), instruction.prime)}",
+                    f"{is_assert}{variable[1]} {equal} {variable_value}",
                     color=utils.color.GREEN,
                 )
                 # Variable value (hex or string)
@@ -108,56 +131,112 @@ class Decompiler:
                     color=utils.color.CYAN,
                     tab_count=1,
                 )
+            # <variable> = [<variable> +/- <integer>]
             elif "OP0" in instruction.op1Addr:
                 variable = self.ssa.get_variable(destination_register, destination_offset)
-
+                if variable[2].value is not None or self.assertion:
+                    is_assert = "assert "
+                    equal = "=="
                 if self.ssa.get_variable(op0_register, offset_1)[2] in phi_node_variables:
                     operand = phi_node_representation
+                    variable_operand_1 = Operand(
+                        type=OperandType.VARIABLE,
+                        value=[variable.name for variable in self.get_phi_node_variables()],
+                    )
                 else:
                     operand = self.ssa.get_variable(op0_register, offset_1)[1]
+                    variable_operand_1 = Operand(type=OperandType.VARIABLE, value=[operand])
+
+                operator = Operator.ADDITION
+                variable_operand_2 = Operand(type=OperandType.INTEGER, value=[0])
 
                 value_off2 = instruction.off2
                 sign = ""
                 try:
                     value_off2 = int(value_off2)
+                    variable_operand_2 = Operand(type=OperandType.INTEGER, value=[value_off2])
                     sign = " + " if value_off2 >= 0 else " - "
                 except Exception:
                     pass
+
+                # Set variable value
+                variable[2].value = VariableValue(
+                    type=VariableValueType.ADDRESS,
+                    operation=[variable_operand_1, operator, variable_operand_2],
+                )
                 source_code += self.print_instruction_decomp(
-                    f"{variable[1]} = [{operand}{sign}{value_off2}]",
+                    f"{is_assert}{variable[1]} {equal} [{operand}{sign}{value_off2}]",
                     color=utils.color.GREEN,
                 )
+            # <variable> = <variable>
             else:
                 variable = self.ssa.get_variable(destination_register, destination_offset)
+                if variable[2].value is not None or self.assertion:
+                    is_assert = "assert "
                 if self.ssa.get_variable(op1_register, offset_2)[2] in phi_node_variables:
                     variable_value = phi_node_representation
+                    # Set variable value
+                    variable[2].value = VariableValue(
+                        type=VariableValueType.ABSOLUTE,
+                        operation=[
+                            Operand(
+                                type=OperandType.VARIABLE,
+                                value=[variable.name for variable in phi_node_variables],
+                            )
+                        ],
+                    )
                 else:
                     variable_value = self.ssa.get_variable(op1_register, offset_2)[1]
-
+                    # Set variable value
+                    variable[2].value = VariableValue(
+                        type=VariableValueType.ABSOLUTE,
+                        operation=[Operand(type=OperandType.VARIABLE, value=[variable_value])],
+                    )
                 source_code += self.print_instruction_decomp(
-                    f"{variable[1]} = {variable_value}",
+                    f"{is_assert}{variable[1]} {equal} {variable_value}",
                     color=utils.color.GREEN,
                 )
+        # <variable> = <variable> +/- <variable>
         else:
             op = OPERATORS[instruction.res]
             if "IMM" not in instruction.op1Addr:
                 variable = self.ssa.get_variable(destination_register, destination_offset)
-
+                if variable[2].value is not None or self.assertion:
+                    is_assert = "assert "
                 if self.ssa.get_variable(op0_register, offset_1)[2] in phi_node_variables:
                     operand_1 = phi_node_representation
+                    variable_operand_1 = Operand(
+                        type=OperandType.VARIABLE,
+                        value=[variable.name for variable in phi_node_variables],
+                    )
                 else:
                     operand_1 = self.ssa.get_variable(op0_register, offset_1)[1]
+                    variable_operand_1 = Operand(type=OperandType.VARIABLE, value=[operand_1])
                 if self.ssa.get_variable(op1_register, offset_2)[2] in phi_node_variables:
                     operand_2 = phi_node_representation
+                    variable_operand_2 = Operand(
+                        type=OperandType.VARIABLE,
+                        value=[variable.name for variable in phi_node_variables],
+                    )
                 else:
                     operand_2 = self.ssa.get_variable(op1_register, offset_2)[1]
+                    variable_operand_2 = Operand(type=OperandType.VARIABLE, value=[operand_2])
 
+                operator = Operator.ADDITION if op == "+" else Operator.MULTIPLICATION
+                # Set variable value
+                variable[2].value = VariableValue(
+                    type=VariableValueType.ABSOLUTE,
+                    operation=[variable_operand_1, operator, variable_operand_2],
+                )
                 source_code += self.print_instruction_decomp(
-                    f"{variable[1]} = {operand_1} {op} {operand_2}",
+                    f"{is_assert}{variable[1]} {equal} {operand_1} {op} {operand_2}",
                     color=utils.color.GREEN,
                 )
+            # <variable> = <variable> +/- <integer>
             else:
                 variable = self.ssa.get_variable(destination_register, destination_offset)
+                if variable[2].value is not None or self.assertion:
+                    is_assert = "assert "
                 try:
                     value = int(utils.field_element_repr(int(instruction.imm), instruction.prime))
                     if value < 0 and op == "+":
@@ -168,22 +247,43 @@ class Decompiler:
 
                 if self.ssa.get_variable(op0_register, offset_1)[2] in phi_node_variables:
                     operand = phi_node_representation
+                    variable_operand_1 = Operand(
+                        type=OperandType.VARIABLE,
+                        value=[variable.name for variable in phi_node_variables],
+                    )
                 elif (
                     self.block_new_variables == 0
                     and len(self.current_function.cfg.parents(self.current_basic_block)) != 0
                 ):
                     if len(phi_node_variables) != 0:
                         operand = phi_node_representation
+                        variable_operand_1 = Operand(
+                            type=OperandType.VARIABLE,
+                            value=[variable.name for variable in phi_node_variables],
+                        )
                     else:
                         operand = self.ssa.get_variable(op0_register, offset_1)[1]
+                        variable_operand_1 = Operand(type=OperandType.VARIABLE, value=operand)
                 else:
                     operand = self.ssa.get_variable(op0_register, offset_1)[1]
+                    variable_operand_1 = Operand(type=OperandType.VARIABLE, value=operand)
+
+                operator = Operator.ADDITION if op == "+" else Operator.MULTIPLICATION
+                variable_operand_2 = Operand(type=OperandType.INTEGER, value=value)
+                # Set variable value
+                variable[2].value = VariableValue(
+                    type=VariableValueType.ABSOLUTE,
+                    operation=[variable_operand_1, operator, variable_operand_2],
+                )
 
                 source_code += self.print_instruction_decomp(
-                    f"{variable[1]} = {operand} {op} {value}",
+                    f"{is_assert}{variable[1]} {equal} {operand} {op} {value}",
                     color=utils.color.GREEN,
                 )
                 self.block_new_variables += 1
+
+        # Set variable function (scope for local variables)
+        variable[2].function = self.current_function
         return source_code
 
     def _handle_nop_decomp(self, instruction: Instruction) -> str:
@@ -406,7 +506,7 @@ class Decompiler:
         decompiled_instruction = color + tabulations + data + utils.color.ENDC + end
         return decompiled_instruction
 
-    def decompile_code(self) -> str:
+    def decompile_code(self, first_pass_only: bool = False) -> str:
         """
         Decompile the contract code
         Return the decompiled code
@@ -418,18 +518,12 @@ class Decompiler:
             self.tab_count = 0
             count = 0
 
-            # Create new variables in memory for function arguments and return values
-            if len(function.arguments_list()) != 0:
-                for argument in function.arguments_list():
-                    self.ssa.new_variable(variable_name=argument)
-                    self.ssa.ap_position += 1
+            # Initialize AP and FP registers values at the  beginning of the function
+            self.ssa.new_function_init(function)
 
             # Imported function
             if function.is_import:
                 continue
-
-            # Initialize AP and FP registers values at the  beginning of the function
-            self.ssa.new_function_init()
 
             # Create a backup value of AP and FP registers
             ap_backup_value = self.ssa.ap_position
@@ -440,6 +534,10 @@ class Decompiler:
 
             function.generate_cfg()
 
+            # Print the function ID as a comment before the prototype
+            source_code += self.print_instruction_decomp(
+                f"// Function {function.id}", end="\n", color=utils.color.CYAN
+            )
             source_code += self.print_instruction_decomp(
                 function.get_prototype(), color=utils.color.BLUE
             )
@@ -471,6 +569,11 @@ class Decompiler:
                     )
                 block.variables = self.ssa.memory[len(memory_backup) :]
 
+            # Speed the decompilation process for the analyzers by
+            # doing only one pass
+            if first_pass_only:
+                continue
+
             # Initialize the SSA for the second pass
             self.ssa.ap_position = ap_backup_value
             self.ssa.fp_position = fp_backup_value
@@ -478,6 +581,8 @@ class Decompiler:
             self.end_else = []
             self.ifcount = 0
             self.end_if = None
+            for v in self.ssa.memory:
+                v.value = None
 
             self.first_pass = False
             for block in function.cfg.basicblocks:
@@ -486,6 +591,7 @@ class Decompiler:
                 self.block_new_variables = 0
                 instructions = block.instructions
                 for i in range(len(instructions)):
+                    self.assertion = False
                     if int(instructions[i].id) == self.end_if:
                         self.end_if = None
                         self.tab_count -= 1
@@ -502,9 +608,14 @@ class Decompiler:
                                     color=utils.color.ENDC,
                                 )
                     count += 1
+
+                    # ASSERT_EQ Before an if are always an assertion
+                    try:
+                        self.assertion = instructions[i + 1].pcUpdate == "JNZ"
+                    except:
+                        pass
                     instructions[i] = self.print_build_code(
-                        instructions[i],
-                        last=(count == len(function.instructions)),
+                        instructions[i], last=(count == len(function.instructions))
                     )
                     source_code += instructions[i]
                     source_code += "\n"

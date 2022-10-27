@@ -1,4 +1,5 @@
 import sys
+from typing import List
 
 
 class bcolors:
@@ -13,6 +14,61 @@ class bcolors:
         self.BOLD = "\033[1m" if color else ""
         self.BEIGE = "\033[36m" if color else ""
         self.UNDERLINE = "\033[4m" if color else ""
+
+
+class Kosaraju:
+    """
+    Kosaraju's Algorithm is used for finding strongly connected components
+    in a directed graph
+    """
+
+    def __init__(self, graph: List[List]) -> None:
+        self.graph = graph
+        self.size = len(self.graph)
+
+        self.visited = [False] * self.size
+        self.graph_vertices_ordered = [0] * self.size
+        self.visited_vertices = self.size
+        self.transpose_graph = [[]] * self.size
+
+    def connected_components(self) -> int:
+        """
+        Find all connected components in a graph
+        """
+        # Visit each vertex of the graph
+        for vertex in range(len(self.graph)):
+            self.visit(vertex)
+
+        self.connected_components = [0] * self.size
+
+        for vertex in self.graph_vertices_ordered:
+            self.assign(vertex, vertex)
+
+        return self.connected_components
+
+    def visit(self, vertex: int) -> None:
+        """
+        Visit a graph vertex
+        """
+        if not self.visited[vertex]:
+            self.visited[vertex] = True
+            # Visit all adjacents vertices
+            for v in self.graph[vertex]:
+                self.visit(v)
+                self.transpose_graph[v] = self.transpose_graph[v] + [vertex]
+
+            self.visited_vertices = self.visited_vertices - 1
+            self.graph_vertices_ordered[self.visited_vertices] = vertex
+
+    def assign(self, vertex: int, root: int) -> None:
+        """
+        Assign a vertex
+        """
+        if self.visited[vertex]:
+            self.visited[vertex] = False
+            self.connected_components[vertex] = root
+            for transpose_graph_vertex in self.transpose_graph[vertex]:
+                self.assign(transpose_graph_vertex, root)
 
 
 def globals():

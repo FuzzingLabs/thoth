@@ -1,5 +1,7 @@
 import argparse
 from .. import __version__
+from thoth.app.analyzer import all_analyzers
+from thoth.app.analyzer.abstract_analyzer import category_classification_text
 
 
 def parse_args() -> argparse.Namespace:
@@ -10,11 +12,59 @@ def parse_args() -> argparse.Namespace:
     """
     root_parser = argparse.ArgumentParser(add_help=False)
 
+    thoth_examples = """
+Examples:
+
+Disassemble the contract's compilation artifact from a JSON file:    
+    thoth local tests/json_files/cairo_array_sum.json -b
+
+Disassemble the contract's compilation artifact from Starknet:
+    thoth remote --address 0x0323D18E2401DDe9aFFE1908e9863cbfE523791690F32a2ff6aa66959841D31D --network mainnet -b
+
+Get a pretty colored version:
+    thoth local tests/json_files/cairo_array_sum.json -b -color
+
+Get a verbose version with more details about decoded bytecodes:
+    thoth local tests/json_files/cairo_array_sum.json -vvv
+
+Decompile the contract's compilation artifact (json):
+    thoth local tests/json_files/cairo_test_addition_if.json -d
+
+Run all the analyzers:
+    thoth local tests/json_files/cairo_array_sum.json -a
+
+Select which analyzers to run:
+    thoth local tests/json_files/cairo_array_sum.json -a erc20 erc721
+
+Only run a specific category of analyzers:
+    thoth local tests/json_files/cairo_array_sum.json -a security
+    thoth local tests/json_files/cairo_array_sum.json -a optimization
+    thoth local tests/json_files/cairo_array_sum.json -a analytics
+
+Print a list of all the availables analyzers:
+    thoth local tests/json_files/cairo_array_sum.json --analyzers-help
+
+Print the contract's call graph:
+    thoth local tests/json_files/cairo_array_sum.json -call -view True
+
+For a specific output format (pdf/svg/png):
+    thoth local tests/json_files/cairo_array_sum.json -call -view True -format png
+
+Print the contract's control-flow graph (CFG):
+    thoth local tests/json_files/cairo_double_function_and_if.json -cfg -view True
+
+For a specific function:
+    thoth local tests/json_files/cairo_double_function_and_if.json -cfg -view True -function "__main__.main"
+
+For a specific output format (pdf/svg/png):
+    thoth local tests/json_files/cairo_double_function_and_if.json -cfg -view True -format png"""
+
     parser = argparse.ArgumentParser(
         add_help=True,
-        description="Cairo Disassembler",
+        description='Thoth (pronounced "toss") is a Cairo/Starknet analyzer, disassembler & decompiler written in Python 3. Thoth\'s features also include the generation of the call graph and control-flow graph (CFG) of a given Cairo/Starknet compilation artifact.\n\n'
+        + thoth_examples,
         epilog="The exit status is 0 for non-failures and -1 for failures.",
-        formatter_class=argparse.ArgumentDefaultsHelpFormatter,
+        formatter_class=argparse.RawTextHelpFormatter,
         parents=[root_parser],
     )
 
@@ -27,44 +77,38 @@ def parse_args() -> argparse.Namespace:
         help="Print JSON with details of all instructions",
     )
 
-    root_parser.add_argument(
-        "-o",
-        "--output",
-        action="store",
-        type=argparse.FileType("w"),
-        help="Output the result of the disassembler/decompiler to a file",
-    )
-    root_parser.add_argument(
+    cfg = root_parser.add_argument_group("CFG and call flow graph")
+    cfg.add_argument(
         "-call",
         "--call",
         action="store_true",
         help="Print call flow graph",
     )
-    root_parser.add_argument(
+    cfg.add_argument(
         "-cfg",
         "--cfg",
         action="store_true",
         help="Print control flow graph",
     )
-    root_parser.add_argument(
+    cfg.add_argument(
         "-view",
         choices=("True", "False"),
         default=argparse.SUPPRESS,
         help="Set if Thoth should open the output graph or not",
     )
-    root_parser.add_argument(
+    cfg.add_argument(
         "-output_cfg_folder",
         type=str,
         default="output-cfg",
         help="Set the output folder of the cfg",
     )
-    root_parser.add_argument(
+    cfg.add_argument(
         "-output_callgraph_folder",
         type=str,
         default="output-callgraph",
         help="Set the output folder of the callflowgraph",
     )
-    root_parser.add_argument(
+    cfg.add_argument(
         "-format",
         "--format",
         metavar="Format of the output file [png-svg-pdf]",
@@ -72,39 +116,60 @@ def parse_args() -> argparse.Namespace:
         choices=["pdf", "png", "svg"],
         help="Format of the graphs",
     )
-    root_parser.add_argument(
-        "-color",
-        "--color",
-        action="store_true",
-        help="Print disassembler/decompiler with color",
-    )
-    root_parser.add_argument(
+
+    disassembler = root_parser.add_argument_group("Disassembler")
+    disassembler.add_argument(
         "-function",
         "--function",
         type=str,
         required=False,
         help="Analyse a specific function",
     )
-    root_parser.add_argument(
-        "-a",
-        "-analytics",
-        "--analytics",
+    disassembler.add_argument(
+        "-b",
+        "-disas",
+        "--disassembly",
         action="store_true",
-        help="Dump a Json file containing debug information",
+        help="Disassemble bytecode",
     )
-    root_parser.add_argument(
+    disassembler.add_argument(
         "-d",
         "-decomp",
         "--decompile",
         action="store_true",
         help="Print decompiled code",
     )
-    root_parser.add_argument(
-        "-b",
-        "-disas",
-        "--disassembly",
+    disassembler.add_argument(
+        "-color",
+        "--color",
         action="store_true",
-        help="Disassemble bytecode",
+        help="Print disassembler/decompiler with color",
+    )
+    disassembler.add_argument(
+        "-o",
+        "--output",
+        action="store",
+        type=argparse.FileType("w"),
+        help="Output the result of the disassembler/decompiler to a file",
+    )
+
+    # Analyser
+    analyzers_names = [analyzer.ARGUMENT for analyzer in all_analyzers]
+    analyzers_categories_names = list(
+        [category.lower() for category in category_classification_text.values()]
+    )
+    analyzer = root_parser.add_argument_group("Analyzer")
+
+    analyzer.add_argument(
+        "-a",
+        "-analyze",
+        "--analyzers",
+        choices=analyzers_names + analyzers_categories_names,
+        help="Run analyzers",
+        nargs="*",
+    )
+    analyzer.add_argument(
+        "--analyzers-help", choices=analyzers_names, help="Show analyzers help", nargs="*"
     )
 
     contract_subparser = parser.add_subparsers(

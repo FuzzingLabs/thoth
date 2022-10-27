@@ -1,7 +1,7 @@
 from fileinput import filename
 import glob
 import sys, io
-from thoth.disassembler import Disassembler
+from thoth.app.disassembler.disassembler import Disassembler
 from difflib import SequenceMatcher
 from pathlib import Path
 

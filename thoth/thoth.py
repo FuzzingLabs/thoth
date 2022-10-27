@@ -3,6 +3,8 @@ import sys
 import tempfile
 from thoth.app.utils import str_to_bool
 from thoth.app.arguments import parse_args
+from thoth.app.analyzer import all_analyzers
+from thoth.app.analyzer.abstract_analyzer import category_classification_text
 from thoth.app.disassembler.disassembler import Disassembler
 from thoth.app.starknet.starknet import StarkNet
 
@@ -17,6 +19,20 @@ def main() -> int:
     if (args.call or args.cfg) and ("view" not in args):
         print("Need to set -view option")
         sys.exit()
+
+    # Show analyzers help
+    if args.analyzers_help is not None:
+        if args.analyzers_help:
+            for analyzer_name in args.analyzers_help:
+                analyzer = [
+                    analyzer for analyzer in all_analyzers if analyzer.ARGUMENT == analyzer_name
+                ][0]
+                analyzer._print_help()
+            return 0
+        else:
+            for analyzer in all_analyzers:
+                analyzer._print_help()
+            return 0
 
     # Load compiled contract from a file
     if args.contract == "local":
@@ -40,14 +56,14 @@ def main() -> int:
         disassembler.dump_json()
 
     # Decompiler
-    if args.decompile:
+    if args.decompile and args.analyzers is None:
         print(disassembler.decompiler())
         if args.output:
             output = Disassembler(file, color=False).decompiler()
             with args.output as output_file:
                 output_file.write(output)
     # Disassembler
-    elif args.disassembly:
+    elif args.disassembly and args.analyzers is None:
         print(disassembler.print_disassembly())
         if args.output:
             output = Disassembler(file, color=False).print_disassembly()
@@ -77,7 +93,50 @@ def main() -> int:
             view=str_to_bool(args.view),
         )
 
-    # print analytics
-    if args.analytics:
-        print(disassembler.analytics())
+    if args.analyzers is None:
+        return 0
+
+    # Find selected analyzers
+    analyzers_names = [analyzer.ARGUMENT for analyzer in all_analyzers]
+    selected_analyzers = []
+
+    if args.analyzers:
+        selected_analyzers = []
+        for analyzer_name in args.analyzers:
+            # Select a single analyzer
+            if analyzer_name in analyzers_names:
+                selected_analyzers.append(
+                    [analyzer for analyzer in all_analyzers if analyzer.ARGUMENT == analyzer_name][
+                        0
+                    ]
+                )
+            # Select a whole category
+            else:
+                selected_category = [
+                    k
+                    for k, v in category_classification_text.items()
+                    if v == analyzer_name.capitalize()
+                ][0]
+                selected_analyzers += [
+                    analyzer for analyzer in all_analyzers if analyzer.CATEGORY == selected_category
+                ]
+    # Select all analyzers by default
+    else:
+        selected_analyzers = all_analyzers
+
+    # Run analyzers
+    for analyzer in selected_analyzers:
+        a = analyzer(disassembler, color=args.color)
+        a._detect()
+        a._print()
+
+    selected_analyzers_count = len(selected_analyzers)
+    print(
+        "\n[+] %s analyser%s %s run"
+        % (
+            selected_analyzers_count,
+            "s" if selected_analyzers_count > 1 else "",
+            "were" if selected_analyzers_count > 1 else "was",
+        )
+    )
     return 0
