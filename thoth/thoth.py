@@ -1,6 +1,8 @@
 import os
 import sys
 import tempfile
+from thoth.app.decompiler.decompiler import Decompiler
+from thoth.app.dfg.dfg import DFG
 from thoth.app.utils import str_to_bool
 from thoth.app.arguments import parse_args
 from thoth.app.analyzer import all_analyzers
@@ -16,7 +18,7 @@ def main() -> int:
         Int: Return 0
     """
     args = parse_args()
-    if (args.call or args.cfg) and ("view" not in args):
+    if (args.call or args.cfg or args.dfg) and ("view" not in args):
         print("Need to set -view option")
         sys.exit()
 
@@ -92,6 +94,16 @@ def main() -> int:
             function_name=args.function,
             view=str_to_bool(args.view),
         )
+
+    if args.dfg:
+        contract_functions = disassembler.functions
+        decompiler = Decompiler(functions=contract_functions)
+        decompiler.decompile_code(first_pass_only=True)
+
+        dfg = DFG(decompiler.ssa.memory)
+        dfg._create_dfg()
+        dfg._create_graph_representation()
+        dfg._print_dfg(view=str_to_bool(args.view))
 
     if args.analyzers is None:
         return 0

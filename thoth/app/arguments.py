@@ -77,7 +77,7 @@ For a specific output format (pdf/svg/png):
         help="Print JSON with details of all instructions",
     )
 
-    cfg = root_parser.add_argument_group("CFG and call flow graph")
+    cfg = root_parser.add_argument_group("CFG, call flow graph and data-flow graph")
     cfg.add_argument(
         "-call",
         "--call",
@@ -89,6 +89,12 @@ For a specific output format (pdf/svg/png):
         "--cfg",
         action="store_true",
         help="Print control flow graph",
+    )
+    cfg.add_argument(
+        "-dfg",
+        "--dfg",
+        action="store_true",
+        help="Print data-flow graph",
     )
     cfg.add_argument(
         "-view",

@@ -68,6 +68,7 @@ class DFG:
         # List of all the functions arguments names
         all_functions: List[Function] = list(filter(None, [v.function for v in self.variables]))
         self.all_functions_arguments = list(sum([f.arguments_list() for f in all_functions], []))
+        self.dot = None
 
     def _clean_tainting(self) -> None:
         """
@@ -183,11 +184,11 @@ class DFG:
         self._create_blocks()
         self._create_edges()
 
-    def _print_dfg(self) -> str:
+    def _create_graph_representation(self) -> str:
         """
         Generate a Dot graph layout
         """
-        dot = graphviz.Digraph("DataFlow Graph", comment="", strict=True)
+        self.dot = graphviz.Digraph("DataFlow Graph", comment="", strict=True)
         contract_functions = list(set([v.function.name for v in self.variables_blocks]))
 
         # Create one subgraph per function
@@ -206,6 +207,7 @@ class DFG:
                 self.get_variable_name(variable),
                 style="filled",
                 fillcolor=Tainting._get_taint(variable.tainting_coefficient),
+                label=variable.name,
             )
 
         # Edges
@@ -213,10 +215,22 @@ class DFG:
             function_subgraph = [
                 s for s in subgraphs if s.name == "cluster_%s" % edge.function.name
             ][0]
+            if edge.source == edge.destination:
+                continue
+            if edge.source.function != edge.destination.function:
+                continue
+
             function_subgraph.edge(
                 edge.source.graph_representation_name, edge.destination.graph_representation_name
             )
         # Join subgraphs
-        [dot.subgraph(_) for _ in subgraphs]
+        [self.dot.subgraph(_) for _ in subgraphs]
 
-        return dot.source
+        return self.dot.source
+
+    def _print_dfg(self, view=False):
+        """
+        Open the graph representation
+        """
+        if view:
+            self.dot.view()

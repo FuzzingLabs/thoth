@@ -30,7 +30,6 @@ class IntegerOverflowDetector(AbstractAnalyzer):
         dfg = DFG(self.decompiler.ssa.memory)
         dfg._create_dfg()
         dfg._taint_functions_arguments()
-        dfg._print_dfg()
 
         variables = self.decompiler.ssa.memory
         for function in contract_functions:
