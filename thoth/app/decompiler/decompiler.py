@@ -305,10 +305,17 @@ class Decompiler:
 
         if "REGULAR" not in instruction.pcUpdate:
             if instruction.pcUpdate == "JNZ":
+                tested_variable = self.ssa.get_variable("ap", destination_offset)
                 source_code += (
                     self.print_instruction_decomp(f"if ", color=utils.color.RED)
-                    + f"({self.ssa.get_variable('ap', destination_offset)[1]} == 0) {{"
+                    + f"({tested_variable[1]} == 0) {{"
                 )
+                if tested_variable[2].value is None:
+                    tested_variable[2].value = VariableValue(
+                        type=VariableValueType.ABSOLUTE,
+                        operation=[Operand(type=OperandType.INTEGER, value=0)],
+                    )
+                    tested_variable[2].function = self.current_function
                 self.tab_count += 1
                 self.ifcount += 1
                 # Detect if there is an else later
