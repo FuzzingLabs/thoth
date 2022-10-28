@@ -116,10 +116,11 @@ class Decompiler:
                     variable_value_int = int(variable_value)
                 except:
                     variable_value_int = int(variable_value, base=16)
-                variable[2].value = VariableValue(
-                    type=VariableValueType.ABSOLUTE,
-                    operation=[Operand(type=OperandType.INTEGER, value=variable_value_int)],
-                )
+                if variable[2].value is None and not self.assertion:
+                    variable[2].value = VariableValue(
+                        type=VariableValueType.ABSOLUTE,
+                        operation=[Operand(type=OperandType.INTEGER, value=variable_value_int)],
+                    )
 
                 source_code += self.print_instruction_decomp(
                     f"{is_assert}{variable[1]} {equal} {variable_value}",
@@ -160,10 +161,11 @@ class Decompiler:
                     pass
 
                 # Set variable value
-                variable[2].value = VariableValue(
-                    type=VariableValueType.ADDRESS,
-                    operation=[variable_operand_1, operator, variable_operand_2],
-                )
+                if variable[2].value is None and not self.assertion:
+                    variable[2].value = VariableValue(
+                        type=VariableValueType.ADDRESS,
+                        operation=[variable_operand_1, operator, variable_operand_2],
+                    )
                 source_code += self.print_instruction_decomp(
                     f"{is_assert}{variable[1]} {equal} [{operand}{sign}{value_off2}]",
                     color=utils.color.GREEN,
@@ -176,22 +178,24 @@ class Decompiler:
                 if self.ssa.get_variable(op1_register, offset_2)[2] in phi_node_variables:
                     variable_value = phi_node_representation
                     # Set variable value
-                    variable[2].value = VariableValue(
-                        type=VariableValueType.ABSOLUTE,
-                        operation=[
-                            Operand(
-                                type=OperandType.VARIABLE,
-                                value=[variable.name for variable in phi_node_variables],
-                            )
-                        ],
-                    )
+                    if variable[2].value is None and not self.assertion:
+                        variable[2].value = VariableValue(
+                            type=VariableValueType.ABSOLUTE,
+                            operation=[
+                                Operand(
+                                    type=OperandType.VARIABLE,
+                                    value=[variable.name for variable in phi_node_variables],
+                                )
+                            ],
+                        )
                 else:
                     variable_value = self.ssa.get_variable(op1_register, offset_2)[1]
                     # Set variable value
-                    variable[2].value = VariableValue(
-                        type=VariableValueType.ABSOLUTE,
-                        operation=[Operand(type=OperandType.VARIABLE, value=[variable_value])],
-                    )
+                    if variable[2].value is None and not self.assertion:
+                        variable[2].value = VariableValue(
+                            type=VariableValueType.ABSOLUTE,
+                            operation=[Operand(type=OperandType.VARIABLE, value=[variable_value])],
+                        )
                 source_code += self.print_instruction_decomp(
                     f"{is_assert}{variable[1]} {equal} {variable_value}",
                     color=utils.color.GREEN,
@@ -224,10 +228,11 @@ class Decompiler:
 
                 operator = Operator.ADDITION if op == "+" else Operator.MULTIPLICATION
                 # Set variable value
-                variable[2].value = VariableValue(
-                    type=VariableValueType.ABSOLUTE,
-                    operation=[variable_operand_1, operator, variable_operand_2],
-                )
+                if variable[2].value is None and not self.assertion:
+                    variable[2].value = VariableValue(
+                        type=VariableValueType.ABSOLUTE,
+                        operation=[variable_operand_1, operator, variable_operand_2],
+                    )
                 source_code += self.print_instruction_decomp(
                     f"{is_assert}{variable[1]} {equal} {operand_1} {op} {operand_2}",
                     color=utils.color.GREEN,
@@ -271,10 +276,11 @@ class Decompiler:
                 operator = Operator.ADDITION if op == "+" else Operator.MULTIPLICATION
                 variable_operand_2 = Operand(type=OperandType.INTEGER, value=value)
                 # Set variable value
-                variable[2].value = VariableValue(
-                    type=VariableValueType.ABSOLUTE,
-                    operation=[variable_operand_1, operator, variable_operand_2],
-                )
+                if variable[2].value is None and not self.assertion:
+                    variable[2].value = VariableValue(
+                        type=VariableValueType.ABSOLUTE,
+                        operation=[variable_operand_1, operator, variable_operand_2],
+                    )
 
                 source_code += self.print_instruction_decomp(
                     f"{is_assert}{variable[1]} {equal} {operand} {op} {value}",
