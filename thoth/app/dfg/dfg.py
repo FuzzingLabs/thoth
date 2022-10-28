@@ -1,7 +1,6 @@
 import graphviz
 from typing import List
 
-from tomlkit import comment
 from thoth.app.decompiler.variable import Operand, OperandType, Variable
 from thoth.app.disassembler.function import Function
 
@@ -45,6 +44,21 @@ class DFGVariableBlock:
         self.children_blocks: List[DFGVariableBlock] = []
 
 
+class DFGConstantBlock:
+    """
+    DFG Constant block class
+    """
+
+    def __init__(
+        self, value: str, position: int, related_variable: Variable, function: Function
+    ) -> None:
+        self.value = value
+        self.position = position
+        self.graph_representation_name = "%s_%s" % (self.value, self.position)
+        self.related_variable = related_variable
+        self.function = function
+
+
 class DFGEdge:
     """
     DFG Edge class
@@ -66,6 +80,7 @@ class DFG:
     def __init__(self, variables: List[Variable]) -> None:
         self.variables = variables
         self.variables_blocks: List[DFGVariableBlock] = []
+        self.constants_blocks: List[DFGConstantBlock] = []
         self.edges: List[DFGEdge] = []
         # List of all the functions arguments names
         all_functions: List[Function] = list(filter(None, [v.function for v in self.variables]))
@@ -156,19 +171,21 @@ class DFG:
             ][0]
 
             # Source variables
-            parents_variables = [v for v in variable.value.operation if isinstance(v, Operand)]
-            parents_variables = [v for v in parents_variables if v.type == OperandType.VARIABLE]
+            parents_operands = [v for v in variable.value.operation if isinstance(v, Operand)]
+            parents_variables = [v for v in parents_operands if v.type == OperandType.VARIABLE]
+            parents_constants = [v for v in parents_operands if v.type == OperandType.INTEGER]
 
+            # Create edges from parents variables to children variables
             source_blocks = []
             for parent_variable in parents_variables:
                 if isinstance(parent_variable.value, list):
-                    source_blocks = [
+                    source_blocks += [
                         b
                         for b in self.variables_blocks
                         if variable.function == b.function and b.name in parent_variable.value
                     ]
                 else:
-                    source_blocks = [
+                    source_blocks += [
                         b
                         for b in self.variables_blocks
                         if variable.function == b.function and b.name == variable.name
@@ -177,6 +194,25 @@ class DFG:
             for source_block in source_blocks:
                 source_block.children_blocks.append(destination_block)
                 destination_block.parents_blocks.append(source_block)
+                self.edges.append(DFGEdge(source_block, destination_block, variable.function))
+
+            # Create edges from parent constants to children variables
+            for parent_constant in parents_constants:
+                if isinstance(parent_constant.value, list):
+                    source_block = DFGConstantBlock(
+                        parent_constant.value[0],
+                        len(self.constants_blocks),
+                        variable,
+                        variable.function,
+                    )
+                else:
+                    source_block = DFGConstantBlock(
+                        parent_constant.value,
+                        len(self.constants_blocks),
+                        variable,
+                        variable.function,
+                    )
+                self.constants_blocks.append(source_block)
                 self.edges.append(DFGEdge(source_block, destination_block, variable.function))
 
     def _create_dfg(self) -> None:
@@ -201,7 +237,7 @@ class DFG:
             subgraph.attr(bgcolor="lightgrey")
             subgraphs.append(subgraph)
 
-        # Nodes
+        # Variables nodes
         for variable in self.variables_blocks:
             function_subgraph = [
                 s for s in subgraphs if s.name == "cluster_%s" % variable.function.name
@@ -210,6 +246,18 @@ class DFG:
                 self.get_variable_name(variable),
                 style="filled",
                 fillcolor=Tainting._get_taint(variable.tainting_coefficient),
+            )
+
+        # Constants nodes
+        for constant in self.constants_blocks:
+            function_subgraph = [
+                s for s in subgraphs if s.name == "cluster_%s" % constant.function.name
+            ][0]
+            function_subgraph.node(
+                constant.graph_representation_name,
+                style="filled",
+                fillcolor="lightblue",
+                label=str(constant.value),
             )
 
         # Edges
