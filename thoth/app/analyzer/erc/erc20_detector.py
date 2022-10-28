@@ -18,7 +18,7 @@ class ERC20Analyzer(AbstractAnalyzer):
     PRECISION: PrecisionClassification = PrecisionClassification.HIGH
     CATEGORY: CategoryClassification = CategoryClassification.ANALYTICS
 
-    def _detect(self) -> None:
+    def _detect(self) -> bool:
         # Cairo naming convention is snake case
         # https://docs.openzeppelin.com/contracts/2.x/api/token/erc20
         mandatory_erc20_functions_names = set(
@@ -58,3 +58,4 @@ class ERC20Analyzer(AbstractAnalyzer):
                 self.result.append("Pausable token")
             if upgradeable:
                 self.result.append("Upgradeable token")
+        return self.detected

@@ -19,7 +19,7 @@ class FunctionNamingAnalyzer(AbstractAnalyzer):
     PRECISION: PrecisionClassification = PrecisionClassification.HIGH
     CATEGORY: CategoryClassification = CategoryClassification.SECURITY
 
-    def _detect(self) -> None:
+    def _detect(self) -> bool:
         snake_case_regexp = r"^([a-z0-9]*_*[a-z0-9]*)*$"
 
         contract_functions = self.disassembler.functions
@@ -30,3 +30,4 @@ class FunctionNamingAnalyzer(AbstractAnalyzer):
             if not is_snake_case:
                 self.detected = True
                 self.result.append("%s function name needs to be in snake case" % function_name)
+        return self.detected

@@ -19,7 +19,7 @@ class StringsAnalyzer(AbstractAnalyzer):
     PRECISION: PrecisionClassification = PrecisionClassification.HIGH
     CATEGORY: CategoryClassification = CategoryClassification.ANALYTICS
 
-    def _detect(self) -> None:
+    def _detect(self) -> bool:
         contract_functions = self.disassembler.functions
 
         for function in contract_functions:
@@ -38,3 +38,4 @@ class StringsAnalyzer(AbstractAnalyzer):
                                 self.result.append(representation_str)
                         except:
                             pass
+        return self.detected

@@ -19,7 +19,7 @@ class FunctionsAnalyzer(AbstractAnalyzer):
     PRECISION: PrecisionClassification = PrecisionClassification.HIGH
     CATEGORY: CategoryClassification = CategoryClassification.ANALYTICS
 
-    def _detect(self) -> None:
+    def _detect(self) -> bool:
         # Colors
         header_color = colors.HEADER if self.color else ""
         red_color = colors.RED if self.color else ""
@@ -83,3 +83,5 @@ class FunctionsAnalyzer(AbstractAnalyzer):
             result += "\t- instructions : %s" % instructions_count
 
             self.result.append(result)
+
+        return self.detected
