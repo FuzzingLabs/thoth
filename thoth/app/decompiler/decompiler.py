@@ -317,7 +317,8 @@ class Decompiler:
             elif instruction.pcUpdate == "JUMP_REL":
                 if self.ifcount != 0:
                     self.tab_count -= 1
-                    source_code += self.print_instruction_decomp("else:", color=utils.color.RED)
+                    source_code += self.print_instruction_decomp("else", color=utils.color.RED)
+                    source_code += self.print_instruction_decomp(" {", color=utils.color.ENDC, tab_count=0)
                     self.tab_count += 1
                     self.end_else.append(
                         int(utils.field_element_repr(int(instruction.imm), instruction.prime))
