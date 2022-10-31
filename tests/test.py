@@ -5,6 +5,7 @@ import unittest
 
 import thoth.app.analyzer as analyzer
 from thoth.app.analyzer import all_analyzers
+from thoth.app.analyzer.abstract_analyzer import ImpactClassification
 from thoth.app.decompiler.decompiler import Decompiler
 from thoth.app.dfg.dfg import DFG, Tainting
 from thoth.app.disassembler.disassembler import Disassembler
@@ -339,6 +340,17 @@ class TestDisassembler(unittest.TestCase):
         integer_overflow_detector._detect()
 
         self.assertEqual(integer_overflow_detector.detected, True)
+
+    def test_cairo_integer_overflow_integer_2_overflow_detector(self):
+        """
+        Test the Integer Overflow Detector
+        """
+        disassembler = Disassembler("./tests/json_files/cairo_integer_overflow_2.json")
+        integer_overflow_detector = analyzer.IntegerOverflowDetector(disassembler, color=False)
+        integer_overflow_detector._detect()
+
+        self.assertEqual(integer_overflow_detector.detected, True)
+        self.assertEqual(integer_overflow_detector.IMPACT, ImpactClassification.MEDIUM)
 
     def test_cairo_integer_overflow_dfg(self):
         """

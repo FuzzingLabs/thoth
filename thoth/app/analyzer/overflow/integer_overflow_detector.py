@@ -62,7 +62,15 @@ class IntegerOverflowDetector(AbstractAnalyzer):
                         ][0]
                     except:
                         continue
-                    # We only look for directs integer overflow/underflow for now
+                    # Direct integer overflow
                     if dfg_variable.tainting_coefficient == 1:
                         self.detected = True
                         self.result.append("%s : %s" % (function.name, dfg_variable.name))
+                    # Indirect integer overflow
+                    elif dfg_variable.tainting_coefficient >= 0.7:
+                        # Less critical than direct integer overflow/underflow
+                        self.IMPACT = ImpactClassification.MEDIUM
+                        self.detected = True
+                        self.result.append(
+                            "%s : %s (indirect)" % (function.name, dfg_variable.name)
+                        )
