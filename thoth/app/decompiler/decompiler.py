@@ -365,6 +365,12 @@ class Decompiler:
                             args += len(function.args)
                         if function.implicitargs != None:
                             args += len(function.implicitargs)
+
+                        called_function = function
+                        function_return_values = function.arguments_list(
+                            explicit=False, implicit=False
+                        )
+
                 args_str = ""
                 while args != 0:
                     phi_node_variables = []
@@ -383,10 +389,37 @@ class Decompiler:
                     if args != 1:
                         args_str += ", "
                     args -= 1
-                source_code += (
-                    self.print_instruction_decomp(f"{call_name[-1]}", color=utils.color.RED)
-                    + f"({args_str})"
-                )
+
+                for return_value in function_return_values:
+                    self.ssa.new_variable(
+                        variable_name="%s" % return_value, function=called_function
+                    )
+                    self.ssa.ap_position += 1
+
+                if function_return_values:
+                    assigned_variables_list = []
+                    for i in range(1, len(function_return_values) + 1):
+                        assigned_variable = self.ssa.get_variable("ap", -1 * i)[2]
+                        assigned_variable.value = ""
+                        assigned_variables_list.append(assigned_variable.name)
+
+                    assigned_variables = "(%s)" % ", ".join(assigned_variables_list)
+
+                    source_code += self.print_instruction_decomp(
+                        f"let {assigned_variables} = ", color=utils.color.GREEN
+                    )
+                    source_code += (
+                        self.print_instruction_decomp(
+                            f"{call_name[-1]}", color=utils.color.RED, tab_count=0
+                        )
+                        + f"({args_str})"
+                    )
+                else:
+                    source_code += (
+                        self.print_instruction_decomp(f"{call_name[-1]}", color=utils.color.RED)
+                        + f"({args_str})"
+                    )
+
             # CALL to a label
             # e.g. call rel (123)
             else:
