@@ -2,6 +2,8 @@ import graphviz
 from typing import List
 
 from thoth.app.decompiler.variable import Operand, OperandType, Variable
+from thoth.app.dfg.config import DFGConfig
+from thoth.app.dfg.objects import DFGConstantBlock, DFGEdge, DFGVariableBlock
 from thoth.app.disassembler.function import Function
 
 
@@ -27,49 +29,6 @@ class Tainting:
         )
         hex_taint = "#%02x%02x%02x" % (rgb_values[0], rgb_values[1], rgb_values[2])
         return hex_taint
-
-
-class DFGVariableBlock:
-    """
-    DFG Variable block class
-    """
-
-    def __init__(self, name: str, function: Function, is_function_argument: bool) -> None:
-        self.name = name
-        self.graph_representation_name = None
-        self.function = function
-        self.is_function_argument = is_function_argument
-        self.tainting_coefficient = 0
-        self.parents_blocks: List[DFGVariableBlock] = []
-        self.children_blocks: List[DFGVariableBlock] = []
-
-
-class DFGConstantBlock:
-    """
-    DFG Constant block class
-    """
-
-    def __init__(
-        self, value: str, position: int, related_variable: Variable, function: Function
-    ) -> None:
-        self.value = value
-        self.position = position
-        self.graph_representation_name = "%s_%s" % (self.value, self.position)
-        self.related_variable = related_variable
-        self.function = function
-
-
-class DFGEdge:
-    """
-    DFG Edge class
-    """
-
-    def __init__(
-        self, source: DFGVariableBlock, destination: DFGVariableBlock, function: Function
-    ) -> None:
-        self.source = source
-        self.destination = destination
-        self.function = function
 
 
 class DFG:
@@ -227,8 +186,9 @@ class DFG:
         Generate a Dot graph layout
         """
         self.dot = graphviz.Digraph("DataFlow Graph", comment="", strict=True)
-        contract_functions = list(set([v.function.name for v in self.variables_blocks]))
+        self.dot.attr(fontname=DFGConfig.FONT, fontsize=DFGConfig.FONTSIZE)
 
+        contract_functions = list(set([v.function.name for v in self.variables_blocks]))
         # Create one subgraph per function
         subgraphs = []
         for function in contract_functions:
@@ -242,10 +202,12 @@ class DFG:
             function_subgraph = [
                 s for s in subgraphs if s.name == "cluster_%s" % variable.function.name
             ][0]
-            function_subgraph.node(
+
+            node = function_subgraph.node(
                 self.get_variable_name(variable),
                 style="filled",
                 fillcolor=Tainting._get_taint(variable.tainting_coefficient),
+                fontname=DFGConfig.FONT,
             )
 
         # Constants nodes
@@ -256,7 +218,7 @@ class DFG:
             function_subgraph.node(
                 constant.graph_representation_name,
                 style="filled",
-                fillcolor="lightblue",
+                fillcolor=DFGConfig.CONSTANT_NODE_COLOR,
                 label=str(constant.value),
             )
 
