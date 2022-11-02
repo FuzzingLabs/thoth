@@ -245,6 +245,7 @@ class Decompiler:
                     is_assert = "assert "
                 try:
                     value = int(utils.field_element_repr(int(instruction.imm), instruction.prime))
+                    integer_value = value
                     if value < 0 and op == "+":
                         op = "-"
                         value = -value
@@ -269,13 +270,13 @@ class Decompiler:
                         )
                     else:
                         operand = self.ssa.get_variable(op0_register, offset_1)[1]
-                        variable_operand_1 = Operand(type=OperandType.VARIABLE, value=operand)
+                        variable_operand_1 = Operand(type=OperandType.VARIABLE, value=[operand])
                 else:
                     operand = self.ssa.get_variable(op0_register, offset_1)[1]
-                    variable_operand_1 = Operand(type=OperandType.VARIABLE, value=operand)
+                    variable_operand_1 = Operand(type=OperandType.VARIABLE, value=[operand])
 
                 operator = Operator.ADDITION if op == "+" else Operator.MULTIPLICATION
-                variable_operand_2 = Operand(type=OperandType.INTEGER, value=value)
+                variable_operand_2 = Operand(type=OperandType.INTEGER, value=integer_value)
                 # Set variable value
                 if variable[2].value is None and not self.assertion:
                     variable[2].value = VariableValue(
@@ -400,7 +401,9 @@ class Decompiler:
                     assigned_variables_list = []
                     for i in range(1, len(function_return_values) + 1):
                         assigned_variable = self.ssa.get_variable("ap", -1 * i)[2]
-                        assigned_variable.value = ""
+                        assigned_variable.value = VariableValue(
+                            type=VariableValueType.FUNCTION_CALL, operation=[]
+                        )
                         assigned_variables_list.append(assigned_variable.name)
 
                     assigned_variables = "(%s)" % ", ".join(assigned_variables_list)

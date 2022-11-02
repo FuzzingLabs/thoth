@@ -1,7 +1,7 @@
 import graphviz
 from typing import List
 
-from thoth.app.decompiler.variable import Operand, OperandType, Variable
+from thoth.app.decompiler.variable import Operand, OperandType, Variable, VariableValueType
 from thoth.app.dfg.config import DFGConfig
 from thoth.app.dfg.objects import DFGConstantBlock, DFGEdge, DFGVariableBlock
 from thoth.app.disassembler.function import Function
@@ -121,6 +121,9 @@ class DFG:
         """
         for variable in self.variables:
             if variable.value is None:
+                continue
+
+            if variable.value.type == VariableValueType.FUNCTION_CALL:
                 continue
 
             destination_block = [

@@ -15,6 +15,7 @@ class Operator(Enum):
 class VariableValueType(Enum):
     ADDRESS = 0
     ABSOLUTE = 1
+    FUNCTION_CALL = 2
 
 
 class Operand:
