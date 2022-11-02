@@ -34,6 +34,27 @@ class DFGConstantBlock:
         self.function = function
 
 
+class DFGFunctionCallBlock:
+    """
+    DFG Function call block
+    """
+
+    def __init__(
+        self,
+        value: str,
+        call_number: int,
+        function: Function,
+        arguments: List[str],
+        return_values: List[str],
+    ) -> None:
+        self.value = value
+        self.call_number = call_number
+        self.arguments = arguments
+        self.return_values = return_values
+        self.function = function
+        self.graph_representation_name = "%s (%s)" % (value, call_number)
+
+
 class DFGEdge:
     """
     DFG Edge class

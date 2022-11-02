@@ -3,7 +3,7 @@ from typing import List
 
 from thoth.app.decompiler.variable import Operand, OperandType, Variable, VariableValueType
 from thoth.app.dfg.config import DFGConfig
-from thoth.app.dfg.objects import DFGConstantBlock, DFGEdge, DFGVariableBlock
+from thoth.app.dfg.objects import DFGConstantBlock, DFGEdge, DFGVariableBlock, DFGFunctionCallBlock
 from thoth.app.disassembler.function import Function
 
 
@@ -40,6 +40,7 @@ class DFG:
         self.variables = variables
         self.variables_blocks: List[DFGVariableBlock] = []
         self.constants_blocks: List[DFGConstantBlock] = []
+        self.functions_calls_blocks: List[DFGFunctionCallBlock] = []
         self.edges: List[DFGEdge] = []
         # List of all the functions arguments names
         all_functions: List[Function] = list(filter(None, [v.function for v in self.variables]))
@@ -115,6 +116,37 @@ class DFG:
                 new_block.graph_representation_name = self.get_variable_name(new_block)
                 self.variables_blocks.append(new_block)
 
+    def _create_functions_calls(self) -> None:
+        """
+        Create the DFG Functions calls
+        """
+        call_number = 0
+        for variable in self.variables:
+            if variable.value is None:
+                continue
+
+            if variable.value.type is not VariableValueType.FUNCTION_CALL:
+                continue
+
+            value = variable.value.operation.function.name
+            arguments = variable.value.operation.function.arguments_list(
+                explicit=True, implicit=False, ret=False
+            )
+            return_values = variable.value.operation.function.arguments_list(
+                explicit=False, implicit=False, ret=True
+            )
+            function = variable.function
+
+            new_block = DFGFunctionCallBlock(
+                value=value,
+                arguments=arguments,
+                return_values=return_values,
+                function=function,
+                call_number=call_number,
+            )
+            self.functions_calls_blocks.append(new_block)
+            call_number += 1
+
     def _create_edges(self) -> None:
         """
         Create the DFG edges from the variables
@@ -181,6 +213,7 @@ class DFG:
         """
         Create the DFG (Blocks and Edges)
         """
+        self._create_functions_calls()
         self._create_blocks()
         self._create_edges()
 
@@ -223,6 +256,20 @@ class DFG:
                 style="filled",
                 fillcolor=DFGConfig.CONSTANT_NODE_COLOR,
                 label=str(constant.value),
+            )
+
+        # Functions calls nodes
+        for call in self.functions_calls_blocks:
+            function_subgraph = [
+                s for s in subgraphs if s.name == "cluster_%s" % call.function.name
+            ][0]
+
+            function_subgraph.node(
+                call.graph_representation_name,
+                style="filled",
+                fillcolor=DFGConfig.FUNCTION_CALL_NODE_COLOR,
+                shape="square",
+                label=call.graph_representation_name,
             )
 
         # Edges

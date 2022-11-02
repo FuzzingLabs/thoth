@@ -18,12 +18,23 @@ class VariableValueType(Enum):
     FUNCTION_CALL = 2
 
 
+class FunctionCall:
+    """
+    Function call class
+    """
+
+    def __init__(self, function, return_value_position: int, call_number: int) -> None:
+        self.function = function
+        self.return_value_position = return_value_position
+        self.call_number = call_number
+
+
 class Operand:
     """
     Element of an operation, either a variable/list of variables or an integer
     """
 
-    def __init__(self, type: OperandType, value: Union[str, int, List[str]]) -> None:
+    def __init__(self, type: OperandType, value: Union[str, int, List[str], FunctionCall]) -> None:
         self.type = type
         self.value = value
 

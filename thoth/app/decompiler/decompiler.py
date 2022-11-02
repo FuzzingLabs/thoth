@@ -7,6 +7,7 @@ from thoth.app.disassembler.function import Function
 from thoth.app.disassembler.instruction import Instruction
 from thoth.app.decompiler.ssa import SSA
 from thoth.app.decompiler.variable import (
+    FunctionCall,
     Operand,
     OperandType,
     Operator,
@@ -42,6 +43,8 @@ class Decompiler:
         self.current_basic_block: Optional[BasicBlock] = None
         self.first_pass = True
         self.block_new_variables = 0
+        # Function calls
+        self.function_calls = 0
 
     def get_phi_node_variables(self) -> List[Variable]:
         """
@@ -401,8 +404,14 @@ class Decompiler:
                     assigned_variables_list = []
                     for i in range(1, len(function_return_values) + 1):
                         assigned_variable = self.ssa.get_variable("ap", -1 * i)[2]
+                        assigned_variable.function = self.current_function
                         assigned_variable.value = VariableValue(
-                            type=VariableValueType.FUNCTION_CALL, operation=[]
+                            type=VariableValueType.FUNCTION_CALL,
+                            operation=FunctionCall(
+                                function=called_function,
+                                return_value_position=i,
+                                call_number=self.function_calls,
+                            ),
                         )
                         assigned_variables_list.append(assigned_variable.name)
 
@@ -422,7 +431,7 @@ class Decompiler:
                         self.print_instruction_decomp(f"{call_name[-1]}", color=utils.color.RED)
                         + f"({args_str})"
                     )
-
+                self.function_calls += 1
             # CALL to a label
             # e.g. call rel (123)
             else:
