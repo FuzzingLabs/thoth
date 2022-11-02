@@ -120,7 +120,6 @@ class DFG:
         """
         Create the DFG Functions calls
         """
-        call_number = 0
         for variable in self.variables:
             if variable.value is None:
                 continue
@@ -142,10 +141,9 @@ class DFG:
                 arguments=arguments,
                 return_values=return_values,
                 function=function,
-                call_number=call_number,
+                call_number=variable.value.operation.call_number,
             )
             self.functions_calls_blocks.append(new_block)
-            call_number += 1
 
     def _create_edges(self) -> None:
         """
@@ -213,8 +211,8 @@ class DFG:
         """
         Create the DFG (Blocks and Edges)
         """
-        self._create_functions_calls()
         self._create_blocks()
+        self._create_functions_calls()
         self._create_edges()
 
     def _create_graph_representation(self) -> str:
@@ -232,6 +230,25 @@ class DFG:
             subgraph.attr(label=function)
             subgraph.attr(bgcolor="lightgrey")
             subgraphs.append(subgraph)
+
+        # Create edges between variables and functions return values
+        for variable in self.variables:
+            if variable.value is None:
+                continue
+            if variable.value.type != VariableValueType.FUNCTION_CALL:
+                continue
+
+            function_subgraph = [
+                s for s in subgraphs if s.name == "cluster_%s" % variable.function.name
+            ][0]
+
+            source_variable = "%s (%s)" % (
+                variable.value.operation.function.name,
+                variable.value.operation.call_number,
+            )
+            destination_variable = "f%s_%s" % (variable.function.id, variable.name)
+
+            function_subgraph.edge(source_variable, destination_variable)
 
         # Variables nodes
         for variable in self.variables_blocks:

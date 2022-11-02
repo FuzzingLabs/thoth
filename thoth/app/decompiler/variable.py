@@ -25,7 +25,9 @@ class FunctionCall:
 
     def __init__(self, function, return_value_position: int, call_number: int) -> None:
         self.function = function
-        self.return_value_position = return_value_position
+        self.return_value = self.function.arguments_list(explicit=False, implicit=False, ret=True)[
+            return_value_position
+        ]
         self.call_number = call_number
 
 

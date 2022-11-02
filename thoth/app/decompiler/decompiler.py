@@ -409,7 +409,7 @@ class Decompiler:
                             type=VariableValueType.FUNCTION_CALL,
                             operation=FunctionCall(
                                 function=called_function,
-                                return_value_position=i,
+                                return_value_position=i - 1,
                                 call_number=self.function_calls,
                             ),
                         )
