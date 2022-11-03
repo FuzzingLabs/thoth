@@ -267,7 +267,10 @@ class DFG:
                         variable.value.operation.call_number,
                     )
                     function_subgraph.edge(
-                        source_variable, destination_variable, label=current_argument_name
+                        source_variable,
+                        destination_variable,
+                        label=current_argument_name,
+                        fontname=DFGConfig.FONT,
                     )
 
         # Variables nodes
@@ -293,6 +296,7 @@ class DFG:
                 style="filled",
                 fillcolor=DFGConfig.CONSTANT_NODE_COLOR,
                 label=str(constant.value),
+                fontname=DFGConfig.FONT,
             )
 
         # Functions calls nodes
@@ -307,6 +311,7 @@ class DFG:
                 fillcolor=DFGConfig.FUNCTION_CALL_NODE_COLOR,
                 shape="box",
                 label=call.graph_representation_name,
+                fontname=DFGConfig.FONT,
             )
 
         # Edges
@@ -320,7 +325,9 @@ class DFG:
                 continue
 
             function_subgraph.edge(
-                edge.source.graph_representation_name, edge.destination.graph_representation_name
+                edge.source.graph_representation_name,
+                edge.destination.graph_representation_name,
+                fontname=DFGConfig.FONT,
             )
         # Join subgraphs
         [self.dot.subgraph(_) for _ in subgraphs]
