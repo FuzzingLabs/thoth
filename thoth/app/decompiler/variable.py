@@ -23,11 +23,14 @@ class FunctionCall:
     Function call class
     """
 
-    def __init__(self, function, return_value_position: int, call_number: int) -> None:
+    def __init__(
+        self, function, return_value_position: int, arguments: List[str], call_number: int
+    ) -> None:
         self.function = function
         self.return_value = self.function.arguments_list(explicit=False, implicit=False, ret=True)[
             return_value_position
         ]
+        self.arguments = arguments
         self.call_number = call_number
 
 
@@ -67,7 +70,9 @@ class Variable:
 
     counter = 0
 
-    def __init__(self, variable_name: Optional[str] = None, function=None) -> None:
+    def __init__(
+        self, variable_name: Optional[str] = None, function=None, function_result: bool = False
+    ) -> None:
         """
         Initialize a new variable
         Args:
@@ -81,6 +86,8 @@ class Variable:
         self.local = True
         # Function where the variable is defined
         self.function = function
+        # If the variable is the result of a function
+        self.function_result = function_result
 
     def set(self) -> None:
         """
@@ -103,6 +110,8 @@ class Variable:
 
         # If the variable has a name
         if self.variable_name is not None:
+            if self.function_result:
+                return "v%s_%s" % (self.instance, self.variable_name)
             return self.variable_name
 
         # Use default name (v_<n>)

@@ -36,13 +36,20 @@ class SSA:
 
         self.fp_position = self.ap_position
 
-    def new_variable(self, variable_name: Optional[str] = None, function: Function = None) -> None:
+    def new_variable(
+        self,
+        variable_name: Optional[str] = None,
+        function: Function = None,
+        function_result: bool = False,
+    ) -> None:
         """
         Create a new variable in memory
         Args:
             variable_name (Optional String): name of the variable
         """
-        variable = Variable(variable_name=variable_name, function=function)
+        variable = Variable(
+            variable_name=variable_name, function=function, function_result=function_result
+        )
         self.memory.append(variable)
 
     def get_variable(self, register: str, offset: int) -> Tuple[bool, Variable, bool]:

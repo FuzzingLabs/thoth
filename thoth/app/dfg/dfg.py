@@ -231,7 +231,6 @@ class DFG:
             subgraph.attr(bgcolor="lightgrey")
             subgraphs.append(subgraph)
 
-        # Create edges between variables and functions return values
         for variable in self.variables:
             if variable.value is None:
                 continue
@@ -242,13 +241,34 @@ class DFG:
                 s for s in subgraphs if s.name == "cluster_%s" % variable.function.name
             ][0]
 
+            # Create edges between variables and functions return values
             source_variable = "%s (%s)" % (
                 variable.value.operation.function.name,
                 variable.value.operation.call_number,
             )
-            destination_variable = "f%s_%s" % (variable.function.id, variable.name)
+            destination_variable = variable.name
 
             function_subgraph.edge(source_variable, destination_variable)
+
+            # Create edges between functions arguments and functions
+            function_arguments = variable.value.operation.arguments
+            function_arguments_names = variable.value.operation.function.arguments_list(
+                explicit=True, implicit=True, ret=True
+            )
+            for i in range(len(function_arguments)):
+                current_argument_name = function_arguments_names[i]
+                for argument in function_arguments[i]:
+                    source_block = [b for b in self.variables_blocks if b.name == argument[2].name][
+                        0
+                    ]
+                    source_variable = source_block.name
+                    destination_variable = "%s (%s)" % (
+                        variable.value.operation.function.name,
+                        variable.value.operation.call_number,
+                    )
+                    function_subgraph.edge(
+                        source_variable, destination_variable, label=current_argument_name
+                    )
 
         # Variables nodes
         for variable in self.variables_blocks:
@@ -285,7 +305,7 @@ class DFG:
                 call.graph_representation_name,
                 style="filled",
                 fillcolor=DFGConfig.FUNCTION_CALL_NODE_COLOR,
-                shape="square",
+                shape="box",
                 label=call.graph_representation_name,
             )
 

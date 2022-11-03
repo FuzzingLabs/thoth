@@ -376,6 +376,7 @@ class Decompiler:
                         )
 
                 args_str = ""
+                args_list = []
                 while args != 0:
                     phi_node_variables = []
                     # Generate the phi function representation
@@ -388,15 +389,18 @@ class Decompiler:
                         phi_node_representation = "Φ(%s)" % ", ".join(variables_names)
                     if self.ssa.get_variable("ap", -1 * int(args))[2] in phi_node_variables:
                         args_str += f"{phi_node_representation}"
+                        args_list.append(phi_node_variables)
                     else:
-                        args_str += f"{self.ssa.get_variable('ap', -1 * int(args))[1]}"
+                        argument_value = self.ssa.get_variable("ap", -1 * int(args))
+                        args_str += f"{argument_value[1]}"
+                        args_list.append([argument_value])
                     if args != 1:
                         args_str += ", "
                     args -= 1
 
                 for return_value in function_return_values:
                     self.ssa.new_variable(
-                        variable_name="%s" % return_value, function=called_function
+                        variable_name=return_value, function=called_function, function_result=True
                     )
                     self.ssa.ap_position += 1
 
@@ -410,6 +414,7 @@ class Decompiler:
                             operation=FunctionCall(
                                 function=called_function,
                                 return_value_position=i - 1,
+                                arguments=args_list,
                                 call_number=self.function_calls,
                             ),
                         )
