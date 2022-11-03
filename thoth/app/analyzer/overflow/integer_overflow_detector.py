@@ -1,6 +1,6 @@
 from typing import List
 from thoth.app.decompiler.decompiler import Decompiler
-from thoth.app.decompiler.variable import OperandType, Operator, Variable
+from thoth.app.decompiler.variable import OperandType, Operator, Variable, VariableValueType
 from thoth.app.analyzer.abstract_analyzer import (
     AbstractAnalyzer,
     CategoryClassification,
@@ -45,32 +45,36 @@ class IntegerOverflowDetector(AbstractAnalyzer):
 
             for local in local_variables:
                 value = local.value
-                if value is not None:
-                    operands = [v for v in value.operation if not isinstance(v, Operator)]
-                    variables_operands = [o for o in operands if o.type == OperandType.VARIABLE]
-                    variables_operands_values = [o.value for o in variables_operands]
+                if value is None:
+                    continue
 
-                    if len(variables_operands) != 2:
-                        continue
+                # TODO : Handle variables assigned by a function call
+                if value.type == VariableValueType.FUNCTION_CALL:
+                    continue
 
-                    # Use DFG to find tainted variables
-                    try:
-                        dfg_variable = [
-                            v
-                            for v in dfg.variables_blocks
-                            if v.name in variables_operands_values[1] and v.function == function
-                        ][0]
-                    except:
-                        continue
-                    # Direct integer overflow
-                    if dfg_variable.tainting_coefficient == 1:
-                        self.detected = True
-                        self.result.append("%s : %s" % (function.name, dfg_variable.name))
-                    # Indirect integer overflow
-                    elif dfg_variable.tainting_coefficient >= 0.7:
-                        # Less critical than direct integer overflow/underflow
-                        self.IMPACT = ImpactClassification.MEDIUM
-                        self.detected = True
-                        self.result.append(
-                            "%s : %s (indirect)" % (function.name, dfg_variable.name)
-                        )
+                operands = [v for v in value.operation if not isinstance(v, Operator)]
+                variables_operands = [o for o in operands if o.type == OperandType.VARIABLE]
+                variables_operands_values = [o.value for o in variables_operands]
+
+                if len(variables_operands) != 2:
+                    continue
+
+                # Use DFG to find tainted variables
+                try:
+                    dfg_variable = [
+                        v
+                        for v in dfg.variables_blocks
+                        if v.name in variables_operands_values[1] and v.function == function
+                    ][0]
+                except:
+                    continue
+                # Direct integer overflow
+                if dfg_variable.tainting_coefficient == 1:
+                    self.detected = True
+                    self.result.append("%s : %s" % (function.name, dfg_variable.name))
+                # Indirect integer overflow
+                elif dfg_variable.tainting_coefficient >= 0.7:
+                    # Less critical than direct integer overflow/underflow
+                    self.IMPACT = ImpactClassification.MEDIUM
+                    self.detected = True
+                    self.result.append("%s : %s (indirect)" % (function.name, dfg_variable.name))

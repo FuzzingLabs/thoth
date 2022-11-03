@@ -5,7 +5,7 @@ from thoth.app.analyzer.abstract_analyzer import (
     PrecisionClassification,
 )
 from thoth.app.decompiler.decompiler import Decompiler
-from thoth.app.decompiler.variable import Operand, Operator, VariableValue
+from thoth.app.decompiler.variable import Operand, Operator, VariableValue, VariableValueType
 from thoth.app.disassembler.function import Function
 
 
@@ -68,10 +68,16 @@ class AssignationsAnalyzer(AbstractAnalyzer):
         memory = self.decompiler.ssa.memory
         for variable in memory:
             variable_value = variable.value
-            if variable_value is not None:
-                assignation = "%s = %s" % (
-                    variable.name,
-                    variable_value_to_str(variable_value, variable.function),
-                )
-                self.result.append(assignation)
+            if variable_value is None:
+                continue
+
+            # TODO : Handle variables assigned by a function call
+            if variable_value.type == VariableValueType.FUNCTION_CALL:
+                continue
+
+            assignation = "%s = %s" % (
+                variable.name,
+                variable_value_to_str(variable_value, variable.function),
+            )
+            self.result.append(assignation)
         self.detected = True

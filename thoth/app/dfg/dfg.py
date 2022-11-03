@@ -3,12 +3,20 @@ from typing import List
 
 from thoth.app.decompiler.variable import Operand, OperandType, Variable, VariableValueType
 from thoth.app.dfg.config import DFGConfig
-from thoth.app.dfg.objects import DFGConstantBlock, DFGEdge, DFGVariableBlock, DFGFunctionCallBlock
+from thoth.app.dfg.objects import DFGConstantBlock, DFGEdge, DFGFunctionCallBlock, DFGVariableBlock
 from thoth.app.disassembler.function import Function
 
 
 class Tainting:
+    """
+    Allows to taint one of the blocks and to visualize the
+    propagation within the DFG
+    """
+
+    # Red
     FULL_TAINTED_COLOR = (1.0, 0.0, 0.0)
+    # A tainted block tainting coefficient
+    # is <parent_tainting_coefficient> * taiting_coefficient
     PROPAGATION_COEFFICIENT = 0.7
 
     @classmethod
@@ -38,29 +46,21 @@ class DFG:
 
     def __init__(self, variables: List[Variable]) -> None:
         self.variables = variables
+
+        # DFG Blocks
         self.variables_blocks: List[DFGVariableBlock] = []
         self.constants_blocks: List[DFGConstantBlock] = []
         self.functions_calls_blocks: List[DFGFunctionCallBlock] = []
+
+        # DFG Edges
         self.edges: List[DFGEdge] = []
+
         # List of all the functions arguments names
         all_functions: List[Function] = list(filter(None, [v.function for v in self.variables]))
         self.all_functions_arguments = list(sum([f.arguments_list() for f in all_functions], []))
+
+        # Dot graph object
         self.dot = None
-
-    def _clean_tainting(self) -> None:
-        """
-        Remove all tainting from variables
-        """
-        for block in self.variables_blocks:
-            block.tainting_coefficient = 0
-
-    def get_variable_name(self, variable: DFGVariableBlock) -> str:
-        """
-        Get the name of a variable that will be displayed in the graph representation
-        """
-        if variable.name in self.all_functions_arguments:
-            return "f%s_%s" % (variable.function.id, variable.name)
-        return variable.name
 
     @staticmethod
     def taint_children_blocks(parent_block: DFGVariableBlock) -> None:
@@ -99,6 +99,21 @@ class DFG:
             if variable.is_function_argument:
                 self._taint_variable(variable)
 
+    def _clean_tainting(self) -> None:
+        """
+        Remove all tainting from variables
+        """
+        for block in self.variables_blocks:
+            block.tainting_coefficient = 0
+
+    def _get_variable_name(self, variable: DFGVariableBlock) -> str:
+        """
+        Get the name of a variable that will be displayed in the graph representation
+        """
+        if variable.name in self.all_functions_arguments:
+            return "f%s_%s" % (variable.function.id, variable.name)
+        return variable.name
+
     def _create_blocks(self) -> None:
         """
         Create the DFG blocks from the variables
@@ -111,19 +126,20 @@ class DFG:
             if variable_function is not None and not variable.function.is_import:
                 function_arguments = variable.function.arguments_list(implicit=False, ret=False)
                 is_function_argument = variable_name in function_arguments
+
                 # Create block
                 new_block = DFGVariableBlock(variable_name, variable_function, is_function_argument)
-                new_block.graph_representation_name = self.get_variable_name(new_block)
+                new_block.graph_representation_name = self._get_variable_name(new_block)
                 self.variables_blocks.append(new_block)
 
     def _create_functions_calls(self) -> None:
         """
-        Create the DFG Functions calls
+        Create the DFG Functions calls blocks
         """
         for variable in self.variables:
+            # Skip variables that are not assigned with a function call
             if variable.value is None:
                 continue
-
             if variable.value.type is not VariableValueType.FUNCTION_CALL:
                 continue
 
@@ -136,6 +152,7 @@ class DFG:
             )
             function = variable.function
 
+            # Create a new function call block
             new_block = DFGFunctionCallBlock(
                 value=value,
                 arguments=arguments,
@@ -152,10 +169,11 @@ class DFG:
         for variable in self.variables:
             if variable.value is None:
                 continue
-
+            # Skip variables that are assigned with a function call
             if variable.value.type == VariableValueType.FUNCTION_CALL:
                 continue
 
+            # Destination variable
             destination_block = [
                 b
                 for b in self.variables_blocks
@@ -231,6 +249,7 @@ class DFG:
             subgraph.attr(bgcolor="lightgrey")
             subgraphs.append(subgraph)
 
+        # Functions calls
         for variable in self.variables:
             if variable.value is None:
                 continue
@@ -247,7 +266,6 @@ class DFG:
                 variable.value.operation.call_number,
             )
             destination_variable = variable.name
-
             function_subgraph.edge(source_variable, destination_variable)
 
             # Create edges between functions arguments and functions
@@ -278,9 +296,8 @@ class DFG:
             function_subgraph = [
                 s for s in subgraphs if s.name == "cluster_%s" % variable.function.name
             ][0]
-
-            node = function_subgraph.node(
-                self.get_variable_name(variable),
+            function_subgraph.node(
+                self._get_variable_name(variable),
                 style="filled",
                 fillcolor=Tainting._get_taint(variable.tainting_coefficient),
                 fontname=DFGConfig.FONT,
@@ -304,14 +321,12 @@ class DFG:
             function_subgraph = [
                 s for s in subgraphs if s.name == "cluster_%s" % call.function.name
             ][0]
-
             function_subgraph.node(
                 call.graph_representation_name,
                 style="filled",
                 fillcolor=DFGConfig.FUNCTION_CALL_NODE_COLOR,
                 shape="box",
                 label=call.graph_representation_name,
-                fontname=DFGConfig.FONT,
             )
 
         # Edges
