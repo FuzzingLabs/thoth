@@ -22,7 +22,7 @@ class SSA:
         Initialize AP and FP at the beginning of a function
         Reference : https://eprint.iacr.org/2021/1063.pdf page 38 / Section 6.1 - Function call stack
         """
-        arguments = function.arguments_list()
+        arguments = function.arguments_list(explicit=True, implicit=True, ret=False)
         # [fp - 3], [fp - 4], ...
         for argument in arguments:
             self.new_variable(variable_name=argument, function=function, is_function_argument=True)

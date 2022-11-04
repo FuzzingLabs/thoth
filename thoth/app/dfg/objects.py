@@ -9,11 +9,18 @@ class DFGVariableBlock:
     DFG Variable block class
     """
 
-    def __init__(self, name: str, function: Function, is_function_argument: bool) -> None:
+    def __init__(
+        self,
+        name: str,
+        function: Function,
+        is_function_argument: bool,
+        is_function_return_value: bool,
+    ) -> None:
         self.name = name
         self.graph_representation_name = None
         self.function = function
         self.is_function_argument = is_function_argument
+        self.is_function_return_value = is_function_return_value
         self.tainting_coefficient = 0
         self.parents_blocks: List[DFGVariableBlock] = []
         self.children_blocks: List[DFGVariableBlock] = []

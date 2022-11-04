@@ -77,6 +77,7 @@ class Variable:
         function=None,
         function_result: bool = False,
         is_function_argument: bool = True,
+        is_function_return_value: bool = False,
     ) -> None:
         """
         Initialize a new variable
@@ -95,6 +96,8 @@ class Variable:
         self.function_result = function_result
         # If the variable is a function argument
         self.is_function_argument = is_function_argument
+        # If the variable is a potential return value
+        self.is_function_return_value = is_function_return_value
 
     def set(self) -> None:
         """

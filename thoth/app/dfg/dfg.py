@@ -122,12 +122,16 @@ class DFG:
             variable_name = variable.name
             variable_function = variable.function
             is_function_argument = False
+            is_function_return_value = False
 
             if variable_function is not None and not variable.function.is_import:
                 is_function_argument = variable.is_function_argument
+                is_function_return_value = variable.is_function_return_value
 
                 # Create block
-                new_block = DFGVariableBlock(variable_name, variable_function, is_function_argument)
+                new_block = DFGVariableBlock(
+                    variable_name, variable_function, is_function_argument, is_function_return_value
+                )
                 new_block.graph_representation_name = self._get_variable_name(new_block)
                 self.variables_blocks.append(new_block)
 

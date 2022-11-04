@@ -475,7 +475,9 @@ class Decompiler:
             idx = len(self.return_values)
             source_code += self.print_instruction_decomp("return", color=utils.color.RED) + "("
             while idx:
-                source_code += f"{self.ssa.get_variable('ap', -1 * int(idx))[1]}"
+                return_variable = self.ssa.get_variable("ap", -1 * int(idx))
+                return_variable[2].is_function_return_value = True
+                source_code += f"{return_variable[1]}"
                 if idx != 1:
                     source_code += ", "
                 idx -= 1
