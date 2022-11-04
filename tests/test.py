@@ -367,7 +367,7 @@ class TestDisassembler(unittest.TestCase):
         # Find v1
         v1 = [v for v in dfg.variables_blocks if v.name == "v1"][0]
         v1_parents = [parent.name for parent in v1.parents_blocks]
-        self.assertEqual(["v0", "integer"], v1_parents)
+        self.assertEqual(["v0", "v2_integer"], v1_parents)
 
         # Find v5
         v5 = [v for v in dfg.variables_blocks if v.name == "v5"][0]

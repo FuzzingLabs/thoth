@@ -124,8 +124,7 @@ class DFG:
             is_function_argument = False
 
             if variable_function is not None and not variable.function.is_import:
-                function_arguments = variable.function.arguments_list(implicit=False, ret=False)
-                is_function_argument = variable_name in function_arguments
+                is_function_argument = variable.is_function_argument
 
                 # Create block
                 new_block = DFGVariableBlock(variable_name, variable_function, is_function_argument)
@@ -271,14 +270,17 @@ class DFG:
             # Create edges between functions arguments and functions
             function_arguments = variable.value.operation.arguments
             function_arguments_names = variable.value.operation.function.arguments_list(
-                explicit=True, implicit=True, ret=True
+                explicit=True, implicit=True, ret=False
             )
             for i in range(len(function_arguments)):
                 current_argument_name = function_arguments_names[i]
                 for argument in function_arguments[i]:
-                    source_block = [b for b in self.variables_blocks if b.name == argument[2].name][
-                        0
-                    ]
+                    try:
+                        source_block = [
+                            b for b in self.variables_blocks if b.name == argument[2].name
+                        ][0]
+                    except:
+                        continue
                     source_variable = source_block.name
                     destination_variable = "%s (%s)" % (
                         variable.value.operation.function.name,

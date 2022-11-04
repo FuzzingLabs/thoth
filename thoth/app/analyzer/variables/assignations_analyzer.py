@@ -72,12 +72,6 @@ class AssignationsAnalyzer(AbstractAnalyzer):
             if variable_value is None:
                 continue
 
-            assignation = "%s = %s" % (
-                variable.name,
-                variable_value_to_str(variable_value, variable.function),
-            )
-            self.result.append(assignation)
-
             # Handle variables assigned by a function call
             if variable_value.type == VariableValueType.FUNCTION_CALL:
                 function_name = variable_value.operation.function.name.split(".")[-1]
@@ -105,5 +99,11 @@ class AssignationsAnalyzer(AbstractAnalyzer):
                 assignation = "%s = %s[%s]" % (variable.name, function_call, return_value_position)
                 self.result.append(assignation)
                 continue
+
+            assignation = "%s = %s" % (
+                variable.name,
+                variable_value_to_str(variable_value, variable.function),
+            )
+            self.result.append(assignation)
 
         self.detected = True

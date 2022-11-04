@@ -25,13 +25,13 @@ class SSA:
         arguments = function.arguments_list()
         # [fp - 3], [fp - 4], ...
         for argument in arguments:
-            self.new_variable(variable_name=argument, function=function)
+            self.new_variable(variable_name=argument, function=function, is_function_argument=True)
             self.ap_position += 1
         # [fp - 2]
-        self.new_variable(variable_name="[callers function's frame]")
+        self.new_variable(variable_name="callers function's frame")
         self.ap_position += 1
         # [fp - 1]
-        self.new_variable(variable_name="[return instruction]")
+        self.new_variable(variable_name="return instruction")
         self.ap_position += 1
 
         self.fp_position = self.ap_position
@@ -41,6 +41,7 @@ class SSA:
         variable_name: Optional[str] = None,
         function: Function = None,
         function_result: bool = False,
+        is_function_argument: bool = False,
     ) -> None:
         """
         Create a new variable in memory
@@ -48,7 +49,10 @@ class SSA:
             variable_name (Optional String): name of the variable
         """
         variable = Variable(
-            variable_name=variable_name, function=function, function_result=function_result
+            variable_name=variable_name,
+            function=function,
+            function_result=function_result,
+            is_function_argument=is_function_argument,
         )
         self.memory.append(variable)
 

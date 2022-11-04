@@ -72,7 +72,11 @@ class Variable:
     counter = 0
 
     def __init__(
-        self, variable_name: Optional[str] = None, function=None, function_result: bool = False
+        self,
+        variable_name: Optional[str] = None,
+        function=None,
+        function_result: bool = False,
+        is_function_argument: bool = True,
     ) -> None:
         """
         Initialize a new variable
@@ -89,6 +93,8 @@ class Variable:
         self.function = function
         # If the variable is the result of a function
         self.function_result = function_result
+        # If the variable is a function argument
+        self.is_function_argument = is_function_argument
 
     def set(self) -> None:
         """
@@ -111,9 +117,7 @@ class Variable:
 
         # If the variable has a name
         if self.variable_name is not None:
-            if self.function_result:
-                return "v%s_%s" % (self.instance, self.variable_name)
-            return self.variable_name
+            return "v%s_%s" % (self.instance, self.variable_name)
 
         # Use default name (v_<n>)
         name = "v%s" % self.instance
