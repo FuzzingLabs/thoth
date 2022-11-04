@@ -1,4 +1,3 @@
-from typing import List
 from thoth.app.decompiler.decompiler import Decompiler
 from thoth.app.decompiler.variable import OperandType, Operator, Variable, VariableValueType
 from thoth.app.analyzer.abstract_analyzer import (

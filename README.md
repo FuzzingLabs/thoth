@@ -224,6 +224,10 @@ func balance() -> (res : felt):
 end
 ```
 
+# Acknowledgments
+
+Thoth is inspired by a lot of differents security tools developped by friends such as: [Octopus](https://github.com/FuzzingLabs/octopus), [Slither](https://github.com/crytic/slither), [Mythril](https://github.com/ConsenSys/mythril), etc.
+
 # License
 
 Thoth is licensed and distributed under the AGPLv3 license. [Contact us](mailto:contact@fuzzinglabs.com) if you're looking for an exception to the terms.

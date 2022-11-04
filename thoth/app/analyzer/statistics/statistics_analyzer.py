@@ -18,7 +18,7 @@ class StatisticsAnalyzer(AbstractAnalyzer):
     PRECISION: PrecisionClassification = PrecisionClassification.HIGH
     CATEGORY: CategoryClassification = CategoryClassification.ANALYTICS
 
-    def _detect(self) -> None:
+    def _detect(self) -> bool:
         self.detected = True
 
         # Statistics
@@ -37,3 +37,5 @@ class StatisticsAnalyzer(AbstractAnalyzer):
         self.result.append("builtins : %s" % str(builtins_count))
         self.result.append("structs : %s" % str(structs_count))
         self.result.append("calls : %s" % str(calls_count))
+
+        return self.detected
