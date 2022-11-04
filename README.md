@@ -3,35 +3,41 @@
 
 Thoth (pronounced "toss") is a Cairo/Starknet analyzer, disassembler & decompiler written in Python 3. Thoth's features also include the generation of the call graph and control-flow graph (CFG) of a given Cairo/Starknet compilation artifact. [Demo video](https://www.youtube.com/watch?v=T0KvG8Zps6I)
 
+## Features
+- **Local and remote**: Thoth can both analyze contracts compiled locally on your machine or deployed on Mainnet/Goerli
+- **[Disassembler](#disassemble-the-contracts-compilation-artifact-json)**: Thoth can translate bytecode into assembly representation
+- **[Decompiler](#decompile-the-contracts-compilation-artifact-json)**: Thoth can convert assembly into decompiled code with SSA (Static Single Assignment)  
+- **[Control Flow analysis](#print-the-contracts-control-flow-graph-cfg)**: Thoth can generate a **Control Flow Graph** (CFG)
+- **[Call Flow analysis](#print-the-contracts-call-graph)**: Thoth can generate a **Call Flow Graph** 
+- **[Data Flow analysis](#print-the-contracts-data-flow-graph-dfg)**: Thoth can generate a **Data Flow Graph** (DFG) for each function
+- **[Static analysis](#run-the-static-analysis)**: Thoth can run various **analyzers** of different types (*security*/*optimization*/*analytics*) on the contract
+
 ## Installation
 
-```sh
+```
 sudo apt install graphviz
-
 git clone https://github.com/FuzzingLabs/thoth && cd thoth
-
 pip install .
-
 thoth -h
 ```
 
-## Disassemble the contract's compilation artifact (json)
+## Disassemble the contract's compilation artifact (JSON)
 
 #### From a JSON file
 
-```sh
+```
 thoth local tests/json_files/cairo_array_sum.json -b
 ```
 
 #### From starknet 
 
-```sh
+```
 thoth remote --address 0x0323D18E2401DDe9aFFE1908e9863cbfE523791690F32a2ff6aa66959841D31D --network mainnet -b
 ```
 
 To get a pretty colored version:
 
-```sh
+```
 thoth local tests/json_files/cairo_array_sum.json -b -color
 ```
 <p align="center">
@@ -39,14 +45,14 @@ thoth local tests/json_files/cairo_array_sum.json -b -color
 </p>
 
 To get a verbose version with more details about decoded bytecodes:
-```sh
+```
 thoth local tests/json_files/cairo_array_sum.json -vvv
 ```
 
-## Decompile the contract's compilation artifact (json)
+## Decompile the contract's compilation artifact (JSON)
 
 
-```sh
+```
 thoth local tests/json_files/cairo_test_addition_if.json -d
 ```
 Example 1 with strings:
@@ -80,19 +86,25 @@ The static analysis is performed using *analyzers* which can be either informati
 |**Function naming**|`function_naming`|Detect functions names that are not in snake case|Informational|High|Security|
 |**Variable naming**|`variable_naming`|Detect variables names that are not in snake case|Informational|High|Security|
 
-```bash
-# Run all the analyzers
+#### Run all the analyzers
+```
 thoth local tests/json_files/cairo_array_sum.json -a
+```
 
-# Selects which analyzers to run
+#### Selects which analyzers to run
+```
 thoth local tests/json_files/cairo_array_sum.json -a erc20 erc721
+```
 
-# Only run a specific category of analyzers
+#### Only run a specific category of analyzers
+```
 thoth local tests/json_files/cairo_array_sum.json -a security
 thoth local tests/json_files/cairo_array_sum.json -a optimization
 thoth local tests/json_files/cairo_array_sum.json -a analytics
+```
 
-# Print a list of all the availables analyzers
+#### Print a list of all the availables analyzers
+```
 thoth local tests/json_files/cairo_array_sum.json --analyzers-help
 ```
 
@@ -100,7 +112,7 @@ thoth local tests/json_files/cairo_array_sum.json --analyzers-help
 
 The call flow graph represents calling relationships between functions of the contract. We tried to provide a maximum of information, such as the entry-point functions, the imports, decorators, etc.
 
-```sh
+```
 thoth local tests/json_files/cairo_array_sum.json -call -view True
 ```
 The output file (pdf/svg/png) and the dot file are inside the `output-callgraph` folder.
@@ -117,13 +129,13 @@ A more complexe callgraph:
 
 
 For a specific output format (pdf/svg/png):
-```sh
+```
 thoth local tests/json_files/cairo_array_sum.json -call -view True -format png
 ```
 
 ## Print the contract's control-flow graph (CFG)
 
-```sh
+```
 thoth local tests/json_files/cairo_double_function_and_if.json -cfg -view True
 ```
 The output file (pdf/svg/png) and the dot file are inside the `output-cfg` folder.
@@ -133,18 +145,18 @@ The output file (pdf/svg/png) and the dot file are inside the `output-cfg` folde
 </p>
 
 For a specific function:
-```sh
+```
 thoth local tests/json_files/cairo_double_function_and_if.json -cfg -view True -function "__main__.main"
 ```
 
 For a specific output format (pdf/svg/png):
-```sh
+```
 thoth local tests/json_files/cairo_double_function_and_if.json -cfg -view True -format png
 ```
 
 ## Print the contract's data-flow graph (DFG)
 
-```sh
+```
 thoth local tests/json_files/cairo_double_function_and_if.json -dfg -view True
 ```
 The output file (pdf/svg/png) and the dot file are inside the `output-dfg` folder.
@@ -155,7 +167,7 @@ The output file (pdf/svg/png) and the dot file are inside the `output-dfg` folde
 
 
 For a specific output format (pdf/svg/png):
-```sh
+```
 thoth local tests/json_files/cairo_double_function_and_if.json -dfg -view True -format png
 ```
 
@@ -167,13 +179,13 @@ Thoth support cairo and starknet compilation artifact (json file) generated afte
 
 ## How to run the tests?
 
-``` sh
+``` 
 python3 tests/test.py
 ```
 
 ## How to build the documentation?
 
-```sh
+```
 # Install sphinx
 apt-get install python3-sphinx
 
