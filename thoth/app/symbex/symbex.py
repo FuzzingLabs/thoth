@@ -1,5 +1,6 @@
 from typing import List, Tuple
 from z3 import *
+from thoth.app.cfg.cfg import BasicBlock
 
 from thoth.app.decompiler.variable import OperandType, Operator, Variable, VariableValueType
 
@@ -75,10 +76,37 @@ class SymbolicExecution:
         """
         self.variables.append(Int(name))
 
-    def _generate_test_cases(self) -> Tuple[Tuple[str, int]]:
+    def _find_paths(self, function: Function) -> List[List[BasicBlock]]:
+        """
+        Find all the possible paths betwwen the basic blocks in a function
+        """
+        paths = []
+
+        # Find paths starting blocks
+        for block in function.cfg.basicblocks:
+            if len(function.cfg.parents(block)) == 0:
+                paths.append([block])
+        
+        # Find all the paths
+        while True:
+            new_paths = []
+
+            for i in range(len(paths)):
+                last_block_children = function.cfg.children(paths[i][-1])
+                for child_block in last_block_children:
+                    new_paths.append(paths[i] + [child_block])
+                if len(last_block_children) == 0:
+                    new_paths.append(paths[i])
+
+            # No new paths
+            if new_paths == paths:
+                break
+            paths = new_paths
+        return paths
+
+
+    def _generate_test_cases(self, function: Function) -> Tuple[Tuple[str, int]]:
         """
         Generate a list of testcases allowing to cover all the possible paths of a function
         """
-        self._create_z3_variables()
-        self._create_operations()
         return ()

@@ -293,6 +293,24 @@ class CFG:
                     parents.append(basic_block)
         return parents
 
+    def children(self, basic_block: BasicBlock) -> List[BasicBlock]:
+        """
+        Return a list of the children of a basic_block
+        Args:
+            basic_block (BasicBlock): A basic block
+        Returns:
+            children (List BasicBlock): A list of the children blocks of a basic_block
+        """
+        children = []
+
+        edges_destinations = [edge.destination for edge in basic_block.edges_offset]
+
+        # Find all blocks having an edge with the current block as source
+        for basic_block in self.basicblocks:
+            if basic_block.start_offset in edges_destinations:
+                children.append(basic_block)
+        return children
+
     def find_phi_nodes(self) -> None:
         """
         Find the basic blocks that are phi nodes
