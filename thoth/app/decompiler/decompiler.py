@@ -38,6 +38,7 @@ class Decompiler:
         self.return_values = None
         # Static single assignment
         Variable.counter = 0
+        BasicBlock.counter = 0
         self.ssa = SSA()
         self.assertion = False
         self.current_basic_block: Optional[BasicBlock] = None

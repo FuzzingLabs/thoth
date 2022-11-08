@@ -1,4 +1,5 @@
 from typing import Optional, Tuple
+from thoth.app.cfg.cfg import BasicBlock
 from thoth.app.decompiler.variable import Variable
 from thoth.app.disassembler.function import Function
 
@@ -25,21 +26,30 @@ class SSA:
         arguments = function.arguments_list(explicit=True, implicit=True, ret=False)
         # [fp - 3], [fp - 4], ...
         for argument in arguments:
-            self.new_variable(variable_name=argument, function=function, is_function_argument=True)
+            self.new_variable(
+                variable_name=argument,
+                function=function,
+                basic_block_id=BasicBlock.counter,
+                is_function_argument=True,
+            )
             self.ap_position += 1
         # [fp - 2]
-        self.new_variable(variable_name="callers function's frame")
+        self.new_variable(
+            variable_name="callers function's frame", basic_block_id=BasicBlock.counter
+        )
         self.ap_position += 1
         # [fp - 1]
-        self.new_variable(variable_name="return instruction")
+        self.new_variable(variable_name="return instruction", basic_block_id=BasicBlock.counter)
         self.ap_position += 1
 
         self.fp_position = self.ap_position
+        BasicBlock.counter += 1
 
     def new_variable(
         self,
         variable_name: Optional[str] = None,
         function: Function = None,
+        basic_block_id: int = None,
         function_result: bool = False,
         is_function_argument: bool = False,
     ) -> None:
@@ -51,6 +61,7 @@ class SSA:
         variable = Variable(
             variable_name=variable_name,
             function=function,
+            basic_block_id=basic_block_id,
             function_result=function_result,
             is_function_argument=is_function_argument,
         )

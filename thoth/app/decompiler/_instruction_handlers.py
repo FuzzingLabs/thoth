@@ -241,6 +241,8 @@ def _handle_assert_eq_decomp(self, instruction: Instruction) -> str:
 
     # Set variable function (scope for local variables)
     variable[2].function = self.current_function
+    # Set variable basic block ID for the symbolic execution
+    variable[2].basic_block_id = self.current_basic_block.id
     return source_code
 
 
@@ -353,6 +355,7 @@ def _handle_call_decomp(self, instruction: Instruction) -> str:
                 for i in range(1, len(function_return_values) + 1):
                     assigned_variable = self.ssa.get_variable("ap", -1 * i)[2]
                     assigned_variable.function = self.current_function
+                    assigned_variable.basic_block_id = self.current_basic_block.id
                     assigned_variable.value = VariableValue(
                         type=VariableValueType.FUNCTION_CALL,
                         operation=FunctionCall(

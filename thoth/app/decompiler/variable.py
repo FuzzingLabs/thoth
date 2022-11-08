@@ -75,6 +75,7 @@ class Variable:
         self,
         variable_name: Optional[str] = None,
         function=None,
+        basic_block_id: int = None,
         function_result: bool = False,
         is_function_argument: bool = True,
         is_function_return_value: bool = False,
@@ -92,6 +93,8 @@ class Variable:
         self.local = True
         # Function where the variable is defined
         self.function = function
+        # ID of the basic block where the variable is defined
+        self.basic_block_id = basic_block_id
         # If the variable is the result of a function
         self.function_result = function_result
         # If the variable is a function argument

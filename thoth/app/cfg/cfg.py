@@ -1,6 +1,6 @@
 import re
 from graphviz import Digraph
-from typing import List
+from typing import List, Optional
 
 from thoth.app.decompiler.variable import Variable
 from thoth.app.disassembler.instruction import Instruction
@@ -29,6 +29,8 @@ class Edge:
 class BasicBlock:
     """Basic Block class object."""
 
+    counter = 0
+
     def __init__(self, start_instruction: Instruction) -> None:
         """Create the basic block object from the given instruction.
         Args:
@@ -44,6 +46,8 @@ class BasicBlock:
         self.edges_offset: List[Instruction] = []
         self.is_phi_node: Optional[bool] = None
         self.variables: List[Variable] = []
+        self.id = BasicBlock.counter
+        BasicBlock.counter += 1
 
     @staticmethod
     def format_bb_name(instruction_offset: int) -> str:
