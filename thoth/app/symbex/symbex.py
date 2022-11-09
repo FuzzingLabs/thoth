@@ -41,8 +41,10 @@ class SymbolicExecution:
                 if operation[0].type == OperandType.INTEGER:
                     self.solver.add(assigned_variable == int(operation[0].value))
                 else:
+                    path_variables = [v.name for v in variables]
+                    operand_variable_name = [o for o in operation[0].value if o in path_variables][0]
                     assigned_variable_value = [
-                        v for v in self.z3_variables if str(v) == operation[0].value[0]
+                        v for v in self.z3_variables if str(v) == operand_variable_name
                     ][0]
                     self.solver.add(assigned_variable == assigned_variable_value)
 
@@ -52,8 +54,10 @@ class SymbolicExecution:
                 if operation[0].type == OperandType.INTEGER:
                     first_operand = int(operation[0].value)
                 else:
+                    path_variables = [v.name for v in variables]
+                    operand_variable_name = [o for o in operation[0].value if o in path_variables][0]
                     first_operand = [
-                        v for v in self.z3_variables if str(v) == operation[0].value[0]
+                        v for v in self.z3_variables if str(v) == operand_variable_name
                     ][0]
 
                 # Second operand
