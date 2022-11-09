@@ -22,11 +22,11 @@ class SymbolicExecution:
         for variable in self.variables:
             self.z3_variables.append(Int(variable.name))
 
-    def _create_operations(self) -> None:
+    def _create_operations(self, variables: List[Variable]) -> None:
         """
         Assign variables value in the z3 solver
         """
-        for variable in self.variables:
+        for variable in variables:
             if variable.value is None:
                 continue
             if variable.value.type == VariableValueType.FUNCTION_CALL:
@@ -86,7 +86,7 @@ class SymbolicExecution:
         for block in function.cfg.basicblocks:
             if len(function.cfg.parents(block)) == 0:
                 paths.append([block])
-        
+
         # Find all the paths
         while True:
             new_paths = []
@@ -104,9 +104,28 @@ class SymbolicExecution:
             paths = new_paths
         return paths
 
-
     def _generate_test_cases(self, function: Function) -> Tuple[Tuple[str, int]]:
         """
         Generate a list of testcases allowing to cover all the possible paths of a function
         """
+        paths = self._find_paths(function)
+
+        # Function arguments variables
+        function_arguments = [
+            v for v in self.variables if v.function == function and v.is_function_argument
+        ]
+
+        for path in paths:
+            # Use a new solver for each path
+            self.solver = z3.Solver()
+            # Initialize variables
+            self._create_z3_variables()
+
+            # Load variables assignations into z3
+            path_variables = []
+            for block in path:
+                path_variables += block.variables
+            path_variables = function_arguments + path_variables
+            self._create_operations(path_variables)
+
         return ()
