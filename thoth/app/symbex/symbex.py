@@ -14,11 +14,14 @@ class SymbolicExecution:
         self.solver = z3.Solver()
         self.variables: List[Variable] = variables
         self.z3_variables: List[ArithRef] = []
+        self.constraints: List[ArithRef] = []
 
     def _create_z3_variables(self) -> None:
         """
         Create z3 ArithRef objects from the program memory
         """
+        # Init z3 variables list
+        self.z3_variables = []
         for variable in self.variables:
             self.z3_variables.append(Int(variable.name))
 
@@ -42,7 +45,9 @@ class SymbolicExecution:
                     self.solver.add(assigned_variable == int(operation[0].value))
                 else:
                     path_variables = [v.name for v in variables]
-                    operand_variable_name = [o for o in operation[0].value if o in path_variables][0]
+                    operand_variable_name = [o for o in operation[0].value if o in path_variables][
+                        0
+                    ]
                     assigned_variable_value = [
                         v for v in self.z3_variables if str(v) == operand_variable_name
                     ][0]
@@ -55,7 +60,9 @@ class SymbolicExecution:
                     first_operand = int(operation[0].value)
                 else:
                     path_variables = [v.name for v in variables]
-                    operand_variable_name = [o for o in operation[0].value if o in path_variables][0]
+                    operand_variable_name = [o for o in operation[0].value if o in path_variables][
+                        0
+                    ]
                     first_operand = [
                         v for v in self.z3_variables if str(v) == operand_variable_name
                     ][0]
@@ -108,6 +115,36 @@ class SymbolicExecution:
             paths = new_paths
         return paths
 
+    def _get_constraints(self, basic_blocks: List[BasicBlock]) -> List[ArithRef]:
+        """
+        Get the list of requiered z3 constraints to traverse a path
+        """
+        constraints = []
+
+        for block in basic_blocks:
+            block_edges = [edge.destination for edge in block.edges_offset]
+            if not len(block_edges) == 2:
+                continue
+
+            # Find the latest defined variable in the block
+            # The constraint is either <latest_defined_var> == 0 (IF branch)
+            # or <latest_defined_var> != 0 (ELSE branch)
+            try:
+                block_last_variable = block.variables[-1]
+                block_last_z3_variable = [
+                    v for v in self.z3_variables if str(v) == block_last_variable.name
+                ][0]
+            except:
+                continue
+
+            # If branch
+            if len([b for b in basic_blocks if b.start_offset == block_edges[0]]) != 1:
+                constraints.append(block_last_z3_variable == 0)
+            # Else branch
+            elif len([b for b in basic_blocks if b.start_offset == block_edges[1]]) != 1:
+                constraints.append(block_last_z3_variable != 0)
+        return constraints
+
     def _generate_test_cases(self, function: Function) -> Tuple[Tuple[str, int]]:
         """
         Generate a list of testcases allowing to cover all the possible paths of a function
@@ -131,5 +168,6 @@ class SymbolicExecution:
                 path_variables += block.variables
             path_variables = function_arguments + path_variables
             self._create_operations(path_variables)
+            constraints = self._get_constraints(path)
 
         return ()
