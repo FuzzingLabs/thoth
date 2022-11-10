@@ -210,6 +210,7 @@ def _handle_assert_eq_decomp(self, instruction: Instruction) -> str:
             elif (
                 self.block_new_variables == 0
                 and len(self.current_function.cfg.parents(self.current_basic_block)) != 0
+                and not is_assert
             ):
                 if len(phi_node_variables) != 0:
                     operand = phi_node_representation

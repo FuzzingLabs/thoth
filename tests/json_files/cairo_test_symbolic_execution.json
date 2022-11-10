@@ -1,0 +1,847 @@
+{
+    "attributes": [],
+    "builtins": [
+        "output"
+    ],
+    "compiler_version": "0.10.0",
+    "data": [
+        "0x482680017ffc8000",
+        "0x800000000000010fffffffffffffffffffffffffffffffffffffffffffffff7",
+        "0x20680017fff7fff",
+        "0x3",
+        "0x208b7fff7fff7ffe",
+        "0x482680017ffc8000",
+        "0x800000000000010ffffffffffffffffffffffffffffffffffffffffffffffed",
+        "0x20680017fff7fff",
+        "0x3",
+        "0x208b7fff7fff7ffe",
+        "0x482680017ffd8000",
+        "0x800000000000010fffffffffffffffffffffffffffffffffffffffffffffff2",
+        "0x20680017fff7fff",
+        "0x3",
+        "0x208b7fff7fff7ffe",
+        "0x482680017ffd8000",
+        "0x800000000000010ffffffffffffffffffffffffffffffffffffffffffffffe8",
+        "0x20680017fff7fff",
+        "0x3",
+        "0x208b7fff7fff7ffe",
+        "0x208b7fff7fff7ffe",
+        "0x480680017fff8000",
+        "0xa",
+        "0x480680017fff8000",
+        "0x14",
+        "0x1104800180018000",
+        "0x800000000000010ffffffffffffffffffffffffffffffffffffffffffffffe8",
+        "0x480a7ffd7fff8000",
+        "0x208b7fff7fff7ffe"
+    ],
+    "debug_info": {
+        "file_contents": {},
+        "instruction_locations": {
+            "0": {
+                "accessible_scopes": [
+                    "__main__",
+                    "__main__.test_symbolic_execution"
+                ],
+                "flow_tracking_data": {
+                    "ap_tracking": {
+                        "group": 0,
+                        "offset": 0
+                    },
+                    "reference_ids": {
+                        "__main__.test_symbolic_execution.x": 0,
+                        "__main__.test_symbolic_execution.y": 1
+                    }
+                },
+                "hints": [],
+                "inst": {
+                    "end_col": 16,
+                    "end_line": 4,
+                    "input_file": {
+                        "filename": "./tests/cairo_files/cairo_test_symbolic_execution.cairo"
+                    },
+                    "start_col": 9,
+                    "start_line": 4
+                }
+            },
+            "2": {
+                "accessible_scopes": [
+                    "__main__",
+                    "__main__.test_symbolic_execution"
+                ],
+                "flow_tracking_data": {
+                    "ap_tracking": {
+                        "group": 0,
+                        "offset": 1
+                    },
+                    "reference_ids": {
+                        "__main__.test_symbolic_execution.__temp0": 2,
+                        "__main__.test_symbolic_execution.x": 0,
+                        "__main__.test_symbolic_execution.y": 1
+                    }
+                },
+                "hints": [],
+                "inst": {
+                    "end_col": 7,
+                    "end_line": 4,
+                    "input_file": {
+                        "filename": "./tests/cairo_files/cairo_test_symbolic_execution.cairo"
+                    },
+                    "start_col": 5,
+                    "start_line": 4
+                }
+            },
+            "4": {
+                "accessible_scopes": [
+                    "__main__",
+                    "__main__.test_symbolic_execution"
+                ],
+                "flow_tracking_data": {
+                    "ap_tracking": {
+                        "group": 0,
+                        "offset": 1
+                    },
+                    "reference_ids": {
+                        "__main__.test_symbolic_execution.__temp0": 2,
+                        "__main__.test_symbolic_execution.x": 0,
+                        "__main__.test_symbolic_execution.y": 1
+                    }
+                },
+                "hints": [],
+                "inst": {
+                    "end_col": 18,
+                    "end_line": 5,
+                    "input_file": {
+                        "filename": "./tests/cairo_files/cairo_test_symbolic_execution.cairo"
+                    },
+                    "start_col": 9,
+                    "start_line": 5
+                }
+            },
+            "5": {
+                "accessible_scopes": [
+                    "__main__",
+                    "__main__.test_symbolic_execution"
+                ],
+                "flow_tracking_data": {
+                    "ap_tracking": {
+                        "group": 0,
+                        "offset": 1
+                    },
+                    "reference_ids": {
+                        "__main__.test_symbolic_execution.__temp0": 2,
+                        "__main__.test_symbolic_execution.x": 0,
+                        "__main__.test_symbolic_execution.y": 1
+                    }
+                },
+                "hints": [],
+                "inst": {
+                    "end_col": 16,
+                    "end_line": 8,
+                    "input_file": {
+                        "filename": "./tests/cairo_files/cairo_test_symbolic_execution.cairo"
+                    },
+                    "start_col": 9,
+                    "start_line": 8
+                }
+            },
+            "7": {
+                "accessible_scopes": [
+                    "__main__",
+                    "__main__.test_symbolic_execution"
+                ],
+                "flow_tracking_data": {
+                    "ap_tracking": {
+                        "group": 0,
+                        "offset": 2
+                    },
+                    "reference_ids": {
+                        "__main__.test_symbolic_execution.__temp0": 2,
+                        "__main__.test_symbolic_execution.__temp1": 3,
+                        "__main__.test_symbolic_execution.x": 0,
+                        "__main__.test_symbolic_execution.y": 1
+                    }
+                },
+                "hints": [],
+                "inst": {
+                    "end_col": 7,
+                    "end_line": 8,
+                    "input_file": {
+                        "filename": "./tests/cairo_files/cairo_test_symbolic_execution.cairo"
+                    },
+                    "start_col": 5,
+                    "start_line": 8
+                }
+            },
+            "9": {
+                "accessible_scopes": [
+                    "__main__",
+                    "__main__.test_symbolic_execution"
+                ],
+                "flow_tracking_data": {
+                    "ap_tracking": {
+                        "group": 0,
+                        "offset": 2
+                    },
+                    "reference_ids": {
+                        "__main__.test_symbolic_execution.__temp0": 2,
+                        "__main__.test_symbolic_execution.__temp1": 3,
+                        "__main__.test_symbolic_execution.x": 0,
+                        "__main__.test_symbolic_execution.y": 1
+                    }
+                },
+                "hints": [],
+                "inst": {
+                    "end_col": 18,
+                    "end_line": 9,
+                    "input_file": {
+                        "filename": "./tests/cairo_files/cairo_test_symbolic_execution.cairo"
+                    },
+                    "start_col": 9,
+                    "start_line": 9
+                }
+            },
+            "10": {
+                "accessible_scopes": [
+                    "__main__",
+                    "__main__.test_symbolic_execution"
+                ],
+                "flow_tracking_data": {
+                    "ap_tracking": {
+                        "group": 0,
+                        "offset": 2
+                    },
+                    "reference_ids": {
+                        "__main__.test_symbolic_execution.__temp0": 2,
+                        "__main__.test_symbolic_execution.__temp1": 3,
+                        "__main__.test_symbolic_execution.x": 0,
+                        "__main__.test_symbolic_execution.y": 1
+                    }
+                },
+                "hints": [],
+                "inst": {
+                    "end_col": 16,
+                    "end_line": 12,
+                    "input_file": {
+                        "filename": "./tests/cairo_files/cairo_test_symbolic_execution.cairo"
+                    },
+                    "start_col": 9,
+                    "start_line": 12
+                }
+            },
+            "12": {
+                "accessible_scopes": [
+                    "__main__",
+                    "__main__.test_symbolic_execution"
+                ],
+                "flow_tracking_data": {
+                    "ap_tracking": {
+                        "group": 0,
+                        "offset": 3
+                    },
+                    "reference_ids": {
+                        "__main__.test_symbolic_execution.__temp0": 2,
+                        "__main__.test_symbolic_execution.__temp1": 3,
+                        "__main__.test_symbolic_execution.__temp2": 4,
+                        "__main__.test_symbolic_execution.x": 0,
+                        "__main__.test_symbolic_execution.y": 1
+                    }
+                },
+                "hints": [],
+                "inst": {
+                    "end_col": 7,
+                    "end_line": 12,
+                    "input_file": {
+                        "filename": "./tests/cairo_files/cairo_test_symbolic_execution.cairo"
+                    },
+                    "start_col": 5,
+                    "start_line": 12
+                }
+            },
+            "14": {
+                "accessible_scopes": [
+                    "__main__",
+                    "__main__.test_symbolic_execution"
+                ],
+                "flow_tracking_data": {
+                    "ap_tracking": {
+                        "group": 0,
+                        "offset": 3
+                    },
+                    "reference_ids": {
+                        "__main__.test_symbolic_execution.__temp0": 2,
+                        "__main__.test_symbolic_execution.__temp1": 3,
+                        "__main__.test_symbolic_execution.__temp2": 4,
+                        "__main__.test_symbolic_execution.x": 0,
+                        "__main__.test_symbolic_execution.y": 1
+                    }
+                },
+                "hints": [],
+                "inst": {
+                    "end_col": 18,
+                    "end_line": 13,
+                    "input_file": {
+                        "filename": "./tests/cairo_files/cairo_test_symbolic_execution.cairo"
+                    },
+                    "start_col": 9,
+                    "start_line": 13
+                }
+            },
+            "15": {
+                "accessible_scopes": [
+                    "__main__",
+                    "__main__.test_symbolic_execution"
+                ],
+                "flow_tracking_data": {
+                    "ap_tracking": {
+                        "group": 0,
+                        "offset": 3
+                    },
+                    "reference_ids": {
+                        "__main__.test_symbolic_execution.__temp0": 2,
+                        "__main__.test_symbolic_execution.__temp1": 3,
+                        "__main__.test_symbolic_execution.__temp2": 4,
+                        "__main__.test_symbolic_execution.x": 0,
+                        "__main__.test_symbolic_execution.y": 1
+                    }
+                },
+                "hints": [],
+                "inst": {
+                    "end_col": 16,
+                    "end_line": 16,
+                    "input_file": {
+                        "filename": "./tests/cairo_files/cairo_test_symbolic_execution.cairo"
+                    },
+                    "start_col": 9,
+                    "start_line": 16
+                }
+            },
+            "17": {
+                "accessible_scopes": [
+                    "__main__",
+                    "__main__.test_symbolic_execution"
+                ],
+                "flow_tracking_data": {
+                    "ap_tracking": {
+                        "group": 0,
+                        "offset": 4
+                    },
+                    "reference_ids": {
+                        "__main__.test_symbolic_execution.__temp0": 2,
+                        "__main__.test_symbolic_execution.__temp1": 3,
+                        "__main__.test_symbolic_execution.__temp2": 4,
+                        "__main__.test_symbolic_execution.__temp3": 5,
+                        "__main__.test_symbolic_execution.x": 0,
+                        "__main__.test_symbolic_execution.y": 1
+                    }
+                },
+                "hints": [],
+                "inst": {
+                    "end_col": 7,
+                    "end_line": 16,
+                    "input_file": {
+                        "filename": "./tests/cairo_files/cairo_test_symbolic_execution.cairo"
+                    },
+                    "start_col": 5,
+                    "start_line": 16
+                }
+            },
+            "19": {
+                "accessible_scopes": [
+                    "__main__",
+                    "__main__.test_symbolic_execution"
+                ],
+                "flow_tracking_data": {
+                    "ap_tracking": {
+                        "group": 0,
+                        "offset": 4
+                    },
+                    "reference_ids": {
+                        "__main__.test_symbolic_execution.__temp0": 2,
+                        "__main__.test_symbolic_execution.__temp1": 3,
+                        "__main__.test_symbolic_execution.__temp2": 4,
+                        "__main__.test_symbolic_execution.__temp3": 5,
+                        "__main__.test_symbolic_execution.x": 0,
+                        "__main__.test_symbolic_execution.y": 1
+                    }
+                },
+                "hints": [],
+                "inst": {
+                    "end_col": 18,
+                    "end_line": 17,
+                    "input_file": {
+                        "filename": "./tests/cairo_files/cairo_test_symbolic_execution.cairo"
+                    },
+                    "start_col": 9,
+                    "start_line": 17
+                }
+            },
+            "20": {
+                "accessible_scopes": [
+                    "__main__",
+                    "__main__.test_symbolic_execution"
+                ],
+                "flow_tracking_data": {
+                    "ap_tracking": {
+                        "group": 0,
+                        "offset": 4
+                    },
+                    "reference_ids": {
+                        "__main__.test_symbolic_execution.__temp0": 2,
+                        "__main__.test_symbolic_execution.__temp1": 3,
+                        "__main__.test_symbolic_execution.__temp2": 4,
+                        "__main__.test_symbolic_execution.__temp3": 5,
+                        "__main__.test_symbolic_execution.x": 0,
+                        "__main__.test_symbolic_execution.y": 1
+                    }
+                },
+                "hints": [],
+                "inst": {
+                    "end_col": 14,
+                    "end_line": 19,
+                    "input_file": {
+                        "filename": "./tests/cairo_files/cairo_test_symbolic_execution.cairo"
+                    },
+                    "start_col": 5,
+                    "start_line": 19
+                }
+            },
+            "21": {
+                "accessible_scopes": [
+                    "__main__",
+                    "__main__.main"
+                ],
+                "flow_tracking_data": {
+                    "ap_tracking": {
+                        "group": 1,
+                        "offset": 0
+                    },
+                    "reference_ids": {
+                        "__main__.main.output_ptr": 6
+                    }
+                },
+                "hints": [],
+                "inst": {
+                    "end_col": 19,
+                    "end_line": 23,
+                    "input_file": {
+                        "filename": "./tests/cairo_files/cairo_test_symbolic_execution.cairo"
+                    },
+                    "start_col": 17,
+                    "start_line": 23
+                }
+            },
+            "23": {
+                "accessible_scopes": [
+                    "__main__",
+                    "__main__.main"
+                ],
+                "flow_tracking_data": {
+                    "ap_tracking": {
+                        "group": 1,
+                        "offset": 1
+                    },
+                    "reference_ids": {
+                        "__main__.main.output_ptr": 6,
+                        "__main__.main.x": 7
+                    }
+                },
+                "hints": [],
+                "inst": {
+                    "end_col": 19,
+                    "end_line": 24,
+                    "input_file": {
+                        "filename": "./tests/cairo_files/cairo_test_symbolic_execution.cairo"
+                    },
+                    "start_col": 17,
+                    "start_line": 24
+                }
+            },
+            "25": {
+                "accessible_scopes": [
+                    "__main__",
+                    "__main__.main"
+                ],
+                "flow_tracking_data": {
+                    "ap_tracking": {
+                        "group": 1,
+                        "offset": 2
+                    },
+                    "reference_ids": {
+                        "__main__.main.output_ptr": 6,
+                        "__main__.main.x": 7,
+                        "__main__.main.y": 8
+                    }
+                },
+                "hints": [],
+                "inst": {
+                    "end_col": 34,
+                    "end_line": 25,
+                    "input_file": {
+                        "filename": "./tests/cairo_files/cairo_test_symbolic_execution.cairo"
+                    },
+                    "start_col": 5,
+                    "start_line": 25
+                }
+            },
+            "27": {
+                "accessible_scopes": [
+                    "__main__",
+                    "__main__.main"
+                ],
+                "flow_tracking_data": {
+                    "ap_tracking": {
+                        "group": 2,
+                        "offset": 0
+                    },
+                    "reference_ids": {
+                        "__main__.main.output_ptr": 6,
+                        "__main__.main.x": 7,
+                        "__main__.main.y": 8
+                    }
+                },
+                "hints": [],
+                "inst": {
+                    "end_col": 28,
+                    "end_line": 22,
+                    "input_file": {
+                        "filename": "./tests/cairo_files/cairo_test_symbolic_execution.cairo"
+                    },
+                    "parent_location": [
+                        {
+                            "end_col": 28,
+                            "end_line": 22,
+                            "input_file": {
+                                "filename": "./tests/cairo_files/cairo_test_symbolic_execution.cairo"
+                            },
+                            "parent_location": [
+                                {
+                                    "end_col": 15,
+                                    "end_line": 26,
+                                    "input_file": {
+                                        "filename": "./tests/cairo_files/cairo_test_symbolic_execution.cairo"
+                                    },
+                                    "start_col": 5,
+                                    "start_line": 26
+                                },
+                                "While trying to retrieve the implicit argument 'output_ptr' in:"
+                            ],
+                            "start_col": 11,
+                            "start_line": 22
+                        },
+                        "While expanding the reference 'output_ptr' in:"
+                    ],
+                    "start_col": 11,
+                    "start_line": 22
+                }
+            },
+            "28": {
+                "accessible_scopes": [
+                    "__main__",
+                    "__main__.main"
+                ],
+                "flow_tracking_data": {
+                    "ap_tracking": {
+                        "group": 2,
+                        "offset": 1
+                    },
+                    "reference_ids": {
+                        "__main__.main.output_ptr": 6,
+                        "__main__.main.x": 7,
+                        "__main__.main.y": 8
+                    }
+                },
+                "hints": [],
+                "inst": {
+                    "end_col": 15,
+                    "end_line": 26,
+                    "input_file": {
+                        "filename": "./tests/cairo_files/cairo_test_symbolic_execution.cairo"
+                    },
+                    "start_col": 5,
+                    "start_line": 26
+                }
+            }
+        }
+    },
+    "hints": {},
+    "identifiers": {
+        "__main__.main": {
+            "decorators": [],
+            "pc": 21,
+            "type": "function"
+        },
+        "__main__.main.Args": {
+            "full_name": "__main__.main.Args",
+            "members": {},
+            "size": 0,
+            "type": "struct"
+        },
+        "__main__.main.ImplicitArgs": {
+            "full_name": "__main__.main.ImplicitArgs",
+            "members": {
+                "output_ptr": {
+                    "cairo_type": "felt*",
+                    "offset": 0
+                }
+            },
+            "size": 1,
+            "type": "struct"
+        },
+        "__main__.main.Return": {
+            "cairo_type": "()",
+            "type": "type_definition"
+        },
+        "__main__.main.SIZEOF_LOCALS": {
+            "type": "const",
+            "value": 0
+        },
+        "__main__.main.output_ptr": {
+            "cairo_type": "felt*",
+            "full_name": "__main__.main.output_ptr",
+            "references": [
+                {
+                    "ap_tracking_data": {
+                        "group": 1,
+                        "offset": 0
+                    },
+                    "pc": 21,
+                    "value": "[cast(fp + (-3), felt**)]"
+                }
+            ],
+            "type": "reference"
+        },
+        "__main__.main.x": {
+            "cairo_type": "felt",
+            "full_name": "__main__.main.x",
+            "references": [
+                {
+                    "ap_tracking_data": {
+                        "group": 1,
+                        "offset": 1
+                    },
+                    "pc": 23,
+                    "value": "[cast(ap + (-1), felt*)]"
+                }
+            ],
+            "type": "reference"
+        },
+        "__main__.main.y": {
+            "cairo_type": "felt",
+            "full_name": "__main__.main.y",
+            "references": [
+                {
+                    "ap_tracking_data": {
+                        "group": 1,
+                        "offset": 2
+                    },
+                    "pc": 25,
+                    "value": "[cast(ap + (-1), felt*)]"
+                }
+            ],
+            "type": "reference"
+        },
+        "__main__.test_symbolic_execution": {
+            "decorators": [],
+            "pc": 0,
+            "type": "function"
+        },
+        "__main__.test_symbolic_execution.Args": {
+            "full_name": "__main__.test_symbolic_execution.Args",
+            "members": {
+                "x": {
+                    "cairo_type": "felt",
+                    "offset": 0
+                },
+                "y": {
+                    "cairo_type": "felt",
+                    "offset": 1
+                }
+            },
+            "size": 2,
+            "type": "struct"
+        },
+        "__main__.test_symbolic_execution.ImplicitArgs": {
+            "full_name": "__main__.test_symbolic_execution.ImplicitArgs",
+            "members": {},
+            "size": 0,
+            "type": "struct"
+        },
+        "__main__.test_symbolic_execution.Return": {
+            "cairo_type": "()",
+            "type": "type_definition"
+        },
+        "__main__.test_symbolic_execution.SIZEOF_LOCALS": {
+            "type": "const",
+            "value": 0
+        },
+        "__main__.test_symbolic_execution.__temp0": {
+            "cairo_type": "felt",
+            "full_name": "__main__.test_symbolic_execution.__temp0",
+            "references": [
+                {
+                    "ap_tracking_data": {
+                        "group": 0,
+                        "offset": 1
+                    },
+                    "pc": 2,
+                    "value": "[cast(ap + (-1), felt*)]"
+                }
+            ],
+            "type": "reference"
+        },
+        "__main__.test_symbolic_execution.__temp1": {
+            "cairo_type": "felt",
+            "full_name": "__main__.test_symbolic_execution.__temp1",
+            "references": [
+                {
+                    "ap_tracking_data": {
+                        "group": 0,
+                        "offset": 2
+                    },
+                    "pc": 7,
+                    "value": "[cast(ap + (-1), felt*)]"
+                }
+            ],
+            "type": "reference"
+        },
+        "__main__.test_symbolic_execution.__temp2": {
+            "cairo_type": "felt",
+            "full_name": "__main__.test_symbolic_execution.__temp2",
+            "references": [
+                {
+                    "ap_tracking_data": {
+                        "group": 0,
+                        "offset": 3
+                    },
+                    "pc": 12,
+                    "value": "[cast(ap + (-1), felt*)]"
+                }
+            ],
+            "type": "reference"
+        },
+        "__main__.test_symbolic_execution.__temp3": {
+            "cairo_type": "felt",
+            "full_name": "__main__.test_symbolic_execution.__temp3",
+            "references": [
+                {
+                    "ap_tracking_data": {
+                        "group": 0,
+                        "offset": 4
+                    },
+                    "pc": 17,
+                    "value": "[cast(ap + (-1), felt*)]"
+                }
+            ],
+            "type": "reference"
+        },
+        "__main__.test_symbolic_execution.x": {
+            "cairo_type": "felt",
+            "full_name": "__main__.test_symbolic_execution.x",
+            "references": [
+                {
+                    "ap_tracking_data": {
+                        "group": 0,
+                        "offset": 0
+                    },
+                    "pc": 0,
+                    "value": "[cast(fp + (-4), felt*)]"
+                }
+            ],
+            "type": "reference"
+        },
+        "__main__.test_symbolic_execution.y": {
+            "cairo_type": "felt",
+            "full_name": "__main__.test_symbolic_execution.y",
+            "references": [
+                {
+                    "ap_tracking_data": {
+                        "group": 0,
+                        "offset": 0
+                    },
+                    "pc": 0,
+                    "value": "[cast(fp + (-3), felt*)]"
+                }
+            ],
+            "type": "reference"
+        }
+    },
+    "main_scope": "__main__",
+    "prime": "0x800000000000011000000000000000000000000000000000000000000000001",
+    "reference_manager": {
+        "references": [
+            {
+                "ap_tracking_data": {
+                    "group": 0,
+                    "offset": 0
+                },
+                "pc": 0,
+                "value": "[cast(fp + (-4), felt*)]"
+            },
+            {
+                "ap_tracking_data": {
+                    "group": 0,
+                    "offset": 0
+                },
+                "pc": 0,
+                "value": "[cast(fp + (-3), felt*)]"
+            },
+            {
+                "ap_tracking_data": {
+                    "group": 0,
+                    "offset": 1
+                },
+                "pc": 2,
+                "value": "[cast(ap + (-1), felt*)]"
+            },
+            {
+                "ap_tracking_data": {
+                    "group": 0,
+                    "offset": 2
+                },
+                "pc": 7,
+                "value": "[cast(ap + (-1), felt*)]"
+            },
+            {
+                "ap_tracking_data": {
+                    "group": 0,
+                    "offset": 3
+                },
+                "pc": 12,
+                "value": "[cast(ap + (-1), felt*)]"
+            },
+            {
+                "ap_tracking_data": {
+                    "group": 0,
+                    "offset": 4
+                },
+                "pc": 17,
+                "value": "[cast(ap + (-1), felt*)]"
+            },
+            {
+                "ap_tracking_data": {
+                    "group": 1,
+                    "offset": 0
+                },
+                "pc": 21,
+                "value": "[cast(fp + (-3), felt**)]"
+            },
+            {
+                "ap_tracking_data": {
+                    "group": 1,
+                    "offset": 1
+                },
+                "pc": 23,
+                "value": "[cast(ap + (-1), felt*)]"
+            },
+            {
+                "ap_tracking_data": {
+                    "group": 1,
+                    "offset": 2
+                },
+                "pc": 25,
+                "value": "[cast(ap + (-1), felt*)]"
+            }
+        ]
+    }
+}
