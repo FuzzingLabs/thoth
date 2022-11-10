@@ -47,6 +47,7 @@ class BasicBlock:
         self.is_phi_node: Optional[bool] = None
         self.variables: List[Variable] = []
         self.id = BasicBlock.counter
+        self.variable_condition = None
         BasicBlock.counter += 1
 
     @staticmethod

@@ -39,15 +39,19 @@ class SymbolicExecution:
 
             assigned_variable = [v for v in self.z3_variables if variable.name == str(v)][0]
             operation = variable.value.operation
+
             # Simple variable assignation
             if len(operation) == 1:
                 if operation[0].type == OperandType.INTEGER:
                     self.solver.add(assigned_variable == int(operation[0].value))
                 else:
                     path_variables = [v.name for v in variables]
-                    operand_variable_name = [o for o in operation[0].value if o in path_variables][
-                        0
-                    ]
+                    try:
+                        operand_variable_name = [
+                            o for o in operation[0].value if o in path_variables
+                        ][0]
+                    except:
+                        continue
                     assigned_variable_value = [
                         v for v in self.z3_variables if str(v) == operand_variable_name
                     ][0]
@@ -60,9 +64,12 @@ class SymbolicExecution:
                     first_operand = int(operation[0].value)
                 else:
                     path_variables = [v.name for v in variables]
-                    operand_variable_name = [o for o in operation[0].value if o in path_variables][
-                        0
-                    ]
+                    try:
+                        operand_variable_name = [
+                            o for o in operation[0].value if o in path_variables
+                        ][0]
+                    except:
+                        continue
                     first_operand = [
                         v for v in self.z3_variables if str(v) == operand_variable_name
                     ][0]
@@ -130,7 +137,7 @@ class SymbolicExecution:
             # The constraint is either <latest_defined_var> == 0 (IF branch)
             # or <latest_defined_var> != 0 (ELSE branch)
             try:
-                block_last_variable = block.variables[-1]
+                block_last_variable = block.condition_variable
                 block_last_z3_variable = [
                     v for v in self.z3_variables if str(v) == block_last_variable.name
                 ][0]
@@ -145,7 +152,7 @@ class SymbolicExecution:
                 constraints.append(block_last_z3_variable != 0)
         return constraints
 
-    def _generate_test_cases(self, function: Function) -> Tuple[Tuple[str, int]]:
+    def _generate_test_cases(self, function: Function) -> List[Tuple[str, int]]:
         """
         Generate a list of testcases allowing to cover all the possible paths of a function
         """
@@ -155,6 +162,10 @@ class SymbolicExecution:
         function_arguments = [
             v for v in self.variables if v.function == function and v.is_function_argument
         ]
+
+        function_arguments_names = [_.name for _ in function_arguments]
+
+        test_cases = []
 
         for path in paths:
             # Use a new solver for each path
@@ -168,6 +179,25 @@ class SymbolicExecution:
                 path_variables += block.variables
             path_variables = function_arguments + path_variables
             self._create_operations(path_variables)
-            constraints = self._get_constraints(path)
 
-        return ()
+            # Load constraints into z3
+            constraints = self._get_constraints(path)
+            self.solver.add(constraints)
+
+            # Solve the constraints
+            if self.solver.check() == z3.sat:
+                model = self.solver.model()
+                # Create a dict from the z3 model
+                dict_model = {}
+                for d in self.solver.model():
+                    dict_model[str(d)] = model[d]
+                for argument in function_arguments_names:
+                    if not argument in dict_model.keys():
+                        dict_model[argument] = 0
+
+                # Create a test case list
+                test_case = [(k, v) for k, v in dict_model.items() if k in function_arguments_names]
+                if test_case and not test_case in test_cases:
+                    test_cases.append(test_case)
+
+        return test_cases

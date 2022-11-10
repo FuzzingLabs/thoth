@@ -176,7 +176,7 @@ def _handle_assert_eq_decomp(self, instruction: Instruction) -> str:
                 operand_2 = self.ssa.get_variable(op1_register, offset_2)[1]
                 variable_operand_2 = Operand(type=OperandType.VARIABLE, value=[operand_2])
 
-            operator = Operator.ADDITION if op == "+" else Operator.MULTIPLICATION
+            operator = Operator.ADDITION if op in ["+", "-"] else Operator.MULTIPLICATION
             # Set variable value
             if variable[2].value is None and not self.assertion:
                 variable[2].value = VariableValue(
@@ -225,7 +225,7 @@ def _handle_assert_eq_decomp(self, instruction: Instruction) -> str:
                 operand = self.ssa.get_variable(op0_register, offset_1)[1]
                 variable_operand_1 = Operand(type=OperandType.VARIABLE, value=[operand])
 
-            operator = Operator.ADDITION if op == "+" else Operator.MULTIPLICATION
+            operator = Operator.ADDITION if op in ["+", "-"] else Operator.MULTIPLICATION
             variable_operand_2 = Operand(type=OperandType.INTEGER, value=integer_value)
             # Set variable value
             if variable[2].value is None and not self.assertion:
@@ -261,16 +261,13 @@ def _handle_nop_decomp(self, instruction: Instruction) -> str:
     if "REGULAR" not in instruction.pcUpdate:
         if instruction.pcUpdate == "JNZ":
             tested_variable = self.ssa.get_variable("ap", destination_offset)
+            self.current_basic_block.condition_variable = tested_variable[2]
             source_code += (
                 self.print_instruction_decomp(f"if ", color=utils.color.RED)
                 + f"({tested_variable[1]} == 0) {{"
             )
-            if tested_variable[2].value is None:
-                tested_variable[2].value = VariableValue(
-                    type=VariableValueType.ABSOLUTE,
-                    operation=[Operand(type=OperandType.INTEGER, value=0)],
-                )
-                tested_variable[2].function = self.current_function
+
+            tested_variable[2].function = self.current_function
             self.tab_count += 1
             self.ifcount += 1
             # Detect if there is an else later
