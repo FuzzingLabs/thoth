@@ -3,9 +3,11 @@ from thoth.app.analyzer.abstract_analyzer import (
     CategoryClassification,
     ImpactClassification,
     PrecisionClassification,
+    colors,
 )
 from thoth.app.decompiler.decompiler import Decompiler
 from thoth.app.symbex.symbex import SymbolicExecution
+from thoth.app.utils import bcolors
 
 
 class TestCasesGeneratorAnalyzer(AbstractAnalyzer):
@@ -23,6 +25,9 @@ class TestCasesGeneratorAnalyzer(AbstractAnalyzer):
     def _detect(self) -> bool:
         self.detected = True
 
+        path_color = colors.HEADER if self.color else ""
+        variable_color = colors.CYAN if self.color else ""
+
         contract_functions = self.disassembler.functions
         decompiler = Decompiler(functions=contract_functions)
         decompiler.decompile_code(first_pass_only=True)
@@ -39,9 +44,12 @@ class TestCasesGeneratorAnalyzer(AbstractAnalyzer):
 
             function_test_cases = "%s" % function.name
 
+            paths_count = 0
             for test_case in test_cases:
                 function_test_cases += "\n    "
-                function_test_cases += ", ".join(["%s: %s" % (arg[0], arg[1]) for arg in test_case])
+                function_test_cases += "%sPath %s%s : " % (path_color , paths_count, colors.ENDC)
+                function_test_cases += ", ".join(["%s%s%s: %s" % (variable_color, arg[0], colors.ENDC, arg[1]) for arg in test_case])
+                paths_count += 1
             self.result.append(function_test_cases)
 
         return self.detected
