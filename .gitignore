@@ -1,7 +1,9 @@
 # Project custom
-output-callgraph/
-output-cfg/
+output-callgraph
+output-cfg
+output-dfg
 .vscode/
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
@@ -131,6 +133,3 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
-
-# Output graph directory 
-output_graph

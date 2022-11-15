@@ -1,6 +1,8 @@
 import os
 import sys
 import tempfile
+from thoth.app.decompiler.decompiler import Decompiler
+from thoth.app.dfg.dfg import DFG
 from thoth.app.utils import str_to_bool
 from thoth.app.arguments import parse_args
 from thoth.app.analyzer import all_analyzers
@@ -16,7 +18,7 @@ def main() -> int:
         Int: Return 0
     """
     args = parse_args()
-    if (args.call or args.cfg) and ("view" not in args):
+    if (args.call or args.cfg or args.dfg) and ("view" not in args):
         print("Need to set -view option")
         sys.exit()
 
@@ -72,7 +74,7 @@ def main() -> int:
 
     format = "pdf" if args.format is None else str(args.format)
 
-    # print call flow graph
+    # Print the call flow graph
     if args.call:
         disassembler.print_call_flow_graph(
             folder=args.output_callgraph_folder,
@@ -81,7 +83,7 @@ def main() -> int:
             view=str_to_bool(args.view),
         )
 
-    # print CFG
+    # Print the CFG
     if args.cfg:
         if args.color:
             disassembler = Disassembler(file, color=False)
@@ -91,6 +93,21 @@ def main() -> int:
             format=format,
             function_name=args.function,
             view=str_to_bool(args.view),
+        )
+
+    # Print the DFG
+    if args.dfg:
+        contract_functions = disassembler.functions
+        decompiler = Decompiler(functions=contract_functions)
+        decompiler.decompile_code(first_pass_only=True)
+
+        dfg = DFG(decompiler.ssa.memory)
+        dfg._create_dfg()
+        if args.taint:
+            dfg._taint_functions_arguments()
+        dfg._create_graph_representation()
+        dfg._print_dfg(
+            view=str_to_bool(args.view), folder=args.output_dfg_folder, format=args.format
         )
 
     if args.analyzers is None:
@@ -131,7 +148,7 @@ def main() -> int:
         a = analyzer(disassembler, color=args.color)
         if a._detect():
             detected = True
-            detected_analyzers_count += 1 
+            detected_analyzers_count += 1
         a._print()
         if detected:
             print()
@@ -144,7 +161,7 @@ def main() -> int:
             selected_analyzers_count,
             "s" if selected_analyzers_count > 1 else "",
             "were" if selected_analyzers_count > 1 else "was",
-            detected_analyzers_count
+            detected_analyzers_count,
         )
     )
     return 0

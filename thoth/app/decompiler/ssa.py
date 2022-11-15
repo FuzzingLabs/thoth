@@ -22,27 +22,38 @@ class SSA:
         Initialize AP and FP at the beginning of a function
         Reference : https://eprint.iacr.org/2021/1063.pdf page 38 / Section 6.1 - Function call stack
         """
-        arguments = function.arguments_list()
+        arguments = function.arguments_list(explicit=True, implicit=True, ret=False)
         # [fp - 3], [fp - 4], ...
         for argument in arguments:
-            self.new_variable(variable_name=argument, function=function)
+            self.new_variable(variable_name=argument, function=function, is_function_argument=True)
             self.ap_position += 1
         # [fp - 2]
-        self.new_variable(variable_name="[callers function's frame]")
+        self.new_variable(variable_name="callers function's frame")
         self.ap_position += 1
         # [fp - 1]
-        self.new_variable(variable_name="[return instruction]")
+        self.new_variable(variable_name="return instruction")
         self.ap_position += 1
 
         self.fp_position = self.ap_position
 
-    def new_variable(self, variable_name: Optional[str] = None, function: Function = None) -> None:
+    def new_variable(
+        self,
+        variable_name: Optional[str] = None,
+        function: Function = None,
+        function_result: bool = False,
+        is_function_argument: bool = False,
+    ) -> None:
         """
         Create a new variable in memory
         Args:
             variable_name (Optional String): name of the variable
         """
-        variable = Variable(variable_name=variable_name, function=function)
+        variable = Variable(
+            variable_name=variable_name,
+            function=function,
+            function_result=function_result,
+            is_function_argument=is_function_argument,
+        )
         self.memory.append(variable)
 
     def get_variable(self, register: str, offset: int) -> Tuple[bool, Variable, bool]:

@@ -5,6 +5,9 @@ import unittest
 
 import thoth.app.analyzer as analyzer
 from thoth.app.analyzer import all_analyzers
+from thoth.app.analyzer.abstract_analyzer import ImpactClassification
+from thoth.app.decompiler.decompiler import Decompiler
+from thoth.app.dfg.dfg import DFG, Tainting
 from thoth.app.disassembler.disassembler import Disassembler
 
 
@@ -308,7 +311,7 @@ class TestDisassembler(unittest.TestCase):
             "(1) __wrappers__.generate (entry point)\n\t- decorators : external\n\t- cyclomatic complexity : 1\n\t- instructions : 11",
         )
 
-    def test_starknet_erc20_erc20_analyzer(self):
+    def test_starknet_erc20_analyzer(self):
         """
         Test the ERC20 analyzer
         """
@@ -318,7 +321,7 @@ class TestDisassembler(unittest.TestCase):
 
         self.assertEqual(functions_analyzer.detected, True)
 
-    def test_starknet_erc721_erc721_analyzer(self):
+    def test_starknet_erc721_analyzer(self):
         """
         Test the ERC721 analyzer
         """
@@ -328,7 +331,7 @@ class TestDisassembler(unittest.TestCase):
 
         self.assertEqual(functions_analyzer.detected, True)
 
-    def test_starknet_integer_overflow_integer_overflow_detector(self):
+    def test_cairo_integer_overflow_integer_overflow_detector(self):
         """
         Test the Integer Overflow Detector
         """
@@ -337,6 +340,62 @@ class TestDisassembler(unittest.TestCase):
         integer_overflow_detector._detect()
 
         self.assertEqual(integer_overflow_detector.detected, True)
+
+    def test_cairo_integer_overflow_integer_2_overflow_detector(self):
+        """
+        Test the Integer Overflow Detector
+        """
+        disassembler = Disassembler("./tests/json_files/cairo_integer_overflow_2.json")
+        integer_overflow_detector = analyzer.IntegerOverflowDetector(disassembler, color=False)
+        integer_overflow_detector._detect()
+
+        self.assertEqual(integer_overflow_detector.detected, True)
+        self.assertEqual(integer_overflow_detector.IMPACT, ImpactClassification.MEDIUM)
+
+    def test_cairo_integer_overflow_dfg(self):
+        """
+        Test the DFG on cairo_integer_overflow
+        """
+        disassembler = Disassembler("./tests/json_files/cairo_integer_overflow.json")
+        decompiler = Decompiler(functions=disassembler.functions)
+        decompiler.decompile_code(first_pass_only=True)
+
+        dfg = DFG(decompiler.ssa.memory)
+        dfg._create_dfg()
+        dfg._create_graph_representation()
+
+        # Find v1
+        v1 = [v for v in dfg.variables_blocks if v.name == "v1"][0]
+        v1_parents = [parent.name for parent in v1.parents_blocks]
+        self.assertEqual(["v0", "v2_integer"], v1_parents)
+
+        # Find v5
+        v5 = [v for v in dfg.variables_blocks if v.name == "v5"][0]
+        v5_parents = [parent.name for parent in v5.parents_blocks]
+        self.assertEqual(["v1"], v5_parents)
+
+    def test_cairo_integer_overflow_2_tainting_dfg(self):
+        """
+        Test the DFG tainting on cairo_integer_overflow_2
+        """
+        disassembler = Disassembler("./tests/json_files/cairo_integer_overflow_2.json")
+        decompiler = Decompiler(functions=disassembler.functions)
+        decompiler.decompile_code(first_pass_only=True)
+
+        dfg = DFG(decompiler.ssa.memory)
+        dfg._create_dfg()
+        dfg._create_graph_representation()
+        dfg._taint_functions_arguments()
+
+        # Find v1
+        v1 = [v for v in dfg.variables_blocks if v.name == "v1"][0]
+        self.assertEqual(1 * Tainting.PROPAGATION_COEFFICIENT, v1.tainting_coefficient)
+        # Find v3
+        v3 = [v for v in dfg.variables_blocks if v.name == "v3"][0]
+        self.assertEqual(1 * Tainting.PROPAGATION_COEFFICIENT**2, v3.tainting_coefficient)
+        # Find v6
+        v6 = [v for v in dfg.variables_blocks if v.name == "v6"][0]
+        self.assertEqual(1 * Tainting.PROPAGATION_COEFFICIENT**3, v6.tainting_coefficient)
 
     def test_starknet_get_code_l2_dai_bridge_functions_naming_analyzer(self):
         """

@@ -5,7 +5,7 @@ from thoth.app.analyzer.abstract_analyzer import (
     PrecisionClassification,
 )
 from thoth.app.decompiler.decompiler import Decompiler
-from thoth.app.decompiler.variable import Operand, Operator, VariableValue
+from thoth.app.decompiler.variable import Operand, Operator, VariableValue, VariableValueType
 from thoth.app.disassembler.function import Function
 
 
@@ -19,7 +19,7 @@ def variable_value_to_str(variable_value: VariableValue, function: Function) -> 
     for element in variable_value.operation:
         # Operator
         if not isinstance(element, Operand):
-            result += " + " if element == Operator.MULTIPLICATION else " * "
+            result += " + " if element == Operator.ADDITION else " * "
             continue
 
         # Operand
@@ -45,6 +45,10 @@ def variable_value_to_str(variable_value: VariableValue, function: Function) -> 
                 element_value.append(element)
         possibles_values = ", ".join(element_value)
         result += "Φ(%s)" % possibles_values
+
+    if variable_value.type == VariableValueType.ADDRESS:
+        result = "[%s]" % result
+
     return result
 
 
@@ -66,14 +70,46 @@ class AssignationsAnalyzer(AbstractAnalyzer):
         self.decompiler.decompile_code(first_pass_only=True)
 
         memory = self.decompiler.ssa.memory
-        for variable in memory:
+        for i in range(len(memory)):
+            variable = memory[i]
             variable_value = variable.value
-            if variable_value is not None:
-                assignation = "%s = %s" % (
-                    variable.name,
-                    variable_value_to_str(variable_value, variable.function),
+            if variable_value is None:
+                continue
+
+            # Handle variables assigned by a function call
+            if variable_value.type == VariableValueType.FUNCTION_CALL:
+                function_name = variable_value.operation.function.name.split(".")[-1]
+                arguments_count = len(
+                    variable_value.operation.function.arguments_list(implicit=False, ret=False)
                 )
+                return_values_count = len(
+                    variable_value.operation.function.arguments_list(implicit=False, explicit=False)
+                )
+                return_value_position = variable_value.operation.return_value_position
+
+                # Format the variable assignation
+                # Arguments names
+                arguments_list_start = (
+                    i + 1 - arguments_count - (return_values_count - return_value_position)
+                )
+                arguments_list_end = i + 1 - (return_values_count - return_value_position)
+                arguments_list = [
+                    memory[i].name for i in range(arguments_list_start, arguments_list_end)
+                ]
+                arguments_str = ", ".join(arguments_list)
+                # Function name
+                function_call = "%s(%s)" % (function_name, arguments_str)
+
+                assignation = "%s = %s[%s]" % (variable.name, function_call, return_value_position)
                 self.result.append(assignation)
+                continue
+
+            assignation = "%s = %s" % (
+                variable.name,
+                variable_value_to_str(variable_value, variable.function),
+            )
+            self.result.append(assignation)
+
         self.detected = True
 
         return self.detected

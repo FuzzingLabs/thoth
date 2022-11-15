@@ -1,12 +1,12 @@
-from typing import List
 from thoth.app.decompiler.decompiler import Decompiler
-from thoth.app.decompiler.variable import OperandType, Operator, Variable
+from thoth.app.decompiler.variable import OperandType, Operator, Variable, VariableValueType
 from thoth.app.analyzer.abstract_analyzer import (
     AbstractAnalyzer,
     CategoryClassification,
     ImpactClassification,
     PrecisionClassification,
 )
+from thoth.app.dfg.dfg import DFG
 
 
 class IntegerOverflowDetector(AbstractAnalyzer):
@@ -21,45 +21,14 @@ class IntegerOverflowDetector(AbstractAnalyzer):
     PRECISION: PrecisionClassification = PrecisionClassification.MEDIUM
     CATEGORY: CategoryClassification = CategoryClassification.SECURITY
 
-    def find_operands_values(self, root_variable: Variable) -> List:
-        """
-        Find a variables operands values
-        e.g var3 = var2 + var1 -> [var2, var1]
-        """
-        all_variables = self.decompiler.ssa.memory
-        local_variables = [
-            variable for variable in all_variables if variable.function == root_variable.function
-        ]
-
-        operands = []
-
-        if root_variable.value is not None:
-            operands = [
-                element
-                for element in root_variable.value.operation
-                if not element in list(Operator)
-            ]
-
-            operands_values = [
-                operand.value for operand in operands if operand.type == OperandType.VARIABLE
-            ]
-
-            # Flaten the array
-            try:
-                operands_values = sum(operands_values, [])
-            except:
-                pass
-
-            # Related variables names
-            operands_names = [
-                variable for variable in local_variables if variable.name in operands_values
-            ]
-        return operands_names
-
-    def _detect(self) -> bool:
+    def _detect(self):
         contract_functions = self.disassembler.functions
         self.decompiler = Decompiler(functions=contract_functions)
-        decompiled_code = self.decompiler.decompile_code(first_pass_only=True)
+        self.decompiler.decompile_code(first_pass_only=True)
+
+        dfg = DFG(self.decompiler.ssa.memory)
+        dfg._create_dfg()
+        dfg._taint_functions_arguments()
 
         variables = self.decompiler.ssa.memory
         for function in contract_functions:
@@ -75,22 +44,36 @@ class IntegerOverflowDetector(AbstractAnalyzer):
 
             for local in local_variables:
                 value = local.value
-                if value is not None:
-                    # If there is an addition/substraction in the variable assignation
-                    if Operator.ADDITION in value.operation:
+                if value is None:
+                    continue
 
-                        related_variables = self.find_operands_values(local)
-                        if len(related_variables) != 2:
-                            continue
-                        related_variables_names = [_.name for _ in related_variables]
+                # TODO : Handle variables assigned by a function call
+                if value.type == VariableValueType.FUNCTION_CALL:
+                    continue
 
-                        integer_overflow_variables = list(
-                            set(related_variables_names).intersection(arguments)
-                        )
-                        # If we use one of the function argument in the assignation
-                        if len(integer_overflow_variables) != 0:
-                            self.detected = True
-                            self.result.append(
-                                "%s : %s" % (function.name, integer_overflow_variables[0])
-                            )
-        return self.detected
+                operands = [v for v in value.operation if not isinstance(v, Operator)]
+                variables_operands = [o for o in operands if o.type == OperandType.VARIABLE]
+                variables_operands_values = [o.value for o in variables_operands]
+
+                if len(variables_operands) != 2:
+                    continue
+
+                # Use DFG to find tainted variables
+                try:
+                    dfg_variable = [
+                        v
+                        for v in dfg.variables_blocks
+                        if v.name in variables_operands_values[1] and v.function == function
+                    ][0]
+                except:
+                    continue
+                # Direct integer overflow
+                if dfg_variable.tainting_coefficient == 1:
+                    self.detected = True
+                    self.result.append("%s : %s" % (function.name, dfg_variable.name))
+                # Indirect integer overflow
+                elif dfg_variable.tainting_coefficient >= 0.7:
+                    # Less critical than direct integer overflow/underflow
+                    self.IMPACT = ImpactClassification.MEDIUM
+                    self.detected = True
+                    self.result.append("%s : %s (indirect)" % (function.name, dfg_variable.name))

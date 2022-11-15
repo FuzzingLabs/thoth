@@ -15,6 +15,24 @@ class Operator(Enum):
 class VariableValueType(Enum):
     ADDRESS = 0
     ABSOLUTE = 1
+    FUNCTION_CALL = 2
+
+
+class FunctionCall:
+    """
+    Function call class
+    """
+
+    def __init__(
+        self, function, return_value_position: int, arguments: List[str], call_number: int
+    ) -> None:
+        self.function = function
+        self.return_value_position = return_value_position
+        self.return_value = self.function.arguments_list(explicit=False, implicit=False, ret=True)[
+            return_value_position
+        ]
+        self.arguments = arguments
+        self.call_number = call_number
 
 
 class Operand:
@@ -22,7 +40,7 @@ class Operand:
     Element of an operation, either a variable/list of variables or an integer
     """
 
-    def __init__(self, type: OperandType, value: Union[str, int, List[str]]) -> None:
+    def __init__(self, type: OperandType, value: Union[str, int, List[str], FunctionCall]) -> None:
         self.type = type
         self.value = value
 
@@ -53,7 +71,14 @@ class Variable:
 
     counter = 0
 
-    def __init__(self, variable_name: Optional[str] = None, function=None) -> None:
+    def __init__(
+        self,
+        variable_name: Optional[str] = None,
+        function=None,
+        function_result: bool = False,
+        is_function_argument: bool = True,
+        is_function_return_value: bool = False,
+    ) -> None:
         """
         Initialize a new variable
         Args:
@@ -67,6 +92,12 @@ class Variable:
         self.local = True
         # Function where the variable is defined
         self.function = function
+        # If the variable is the result of a function
+        self.function_result = function_result
+        # If the variable is a function argument
+        self.is_function_argument = is_function_argument
+        # If the variable is a potential return value
+        self.is_function_return_value = is_function_return_value
 
     def set(self) -> None:
         """
@@ -89,7 +120,7 @@ class Variable:
 
         # If the variable has a name
         if self.variable_name is not None:
-            return self.variable_name
+            return "v%s_%s" % (self.instance, self.variable_name)
 
         # Use default name (v_<n>)
         name = "v%s" % self.instance

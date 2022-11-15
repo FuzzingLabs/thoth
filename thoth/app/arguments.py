@@ -77,7 +77,7 @@ For a specific output format (pdf/svg/png):
         help="Print JSON with details of all instructions",
     )
 
-    cfg = root_parser.add_argument_group("CFG and call flow graph")
+    cfg = root_parser.add_argument_group("CFG, call flow graph and data-flow graph")
     cfg.add_argument(
         "-call",
         "--call",
@@ -89,6 +89,18 @@ For a specific output format (pdf/svg/png):
         "--cfg",
         action="store_true",
         help="Print control flow graph",
+    )
+    cfg.add_argument(
+        "-dfg",
+        "--dfg",
+        action="store_true",
+        help="Print data-flow graph",
+    )
+    cfg.add_argument(
+        "-taint",
+        "--taint",
+        action="store_true",
+        help="Taint function arguments in the DFG",
     )
     cfg.add_argument(
         "-view",
@@ -107,6 +119,12 @@ For a specific output format (pdf/svg/png):
         type=str,
         default="output-callgraph",
         help="Set the output folder of the callflowgraph",
+    )
+    cfg.add_argument(
+        "-output_dfg_folder",
+        type=str,
+        default="output-dfg",
+        help="Set the output folder of the data-flow graph",
     )
     cfg.add_argument(
         "-format",

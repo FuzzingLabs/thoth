@@ -1,54 +1,56 @@
 # Thoth, the Cairo/Starknet bytecode analyzer, disassembler and decompiler
 <img src="./tests/coverage.svg"/> <img src ="https://img.shields.io/badge/python-3.10-blue.svg"/>
 
-Thoth (pronounced "toss") is a Cairo/Starknet analyzer, disassembler & decompiler written in Python 3. Thoth's features also include the generation of the call graph and control-flow graph (CFG) of a given Cairo/Starknet compilation artifact. [Demo video](https://www.youtube.com/watch?v=T0KvG8Zps6I)
+Thoth (pronounced "taut" or "toss") is a Cairo/Starknet analyzer, disassembler & decompiler written in Python 3. Thoth's features also include the generation of the call graph, the control-flow graph (CFG) and the data-flow graph for a given Cairo/Starknet compilation artifact. [Demo video](https://www.youtube.com/watch?v=T0KvG8Zps6I)
+
+## Features
+- **Remote & Local**: Thoth can both analyze contracts deployed on Mainnet/Goerli and compiled locally on your machine. 
+- **[Disassembler](#disassemble-the-contracts-compilation-artifact-json)**: Thoth can translate bytecode into assembly representation
+- **[Decompiler](#decompile-the-contracts-compilation-artifact-json)**: Thoth can convert assembly into decompiled code with SSA (Static Single Assignment)  
+- **[Control Flow analysis](#print-the-contracts-control-flow-graph-cfg)**: Thoth can generate a **Control Flow Graph** (CFG)
+- **[Call Flow analysis](#print-the-contracts-call-graph)**: Thoth can generate a **Call Flow Graph** 
+- **[Data Flow analysis](#print-the-contracts-data-flow-graph-dfg)**: Thoth can generate a **Data Flow Graph** (DFG) for each function
+- **[Static analysis](#run-the-static-analysis)**: Thoth can run various **analyzers** of different types (*security*/*optimization*/*analytics*) on the contract
 
 ## Installation
-
-```sh
+ 
+```
 sudo apt install graphviz
-
 git clone https://github.com/FuzzingLabs/thoth && cd thoth
-
 pip install .
-
 thoth -h
 ```
 
-## Disassemble the contract's compilation artifact (json)
+## Disassemble the contract's compilation artifact (JSON)
 
-#### From a JSON file
+#### Remote contrat deployed on starknet (mainnet/goerli)
 
-```sh
-thoth local tests/json_files/cairo_array_sum.json -b
-```
-
-#### From starknet 
-
-```sh
+``` python
 thoth remote --address 0x0323D18E2401DDe9aFFE1908e9863cbfE523791690F32a2ff6aa66959841D31D --network mainnet -b
 ```
 
-To get a pretty colored version:
+#### Local contract compiled locally (JSON file)
 
-```sh
+``` python
+thoth local tests/json_files/cairo_array_sum.json -b
+# To get a pretty colored version:
 thoth local tests/json_files/cairo_array_sum.json -b -color
+# To get a verbose version with more details about decoded bytecodes:
+thoth local tests/json_files/cairo_array_sum.json -vvv
 ```
+
 <p align="center">
 	<img src="/images/thoth_disas_color.png"/>
 </p>
 
-To get a verbose version with more details about decoded bytecodes:
-```sh
-thoth local tests/json_files/cairo_array_sum.json -vvv
-```
 
-## Decompile the contract's compilation artifact (json)
+## Decompile the contract's compilation artifact (JSON)
 
 
-```sh
+``` python
 thoth local tests/json_files/cairo_test_addition_if.json -d
 ```
+
 Example 1 with strings:
 <p align="center">
 	<b> source code </b></br>
@@ -76,23 +78,30 @@ The static analysis is performed using *analyzers* which can be either informati
 |**Functions**|`functions`|Retrieve informations about the contract's functions|Informational|High|Analytics|
 |**Statistics**|`statistics`|General statistics about the contract|Informational|High|Analytics|
 |**Assignations**|`assignations`|List of variables assignations|Informational|High|Optimization|
-|**Integer overflow**|`int_overflow`|Detect direct integer overflow/underflow|High|Medium|Security|
+|**Integer overflow**|`int_overflow`|Detect direct integer overflow/underflow|High (direct) / Medium (indirect)|Medium|Security|
 |**Function naming**|`function_naming`|Detect functions names that are not in snake case|Informational|High|Security|
 |**Variable naming**|`variable_naming`|Detect variables names that are not in snake case|Informational|High|Security|
 
-```bash
-# Run all the analyzers
+
+#### Run all the analyzers
+``` python
 thoth local tests/json_files/cairo_array_sum.json -a
+```
 
-# Selects which analyzers to run
+#### Selects which analyzers to run
+``` python
 thoth local tests/json_files/cairo_array_sum.json -a erc20 erc721
+```
 
-# Only run a specific category of analyzers
+#### Only run a specific category of analyzers
+``` python
 thoth local tests/json_files/cairo_array_sum.json -a security
 thoth local tests/json_files/cairo_array_sum.json -a optimization
 thoth local tests/json_files/cairo_array_sum.json -a analytics
+```
 
-# Print a list of all the availables analyzers
+#### Print a list of all the availables analyzers
+```
 thoth local tests/json_files/cairo_array_sum.json --analyzers-help
 ```
 
@@ -100,8 +109,10 @@ thoth local tests/json_files/cairo_array_sum.json --analyzers-help
 
 The call flow graph represents calling relationships between functions of the contract. We tried to provide a maximum of information, such as the entry-point functions, the imports, decorators, etc.
 
-```sh
+``` python
 thoth local tests/json_files/cairo_array_sum.json -call -view True
+# For a specific output format (pdf/svg/png):
+thoth local tests/json_files/cairo_array_sum.json -call -view True -format png
 ```
 The output file (pdf/svg/png) and the dot file are inside the `output-callgraph` folder.
 If needed, you can also visualize dot files online using [this](https://dreampuf.github.io/GraphvizOnline/) website. The legend can be found [here](images/callgraph_legend.png).
@@ -116,15 +127,14 @@ A more complexe callgraph:
 </p>
 
 
-For a specific output format (pdf/svg/png):
-```sh
-thoth local tests/json_files/cairo_array_sum.json -call -view True -format png
-```
-
 ## Print the contract's control-flow graph (CFG)
 
-```sh
+``` python
 thoth local tests/json_files/cairo_double_function_and_if.json -cfg -view True
+# For a specific function:
+thoth local tests/json_files/cairo_double_function_and_if.json -cfg -view True -function "__main__.main"
+# For a specific output format (pdf/svg/png):
+thoth local tests/json_files/cairo_double_function_and_if.json -cfg -view True -format png
 ```
 The output file (pdf/svg/png) and the dot file are inside the `output-cfg` folder.
 
@@ -132,15 +142,27 @@ The output file (pdf/svg/png) and the dot file are inside the `output-cfg` folde
 	<img src="/images/cairo_double_function_and_if_cfg.png"/>
 </p>
 
-For a specific function:
-```sh
-thoth local tests/json_files/cairo_double_function_and_if.json -cfg -view True -function "__main__.main"
-```
 
-For a specific output format (pdf/svg/png):
-```sh
-thoth local tests/json_files/cairo_double_function_and_if.json -cfg -view True -format png
+## Print the contract's data-flow graph (DFG)
+
+``` python
+thoth local tests/json_files/cairo_double_function_and_if.json -dfg -view True
+# For a specific output format (pdf/svg/png):
+thoth local tests/json_files/cairo_double_function_and_if.json -dfg -view True -format png
+# For tainting visualization:
+thoth remote --address 0x069e40D2c88F479c86aB3E379Da958c75724eC1d5b7285E14e7bA44FD2f746A8 -n mainnet  -dfg -view True --taint
 ```
+The output file (pdf/svg/png) and the dot file are inside the `output-dfg` folder.
+
+<p align="center">
+	<img src="/images/thoth_dataflow_graph.png"/>
+</p>
+
+<p align="center">
+	<img src="/images/thoth_dfg_tainting.png"/>
+</p>
+
+
 # F.A.Q
 
 ## How to find a Cairo/Starknet compilation artifact (json file)?
@@ -149,13 +171,13 @@ Thoth support cairo and starknet compilation artifact (json file) generated afte
 
 ## How to run the tests?
 
-``` sh
+```
 python3 tests/test.py
 ```
 
 ## How to build the documentation?
 
-```sh
+``` python
 # Install sphinx
 apt-get install python3-sphinx
 
@@ -184,7 +206,7 @@ First, verify that your JSON is correct and that it contains a data section.
 Second, verify that your JSON is not a contract interface.
 Finally, it is possible that your contract does not generate bytecodes, for example:
 
-```cairo
+``` cairo
 %lang starknet
 
 from starkware.cairo.common.cairo_builtins import HashBuiltin
