@@ -21,33 +21,12 @@ pip install .
 thoth -h
 ```
 
-## Disassemble the contract's compilation artifact (JSON)
-
-#### Remote contrat deployed on starknet (mainnet/goerli)
-
-``` python
-thoth remote --address 0x0323D18E2401DDe9aFFE1908e9863cbfE523791690F32a2ff6aa66959841D31D --network mainnet -b
-```
-
-#### Local contract compiled locally (JSON file)
-
-``` python
-thoth local tests/json_files/cairo_array_sum.json -b
-# To get a pretty colored version:
-thoth local tests/json_files/cairo_array_sum.json -b -color
-# To get a verbose version with more details about decoded bytecodes:
-thoth local tests/json_files/cairo_array_sum.json -vvv
-```
-
-<p align="center">
-	<img src="/images/thoth_disas_color.png"/>
-</p>
-
-
 ## Decompile the contract's compilation artifact (JSON)
 
-
 ``` python
+# Remote contrat deployed on starknet (mainnet/goerli)
+thoth remote --address 0x0323D18E2401DDe9aFFE1908e9863cbfE523791690F32a2ff6aa66959841D31D --network mainnet -d
+# Local contract compiled locally (JSON file)
 thoth local tests/json_files/cairo_test_addition_if.json -d
 ```
 
@@ -126,23 +105,6 @@ A more complexe callgraph:
 	<img src="/images/starknet_get_full_contract_l2_dai_bridge.gv.png"/>
 </p>
 
-
-## Print the contract's control-flow graph (CFG)
-
-``` python
-thoth local tests/json_files/cairo_double_function_and_if.json -cfg -view True
-# For a specific function:
-thoth local tests/json_files/cairo_double_function_and_if.json -cfg -view True -function "__main__.main"
-# For a specific output format (pdf/svg/png):
-thoth local tests/json_files/cairo_double_function_and_if.json -cfg -view True -format png
-```
-The output file (pdf/svg/png) and the dot file are inside the `output-cfg` folder.
-
-<p align="center">
-	<img src="/images/cairo_double_function_and_if_cfg.png"/>
-</p>
-
-
 ## Print the contract's data-flow graph (DFG)
 
 ``` python
@@ -162,6 +124,37 @@ The output file (pdf/svg/png) and the dot file are inside the `output-dfg` folde
 	<img src="/images/thoth_dfg_tainting.png"/>
 </p>
 
+## Disassemble the contract's compilation artifact (JSON)
+
+``` python
+# Remote contrat deployed on starknet (mainnet/goerli)
+thoth remote --address 0x0323D18E2401DDe9aFFE1908e9863cbfE523791690F32a2ff6aa66959841D31D --network mainnet -b
+# Local contract compiled locally (JSON file)
+thoth local tests/json_files/cairo_array_sum.json -b
+# To get a pretty colored version:
+thoth local tests/json_files/cairo_array_sum.json -b -color
+# To get a verbose version with more details about decoded bytecodes:
+thoth local tests/json_files/cairo_array_sum.json -vvv
+```
+
+<p align="center">
+	<img src="/images/thoth_disas_color.png"/>
+</p>
+
+## Print the contract's control-flow graph (CFG)
+
+``` python
+thoth local tests/json_files/cairo_double_function_and_if.json -cfg -view True
+# For a specific function:
+thoth local tests/json_files/cairo_double_function_and_if.json -cfg -view True -function "__main__.main"
+# For a specific output format (pdf/svg/png):
+thoth local tests/json_files/cairo_double_function_and_if.json -cfg -view True -format png
+```
+The output file (pdf/svg/png) and the dot file are inside the `output-cfg` folder.
+
+<p align="center">
+	<img src="/images/cairo_double_function_and_if_cfg.png"/>
+</p>
 
 # F.A.Q
 
