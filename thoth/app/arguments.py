@@ -97,6 +97,7 @@ For a specific output format (pdf/svg/png):
         help="Print data-flow graph",
     )
     cfg.add_argument(
+        "-taint",
         "--taint",
         action="store_true",
         help="Taint function arguments in the DFG",
