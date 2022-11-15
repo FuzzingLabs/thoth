@@ -103,6 +103,8 @@ def main() -> int:
 
         dfg = DFG(decompiler.ssa.memory)
         dfg._create_dfg()
+        if args.taint:
+            dfg._taint_functions_arguments()
         dfg._create_graph_representation()
         dfg._print_dfg(
             view=str_to_bool(args.view), folder=args.output_dfg_folder, format=args.format
@@ -146,7 +148,7 @@ def main() -> int:
         a = analyzer(disassembler, color=args.color)
         if a._detect():
             detected = True
-            detected_analyzers_count += 1 
+            detected_analyzers_count += 1
         a._print()
         if detected:
             print()
@@ -159,7 +161,7 @@ def main() -> int:
             selected_analyzers_count,
             "s" if selected_analyzers_count > 1 else "",
             "were" if selected_analyzers_count > 1 else "was",
-            detected_analyzers_count
+            detected_analyzers_count,
         )
     )
     return 0
