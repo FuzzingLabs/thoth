@@ -23,8 +23,6 @@ class TestCasesGeneratorAnalyzer(AbstractAnalyzer):
     CATEGORY: CategoryClassification = CategoryClassification.ANALYTICS
 
     def _detect(self) -> bool:
-        self.detected = True
-
         path_color = colors.HEADER if self.color else ""
         variable_color = colors.CYAN if self.color else ""
 
@@ -41,6 +39,7 @@ class TestCasesGeneratorAnalyzer(AbstractAnalyzer):
             test_cases = symbex._generate_test_cases(function=function)
             if not test_cases:
                 continue
+            self.detected = True
 
             function_test_cases = "%s" % function.name
 

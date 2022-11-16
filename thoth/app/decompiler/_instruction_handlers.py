@@ -1,3 +1,4 @@
+import copy
 from thoth.app import utils
 from thoth.app.decompiler.variable import (
     FunctionCall,
@@ -212,7 +213,7 @@ def _handle_assert_eq_decomp(self, instruction: Instruction) -> str:
                 and len(self.current_function.cfg.parents(self.current_basic_block)) != 0
                 and not is_assert
             ):
-                if len(phi_node_variables) != 0:
+                if len(phi_node_variables) > 1:
                     operand = phi_node_representation
                     variable_operand_1 = Operand(
                         type=OperandType.VARIABLE,
@@ -244,6 +245,7 @@ def _handle_assert_eq_decomp(self, instruction: Instruction) -> str:
     variable[2].function = self.current_function
     # Set variable basic block ID for the symbolic execution
     variable[2].basic_block_id = self.current_basic_block.id
+
     return source_code
 
 

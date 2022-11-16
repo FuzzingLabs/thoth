@@ -196,7 +196,7 @@ class SymbolicExecution:
                         dict_model[argument] = 0
 
                 # Create a test case list
-                test_case = [(k, v) for k, v in dict_model.items()]
+                test_case = [(k, v) for k, v in dict_model.items() if k in function_arguments_names]
                 if test_case and not test_case in test_cases:
                     test_cases.append(test_case)
 

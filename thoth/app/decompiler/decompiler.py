@@ -40,6 +40,7 @@ class Decompiler:
         Variable.counter = 0
         BasicBlock.counter = 0
         self.ssa = SSA()
+        self.defined_variables: List[Variable] = []
         self.assertion = False
         self.current_basic_block: Optional[BasicBlock] = None
         self.first_pass = True
@@ -140,6 +141,7 @@ class Decompiler:
         source_code = ""
 
         for function in self.functions:
+            # self.first_pass = True
             self.current_function = function
             self.tab_count = 0
             count = 0
