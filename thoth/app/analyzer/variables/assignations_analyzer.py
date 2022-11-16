@@ -45,6 +45,10 @@ def variable_value_to_str(variable_value: VariableValue, function: Function) -> 
                 element_value.append(element)
         possibles_values = ", ".join(element_value)
         result += "Φ(%s)" % possibles_values
+
+    if variable_value.type == VariableValueType.ADDRESS:
+        result = "[%s]" % result
+
     return result
 
 

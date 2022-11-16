@@ -103,6 +103,8 @@ def main() -> int:
 
         dfg = DFG(decompiler.ssa.memory)
         dfg._create_dfg()
+        if args.taint:
+            dfg._taint_functions_arguments()
         dfg._create_graph_representation()
         dfg._print_dfg(
             view=str_to_bool(args.view), folder=args.output_dfg_folder, format=args.format
