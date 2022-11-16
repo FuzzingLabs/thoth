@@ -47,8 +47,13 @@ class TestCasesGeneratorAnalyzer(AbstractAnalyzer):
             paths_count = 0
             for test_case in test_cases:
                 function_test_cases += "\n    "
-                function_test_cases += "%sPath %s%s : " % (path_color , paths_count, colors.ENDC)
-                function_test_cases += ", ".join(["%s%s%s: %s" % (variable_color, arg[0], colors.ENDC, arg[1]) for arg in test_case])
+                function_test_cases += "%sPath %s%s : " % (path_color, paths_count, colors.ENDC)
+                function_test_cases += ", ".join(
+                    [
+                        "%s%s%s: %s" % (variable_color, arg[0], colors.ENDC, arg[1])
+                        for arg in test_case
+                    ]
+                )
                 paths_count += 1
             self.result.append(function_test_cases)
 

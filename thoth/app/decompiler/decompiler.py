@@ -235,11 +235,6 @@ class Decompiler:
                                 )
                     count += 1
 
-                    # ASSERT_EQ Before an if are always an assertion
-                    try:
-                        self.assertion = instructions[i + 1].pcUpdate == "JNZ"
-                    except:
-                        pass
                     instructions[i] = self.print_build_code(
                         instructions[i], last=(count == len(function.instructions))
                     )
