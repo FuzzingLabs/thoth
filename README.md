@@ -77,6 +77,7 @@ The static analysis is performed using *analyzers* which can be either informati
 |**Strings**|`strings`|Detect strings inside a contract|Informational|High|Analytics|
 |**Functions**|`functions`|Retrieve informations about the contract's functions|Informational|High|Analytics|
 |**Statistics**|`statistics`|General statistics about the contract|Informational|High|Analytics|
+|**Test cases generator**|`tests`|Automatically generate test cases for each function of the contract|Informational|High|Analytics|
 |**Assignations**|`assignations`|List of variables assignations|Informational|High|Optimization|
 |**Integer overflow**|`int_overflow`|Detect direct integer overflow/underflow|High (direct) / Medium (indirect)|Medium|Security|
 |**Function naming**|`function_naming`|Detect functions names that are not in snake case|Informational|High|Security|
