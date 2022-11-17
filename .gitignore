@@ -1,5 +1,6 @@
 # Project custom
 output-callgraph
+output_graph
 output-cfg
 output-dfg
 .vscode/
