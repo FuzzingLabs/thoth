@@ -3,6 +3,7 @@ import sys
 import tempfile
 from thoth.app.decompiler.decompiler import Decompiler
 from thoth.app.dfg.dfg import DFG
+from thoth.app.symbex.symbex import SymbolicExecution
 from thoth.app.utils import str_to_bool
 from thoth.app.arguments import parse_args
 from thoth.app.analyzer import all_analyzers
@@ -109,6 +110,24 @@ def main() -> int:
         dfg._print_dfg(
             view=str_to_bool(args.view), folder=args.output_dfg_folder, format=args.format
         )
+
+    # Symbolic execution
+    if args.symbolic:
+        contract_functions = disassembler.functions
+        decompiler = Decompiler(functions=contract_functions)
+        decompiler.decompile_code(first_pass_only=True)
+
+        symbex = SymbolicExecution(decompiler.ssa.memory)
+
+        try:
+            function = [f for f in disassembler.functions if f.name == args.function][0]
+        except:
+            return 1
+
+        symbex._solve(
+            function=function, constraints=args.constraints, variables_values=args.variables
+        )
+        return 0
 
     if args.analyzers is None:
         return 0
