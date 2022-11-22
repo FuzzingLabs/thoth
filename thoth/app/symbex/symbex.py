@@ -215,10 +215,21 @@ class SymbolicExecution:
                     pass
 
         # Solve the constraints
+        result = []
         if self.solver.check() == z3.sat:
+            # Solve the constraints
             model = self.solver.model()
 
-        return model
+            # Create a dict from the z3 model
+            dict_model = {}
+            for d in self.solver.model():
+                dict_model[str(d)] = model[d]
+
+            # Format the result
+            result = [(k, v) for k, v in dict_model.items()]
+            result = sorted(result)
+
+        return result
 
     def _generate_test_cases(self, function: Function) -> List[Tuple[str, int]]:
         """
