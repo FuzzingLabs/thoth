@@ -124,8 +124,10 @@ def main() -> int:
         except:
             return 1
 
-        symbex._solve(
-            function=function, constraints=args.constraints, variables_values=args.variables
+        print(
+            symbex._solve(
+                function=function, constraints=args.constraints, variables_values=args.variables
+            )
         )
         return 0
 

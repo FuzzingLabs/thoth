@@ -164,10 +164,13 @@ class SymbolicExecution:
         constraint_regexp = re.compile("(v[0-9]{1,4}(_[a-zA-Z0-9]+)?)==([0-9]+)")
         variable_value_regexp = re.compile("(v[0-9]{1,4}(_[a-zA-Z0-9]+)?)=([0-9]+)")
 
+        # Constraints defined in the CLI arguments
         constraints_list = []
         for constraint in constraints:
             constraints_list.append(re.findall(constraint_regexp, constraint))
+        constraints_variables_names = [v[0][0] for v in constraints_list]
 
+        # Variables defined in the CLI arguments
         variables_values_list = []
         for variable in variables_values:
             variables_values_list.append(re.findall(variable_value_regexp, variable))
@@ -182,16 +185,9 @@ class SymbolicExecution:
             and v.name not in variables_values_names
         ]
 
+        result = []
         paths = self._find_paths(function)
-
         for path in paths:
-            # Use a new solver for each path
-            self.solver = z3.Solver()
-            # Initialize variables
-            self._create_z3_variables()
-            for variable in variables_values_names:
-                self.z3_variables.append(Int(variable))
-
             # Load variables assignations into z3
             path_variables = []
             for block in path:
@@ -199,11 +195,19 @@ class SymbolicExecution:
                     v for v in block.variables if v.name not in variables_values_names
                 ]
             path_variables = function_arguments + path_variables
+            if not set(constraints_variables_names) <= set([_.name for _ in path_variables]):
+                continue
+
+            # Use a new solver for each path
+            self.solver = z3.Solver()
+            # Initialize variables
+            self._create_z3_variables()
+            # Create operations
             self._create_operations(path_variables)
 
             # Load variables values defined in CLI into Z3
             for variable in variables_values_list:
-                variable_name = [v for v in self.z3_variables if str(v) == variable[0][0]][0]
+                variable_name = [v.name for v in self.z3_variables if str(v) == variable[0][0]][0]
                 self.solver.add(variable_name == int(variable[0][2]))
 
             # Load constraints defined in CLI into Z3
@@ -212,22 +216,20 @@ class SymbolicExecution:
                     variable_name = [v for v in self.z3_variables if str(v) == constraint[0][0]][0]
                     self.solver.add(variable_name == int(constraint[0][2]))
                 except:
-                    pass
+                    continue
 
-        # Solve the constraints
-        result = []
-        if self.solver.check() == z3.sat:
             # Solve the constraints
-            model = self.solver.model()
+            if self.solver.check() == z3.sat:
+                model = self.solver.model()
 
-            # Create a dict from the z3 model
-            dict_model = {}
-            for d in self.solver.model():
-                dict_model[str(d)] = model[d]
+                # Create a dict from the z3 model
+                dict_model = {}
+                for d in self.solver.model():
+                    dict_model[str(d)] = model[d]
 
-            # Format the result
-            result = [(k, v) for k, v in dict_model.items()]
-            result = sorted(result)
+                # Format the result
+                result = [(k, v) for k, v in dict_model.items()]
+                result = sorted(result)
 
         return result
 
