@@ -202,6 +202,8 @@ For a specific output format (pdf/svg/png):
 
     symbex.add_argument("--variables", nargs="+", help="", default=[])
 
+    symbex.add_argument("--solve", nargs="+", help="", default=[])
+
     contract_subparser = parser.add_subparsers(
         help="Load a cairo contract compilation artifact from a file or from starknet",
         dest="contract",

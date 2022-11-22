@@ -123,12 +123,17 @@ def main() -> int:
             function = [f for f in disassembler.functions if f.name == args.function][0]
         except:
             return 1
-
-        print(
-            symbex._solve(
-                function=function, constraints=args.constraints, variables_values=args.variables
-            )
+        solve = symbex._solve(
+            function=function,
+            constraints=args.constraints,
+            variables_values=args.variables,
+            solves=args.solve,
         )
+        if solve:
+            for variable in solve:
+                print("%s: %s" % (variable[0], variable[1]))
+        else:
+            print("No solution")
         return 0
 
     if args.analyzers is None:

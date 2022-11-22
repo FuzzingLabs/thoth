@@ -34,12 +34,10 @@ class SSA:
             )
             self.ap_position += 1
         # [fp - 2]
-        self.new_variable(
-            variable_name="callers function's frame", basic_block_id=BasicBlock.counter
-        )
+        self.new_variable(variable_name="callers_function_frame", basic_block_id=BasicBlock.counter)
         self.ap_position += 1
         # [fp - 1]
-        self.new_variable(variable_name="return instruction", basic_block_id=BasicBlock.counter)
+        self.new_variable(variable_name="return_instruction", basic_block_id=BasicBlock.counter)
         self.ap_position += 1
 
         self.fp_position = self.ap_position

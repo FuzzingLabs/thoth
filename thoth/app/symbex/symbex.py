@@ -154,15 +154,19 @@ class SymbolicExecution:
         return constraints
 
     def _solve(
-        self, function: Function, constraints: List[str] = [], variables_values: List[str] = []
+        self,
+        function: Function,
+        constraints: List[str] = [],
+        variables_values: List[str] = [],
+        solves: List[str] = [],
     ) -> List[Tuple[str, int]]:
         """
         Use the symbolic execution to solve a list of constraints
         """
-
         # Parse the variables and constraints defined with the CLI arguments
-        constraint_regexp = re.compile("(v[0-9]{1,4}(_[a-zA-Z0-9]+)?)==([0-9]+)")
-        variable_value_regexp = re.compile("(v[0-9]{1,4}(_[a-zA-Z0-9]+)?)=([0-9]+)")
+        constraint_regexp = re.compile("(v[0-9]{1,4}(_[a-zA-Z0-9_]+)?)==([0-9]+)")
+        variable_value_regexp = re.compile("(v[0-9]{1,4}(_[a-zA-Z0-9_]+)?)=([0-9]+)")
+        solve_regexp = re.compile("(v[0-9]{1,4}(_[a-zA-Z0-9_]+)?)")
 
         # Constraints defined in the CLI arguments
         constraints_list = []
@@ -176,6 +180,12 @@ class SymbolicExecution:
             variables_values_list.append(re.findall(variable_value_regexp, variable))
         variables_values_names = [v[0][0] for v in variables_values_list]
 
+        # Variables values to solve defined in the CLI arguments
+        solve_values_list = []
+        for solve in solves:
+            solve_values_list.append(re.findall(solve_regexp, solve))
+        solves_values_names = [v[0][0] for v in solve_values_list]
+
         # Function arguments variables
         function_arguments = [
             v
@@ -185,7 +195,6 @@ class SymbolicExecution:
             and v.name not in variables_values_names
         ]
 
-        result = []
         paths = self._find_paths(function)
         for path in paths:
             # Load variables assignations into z3
@@ -204,7 +213,6 @@ class SymbolicExecution:
             self._create_z3_variables()
             # Create operations
             self._create_operations(path_variables)
-
             # Load variables values defined in CLI into Z3
             for variable in variables_values_list:
                 variable_name = [v.name for v in self.z3_variables if str(v) == variable[0][0]][0]
@@ -217,7 +225,6 @@ class SymbolicExecution:
                     self.solver.add(variable_name == int(constraint[0][2]))
                 except:
                     continue
-
             # Solve the constraints
             if self.solver.check() == z3.sat:
                 model = self.solver.model()
@@ -228,10 +235,10 @@ class SymbolicExecution:
                     dict_model[str(d)] = model[d]
 
                 # Format the result
-                result = [(k, v) for k, v in dict_model.items()]
+                result = [(k, v) for k, v in dict_model.items() if k in solves_values_names]
                 result = sorted(result)
-
-        return result
+                return result
+        return []
 
     def _generate_test_cases(self, function: Function) -> List[Tuple[str, int]]:
         """
