@@ -317,15 +317,13 @@ def _handle_call_decomp(self, instruction: Instruction) -> str:
                 if function.name == instruction.call_xref_func_name:
                     if function.args != None:
                         args += len(function.args)
-                    if function.implicitargs != None:
-                        args += len(function.implicitargs)
 
                     called_function = function
-                    function_return_values = function.arguments_list(explicit=False, implicit=False)
+                    function_return_values = function.arguments_list(explicit=False, implicit=False, ret=True)
 
             args_str = ""
             args_list = []
-            while args != 0:
+            while args >= 1:
                 phi_node_variables = []
                 # Generate the phi function representation
                 if self.current_basic_block.is_phi_node and not self.first_pass:

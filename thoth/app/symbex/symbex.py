@@ -34,6 +34,9 @@ class SymbolicExecution:
             if variable.value is None:
                 continue
             if variable.value.type == VariableValueType.FUNCTION_CALL:
+                function_name = variable.value.operation.function.name
+                if function_name == "starkware.cairo.common.bitwise.bitwise_xor":
+                    pass
                 continue
             if variable.value.type == VariableValueType.ADDRESS:
                 continue
