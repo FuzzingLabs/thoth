@@ -159,25 +159,25 @@ The output file (pdf/svg/png) and the dot file are inside the `output-cfg` folde
 
 ## Use the symbolic execution 
 
-You can find find the right variables values to get through a specific path in a function with the symbolic execution.
-
 ``` python
+# Solve the variables values with contraints 
 thoth local cairo_test_symbolic_execution.json --symbolic -function __main__.test_symbolic_execution -constraint v4==0 v6==0 -solve v0_x v1_y
+# Replace a variable using the -variable flag 
+thoth local cairo_test_symbolic_execution_3.json --symbolic -function __main__.test_symbolic_execution -constraint v13==0 v14==0 v15==0  -solve v0_f v1_u v2_z v3_z2 -variables v3_z2=26 
 ```
 
-Or with a more complex case
-
-```
-thoth local cairo_test_symbolic_execution_3.json --symbolic -function __main__.test_symbolic_execution -constraint v13==0 v14==0 v15==0 v16==0 v17==0 v18==0 v19==0 v20==0 v21==0 v22==0 v23==0 -solve v0_f v1_u v2_z v3_z2 v4_i v5_n v6_g v7_l v8_a v9_b v10_s
-```
+Or with a more complex case:
 
 <p align="center">
-	<b> source code </b></br>
+	<b> Source code </b></br>
 	<img src="/images/thoth_symbolic_execution_source.png"/></br>
-	<b> Solving the variables arguments values with the symbolic execution </b></br>
 </p>
 
-```
+Solve the variables arguments values with the symbolic execution:
+
+```python
+thoth local cairo_test_symbolic_execution_3.json --symbolic -function __main__.test_symbolic_execution -constraint v13==0 v14==0 v15==0 v16==0 v17==0 v18==0 v19==0 v20==0 v21==0 v22==0 v23==0 -solve v0_f v1_u v2_z v3_z2 v4_i v5_n v6_g v7_l v8_a v9_b v10_s
+
 v0_f: 102
 v10_s: 115
 v1_u: 117
@@ -189,12 +189,6 @@ v6_g: 103
 v7_l: 108
 v8_a: 97
 v9_b: 98
-```
-
-You can replace a variable value by another using the `-variable` flag : 
-
-```
-thoth local cairo_test_symbolic_execution_3.json --symbolic -function __main__.test_symbolic_execution -constraint v13==0 v14==0 v15==0  -solve v0_f v1_u v2_z v3_z2 -variables v3_z2=26 
 ```
 
 # F.A.Q
