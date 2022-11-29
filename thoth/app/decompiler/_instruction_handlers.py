@@ -319,7 +319,9 @@ def _handle_call_decomp(self, instruction: Instruction) -> str:
                         args += len(function.args)
 
                     called_function = function
-                    function_return_values = function.arguments_list(explicit=False, implicit=False, ret=True)
+                    function_return_values = function.arguments_list(
+                        explicit=False, implicit=False, ret=True
+                    )
 
             args_str = ""
             args_list = []
