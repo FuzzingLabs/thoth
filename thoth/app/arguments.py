@@ -190,11 +190,26 @@ For a specific output format (pdf/svg/png):
         "--analyzers-help", choices=analyzers_names, help="Show analyzers help", nargs="*"
     )
 
+    # Symbolic execution
+    symbex = root_parser.add_argument_group("Symbolic execution")
+    symbex.add_argument(
+        "--symbolic",
+        action="store_true",
+        help="Print JSON with details of all instructions",
+    )
+
+    symbex.add_argument("-constraint", nargs="+", help="", default=[])
+
+    symbex.add_argument("-variables", nargs="+", help="", default=[])
+
+    symbex.add_argument("-solve", nargs="+", help="", default=[])
+
     contract_subparser = parser.add_subparsers(
         help="Load a cairo contract compilation artifact from a file or from starknet",
         dest="contract",
         required=True,
     )
+
     # Use a JSON file
     file = contract_subparser.add_parser("local", parents=[root_parser])
     file.add_argument("path", type=argparse.FileType("r"), help="Cairo compiled JSON file")

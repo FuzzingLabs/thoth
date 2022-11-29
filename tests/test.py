@@ -9,6 +9,7 @@ from thoth.app.analyzer.abstract_analyzer import ImpactClassification
 from thoth.app.decompiler.decompiler import Decompiler
 from thoth.app.dfg.dfg import DFG, Tainting
 from thoth.app.disassembler.disassembler import Disassembler
+from thoth.app.symbex.symbex import SymbolicExecution
 
 
 class TestDisassembler(unittest.TestCase):
@@ -365,14 +366,14 @@ class TestDisassembler(unittest.TestCase):
         dfg._create_graph_representation()
 
         # Find v1
-        v1 = [v for v in dfg.variables_blocks if v.name == "v1"][0]
+        v1 = [v for v in dfg.variables_blocks if v.name == "v9"][0]
         v1_parents = [parent.name for parent in v1.parents_blocks]
-        self.assertEqual(["v0", "v2_integer"], v1_parents)
+        self.assertEqual(["v8", "v5_integer"], v1_parents)
 
         # Find v5
-        v5 = [v for v in dfg.variables_blocks if v.name == "v5"][0]
+        v5 = [v for v in dfg.variables_blocks if v.name == "v11"][0]
         v5_parents = [parent.name for parent in v5.parents_blocks]
-        self.assertEqual(["v1"], v5_parents)
+        self.assertEqual(["v9"], v5_parents)
 
     def test_cairo_integer_overflow_2_tainting_dfg(self):
         """
@@ -388,13 +389,13 @@ class TestDisassembler(unittest.TestCase):
         dfg._taint_functions_arguments()
 
         # Find v1
-        v1 = [v for v in dfg.variables_blocks if v.name == "v1"][0]
+        v1 = [v for v in dfg.variables_blocks if v.name == "v9"][0]
         self.assertEqual(1 * Tainting.PROPAGATION_COEFFICIENT, v1.tainting_coefficient)
         # Find v3
-        v3 = [v for v in dfg.variables_blocks if v.name == "v3"][0]
+        v3 = [v for v in dfg.variables_blocks if v.name == "v10"][0]
         self.assertEqual(1 * Tainting.PROPAGATION_COEFFICIENT**2, v3.tainting_coefficient)
         # Find v6
-        v6 = [v for v in dfg.variables_blocks if v.name == "v6"][0]
+        v6 = [v for v in dfg.variables_blocks if v.name == "v12"][0]
         self.assertEqual(1 * Tainting.PROPAGATION_COEFFICIENT**3, v6.tainting_coefficient)
 
     def test_starknet_get_code_l2_dai_bridge_functions_naming_analyzer(self):
@@ -425,6 +426,70 @@ class TestDisassembler(unittest.TestCase):
         self.assertEqual(
             statistics_analyzer.result[0],
             "newOwner argument name (transferOwnership function) needs to be in snake case",
+        )
+
+    def test_test_cases_generator_analyzer(self):
+        """
+        Test the test cases generator analyzer on test_symbolic_execution_3
+        """
+        disassembler = Disassembler("./tests/json_files/cairo_test_symbolic_execution_2.json")
+        contract_functions = disassembler.functions
+        decompiler = Decompiler(functions=contract_functions)
+        decompiler.decompile_code(first_pass_only=True)
+
+        symbex = SymbolicExecution(decompiler.ssa.memory)
+
+        main_function = [
+            f for f in contract_functions if f.name == "__main__.test_symbolic_execution"
+        ][0]
+        test_cases = symbex._generate_test_cases(function=main_function)
+
+        self.assertEqual(
+            test_cases[-1],
+            [
+                ("v0_f", 6),
+                ("v10_s", 19),
+                ("v1_u", 21),
+                ("v2_z", 26),
+                ("v3_z2", 26),
+                ("v4_i", 9),
+                ("v5_n", 14),
+                ("v6_g", 7),
+                ("v7_l", 12),
+                ("v8_a", 1),
+                ("v9_b", 2),
+            ],
+        )
+
+    def test_test_cases_generator_analyzer_2(self):
+        """ """
+        disassembler = Disassembler("./tests/json_files/cairo_test_symbolic_execution_3.json")
+        contract_functions = disassembler.functions
+        decompiler = Decompiler(functions=contract_functions)
+        decompiler.decompile_code(first_pass_only=True)
+
+        symbex = SymbolicExecution(decompiler.ssa.memory)
+
+        main_function = [
+            f for f in contract_functions if f.name == "__main__.test_symbolic_execution"
+        ][0]
+        test_cases = symbex._generate_test_cases(function=main_function)
+
+        self.assertEqual(
+            test_cases[1],
+            [
+                ("v0_f", 103),
+                ("v10_s", 116),
+                ("v1_u", 118),
+                ("v2_z", 123),
+                ("v3_z2", 123),
+                ("v4_i", 106),
+                ("v5_n", 111),
+                ("v6_g", 104),
+                ("v7_l", 109),
+                ("v8_a", 98),
+                ("v9_b", 99),
+            ],
         )
 
 

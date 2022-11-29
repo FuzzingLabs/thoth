@@ -1,6 +1,6 @@
 import re
 from graphviz import Digraph
-from typing import List
+from typing import List, Optional
 
 from thoth.app.decompiler.variable import Variable
 from thoth.app.disassembler.instruction import Instruction
@@ -29,6 +29,8 @@ class Edge:
 class BasicBlock:
     """Basic Block class object."""
 
+    counter = 0
+
     def __init__(self, start_instruction: Instruction) -> None:
         """Create the basic block object from the given instruction.
         Args:
@@ -44,6 +46,9 @@ class BasicBlock:
         self.edges_offset: List[Instruction] = []
         self.is_phi_node: Optional[bool] = None
         self.variables: List[Variable] = []
+        self.id = BasicBlock.counter
+        self.variable_condition = None
+        BasicBlock.counter += 1
 
     @staticmethod
     def format_bb_name(instruction_offset: int) -> str:
@@ -288,6 +293,24 @@ class CFG:
                 if start_offset == offset:
                     parents.append(basic_block)
         return parents
+
+    def children(self, basic_block: BasicBlock) -> List[BasicBlock]:
+        """
+        Return a list of the children of a basic_block
+        Args:
+            basic_block (BasicBlock): A basic block
+        Returns:
+            children (List BasicBlock): A list of the children blocks of a basic_block
+        """
+        children = []
+
+        edges_destinations = [edge.destination for edge in basic_block.edges_offset]
+
+        # Find all blocks having an edge with the current block as source
+        for basic_block in self.basicblocks:
+            if basic_block.start_offset in edges_destinations:
+                children.append(basic_block)
+        return children
 
     def find_phi_nodes(self) -> None:
         """

@@ -16,6 +16,7 @@ setup(
     packages=find_packages(),
     python_requires=">=3.6",
     install_requires=[
+        "z3-solver",
         "graphviz",
     ],
     license="AGPL-3.0",

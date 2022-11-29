@@ -3,6 +3,8 @@ from thoth.app.analyzer.erc.erc721_detector import ERC721Analyzer
 
 from thoth.app.analyzer.strings.strings_analyzer import StringsAnalyzer
 
+from thoth.app.analyzer.testing.tests_cases_generator import TestCasesGeneratorAnalyzer
+
 from thoth.app.analyzer.functions.functions_analyzer import FunctionsAnalyzer
 
 from thoth.app.analyzer.statistics.statistics_analyzer import StatisticsAnalyzer
@@ -20,6 +22,7 @@ all_analyzers = [
     ERC20Analyzer,
     ERC721Analyzer,
     StringsAnalyzer,
+    TestCasesGeneratorAnalyzer,
     FunctionsAnalyzer,
     StatisticsAnalyzer,
     # Optimization

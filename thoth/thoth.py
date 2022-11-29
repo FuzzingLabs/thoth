@@ -3,6 +3,7 @@ import sys
 import tempfile
 from thoth.app.decompiler.decompiler import Decompiler
 from thoth.app.dfg.dfg import DFG
+from thoth.app.symbex.symbex import SymbolicExecution
 from thoth.app.utils import str_to_bool
 from thoth.app.arguments import parse_args
 from thoth.app.analyzer import all_analyzers
@@ -109,6 +110,48 @@ def main() -> int:
         dfg._print_dfg(
             view=str_to_bool(args.view), folder=args.output_dfg_folder, format=args.format
         )
+
+    # Symbolic execution
+    if args.symbolic:
+
+        # Mandatory arguments (function, solve, constraint)
+        if args.function is None:
+            print(
+                "Symbolic execution: You need to set the -function flag e.g. -function __main__.main"
+            )
+            functions_list = [f.name for f in disassembler.functions]
+            print("\nPossible values:\n\t%s" % ("\n\t".join(functions_list)))
+            return 1
+        if not args.solve:
+            print("Symbolic execution: You need to set the -solve flag, e.g. -solve v1 v2 v3")
+            return 1
+        if not args.constraint:
+            print(
+                "Symbolic execution: You need to set the -constraint flag e.g. - constraint v1==0 v2==0"
+            )
+
+        contract_functions = disassembler.functions
+        decompiler = Decompiler(functions=contract_functions)
+        decompiler.decompile_code(first_pass_only=True)
+
+        symbex = SymbolicExecution(decompiler.ssa.memory)
+
+        try:
+            function = [f for f in disassembler.functions if f.name == args.function][0]
+        except:
+            return 1
+        solve = symbex._solve(
+            function=function,
+            constraints=args.constraint,
+            variables_values=args.variables,
+            solves=args.solve,
+        )
+        if solve:
+            for variable in solve:
+                print("%s: %s" % (variable[0], variable[1]))
+        else:
+            print("No solution")
+        return 0
 
     if args.analyzers is None:
         return 0

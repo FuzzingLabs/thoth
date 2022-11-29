@@ -1,0 +1,366 @@
+{
+    "attributes": [],
+    "builtins": [
+        "output"
+    ],
+    "compiler_version": "0.10.0",
+    "data": [
+        "0x480680017fff8000",
+        "0xa",
+        "0x482480017fff8000",
+        "0x800000000000010fffffffffffffffffffffffffffffffffffffffffffffffc",
+        "0x20680017fff7fff",
+        "0x4",
+        "0x480a7ffd7fff8000",
+        "0x208b7fff7fff7ffe",
+        "0x480a7ffd7fff8000",
+        "0x208b7fff7fff7ffe"
+    ],
+    "debug_info": {
+        "file_contents": {},
+        "instruction_locations": {
+            "0": {
+                "accessible_scopes": [
+                    "__main__",
+                    "__main__.main"
+                ],
+                "flow_tracking_data": {
+                    "ap_tracking": {
+                        "group": 0,
+                        "offset": 0
+                    },
+                    "reference_ids": {
+                        "__main__.main.output_ptr": 0
+                    }
+                },
+                "hints": [],
+                "inst": {
+                    "end_col": 19,
+                    "end_line": 4,
+                    "input_file": {
+                        "filename": "./cairo_files/cairo_unreachable_code.cairo"
+                    },
+                    "start_col": 17,
+                    "start_line": 4
+                }
+            },
+            "2": {
+                "accessible_scopes": [
+                    "__main__",
+                    "__main__.main"
+                ],
+                "flow_tracking_data": {
+                    "ap_tracking": {
+                        "group": 0,
+                        "offset": 1
+                    },
+                    "reference_ids": {
+                        "__main__.main.output_ptr": 0,
+                        "__main__.main.x": 1
+                    }
+                },
+                "hints": [],
+                "inst": {
+                    "end_col": 15,
+                    "end_line": 5,
+                    "input_file": {
+                        "filename": "./cairo_files/cairo_unreachable_code.cairo"
+                    },
+                    "start_col": 9,
+                    "start_line": 5
+                }
+            },
+            "4": {
+                "accessible_scopes": [
+                    "__main__",
+                    "__main__.main"
+                ],
+                "flow_tracking_data": {
+                    "ap_tracking": {
+                        "group": 0,
+                        "offset": 2
+                    },
+                    "reference_ids": {
+                        "__main__.main.__temp0": 2,
+                        "__main__.main.output_ptr": 0,
+                        "__main__.main.x": 1
+                    }
+                },
+                "hints": [],
+                "inst": {
+                    "end_col": 7,
+                    "end_line": 5,
+                    "input_file": {
+                        "filename": "./cairo_files/cairo_unreachable_code.cairo"
+                    },
+                    "start_col": 5,
+                    "start_line": 5
+                }
+            },
+            "6": {
+                "accessible_scopes": [
+                    "__main__",
+                    "__main__.main"
+                ],
+                "flow_tracking_data": {
+                    "ap_tracking": {
+                        "group": 0,
+                        "offset": 2
+                    },
+                    "reference_ids": {
+                        "__main__.main.__temp0": 2,
+                        "__main__.main.output_ptr": 0,
+                        "__main__.main.x": 1
+                    }
+                },
+                "hints": [],
+                "inst": {
+                    "end_col": 28,
+                    "end_line": 3,
+                    "input_file": {
+                        "filename": "./cairo_files/cairo_unreachable_code.cairo"
+                    },
+                    "parent_location": [
+                        {
+                            "end_col": 28,
+                            "end_line": 3,
+                            "input_file": {
+                                "filename": "./cairo_files/cairo_unreachable_code.cairo"
+                            },
+                            "parent_location": [
+                                {
+                                    "end_col": 19,
+                                    "end_line": 6,
+                                    "input_file": {
+                                        "filename": "./cairo_files/cairo_unreachable_code.cairo"
+                                    },
+                                    "start_col": 9,
+                                    "start_line": 6
+                                },
+                                "While trying to retrieve the implicit argument 'output_ptr' in:"
+                            ],
+                            "start_col": 11,
+                            "start_line": 3
+                        },
+                        "While expanding the reference 'output_ptr' in:"
+                    ],
+                    "start_col": 11,
+                    "start_line": 3
+                }
+            },
+            "7": {
+                "accessible_scopes": [
+                    "__main__",
+                    "__main__.main"
+                ],
+                "flow_tracking_data": {
+                    "ap_tracking": {
+                        "group": 0,
+                        "offset": 3
+                    },
+                    "reference_ids": {
+                        "__main__.main.__temp0": 2,
+                        "__main__.main.output_ptr": 0,
+                        "__main__.main.x": 1
+                    }
+                },
+                "hints": [],
+                "inst": {
+                    "end_col": 19,
+                    "end_line": 6,
+                    "input_file": {
+                        "filename": "./cairo_files/cairo_unreachable_code.cairo"
+                    },
+                    "start_col": 9,
+                    "start_line": 6
+                }
+            },
+            "8": {
+                "accessible_scopes": [
+                    "__main__",
+                    "__main__.main"
+                ],
+                "flow_tracking_data": {
+                    "ap_tracking": {
+                        "group": 0,
+                        "offset": 2
+                    },
+                    "reference_ids": {
+                        "__main__.main.__temp0": 2,
+                        "__main__.main.output_ptr": 0,
+                        "__main__.main.x": 1
+                    }
+                },
+                "hints": [],
+                "inst": {
+                    "end_col": 28,
+                    "end_line": 3,
+                    "input_file": {
+                        "filename": "./cairo_files/cairo_unreachable_code.cairo"
+                    },
+                    "parent_location": [
+                        {
+                            "end_col": 28,
+                            "end_line": 3,
+                            "input_file": {
+                                "filename": "./cairo_files/cairo_unreachable_code.cairo"
+                            },
+                            "parent_location": [
+                                {
+                                    "end_col": 15,
+                                    "end_line": 8,
+                                    "input_file": {
+                                        "filename": "./cairo_files/cairo_unreachable_code.cairo"
+                                    },
+                                    "start_col": 5,
+                                    "start_line": 8
+                                },
+                                "While trying to retrieve the implicit argument 'output_ptr' in:"
+                            ],
+                            "start_col": 11,
+                            "start_line": 3
+                        },
+                        "While expanding the reference 'output_ptr' in:"
+                    ],
+                    "start_col": 11,
+                    "start_line": 3
+                }
+            },
+            "9": {
+                "accessible_scopes": [
+                    "__main__",
+                    "__main__.main"
+                ],
+                "flow_tracking_data": {
+                    "ap_tracking": {
+                        "group": 0,
+                        "offset": 3
+                    },
+                    "reference_ids": {
+                        "__main__.main.__temp0": 2,
+                        "__main__.main.output_ptr": 0,
+                        "__main__.main.x": 1
+                    }
+                },
+                "hints": [],
+                "inst": {
+                    "end_col": 15,
+                    "end_line": 8,
+                    "input_file": {
+                        "filename": "./cairo_files/cairo_unreachable_code.cairo"
+                    },
+                    "start_col": 5,
+                    "start_line": 8
+                }
+            }
+        }
+    },
+    "hints": {},
+    "identifiers": {
+        "__main__.main": {
+            "decorators": [],
+            "pc": 0,
+            "type": "function"
+        },
+        "__main__.main.Args": {
+            "full_name": "__main__.main.Args",
+            "members": {},
+            "size": 0,
+            "type": "struct"
+        },
+        "__main__.main.ImplicitArgs": {
+            "full_name": "__main__.main.ImplicitArgs",
+            "members": {
+                "output_ptr": {
+                    "cairo_type": "felt*",
+                    "offset": 0
+                }
+            },
+            "size": 1,
+            "type": "struct"
+        },
+        "__main__.main.Return": {
+            "cairo_type": "()",
+            "type": "type_definition"
+        },
+        "__main__.main.SIZEOF_LOCALS": {
+            "type": "const",
+            "value": 0
+        },
+        "__main__.main.__temp0": {
+            "cairo_type": "felt",
+            "full_name": "__main__.main.__temp0",
+            "references": [
+                {
+                    "ap_tracking_data": {
+                        "group": 0,
+                        "offset": 2
+                    },
+                    "pc": 4,
+                    "value": "[cast(ap + (-1), felt*)]"
+                }
+            ],
+            "type": "reference"
+        },
+        "__main__.main.output_ptr": {
+            "cairo_type": "felt*",
+            "full_name": "__main__.main.output_ptr",
+            "references": [
+                {
+                    "ap_tracking_data": {
+                        "group": 0,
+                        "offset": 0
+                    },
+                    "pc": 0,
+                    "value": "[cast(fp + (-3), felt**)]"
+                }
+            ],
+            "type": "reference"
+        },
+        "__main__.main.x": {
+            "cairo_type": "felt",
+            "full_name": "__main__.main.x",
+            "references": [
+                {
+                    "ap_tracking_data": {
+                        "group": 0,
+                        "offset": 1
+                    },
+                    "pc": 2,
+                    "value": "[cast(ap + (-1), felt*)]"
+                }
+            ],
+            "type": "reference"
+        }
+    },
+    "main_scope": "__main__",
+    "prime": "0x800000000000011000000000000000000000000000000000000000000000001",
+    "reference_manager": {
+        "references": [
+            {
+                "ap_tracking_data": {
+                    "group": 0,
+                    "offset": 0
+                },
+                "pc": 0,
+                "value": "[cast(fp + (-3), felt**)]"
+            },
+            {
+                "ap_tracking_data": {
+                    "group": 0,
+                    "offset": 1
+                },
+                "pc": 2,
+                "value": "[cast(ap + (-1), felt*)]"
+            },
+            {
+                "ap_tracking_data": {
+                    "group": 0,
+                    "offset": 2
+                },
+                "pc": 4,
+                "value": "[cast(ap + (-1), felt*)]"
+            }
+        ]
+    }
+}
