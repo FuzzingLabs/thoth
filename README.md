@@ -22,33 +22,12 @@ pip install .
 thoth -h
 ```
 
-## Disassemble the contract's compilation artifact (JSON)
-
-#### Remote contrat deployed on starknet (mainnet/goerli)
-
-``` python
-thoth remote --address 0x0323D18E2401DDe9aFFE1908e9863cbfE523791690F32a2ff6aa66959841D31D --network mainnet -b
-```
-
-#### Local contract compiled locally (JSON file)
-
-``` python
-thoth local tests/json_files/cairo_array_sum.json -b
-# To get a pretty colored version:
-thoth local tests/json_files/cairo_array_sum.json -b -color
-# To get a verbose version with more details about decoded bytecodes:
-thoth local tests/json_files/cairo_array_sum.json -vvv
-```
-
-<p align="center">
-	<img src="/images/thoth_disas_color.png"/>
-</p>
-
-
 ## Decompile the contract's compilation artifact (JSON)
 
-
 ``` python
+# Remote contrat deployed on starknet (mainnet/goerli)
+thoth remote --address 0x0323D18E2401DDe9aFFE1908e9863cbfE523791690F32a2ff6aa66959841D31D --network mainnet -d
+# Local contract compiled locally (JSON file)
 thoth local tests/json_files/cairo_test_addition_if.json -d
 ```
 
@@ -83,7 +62,6 @@ The static analysis is performed using *analyzers* which can be either informati
 |**Integer overflow**|`int_overflow`|Detect direct integer overflow/underflow|High (direct) / Medium (indirect)|Medium|Security|
 |**Function naming**|`function_naming`|Detect functions names that are not in snake case|Informational|High|Security|
 |**Variable naming**|`variable_naming`|Detect variables names that are not in snake case|Informational|High|Security|
-
 
 #### Run all the analyzers
 ``` python
@@ -128,23 +106,6 @@ A more complexe callgraph:
 	<img src="/images/starknet_get_full_contract_l2_dai_bridge.gv.png"/>
 </p>
 
-
-## Print the contract's control-flow graph (CFG)
-
-``` python
-thoth local tests/json_files/cairo_double_function_and_if.json -cfg -view True
-# For a specific function:
-thoth local tests/json_files/cairo_double_function_and_if.json -cfg -view True -function "__main__.main"
-# For a specific output format (pdf/svg/png):
-thoth local tests/json_files/cairo_double_function_and_if.json -cfg -view True -format png
-```
-The output file (pdf/svg/png) and the dot file are inside the `output-cfg` folder.
-
-<p align="center">
-	<img src="/images/cairo_double_function_and_if_cfg.png"/>
-</p>
-
-
 ## Print the contract's data-flow graph (DFG)
 
 ``` python
@@ -162,6 +123,38 @@ The output file (pdf/svg/png) and the dot file are inside the `output-dfg` folde
 
 <p align="center">
 	<img src="/images/thoth_dfg_tainting.png"/>
+</p>
+
+## Disassemble the contract's compilation artifact (JSON)
+
+``` python
+# Remote contrat deployed on starknet (mainnet/goerli)
+thoth remote --address 0x0323D18E2401DDe9aFFE1908e9863cbfE523791690F32a2ff6aa66959841D31D --network mainnet -b
+# Local contract compiled locally (JSON file)
+thoth local tests/json_files/cairo_array_sum.json -b
+# To get a pretty colored version:
+thoth local tests/json_files/cairo_array_sum.json -b -color
+# To get a verbose version with more details about decoded bytecodes:
+thoth local tests/json_files/cairo_array_sum.json -vvv
+```
+
+<p align="center">
+	<img src="/images/thoth_disas_color.png"/>
+</p>
+
+## Print the contract's control-flow graph (CFG)
+
+``` python
+thoth local tests/json_files/cairo_double_function_and_if.json -cfg -view True
+# For a specific function:
+thoth local tests/json_files/cairo_double_function_and_if.json -cfg -view True -function "__main__.main"
+# For a specific output format (pdf/svg/png):
+thoth local tests/json_files/cairo_double_function_and_if.json -cfg -view True -format png
+```
+The output file (pdf/svg/png) and the dot file are inside the `output-cfg` folder.
+
+<p align="center">
+	<img src="/images/cairo_double_function_and_if_cfg.png"/>
 </p>
 
 ## Use the symbolic execution 
@@ -182,8 +175,21 @@ thoth local cairo_test_symbolic_execution_3.json --symbolic -function __main__.t
 	<b> source code </b></br>
 	<img src="/images/thoth_symbolic_execution_source.png"/></br>
 	<b> Solving the variables arguments values with the symbolic execution </b></br>
-	<img src="/images/thoth_symbolic_execution.png"/></br>
 </p>
+
+```
+v0_f: 102
+v10_s: 115
+v1_u: 117
+v2_z: 122
+v3_z2: 122
+v4_i: 105
+v5_n: 110
+v6_g: 103
+v7_l: 108
+v8_a: 97
+v9_b: 98
+```
 
 You can replace a variable value by another using the `-variable` flag : 
 
