@@ -175,8 +175,15 @@ thoth local cairo_test_symbolic_execution.json --symbolic -function __main__.tes
 Or with a more complex case
 
 ```
-thoth local cairo_test_symbolic_execution_2.json --symbolic -function __main__.test_symbolic_execution -constraint v13==0 v14==0 v15==0 v16==0 v17==0 v18==0 v19==0 v20==0 v21==0 v22==0 v23==0 -solve v0_f v1_u v2_z v3_z2 v4_i v5_n v6_g v7_l v8_a v9_b v10_s
+thoth local cairo_test_symbolic_execution_3.json --symbolic -function __main__.test_symbolic_execution -constraint v13==0 v14==0 v15==0 v16==0 v17==0 v18==0 v19==0 v20==0 v21==0 v22==0 v23==0 -solve v0_f v1_u v2_z v3_z2 v4_i v5_n v6_g v7_l v8_a v9_b v10_s
 ```
+
+<p align="center">
+	<b> source code </b></br>
+	<img src="/images/thoth_symbolic_execution_source.png"/></br>
+	<b> Solving the variables arguments values with the symbolic execution </b></br>
+	<img src="/images/thoth_symbolic_execution.png"/></br>
+</p>
 
 You can replace a variable value by another using the `-variable` flag : 
 
