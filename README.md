@@ -11,7 +11,7 @@ Thoth (pronounced "taut" or "toss") is a Cairo/Starknet analyzer, disassembler &
 - **[Call Flow analysis](#print-the-contracts-call-graph)**: Thoth can generate a **Call Flow Graph** 
 - **[Data Flow analysis](#print-the-contracts-data-flow-graph-dfg)**: Thoth can generate a **Data Flow Graph** (DFG) for each function
 - **[Static analysis](#run-the-static-analysis)**: Thoth can run various **analyzers** of different types (*security*/*optimization*/*analytics*) on the contract
-- **[Symbolic execution](#use-the-symbolic-execution)**: Thoth can use the **symbolic execution** to find the right variables values to get through a specific path in a function and also automatically generate test cases for a function.
+- **[Symbolic execution](#use-the-symbolic-execution)**: Thoth can use the **symbolic execution** to find the right variables values to get through a specific path in a function and also automatically **generate test cases** for a function.
 
 ## Installation
  
