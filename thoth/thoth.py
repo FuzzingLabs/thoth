@@ -116,15 +116,15 @@ def main() -> int:
 
         # Mandatory arguments (function, solve, constraint)
         if args.function is None:
-            print("Symbolic execution: You need to set the -function flag")
+            print("Symbolic execution: You need to set the -function flag e.g. -function __main__.main")
             functions_list = [f.name for f in disassembler.functions]
             print("\nPossible values:\n\t%s" % ("\n\t".join(functions_list)))
             return 1
         if args.solve is None:
-            print("Symbolic execution: You need to set the -solve flag")
+            print("Symbolic execution: You need to set the -solve flag, e.g. -solve v1 v2 v3")
             return 1
         if args.constraint is None:
-            print("Symbolic execution: You need to set the -constraint flag")
+            print("Symbolic execution: You need to set the -constraint flag e.g. -constraint v1==0 v2==0")
             return 1
 
         contract_functions = disassembler.functions
