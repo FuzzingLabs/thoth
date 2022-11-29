@@ -198,7 +198,7 @@ For a specific output format (pdf/svg/png):
         help="Print JSON with details of all instructions",
     )
 
-    symbex.add_argument("-constraints", nargs="+", help="", default=[])
+    symbex.add_argument("-constraint", nargs="+", help="", default=[])
 
     symbex.add_argument("-variables", nargs="+", help="", default=[])
 

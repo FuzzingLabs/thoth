@@ -218,7 +218,7 @@ class SymbolicExecution:
             self._create_operations(path_variables)
             # Load variables values defined in CLI into Z3
             for variable in variables_values_list:
-                variable_name = [v.name for v in self.z3_variables if str(v) == variable[0][0]][0]
+                variable_name = [v for v in self.z3_variables if str(v) == variable[0][0]][0]
                 self.solver.add(variable_name == int(variable[0][2]))
 
             # Load constraints defined in CLI into Z3
