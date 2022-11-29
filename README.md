@@ -111,9 +111,9 @@ thoth local tests/json_files/cairo_array_sum.json --analyzers-help
 
 ``` python
 # Solve the variables values with contraints 
-thoth local cairo_test_symbolic_execution.json --symbolic -function __main__.test_symbolic_execution -constraint v4==0 v6==0 -solve v0_x v1_y
+thoth local tests/json_files/cairo_test_symbolic_execution.json --symbolic -function __main__.test_symbolic_execution -constraint v4==0 v6==0 -solve v0_x v1_y
 # Replace a variable using the -variable flag 
-thoth local cairo_test_symbolic_execution_3.json --symbolic -function __main__.test_symbolic_execution -constraint v13==0 v14==0 v15==0  -solve v0_f v1_u v2_z v3_z2 -variables v3_z2=26 
+thoth local tests/json_files/cairo_test_symbolic_execution_3.json --symbolic -function __main__.test_symbolic_execution -constraint v13==0 v14==0 v15==0  -solve v0_f v1_u v2_z v3_z2 -variables v3_z2=26 
 ```
 
 Or with a more complex case:
@@ -126,7 +126,7 @@ Or with a more complex case:
 Solve the variables arguments values with the symbolic execution:
 
 ```python
-thoth local cairo_test_symbolic_execution_3.json --symbolic -function __main__.test_symbolic_execution -constraint v13==0 v14==0 v15==0 v16==0 v17==0 v18==0 v19==0 v20==0 v21==0 v22==0 v23==0 -solve v0_f v1_u v2_z v3_z2 v4_i v5_n v6_g v7_l v8_a v9_b v10_s
+thoth local tests/json_files/cairo_test_symbolic_execution_3.json --symbolic -function __main__.test_symbolic_execution -constraint v13==0 v14==0 v15==0 v16==0 v17==0 v18==0 v19==0 v20==0 v21==0 v22==0 v23==0 -solve v0_f v1_u v2_z v3_z2 v4_i v5_n v6_g v7_l v8_a v9_b v10_s
 
 v0_f: 102
 v10_s: 115
