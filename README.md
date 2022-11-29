@@ -5,13 +5,13 @@ Thoth (pronounced "taut" or "toss") is a Cairo/Starknet analyzer, disassembler &
 
 ## Features
 - **Remote & Local**: Thoth can both analyze contracts deployed on Mainnet/Goerli and compiled locally on your machine. 
-- **[Disassembler](#disassemble-the-contracts-compilation-artifact-json)**: Thoth can translate bytecode into assembly representation
 - **[Decompiler](#decompile-the-contracts-compilation-artifact-json)**: Thoth can convert assembly into decompiled code with SSA (Static Single Assignment)  
-- **[Control Flow analysis](#print-the-contracts-control-flow-graph-cfg)**: Thoth can generate a **Control Flow Graph** (CFG)
 - **[Call Flow analysis](#print-the-contracts-call-graph)**: Thoth can generate a **Call Flow Graph** 
-- **[Data Flow analysis](#print-the-contracts-data-flow-graph-dfg)**: Thoth can generate a **Data Flow Graph** (DFG) for each function
 - **[Static analysis](#run-the-static-analysis)**: Thoth can run various **analyzers** of different types (*security*/*optimization*/*analytics*) on the contract
 - **[Symbolic execution](#use-the-symbolic-execution)**: Thoth can use the **symbolic execution** to find the right variables values to get through a specific path in a function and also automatically **generate test cases** for a function.
+- **[Data Flow analysis](#print-the-contracts-data-flow-graph-dfg)**: Thoth can generate a **Data Flow Graph** (DFG) for each function
+- **[Disassembler](#disassemble-the-contracts-compilation-artifact-json)**: Thoth can translate bytecode into assembly representation
+- **[Control Flow analysis](#print-the-contracts-control-flow-graph-cfg)**: Thoth can generate a **Control Flow Graph** (CFG)
 
 ## Installation
  
@@ -44,6 +44,28 @@ Example 2 with function call:
 	<img src="/images/thoth_decompile_sourcecode_2.png"/></br>
 	<b> decompiler code </b></br>
 	<img src="/images/thoth_decompile_2.png"/></br>
+</p>
+
+
+## Print the contract's call graph 
+
+The call flow graph represents calling relationships between functions of the contract. We tried to provide a maximum of information, such as the entry-point functions, the imports, decorators, etc.
+
+``` python
+thoth local tests/json_files/cairo_array_sum.json -call -view True
+# For a specific output format (pdf/svg/png):
+thoth local tests/json_files/cairo_array_sum.json -call -view True -format png
+```
+The output file (pdf/svg/png) and the dot file are inside the `output-callgraph` folder.
+If needed, you can also visualize dot files online using [this](https://dreampuf.github.io/GraphvizOnline/) website. The legend can be found [here](images/callgraph_legend.png).
+
+<p align="center">
+	<img src="/images/thoth_callgraph_simple.png"/>
+</p>
+
+A more complexe callgraph:
+<p align="center">
+	<img src="/images/starknet_get_full_contract_l2_dai_bridge.gv.png"/>
 </p>
 
 ## Run the static analysis
@@ -85,26 +107,39 @@ thoth local tests/json_files/cairo_array_sum.json -a analytics
 thoth local tests/json_files/cairo_array_sum.json --analyzers-help
 ```
 
-## Print the contract's call graph 
-
-The call flow graph represents calling relationships between functions of the contract. We tried to provide a maximum of information, such as the entry-point functions, the imports, decorators, etc.
+## Use the symbolic execution 
 
 ``` python
-thoth local tests/json_files/cairo_array_sum.json -call -view True
-# For a specific output format (pdf/svg/png):
-thoth local tests/json_files/cairo_array_sum.json -call -view True -format png
+# Solve the variables values with contraints 
+thoth local cairo_test_symbolic_execution.json --symbolic -function __main__.test_symbolic_execution -constraint v4==0 v6==0 -solve v0_x v1_y
+# Replace a variable using the -variable flag 
+thoth local cairo_test_symbolic_execution_3.json --symbolic -function __main__.test_symbolic_execution -constraint v13==0 v14==0 v15==0  -solve v0_f v1_u v2_z v3_z2 -variables v3_z2=26 
 ```
-The output file (pdf/svg/png) and the dot file are inside the `output-callgraph` folder.
-If needed, you can also visualize dot files online using [this](https://dreampuf.github.io/GraphvizOnline/) website. The legend can be found [here](images/callgraph_legend.png).
+
+Or with a more complex case:
 
 <p align="center">
-	<img src="/images/thoth_callgraph_simple.png"/>
+	<b> Source code </b></br>
+	<img src="/images/thoth_symbolic_execution_source.png"/></br>
 </p>
 
-A more complexe callgraph:
-<p align="center">
-	<img src="/images/starknet_get_full_contract_l2_dai_bridge.gv.png"/>
-</p>
+Solve the variables arguments values with the symbolic execution:
+
+```python
+thoth local cairo_test_symbolic_execution_3.json --symbolic -function __main__.test_symbolic_execution -constraint v13==0 v14==0 v15==0 v16==0 v17==0 v18==0 v19==0 v20==0 v21==0 v22==0 v23==0 -solve v0_f v1_u v2_z v3_z2 v4_i v5_n v6_g v7_l v8_a v9_b v10_s
+
+v0_f: 102
+v10_s: 115
+v1_u: 117
+v2_z: 122
+v3_z2: 122
+v4_i: 105
+v5_n: 110
+v6_g: 103
+v7_l: 108
+v8_a: 97
+v9_b: 98
+```
 
 ## Print the contract's data-flow graph (DFG)
 
@@ -156,40 +191,6 @@ The output file (pdf/svg/png) and the dot file are inside the `output-cfg` folde
 <p align="center">
 	<img src="/images/cairo_double_function_and_if_cfg.png"/>
 </p>
-
-## Use the symbolic execution 
-
-``` python
-# Solve the variables values with contraints 
-thoth local cairo_test_symbolic_execution.json --symbolic -function __main__.test_symbolic_execution -constraint v4==0 v6==0 -solve v0_x v1_y
-# Replace a variable using the -variable flag 
-thoth local cairo_test_symbolic_execution_3.json --symbolic -function __main__.test_symbolic_execution -constraint v13==0 v14==0 v15==0  -solve v0_f v1_u v2_z v3_z2 -variables v3_z2=26 
-```
-
-Or with a more complex case:
-
-<p align="center">
-	<b> Source code </b></br>
-	<img src="/images/thoth_symbolic_execution_source.png"/></br>
-</p>
-
-Solve the variables arguments values with the symbolic execution:
-
-```python
-thoth local cairo_test_symbolic_execution_3.json --symbolic -function __main__.test_symbolic_execution -constraint v13==0 v14==0 v15==0 v16==0 v17==0 v18==0 v19==0 v20==0 v21==0 v22==0 v23==0 -solve v0_f v1_u v2_z v3_z2 v4_i v5_n v6_g v7_l v8_a v9_b v10_s
-
-v0_f: 102
-v10_s: 115
-v1_u: 117
-v2_z: 122
-v3_z2: 122
-v4_i: 105
-v5_n: 110
-v6_g: 103
-v7_l: 108
-v8_a: 97
-v9_b: 98
-```
 
 # F.A.Q
 
