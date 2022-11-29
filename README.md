@@ -110,10 +110,31 @@ thoth local tests/json_files/cairo_array_sum.json --analyzers-help
 ## Use the symbolic execution 
 
 ``` python
+# List all assigned variables using the `assignations` analyzer or using the decompiler `-d`
+thoth local tests/json_files/cairo_test_symbolic_execution.json -a assignations
+[Optimization] Assignations 
+  -  v4 = v0_x + -10
+  -  v5 = v0_x + -20
+  -  v6 = v1_y + -15
+  -  v7 = v1_y + -25
+  -  v11 = 10
+  -  v12 = 20
+  -  v13 = v8_output_ptr
+
+[+] 1 analyzer was run (1 detected)
+
 # Solve the variables values with contraints 
 thoth local tests/json_files/cairo_test_symbolic_execution.json --symbolic -function __main__.test_symbolic_execution -constraint v4==0 v6==0 -solve v0_x v1_y
+v0_x: 10
+v1_y: 15
+
 # Replace a variable using the -variable flag 
-thoth local tests/json_files/cairo_test_symbolic_execution_3.json --symbolic -function __main__.test_symbolic_execution -constraint v13==0 v14==0 v15==0  -solve v0_f v1_u v2_z v3_z2 -variables v3_z2=26 
+thoth local tests/json_files/cairo_test_symbolic_execution_3.json --symbolic -function __main__.test_symbolic_execution -constraint v13==0 v14==0 v15==0  -solve v0_f v1_u v2_z v3_z2 -variables v3_z2=26  
+v0_f: 102
+v1_u: 117
+v2_z: 122
+v3_z2: 26
+
 ```
 
 Or with a more complex case:
