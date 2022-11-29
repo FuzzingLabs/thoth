@@ -198,11 +198,11 @@ For a specific output format (pdf/svg/png):
         help="Print JSON with details of all instructions",
     )
 
-    symbex.add_argument("--constraints", nargs="+", help="", default=[])
+    symbex.add_argument("-constraints", nargs="+", help="", default=[])
 
-    symbex.add_argument("--variables", nargs="+", help="", default=[])
+    symbex.add_argument("-variables", nargs="+", help="", default=[])
 
-    symbex.add_argument("--solve", nargs="+", help="", default=[])
+    symbex.add_argument("-solve", nargs="+", help="", default=[])
 
     contract_subparser = parser.add_subparsers(
         help="Load a cairo contract compilation artifact from a file or from starknet",

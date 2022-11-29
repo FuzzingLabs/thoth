@@ -11,6 +11,7 @@ Thoth (pronounced "taut" or "toss") is a Cairo/Starknet analyzer, disassembler &
 - **[Call Flow analysis](#print-the-contracts-call-graph)**: Thoth can generate a **Call Flow Graph** 
 - **[Data Flow analysis](#print-the-contracts-data-flow-graph-dfg)**: Thoth can generate a **Data Flow Graph** (DFG) for each function
 - **[Static analysis](#run-the-static-analysis)**: Thoth can run various **analyzers** of different types (*security*/*optimization*/*analytics*) on the contract
+- **[Symbolic execution](#use-the-symbolic-execution)**: Thoth can find the right variables values to get through a specific path in a function and automatically generate test cases for a function with the symbolic execution.
 
 ## Installation
  
@@ -163,6 +164,19 @@ The output file (pdf/svg/png) and the dot file are inside the `output-dfg` folde
 	<img src="/images/thoth_dfg_tainting.png"/>
 </p>
 
+## Use the symbolic execution 
+
+You can find find the right variables values to get through a specific path in a function with the symbolic execution : 
+
+``` python
+thoth local ./tests/json_files/cairo_test_symbolic_execution.json --symbolic -function __main__.test_symbolic_execution -constraint v4==0 v6==0 -solve v0_x v1_y
+```
+
+Or a more complex case :
+
+```python
+thoth local ./tests/json_files/cairo_test_symbolic_execution_2.json --symbolic -function __main__.test_symbolic_execution -constraint v13==0 v14==0 v15==0 v16==0 v17==0 v18==0 v19==0 v20==0 v21==0 v22==0 v23==0 -solve v0_f v1_u v2_z v3_z2 v4_i v5_n v6_g v7_l v8_a v9_b v10_s
+```
 
 # F.A.Q
 
