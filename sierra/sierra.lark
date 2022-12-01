@@ -1,0 +1,93 @@
+// Lark Parser for the Sierra IR
+// Inspired by: https://github.com/starkware-libs/cairo/blob/main/crates/sierra/src/parser.lalrpop
+?start: program
+
+program: type_declaration* libfunc_declaration* statement* function*
+
+// Parse type declarations
+?type_declaration: "type" concrete_type_id "=" concrete_type_long_id";"
+concrete_type_long_id: generic_type_id
+                     | generic_type_id"<"generic_args">"
+
+generic_type_id: path_label
+               | "["unsigned_int"]"
+
+concrete_type_id: concrete_label
+                | "["unsigned_int"]"
+concrete_type_ids: concrete_type_id
+                 | concrete_type_ids", "concrete_type_id
+
+// Parse libfunc declarations
+?libfunc_declaration: "libfunc" concrete_libfunc_id "=" concrete_libfunc_long_id";"
+concrete_libfunc_long_id: generic_libfunc_id
+                        | generic_libfunc_id"<"generic_args">"
+
+generic_libfunc_id: path_label
+                  | "["unsigned_int"]"
+
+concrete_libfunc_id: concrete_label
+                  | "["unsigned_int"]"
+
+function_id: concrete_label
+           | "["unsigned_int"]"
+
+// Parse functions
+function: function_id "@" statement_idx "("params")" "->" "("concrete_type_ids")"";"
+
+param: var_id":"concrete_type_id
+params: param  
+      | params", "param 
+
+user_type_id: concrete_label
+            | "["unsigned_int"]"
+
+var_id: basic_label
+      | "["unsigned_int"]"
+var_ids: (var_id", ")*var_id
+       | var_id
+       |
+
+generic_arg: concrete_type_id
+           | big_int
+           | "user@"function_id
+           | "ut@"user_type_id
+           | "lib@"concrete_libfunc_id
+
+generic_args: generic_arg
+            | generic_args":"generic_arg
+
+// Parse statements
+statement: invocation
+         | "return""("var_ids")"";"
+
+statement_idx: unsigned_int
+
+invocation: concrete_libfunc_id"("var_ids")" "->" "(" var_ids")"";"
+          | concrete_libfunc_id"("var_ids")""{"branch_info*"}"";"
+
+branch_info: branch_target"("var_ids")"
+
+branch_target: "fallthrough"
+             | statement_idx
+
+basic_label: /[a-zA-Z_][a-zA-Z_0-9]*/
+
+path_label: basic_label
+          | path_label"::"basic_label
+
+generic_arg_string: generic_arg
+                  | generic_arg_string"," generic_arg
+
+concrete_label: path_label"::""<"generic_arg_string">"
+              | path_label"<"generic_arg_string">"
+              | path_label
+
+big_int: /-?[1-9][0-9]*|0/
+unsigned_int: big_int 
+signed_int: big_int
+
+COMMENT: /\/\/[^\r\n]+/
+
+%import common.WS
+%ignore WS
+%ignore COMMENT
