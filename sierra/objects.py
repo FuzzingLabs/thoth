@@ -1,9 +1,14 @@
 class SierraObject:
+
+    current_object_id = 0
+
     """
     Base object from which all Sierra objects are inherited from
     """
 
-    pass
+    def __init__(self) -> None:
+        self.id = SierraObject.current_object_id
+        SierraObject.current_object_id += 1
 
 
 class SierraType(SierraObject):
@@ -11,8 +16,9 @@ class SierraType(SierraObject):
     Sierra Type class
     """
 
-    def __init__(self) -> None:
-        pass
+    def __init__(self, name: str) -> None:
+        super(SierraType, self).__init__()
+        self.name = name
 
 
 class SierraLibFunc(SierraObject):
@@ -20,8 +26,9 @@ class SierraLibFunc(SierraObject):
     Sierra LibFunc class
     """
 
-    def __init__(self) -> None:
-        pass
+    def __init__(self, name: str) -> None:
+        super(SierraLibFunc, self).__init__()
+        self.name = name
 
 
 class SierraStatement(SierraObject):
@@ -30,7 +37,7 @@ class SierraStatement(SierraObject):
     """
 
     def __init__(self) -> None:
-        pass
+        super(SierraType, self).__init__()
 
 
 class SierraFunction(SierraObject):
@@ -39,4 +46,4 @@ class SierraFunction(SierraObject):
     """
 
     def __init__(self) -> None:
-        pass
+        super(SierraType, self).__init__()
