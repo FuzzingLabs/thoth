@@ -14,8 +14,9 @@ generic_type_id: path_label
 
 concrete_type_id: concrete_label
                 | "["unsigned_int"]"
-concrete_type_ids: concrete_type_id
-                 | concrete_type_ids", "concrete_type_id
+concrete_type_ids: (concrete_type_id", ")*concrete_type_id
+                 | concrete_type_id
+                 | 
 
 // Parse libfunc declarations
 ?libfunc_declaration: "libfunc" concrete_libfunc_id "=" concrete_libfunc_long_id";"
@@ -35,8 +36,9 @@ function_id: concrete_label
 function: function_id "@" statement_idx "("params")" "->" "("concrete_type_ids")"";"
 
 param: var_id":"concrete_type_id
-params: param  
-      | params", "param 
+params: (param", ")*param
+      | param 
+      |
 
 user_type_id: concrete_label
             | "["unsigned_int"]"
@@ -53,8 +55,9 @@ generic_arg: concrete_type_id
            | "ut@"user_type_id
            | "lib@"concrete_libfunc_id
 
-generic_args: generic_arg
-            | generic_args":"generic_arg
+generic_args: (generic_arg", ")*generic_arg
+            | generic_arg
+            |
 
 // Parse statements
 statement: invocation
@@ -62,7 +65,7 @@ statement: invocation
 
 statement_idx: unsigned_int
 
-invocation: concrete_libfunc_id"("var_ids")" "->" "(" var_ids")"";"
+invocation: concrete_libfunc_id"("var_ids")" "->" "("var_ids")"";"
           | concrete_libfunc_id"("var_ids")""{"branch_info*"}"";"
 
 branch_info: branch_target"("var_ids")"
@@ -75,11 +78,11 @@ basic_label: /[a-zA-Z_][a-zA-Z_0-9]*/
 path_label: basic_label
           | path_label"::"basic_label
 
-generic_arg_string: generic_arg
-                  | generic_arg_string"," generic_arg
+generic_args_string: generic_arg
+                  | generic_args_string", "generic_arg
 
-concrete_label: path_label"::""<"generic_arg_string">"
-              | path_label"<"generic_arg_string">"
+concrete_label: path_label"::""<"generic_args_string">"
+              | path_label"<"generic_args_string">"
               | path_label
 
 big_int: /-?[1-9][0-9]*|0/
