@@ -402,8 +402,13 @@ def parse_to_json(json_data: str, json_type: dict) -> dict:
             incr = 1
         except AssertionError:
             # l[offset + 1] -> imm value
-            decoded = decode_instruction(bytecode_data[offset], bytecode_data[offset + 1])
-            incr = 2
+            try:
+                decoded = decode_instruction(bytecode_data[offset], bytecode_data[offset + 1])
+                incr = 2
+            except Exception:
+                print(f"could not decode {bytecode_data[offset]}")
+                offset += 2
+                continue
         key = str(offset)
         bytecodes_to_json[actual_function]["instruction"][key] = {}
         bytecodes_to_json[actual_function]["instruction"][key][
