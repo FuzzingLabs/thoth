@@ -41,6 +41,42 @@ class Instruction:
             else "+" + instruction_data.get("off2")
         )
         self.off2 = self.off2 if int(self.off2) != 0 else ""
+        self.off3 = (
+            instruction_data.get("off3")
+            if instruction_data.get("off3")[0] == "-"
+            else "+" + instruction_data.get("off3")
+        )
+        self.off3 = self.off3 if int(self.off3) != 0 else ""
+        self.off4 = (
+            instruction_data.get("off4")
+            if instruction_data.get("off4")[0] == "-"
+            else "+" + instruction_data.get("off4")
+        )
+        self.off4 = self.off4 if int(self.off4) != 0 else ""
+        self.off5 = (
+            instruction_data.get("off5")
+            if instruction_data.get("off5")[0] == "-"
+            else "+" + instruction_data.get("off5")
+        )
+        self.off5 = self.off5 if int(self.off5) != 0 else ""
+        self.off6 = (
+            instruction_data.get("off6")
+            if instruction_data.get("off6")[0] == "-"
+            else "+" + instruction_data.get("off6")
+        )
+        self.off6 = self.off6 if int(self.off6) != 0 else ""
+        self.off7 = (
+            instruction_data.get("off7")
+            if instruction_data.get("off7")[0] == "-"
+            else "+" + instruction_data.get("off7")
+        )
+        self.off7 = self.off7 if int(self.off7) != 0 else ""
+        self.off8 = (
+            instruction_data.get("off8")
+            if instruction_data.get("off8")[0] == "-"
+            else "+" + instruction_data.get("off8")
+        )
+        self.off8 = self.off8 if int(self.off8) != 0 else ""
         self.imm = instruction_data.get("imm")
         self.dstRegister = instruction_data.get("dst_register").split("Register.")[1]
         self.op0Register = instruction_data.get("op0_register").split("Register.")[1]
@@ -169,14 +205,20 @@ class Instruction:
         elif self.hint is None:
             dw_value = (
                 (int(self.offDest) + 2 ** (16 - 1))
-                + (int(self.off1) + 2 ** (16 - 1) << 16)
-                + (int(self.off2) + 2 ** (16 - 1) << 32)
+                + (int(self.off1) + 2 ** (16 - 1) << 16 * 1)
+                + (int(self.off2) + 2 ** (16 - 1) << 16 * 2)
+                + (int(self.off3) + 2 ** (16 - 1) << 16 * 3)
+                + (int(self.off4) + 2 ** (16 - 1) << 16 * 4)
+                + (int(self.off5) + 2 ** (16 - 1) << 16 * 5)
+                + (int(self.off6) + 2 ** (16 - 1) << 16 * 6)
+                + (int(self.off7) + 2 ** (16 - 1) << 16 * 7)
+                + (int(self.off8) + 2 ** (16 - 1) << 16 * 8)
             )
             assembly += self.print_instruction(f"dw {dw_value}", color=utils.color.BLUE)
         # hints
         else:
             assembly += self.print_instruction(f"{self.opcode}", color=utils.color.RED)
-        
+
         return assembly
 
     def _handle_call(self):
