@@ -166,7 +166,12 @@ class Instruction:
                     color=utils.color.CYAN,
                 )
         else:
-            assembly += self.print_instruction(f"{self.opcode}", color=utils.color.RED)
+            dw_value = (
+                (int(self.offDest) + 2 ** (16 - 1))
+                + (int(self.off1) + 2 ** (16 - 1) << 16)
+                + (int(self.off2) + 2 ** (16 - 1) << 32)
+            )
+            assembly += self.print_instruction(f"dw {dw_value}", color=utils.color.BLUE)
         return assembly
 
     def _handle_call(self):

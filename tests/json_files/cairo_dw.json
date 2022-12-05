@@ -15,25 +15,12 @@
         "0x1104800180018000",
         "0x800000000000010fffffffffffffffffffffffffffffffffffffffffffffff9",
         "0x208b7fff7fff7ffe",
-        "0x100000000000000000000000000000000",
-        "0x1000000000000000000000000000000",
-        "0x10000000000000000000000000000",
-        "0x100000000000000000000000000",
-        "0x1000000000000000000000000",
-        "0x10000000000000000000000",
-        "0x100000000000000000000",
-        "0x1000000000000000000",
-        "0x10000000000000000",
-        "0x100000000000000",
-        "0x1000000000000",
-        "0x10000000000",
-        "0x100000000",
-        "0x1000000",
-        "0x10000",
-        "0x100",
         "0x1",
+        "0x16",
+        "0x14d",
+        "0x115c",
         "0x1104800180018000",
-        "0x800000000000010ffffffffffffffffffffffffffffffffffffffffffffffeb",
+        "0x800000000000010fffffffffffffffffffffffffffffffffffffffffffffff8",
         "0x480080027fff8000",
         "0x400680017fff7fff",
         "0x14d",
@@ -255,12 +242,12 @@
                 },
                 "hints": [],
                 "inst": {
-                    "end_col": 51,
+                    "end_col": 9,
                     "end_line": 9,
                     "input_file": {
                         "filename": "cairo_files/cairo_dw.cairo"
                     },
-                    "start_col": 9,
+                    "start_col": 5,
                     "start_line": 9
                 }
             },
@@ -278,12 +265,12 @@
                 },
                 "hints": [],
                 "inst": {
-                    "end_col": 49,
+                    "end_col": 10,
                     "end_line": 10,
                     "input_file": {
                         "filename": "cairo_files/cairo_dw.cairo"
                     },
-                    "start_col": 9,
+                    "start_col": 5,
                     "start_line": 10
                 }
             },
@@ -301,12 +288,12 @@
                 },
                 "hints": [],
                 "inst": {
-                    "end_col": 46,
+                    "end_col": 11,
                     "end_line": 11,
                     "input_file": {
                         "filename": "cairo_files/cairo_dw.cairo"
                     },
-                    "start_col": 9,
+                    "start_col": 5,
                     "start_line": 11
                 }
             },
@@ -324,19 +311,19 @@
                 },
                 "hints": [],
                 "inst": {
-                    "end_col": 44,
+                    "end_col": 12,
                     "end_line": 12,
                     "input_file": {
                         "filename": "cairo_files/cairo_dw.cairo"
                     },
-                    "start_col": 9,
+                    "start_col": 5,
                     "start_line": 12
                 }
             },
             "16": {
                 "accessible_scopes": [
                     "__main__",
-                    "__main__.get_data"
+                    "__main__.main"
                 ],
                 "flow_tracking_data": {
                     "ap_tracking": {
@@ -347,322 +334,23 @@
                 },
                 "hints": [],
                 "inst": {
-                    "end_col": 41,
-                    "end_line": 13,
+                    "end_col": 28,
+                    "end_line": 16,
                     "input_file": {
                         "filename": "cairo_files/cairo_dw.cairo"
                     },
-                    "start_col": 9,
-                    "start_line": 13
-                }
-            },
-            "17": {
-                "accessible_scopes": [
-                    "__main__",
-                    "__main__.get_data"
-                ],
-                "flow_tracking_data": {
-                    "ap_tracking": {
-                        "group": 8,
-                        "offset": 0
-                    },
-                    "reference_ids": {}
-                },
-                "hints": [],
-                "inst": {
-                    "end_col": 39,
-                    "end_line": 14,
-                    "input_file": {
-                        "filename": "cairo_files/cairo_dw.cairo"
-                    },
-                    "start_col": 9,
-                    "start_line": 14
+                    "start_col": 18,
+                    "start_line": 16
                 }
             },
             "18": {
                 "accessible_scopes": [
                     "__main__",
-                    "__main__.get_data"
-                ],
-                "flow_tracking_data": {
-                    "ap_tracking": {
-                        "group": 9,
-                        "offset": 0
-                    },
-                    "reference_ids": {}
-                },
-                "hints": [],
-                "inst": {
-                    "end_col": 37,
-                    "end_line": 15,
-                    "input_file": {
-                        "filename": "cairo_files/cairo_dw.cairo"
-                    },
-                    "start_col": 9,
-                    "start_line": 15
-                }
-            },
-            "19": {
-                "accessible_scopes": [
-                    "__main__",
-                    "__main__.get_data"
-                ],
-                "flow_tracking_data": {
-                    "ap_tracking": {
-                        "group": 10,
-                        "offset": 0
-                    },
-                    "reference_ids": {}
-                },
-                "hints": [],
-                "inst": {
-                    "end_col": 34,
-                    "end_line": 16,
-                    "input_file": {
-                        "filename": "cairo_files/cairo_dw.cairo"
-                    },
-                    "start_col": 9,
-                    "start_line": 16
-                }
-            },
-            "20": {
-                "accessible_scopes": [
-                    "__main__",
-                    "__main__.get_data"
-                ],
-                "flow_tracking_data": {
-                    "ap_tracking": {
-                        "group": 11,
-                        "offset": 0
-                    },
-                    "reference_ids": {}
-                },
-                "hints": [],
-                "inst": {
-                    "end_col": 32,
-                    "end_line": 17,
-                    "input_file": {
-                        "filename": "cairo_files/cairo_dw.cairo"
-                    },
-                    "start_col": 9,
-                    "start_line": 17
-                }
-            },
-            "21": {
-                "accessible_scopes": [
-                    "__main__",
-                    "__main__.get_data"
-                ],
-                "flow_tracking_data": {
-                    "ap_tracking": {
-                        "group": 12,
-                        "offset": 0
-                    },
-                    "reference_ids": {}
-                },
-                "hints": [],
-                "inst": {
-                    "end_col": 29,
-                    "end_line": 18,
-                    "input_file": {
-                        "filename": "cairo_files/cairo_dw.cairo"
-                    },
-                    "start_col": 9,
-                    "start_line": 18
-                }
-            },
-            "22": {
-                "accessible_scopes": [
-                    "__main__",
-                    "__main__.get_data"
-                ],
-                "flow_tracking_data": {
-                    "ap_tracking": {
-                        "group": 13,
-                        "offset": 0
-                    },
-                    "reference_ids": {}
-                },
-                "hints": [],
-                "inst": {
-                    "end_col": 27,
-                    "end_line": 19,
-                    "input_file": {
-                        "filename": "cairo_files/cairo_dw.cairo"
-                    },
-                    "start_col": 9,
-                    "start_line": 19
-                }
-            },
-            "23": {
-                "accessible_scopes": [
-                    "__main__",
-                    "__main__.get_data"
-                ],
-                "flow_tracking_data": {
-                    "ap_tracking": {
-                        "group": 14,
-                        "offset": 0
-                    },
-                    "reference_ids": {}
-                },
-                "hints": [],
-                "inst": {
-                    "end_col": 25,
-                    "end_line": 20,
-                    "input_file": {
-                        "filename": "cairo_files/cairo_dw.cairo"
-                    },
-                    "start_col": 9,
-                    "start_line": 20
-                }
-            },
-            "24": {
-                "accessible_scopes": [
-                    "__main__",
-                    "__main__.get_data"
-                ],
-                "flow_tracking_data": {
-                    "ap_tracking": {
-                        "group": 15,
-                        "offset": 0
-                    },
-                    "reference_ids": {}
-                },
-                "hints": [],
-                "inst": {
-                    "end_col": 22,
-                    "end_line": 21,
-                    "input_file": {
-                        "filename": "cairo_files/cairo_dw.cairo"
-                    },
-                    "start_col": 9,
-                    "start_line": 21
-                }
-            },
-            "25": {
-                "accessible_scopes": [
-                    "__main__",
-                    "__main__.get_data"
-                ],
-                "flow_tracking_data": {
-                    "ap_tracking": {
-                        "group": 16,
-                        "offset": 0
-                    },
-                    "reference_ids": {}
-                },
-                "hints": [],
-                "inst": {
-                    "end_col": 20,
-                    "end_line": 22,
-                    "input_file": {
-                        "filename": "cairo_files/cairo_dw.cairo"
-                    },
-                    "start_col": 9,
-                    "start_line": 22
-                }
-            },
-            "26": {
-                "accessible_scopes": [
-                    "__main__",
-                    "__main__.get_data"
-                ],
-                "flow_tracking_data": {
-                    "ap_tracking": {
-                        "group": 17,
-                        "offset": 0
-                    },
-                    "reference_ids": {}
-                },
-                "hints": [],
-                "inst": {
-                    "end_col": 17,
-                    "end_line": 23,
-                    "input_file": {
-                        "filename": "cairo_files/cairo_dw.cairo"
-                    },
-                    "start_col": 9,
-                    "start_line": 23
-                }
-            },
-            "27": {
-                "accessible_scopes": [
-                    "__main__",
-                    "__main__.get_data"
-                ],
-                "flow_tracking_data": {
-                    "ap_tracking": {
-                        "group": 18,
-                        "offset": 0
-                    },
-                    "reference_ids": {}
-                },
-                "hints": [],
-                "inst": {
-                    "end_col": 15,
-                    "end_line": 24,
-                    "input_file": {
-                        "filename": "cairo_files/cairo_dw.cairo"
-                    },
-                    "start_col": 9,
-                    "start_line": 24
-                }
-            },
-            "28": {
-                "accessible_scopes": [
-                    "__main__",
-                    "__main__.get_data"
-                ],
-                "flow_tracking_data": {
-                    "ap_tracking": {
-                        "group": 19,
-                        "offset": 0
-                    },
-                    "reference_ids": {}
-                },
-                "hints": [],
-                "inst": {
-                    "end_col": 13,
-                    "end_line": 25,
-                    "input_file": {
-                        "filename": "cairo_files/cairo_dw.cairo"
-                    },
-                    "start_col": 9,
-                    "start_line": 25
-                }
-            },
-            "29": {
-                "accessible_scopes": [
-                    "__main__",
                     "__main__.main"
                 ],
                 "flow_tracking_data": {
                     "ap_tracking": {
-                        "group": 20,
-                        "offset": 0
-                    },
-                    "reference_ids": {}
-                },
-                "hints": [],
-                "inst": {
-                    "end_col": 28,
-                    "end_line": 29,
-                    "input_file": {
-                        "filename": "cairo_files/cairo_dw.cairo"
-                    },
-                    "start_col": 18,
-                    "start_line": 29
-                }
-            },
-            "31": {
-                "accessible_scopes": [
-                    "__main__",
-                    "__main__.main"
-                ],
-                "flow_tracking_data": {
-                    "ap_tracking": {
-                        "group": 20,
+                        "group": 7,
                         "offset": 9
                     },
                     "reference_ids": {
@@ -672,22 +360,22 @@
                 "hints": [],
                 "inst": {
                     "end_col": 28,
-                    "end_line": 30,
+                    "end_line": 17,
                     "input_file": {
                         "filename": "cairo_files/cairo_dw.cairo"
                     },
                     "start_col": 21,
-                    "start_line": 30
+                    "start_line": 17
                 }
             },
-            "32": {
+            "19": {
                 "accessible_scopes": [
                     "__main__",
                     "__main__.main"
                 ],
                 "flow_tracking_data": {
                     "ap_tracking": {
-                        "group": 20,
+                        "group": 7,
                         "offset": 10
                     },
                     "reference_ids": {
@@ -698,22 +386,22 @@
                 "hints": [],
                 "inst": {
                     "end_col": 24,
-                    "end_line": 31,
+                    "end_line": 18,
                     "input_file": {
                         "filename": "cairo_files/cairo_dw.cairo"
                     },
                     "start_col": 5,
-                    "start_line": 31
+                    "start_line": 18
                 }
             },
-            "34": {
+            "21": {
                 "accessible_scopes": [
                     "__main__",
                     "__main__.main"
                 ],
                 "flow_tracking_data": {
                     "ap_tracking": {
-                        "group": 20,
+                        "group": 7,
                         "offset": 10
                     },
                     "reference_ids": {
@@ -724,12 +412,12 @@
                 "hints": [],
                 "inst": {
                     "end_col": 15,
-                    "end_line": 32,
+                    "end_line": 19,
                     "input_file": {
                         "filename": "cairo_files/cairo_dw.cairo"
                     },
                     "start_col": 5,
-                    "start_line": 32
+                    "start_line": 19
                 }
             }
         }
@@ -786,7 +474,7 @@
         },
         "__main__.main": {
             "decorators": [],
-            "pc": 29,
+            "pc": 16,
             "type": "function"
         },
         "__main__.main.Args": {
@@ -815,10 +503,10 @@
             "references": [
                 {
                     "ap_tracking_data": {
-                        "group": 20,
+                        "group": 7,
                         "offset": 9
                     },
-                    "pc": 31,
+                    "pc": 18,
                     "value": "[cast(ap + (-1), felt**)]"
                 }
             ],
@@ -830,10 +518,10 @@
             "references": [
                 {
                     "ap_tracking_data": {
-                        "group": 20,
+                        "group": 7,
                         "offset": 10
                     },
-                    "pc": 32,
+                    "pc": 19,
                     "value": "[cast(ap + (-1), felt*)]"
                 }
             ],
@@ -990,18 +678,18 @@
             },
             {
                 "ap_tracking_data": {
-                    "group": 20,
+                    "group": 7,
                     "offset": 9
                 },
-                "pc": 31,
+                "pc": 18,
                 "value": "[cast(ap + (-1), felt**)]"
             },
             {
                 "ap_tracking_data": {
-                    "group": 20,
+                    "group": 7,
                     "offset": 10
                 },
-                "pc": 32,
+                "pc": 19,
                 "value": "[cast(ap + (-1), felt*)]"
             }
         ]
