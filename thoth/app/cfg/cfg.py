@@ -140,8 +140,11 @@ class CFG:
             # Jump to instr offset + instr.imm
             # or instr offset + 2
             elif "JNZ" in instruction.pcUpdate:
-                basic_blocks_starts.append(str(int(instruction.id) + int(instruction.imm)))
-                basic_blocks_starts.append(str(int(instruction.id) + int(2)))
+                try:
+                    basic_blocks_starts.append(str(int(instruction.id) + int(instruction.imm)))
+                    basic_blocks_starts.append(str(int(instruction.id) + int(2)))
+                except:
+                    pass
 
             else:
                 if instruction is last_function_instruction:

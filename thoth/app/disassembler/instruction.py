@@ -201,20 +201,24 @@ class Instruction:
                     f"# JMP {jump_to}",
                     color=utils.color.CYAN,
                 )
-        # dw instruction
+        # dw instructions
         elif self.hint is None:
-            dw_value = (
-                (int(self.offDest) + 2 ** (16 - 1))
-                + (int(self.off1) + 2 ** (16 - 1) << 16 * 1)
-                + (int(self.off2) + 2 ** (16 - 1) << 16 * 2)
-                + (int(self.off3) + 2 ** (16 - 1) << 16 * 3)
-                + (int(self.off4) + 2 ** (16 - 1) << 16 * 4)
-                + (int(self.off5) + 2 ** (16 - 1) << 16 * 5)
-                + (int(self.off6) + 2 ** (16 - 1) << 16 * 6)
-                + (int(self.off7) + 2 ** (16 - 1) << 16 * 7)
-                + (int(self.off8) + 2 ** (16 - 1) << 16 * 8)
-            )
-            assembly += self.print_instruction(f"dw {dw_value}", color=utils.color.BLUE)
+
+            try:
+                dw_value = (
+                    (int(self.offDest) + 2 ** (16 - 1))
+                    + (int(self.off1) + 2 ** (16 - 1) << 16 * 1)
+                    + (int(self.off2) + 2 ** (16 - 1) << 16 * 2)
+                    + (int(self.off3) + 2 ** (16 - 1) << 16 * 3)
+                    + (int(self.off4) + 2 ** (16 - 1) << 16 * 4)
+                    + (int(self.off5) + 2 ** (16 - 1) << 16 * 5)
+                    + (int(self.off6) + 2 ** (16 - 1) << 16 * 6)
+                    + (int(self.off7) + 2 ** (16 - 1) << 16 * 7)
+                    + (int(self.off8) + 2 ** (16 - 1) << 16 * 8)
+                )
+                assembly += self.print_instruction(f"dw {dw_value}", color=utils.color.BLUE)
+            except:
+                assembly += self.print_instruction(f"{self.opcode}", color=utils.color.RED)
         # hints
         else:
             assembly += self.print_instruction(f"{self.opcode}", color=utils.color.RED)
