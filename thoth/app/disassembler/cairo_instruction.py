@@ -126,7 +126,7 @@ def decode_instruction_values(encoded_instruction: str) -> Tuple:
     Returns:
         Tuple: Decoded instruction
     """
-    assert 0 <= encoded_instruction < 2 ** (3 * OFFSET_BITS + N_FLAGS), "Unsupported instruction."
+    # assert 0 <= encoded_instruction < 2 ** (3 * OFFSET_BITS + N_FLAGS), "Unsupported instruction."
     off0 = encoded_instruction & (2**OFFSET_BITS - 1)
     off1 = (encoded_instruction >> OFFSET_BITS) & (2**OFFSET_BITS - 1)
     off2 = (encoded_instruction >> (2 * OFFSET_BITS)) & (2**OFFSET_BITS - 1)
@@ -164,7 +164,6 @@ def decode_instruction(encoding: int, imm: Optional[int] = None) -> Instruction:
         Instruction: Decoded instruction object
     """
     flags, off0_enc, off1_enc, off2_enc = decode_instruction_values(encoding)
-
     # Get dst_register.
     dst_register = Register.FP if (flags >> DST_REG_BIT) & 1 else Register.AP
 

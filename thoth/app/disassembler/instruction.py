@@ -149,7 +149,7 @@ class Instruction:
         """
         assembly = ""
 
-        if "REGULAR" not in self.pcUpdate:
+        if "REGULAR" not in self.pcUpdate and self.imm != "None":
             assembly += self.print_instruction(f"{self.pcUpdate}", color=utils.color.RED)
             assembly += self.print_instruction(
                 field_element_repr(int(self.imm), self.prime), utils.color.BLUE

@@ -131,8 +131,9 @@ class CFG:
                 basic_blocks_end.append(instruction.id)
 
             # Jump to instr offset + instr.imm
-            elif ("JUMP" in instruction.pcUpdate) or (
-                "JUMP_REL" in instruction.pcUpdate and "CALL" not in instruction.opcode
+            elif (instruction.imm != "None") and (
+                ("JUMP" in instruction.pcUpdate)
+                or ("JUMP_REL" in instruction.pcUpdate and "CALL" not in instruction.opcode)
             ):
                 basic_blocks_starts.append((str(int(instruction.id) + int(instruction.imm))))
 
@@ -144,7 +145,7 @@ class CFG:
 
             else:
                 if instruction is last_function_instruction:
-                    raise AssertionError
+                    pass
 
         basic_blocks_starts = [int(start) for start in basic_blocks_starts]
         basic_blocks_end = [int(end) for end in basic_blocks_end]
