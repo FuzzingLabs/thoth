@@ -35,11 +35,6 @@ class Instruction(BytecodeElement):
     off1: int
     off2: int
     off3: int
-    off4: int
-    off5: int
-    off6: int
-    off7: int
-    off8: int
 
     # Immediate.
     imm: Optional[int]
@@ -136,14 +131,9 @@ def decode_instruction_values(encoded_instruction: str) -> Tuple:
     off0 = encoded_instruction & (2**OFFSET_BITS - 1)
     off1 = (encoded_instruction >> OFFSET_BITS) & (2**OFFSET_BITS - 1)
     off2 = (encoded_instruction >> (2 * OFFSET_BITS)) & (2**OFFSET_BITS - 1)
-    off3 = (encoded_instruction >> (3 * OFFSET_BITS)) & (2**OFFSET_BITS - 1)
-    off4 = (encoded_instruction >> (4 * OFFSET_BITS)) & (2**OFFSET_BITS - 1)
-    off5 = (encoded_instruction >> (5 * OFFSET_BITS)) & (2**OFFSET_BITS - 1)
-    off6 = (encoded_instruction >> (6 * OFFSET_BITS)) & (2**OFFSET_BITS - 1)
-    off7 = (encoded_instruction >> (7 * OFFSET_BITS)) & (2**OFFSET_BITS - 1)
-    off8 = (encoded_instruction >> (8 * OFFSET_BITS)) & (2**OFFSET_BITS - 1)
+    off3 = max(0, int(encoded_instruction))
     flags_val = encoded_instruction >> (3 * OFFSET_BITS)
-    return flags_val, off0, off1, off2, off3, off4, off5, off6, off7, off8
+    return flags_val, off0, off1, off2, off3
 
 
 DST_REG_BIT = 0
@@ -181,11 +171,6 @@ def decode_instruction(encoding: int, imm: Optional[int] = None) -> Instruction:
         off1_enc,
         off2_enc,
         off3_enc,
-        off4_enc,
-        off5_enc,
-        off6_enc,
-        off7_enc,
-        off8_enc,
     ) = decode_instruction_values(encoding)
     # Get dst_register.
     dst_register = Register.FP if (flags >> DST_REG_BIT) & 1 else Register.AP
@@ -274,12 +259,7 @@ def decode_instruction(encoding: int, imm: Optional[int] = None) -> Instruction:
         off0=off0_enc - 2 ** (OFFSET_BITS - 1),
         off1=off1_enc - 2 ** (OFFSET_BITS - 1),
         off2=off2_enc - 2 ** (OFFSET_BITS - 1),
-        off3=off3_enc - 2 ** (OFFSET_BITS - 1),
-        off4=off4_enc - 2 ** (OFFSET_BITS - 1),
-        off5=off5_enc - 2 ** (OFFSET_BITS - 1),
-        off6=off6_enc - 2 ** (OFFSET_BITS - 1),
-        off7=off7_enc - 2 ** (OFFSET_BITS - 1),
-        off8=off8_enc - 2 ** (OFFSET_BITS - 1),
+        off3=off3_enc,
         imm=imm,
         dst_register=dst_register,
         op0_register=op0_register,

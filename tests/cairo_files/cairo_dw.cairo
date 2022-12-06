@@ -1,10 +1,4 @@
-from starkware.cairo.common.registers import get_label_location
-
-// Returns a pointer to the values: [1, 22, 333, 4444].
 func get_data() -> (data: felt*) {
-    let (data_address) = get_label_location(data_start);
-    return (data=cast(data_address, felt*));
-
     data_start:
     dw 340282366920938463463374607431768211456;
     dw 1329227995784915872903807060280344576;
@@ -27,7 +21,5 @@ func get_data() -> (data: felt*) {
 
 func main() {
     let (data) = get_data();
-    tempvar value = data[2];
-    assert value = 333;
     return ();
 }
