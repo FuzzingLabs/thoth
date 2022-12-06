@@ -362,7 +362,7 @@ class Disassembler:
 
         # Contract functions
         decomp = Decompiler(functions=self.functions)
-        decompiled_code = decomp.decompile_code()
+        decompiled_code = decomp.decompile_code(first_pass_only=False)
         decompiler_result += decompiled_code
         decompiler_result += "\n"
         return decompiled_code

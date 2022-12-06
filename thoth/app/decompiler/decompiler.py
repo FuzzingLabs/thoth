@@ -80,7 +80,7 @@ class Decompiler:
 
         if instruction.id in instruction.labels:
             source_code += self.print_instruction_decomp(
-                f"\nLABEL : {instruction.labels[instruction.id]}",
+                f"\nLABEL : {instruction.labels[instruction.id]}\n",
                 color=utils.color.GREEN,
             )
         if instruction.hint:
@@ -241,7 +241,8 @@ class Decompiler:
                         instructions[i], last=(count == len(function.instructions))
                     )
                     source_code += instructions[i]
-                    source_code += "\n"
+                    if instructions[i].strip():
+                        source_code += "\n"
             source_code += "\n"
 
         # Remove useless spaces
