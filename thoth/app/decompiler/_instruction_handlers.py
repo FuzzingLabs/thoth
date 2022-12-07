@@ -227,13 +227,16 @@ def _handle_assert_eq_decomp(self, instruction: Instruction) -> str:
                 variable_operand_1 = Operand(type=OperandType.VARIABLE, value=[operand])
 
             operator = Operator.ADDITION if op in ["+", "-"] else Operator.MULTIPLICATION
-            variable_operand_2 = Operand(type=OperandType.INTEGER, value=integer_value)
-            # Set variable value
-            if variable[2].value is None and not self.assertion:
-                variable[2].value = VariableValue(
-                    type=VariableValueType.ABSOLUTE,
-                    operation=[variable_operand_1, operator, variable_operand_2],
-                )
+            try:
+                variable_operand_2 = Operand(type=OperandType.INTEGER, value=integer_value)
+                # Set variable value
+                if variable[2].value is None and not self.assertion:
+                    variable[2].value = VariableValue(
+                        type=VariableValueType.ABSOLUTE,
+                        operation=[variable_operand_1, operator, variable_operand_2],
+                    )
+            except:
+                pass
 
             source_code += self.print_instruction_decomp(
                 f"{is_assert}{variable[1]} {equal} {operand} {op} {value}",
@@ -259,7 +262,6 @@ def _handle_nop_decomp(self, instruction: Instruction) -> str:
     source_code = ""
 
     destination_offset = int(instruction.offDest) if instruction.offDest else 0
-
     if "REGULAR" not in instruction.pcUpdate:
         if instruction.pcUpdate == "JNZ":
             tested_variable = self.ssa.get_variable("ap", destination_offset)
@@ -291,8 +293,16 @@ def _handle_nop_decomp(self, instruction: Instruction) -> str:
                     + int(instruction.id)
                 )
                 self.ifcount -= 1
-            else:
+            elif instruction.imm != "None":
                 source_code += self.print_instruction_decomp(f"jmp rel {instruction.imm}")
+
+    # dw statements
+    elif instruction.hint is None:
+        try:
+            dw_value = int(instruction.off3)
+            source_code += self.print_instruction_decomp(f"dw {dw_value}", color=utils.color.BLUE)
+        except Exception:
+            pass
     return source_code
 
 

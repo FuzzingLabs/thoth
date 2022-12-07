@@ -76,16 +76,6 @@ def globals():
     color = bcolors()
 
 
-def str_to_bool(str):
-    if str == "True":
-        return True
-    elif str == "False":
-        return False
-    else:
-        print("Wrong value in str_to_bool")
-        sys.exit(1)
-
-
 # Copy from cairo-lang
 # https://github.com/starkware-libs/cairo-lang/blob/167b28bcd940fd25ea3816204fa882a0b0a49603/src/starkware/cairo/lang/tracer/tracer_data.py#L261-L273
 def field_element_repr(val: int, prime: int) -> str:

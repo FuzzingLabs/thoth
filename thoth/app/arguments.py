@@ -104,8 +104,7 @@ For a specific output format (pdf/svg/png):
     )
     cfg.add_argument(
         "-view",
-        choices=("True", "False"),
-        default=argparse.SUPPRESS,
+        action="store_true",
         help="Set if Thoth should open the output graph or not",
     )
     cfg.add_argument(
