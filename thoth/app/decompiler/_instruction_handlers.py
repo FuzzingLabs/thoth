@@ -283,7 +283,7 @@ def _handle_nop_decomp(self, instruction: Instruction) -> str:
                     if inst.pcUpdate != "JUMP_REL":
                         self.end_if = int(jump_to)
                         self.ifcount -= 1
-        elif instruction.pcUpdate == "JUMP_REL":
+        elif instruction.pcUpdate == "JUMP_REL" and instruction.imm != "None":
             if self.ifcount != 0:
                 self.tab_count -= 1
                 source_code += self.print_instruction_decomp("else:", color=utils.color.RED)
@@ -293,11 +293,11 @@ def _handle_nop_decomp(self, instruction: Instruction) -> str:
                     + int(instruction.id)
                 )
                 self.ifcount -= 1
-            elif instruction.imm != "None":
+            else:
                 source_code += self.print_instruction_decomp(f"jmp rel {instruction.imm}")
 
     # dw statements
-    elif instruction.hint is None:
+    elif instruction.hint is None and instruction.imm == "None":
         try:
             dw_value = int(instruction.off3)
             source_code += self.print_instruction_decomp(f"dw {dw_value}", color=utils.color.BLUE)

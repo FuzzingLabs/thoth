@@ -133,7 +133,7 @@ class Decompiler:
         decompiled_instruction = color + tabulations + data + utils.color.ENDC + end
         return decompiled_instruction
 
-    def decompile_code(self, first_pass_only: bool = False) -> str:
+    def decompile_code(self, first_pass_only: bool = False, imported_functions: bool = True) -> str:
         """
         Decompile the contract code
         Return the decompiled code
@@ -150,7 +150,7 @@ class Decompiler:
             self.ssa.new_function_init(function)
 
             # Imported function
-            if function.is_import:
+            if function.is_import and not imported_functions:
                 continue
 
             # Create a backup value of AP and FP registers

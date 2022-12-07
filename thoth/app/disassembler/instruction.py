@@ -172,7 +172,7 @@ class Instruction:
                     color=utils.color.CYAN,
                 )
         # dw statements
-        elif self.hint is None:
+        elif self.hint is None and self.imm == "None":
 
             try:
                 dw_value = int(self.off3)

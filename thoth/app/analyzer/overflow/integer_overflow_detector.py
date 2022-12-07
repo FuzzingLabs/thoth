@@ -23,8 +23,9 @@ class IntegerOverflowDetector(AbstractAnalyzer):
 
     def _detect(self):
         contract_functions = self.disassembler.functions
+
         self.decompiler = Decompiler(functions=contract_functions)
-        self.decompiler.decompile_code(first_pass_only=True)
+        self.decompiler.decompile_code(first_pass_only=True, imported_functions=False)
 
         dfg = DFG(self.decompiler.ssa.memory)
         dfg._create_dfg()
