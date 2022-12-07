@@ -199,9 +199,15 @@ class Function:
         """
         Iterate over each instruction and print the disassembly
         """
-        function_str = ""
+        # Print the function ID
+        function_id = str(self.id)
+        function_str = "\n" + utils.color.CYAN + "// Function " + function_id + utils.color.ENDC
+
+        # Print the function prototype
         prototype = self.get_prototype()
-        function_str = f"\n\t{utils.color.BLUE + prototype + utils.color.ENDC}\n"
+        function_str += f"\n{utils.color.BLUE + prototype + utils.color.ENDC}\n"
+
+        # Print the disassembled instructions
         for instr in self.instructions:
             instruction_str = instr.print()
             function_str += instruction_str

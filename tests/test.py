@@ -60,6 +60,7 @@ class TestDisassembler(unittest.TestCase):
             try:
                 a(disassembler)._detect()
             except:
+                print(a)
                 crash += 1
         self.assertEqual(crash, 0)
 
@@ -193,35 +194,35 @@ class TestDisassembler(unittest.TestCase):
 
         self.assertEqual(
             functions_analyzer.result[0],
-            "(0) __main__.balance.addr\n\t- cyclomatic complexity : 1\n\t- instructions : 11",
+            "(7) __main__.balance.addr\n\t- cyclomatic complexity : 1\n\t- instructions : 11",
         )
         self.assertEqual(
             functions_analyzer.result[1],
-            "(1) __main__.balance.read\n\t- cyclomatic complexity : 1\n\t- instructions : 12",
+            "(8) __main__.balance.read\n\t- cyclomatic complexity : 1\n\t- instructions : 12",
         )
         self.assertEqual(
             functions_analyzer.result[2],
-            "(2) __main__.balance.write\n\t- cyclomatic complexity : 1\n\t- instructions : 11",
+            "(9) __main__.balance.write\n\t- cyclomatic complexity : 1\n\t- instructions : 11",
         )
         self.assertEqual(
             functions_analyzer.result[3],
-            "(3) increase_balance\n\t- decorators : external\n\t- cyclomatic complexity : 1\n\t- instructions : 17",
+            "(10) increase_balance\n\t- decorators : external\n\t- cyclomatic complexity : 1\n\t- instructions : 17",
         )
         self.assertEqual(
             functions_analyzer.result[4],
-            "(4) __wrappers__.increase_balance (entry point)\n\t- decorators : external\n\t- cyclomatic complexity : 1\n\t- instructions : 14",
+            "(11) __wrappers__.increase_balance (entry point)\n\t- decorators : external\n\t- cyclomatic complexity : 1\n\t- instructions : 14",
         )
         self.assertEqual(
             functions_analyzer.result[5],
-            "(5) get_balance\n\t- decorators : view\n\t- cyclomatic complexity : 1\n\t- instructions : 6",
+            "(12) get_balance\n\t- decorators : view\n\t- cyclomatic complexity : 1\n\t- instructions : 6",
         )
         self.assertEqual(
             functions_analyzer.result[6],
-            "(6) __wrappers__.get_balance_encode_return\n\t- cyclomatic complexity : 1\n\t- instructions : 7",
+            "(13) __wrappers__.get_balance_encode_return\n\t- cyclomatic complexity : 1\n\t- instructions : 7",
         )
         self.assertEqual(
             functions_analyzer.result[7],
-            "(7) __wrappers__.get_balance (entry point)\n\t- decorators : view\n\t- cyclomatic complexity : 1\n\t- instructions : 15",
+            "(14) __wrappers__.get_balance (entry point)\n\t- decorators : view\n\t- cyclomatic complexity : 1\n\t- instructions : 15",
         )
 
     def test_starknet_l1_default_statistics_analyzer(self):
@@ -247,39 +248,39 @@ class TestDisassembler(unittest.TestCase):
 
         self.assertEqual(
             functions_analyzer.result[0],
-            "(0) __main__.impl_address.addr\n\t- cyclomatic complexity : 1\n\t- instructions : 4",
+            "(4) __main__.impl_address.addr\n\t- cyclomatic complexity : 1\n\t- instructions : 4",
         )
         self.assertEqual(
             functions_analyzer.result[1],
-            "(1) __main__.impl_address.read\n\t- cyclomatic complexity : 1\n\t- instructions : 11",
+            "(5) __main__.impl_address.read\n\t- cyclomatic complexity : 1\n\t- instructions : 11",
         )
         self.assertEqual(
             functions_analyzer.result[2],
-            "(2) __main__.impl_address.write\n\t- cyclomatic complexity : 1\n\t- instructions : 10",
+            "(6) __main__.impl_address.write\n\t- cyclomatic complexity : 1\n\t- instructions : 10",
         )
         self.assertEqual(
             functions_analyzer.result[3],
-            "(3) constructor\n\t- decorators : external\n\t- cyclomatic complexity : 1\n\t- instructions : 6",
+            "(7) constructor\n\t- decorators : external\n\t- cyclomatic complexity : 1\n\t- instructions : 6",
         )
         self.assertEqual(
             functions_analyzer.result[4],
-            "(4) __wrappers__.constructor (entry point)\n\t- decorators : external\n\t- cyclomatic complexity : 1\n\t- instructions : 15",
+            "(8) __wrappers__.constructor (entry point)\n\t- decorators : external\n\t- cyclomatic complexity : 1\n\t- instructions : 15",
         )
         self.assertEqual(
             functions_analyzer.result[5],
-            "(5) __default__\n\t- decorators : external, raw_input, raw_output\n\t- cyclomatic complexity : 1\n\t- instructions : 16",
+            "(9) __default__\n\t- decorators : external, raw_input, raw_output\n\t- cyclomatic complexity : 1\n\t- instructions : 16",
         )
         self.assertEqual(
             functions_analyzer.result[6],
-            "(6) __wrappers__.__default__ (entry point)\n\t- decorators : external, raw_input, raw_output\n\t- cyclomatic complexity : 1\n\t- instructions : 14",
+            "(10) __wrappers__.__default__ (entry point)\n\t- decorators : external, raw_input, raw_output\n\t- cyclomatic complexity : 1\n\t- instructions : 14",
         )
         self.assertEqual(
             functions_analyzer.result[7],
-            "(7) __l1_default__ <- L1\n\t- decorators : l1_handler, raw_input\n\t- cyclomatic complexity : 1\n\t- instructions : 14",
+            "(11) __l1_default__ <- L1\n\t- decorators : l1_handler, raw_input\n\t- cyclomatic complexity : 1\n\t- instructions : 14",
         )
         self.assertEqual(
             functions_analyzer.result[8],
-            "(8) __wrappers__.__l1_default__ <- L1 (entry point)\n\t- decorators : l1_handler, raw_input\n\t- cyclomatic complexity : 1\n\t- instructions : 15",
+            "(12) __wrappers__.__l1_default__ <- L1 (entry point)\n\t- decorators : l1_handler, raw_input\n\t- cyclomatic complexity : 1\n\t- instructions : 15",
         )
 
     def test_starknet_get_code_l2_dai_bridge_statistics_analyzer(self):
@@ -305,11 +306,11 @@ class TestDisassembler(unittest.TestCase):
 
         self.assertEqual(
             functions_analyzer.result[0],
-            "(0) generate -> L1\n\t- decorators : external\n\t- cyclomatic complexity : 1\n\t- instructions : 12",
+            "(2) generate -> L1\n\t- decorators : external\n\t- cyclomatic complexity : 1\n\t- instructions : 12",
         )
         self.assertEqual(
             functions_analyzer.result[1],
-            "(1) __wrappers__.generate (entry point)\n\t- decorators : external\n\t- cyclomatic complexity : 1\n\t- instructions : 11",
+            "(3) __wrappers__.generate (entry point)\n\t- decorators : external\n\t- cyclomatic complexity : 1\n\t- instructions : 11",
         )
 
     def test_starknet_erc20_analyzer(self):
@@ -359,7 +360,7 @@ class TestDisassembler(unittest.TestCase):
         """
         disassembler = Disassembler("./tests/json_files/cairo_integer_overflow.json")
         decompiler = Decompiler(functions=disassembler.functions)
-        decompiler.decompile_code(first_pass_only=True)
+        decompiler.decompile_code(first_pass_only=True, imported_functions=False)
 
         dfg = DFG(decompiler.ssa.memory)
         dfg._create_dfg()
@@ -381,7 +382,7 @@ class TestDisassembler(unittest.TestCase):
         """
         disassembler = Disassembler("./tests/json_files/cairo_integer_overflow_2.json")
         decompiler = Decompiler(functions=disassembler.functions)
-        decompiler.decompile_code(first_pass_only=True)
+        decompiler.decompile_code(first_pass_only=True, imported_functions=False)
 
         dfg = DFG(decompiler.ssa.memory)
         dfg._create_dfg()

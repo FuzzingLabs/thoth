@@ -96,7 +96,7 @@ def main() -> int:
     if args.dfg:
         contract_functions = disassembler.functions
         decompiler = Decompiler(functions=contract_functions)
-        decompiler.decompile_code(first_pass_only=True)
+        decompiler.decompile_code(first_pass_only=True, imported_functions=False)
 
         dfg = DFG(decompiler.ssa.memory)
         dfg._create_dfg()

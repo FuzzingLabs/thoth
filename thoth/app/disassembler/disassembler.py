@@ -122,8 +122,8 @@ class Disassembler:
                     is_import=is_import,
                 )
             )
-            if not is_import:
-                functions_counter += 1
+
+            functions_counter += 1
         # Analyze all the CALL to find the corresponding function, also set the references and hints to their instructions
         for func in self.functions:
             for inst in func.instructions:
