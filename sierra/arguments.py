@@ -18,7 +18,7 @@ def parse_arguments() -> argparse.Namespace:
     # Create the parser
     parser = argparse.ArgumentParser(
         description="""
-    thoth-sierra is a tool that can analyze Sierra files and generate their Control-Flow and Call-Flow graphs.
+    thoth-sierra is a tool that can analyze Sierra files and generate their Control-Flow and Call-Graphs.
     """
     )
 
