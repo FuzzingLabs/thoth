@@ -25,6 +25,7 @@ libfunc dup<fib_struct::fib_struct::FibResult> = dup<fib_struct::fib_struct::Fib
 libfunc struct_deconstruct<fib_struct::fib_struct::FibResult> = struct_deconstruct<fib_struct::fib_struct::FibResult>;
 libfunc drop<Unit> = drop<Unit>;
 
+dup<felt>([2]) -> ([2], [27]);
 revoke_ap_tracking() -> ();
 dup<felt>([2]) -> ([2], [27]);
 felt_jump_nz([27]) { fallthrough() 12([3]) };

@@ -32,6 +32,7 @@ function_call<user@fib_array::fib_array::fib_inner>([5], [6], [7], [8]) -> ([4])
 rename<Array<felt>>([4]) -> ([9]);
 burn_gas() -> ();
 return([9]);
+
 revoke_ap_tracking() -> ();
 dup<felt>([2]) -> ([2], [16]);
 felt_jump_nz([16]) { fallthrough() 22([4]) };

@@ -23,8 +23,6 @@ setup(
     long_description=long_description,
     long_description_content_type="text/markdown",
     entry_points={
-        "console_scripts": [
-            "thoth = thoth.thoth:main",
-        ]
+        "console_scripts": ["thoth = thoth.thoth:main", "thoth-sierra = sierra.thoth_sierra:main"]
     },
 )

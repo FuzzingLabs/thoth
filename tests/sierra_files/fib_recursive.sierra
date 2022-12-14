@@ -100,9 +100,7 @@ store_temp<uint128>([2]) -> ([40]);
 store_temp<uint128>([13]) -> ([41]);
 store_temp<uint128>([32]) -> ([42]);
 function_call<user@fib_uint128_checked::fib_uint128_checked::fib>([39], [40], [41], [42]) -> ([37], [38]);
-
 enum_match<core::option::Option::<core::integer::uint128>>([38]) { 72([43]) 75([44]) };
-
 store_temp<uint128>([43]) -> ([45]);
 burn_gas() -> ();
 jump() { 81() };
