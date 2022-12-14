@@ -1,6 +1,8 @@
 import os
 
-SIERRA_LARK_PARSER_PATH = os.path.realpath("./sierra/parser/sierra.lark")
+SIERRA_LARK_PARSER_PATH = "{}/parser/sierra.lark".format(
+    os.path.dirname(os.path.realpath(__file__))
+)
 
 # CFG Configuration
 CFG_NODE_ATTR = {

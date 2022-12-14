@@ -1,7 +1,20 @@
 import argparse
+import os.path
+
+
+def is_valid_file(parser: argparse.ArgumentParser, path: str) -> str:
+    """
+    Check if the sierra file path is valid
+    """
+    if not os.path.exists(path):
+        parser.error("The file %s does not exist" % path)
+    return path
 
 
 def parse_arguments() -> argparse.Namespace:
+    """
+    PArse the thoth-sierra arguments
+    """
     # Create the parser
     parser = argparse.ArgumentParser(
         description="""
@@ -10,7 +23,13 @@ def parse_arguments() -> argparse.Namespace:
     )
 
     # Add arguments
-    parser.add_argument("-f", "--file", required=True, help="Path of the sierra file")
+    parser.add_argument(
+        "-f",
+        "--file",
+        required=True,
+        help="Path of the sierra file",
+        type=lambda path: is_valid_file(parser, path),
+    )
     parser.add_argument("--call", help="Generate a call-flow graph", action="store_true")
     parser.add_argument("--cfg", help="Generate a control-flow graph", action="store_true")
 
