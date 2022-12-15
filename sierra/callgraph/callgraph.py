@@ -26,11 +26,10 @@ class SierraCallGraph:
         # Dot graph
         self.dot = None
 
-    def _generate_callgraph(self) -> None:
+    def generate_callgraph(self) -> None:
         """
         Generate a call-graph dot graph
         """
-
         self.dot = Digraph(
             name="Call-Flow Graph",
             strict=True,
@@ -41,11 +40,8 @@ class SierraCallGraph:
 
         functions = self.program.functions
         for function in functions:
-
-            # Bug in Graphviz with ":"
-            source_function_name = function.id.replace(":", "𐫵")
-
             # Create a node for the source function
+            source_function_name = self.sanitize_name(function.id)
             self.dot.node(
                 name=source_function_name,
                 shape="rectangle",
@@ -57,13 +53,10 @@ class SierraCallGraph:
                 if isinstance(statement, SierraVariableAssignation):
                     called_function = statement.function
 
-                user_defined_function = USER_DEFINED_FUNCTION_REGEXP.match(called_function.id)
                 # Call to an user defined function
-                if user_defined_function:
+                if self.is_user_defined_function(called_function.id):
                     # Create a node for an user defined function
-                    called_function_name = user_defined_function.group(2)
-                    called_function_name = called_function_name
-                    called_function_name = called_function_name.replace(":", "𐫵")
+                    called_function_name = self.sanitize_name(called_function.id)
                     self.dot.node(
                         name=called_function_name,
                         shape="rectangle",
@@ -73,20 +66,28 @@ class SierraCallGraph:
                 # Call to a libfunc function
                 else:
                     # Create a node for a libfunc
-                    called_function_name = called_function.id
-                    called_function_name = called_function_name
-                    called_function_name = called_function_name.replace(":", "𐫵")
+                    called_function_name = self.sanitize_name(called_function.id)
                     self.dot.node(
                         name=called_function_name, shape="oval", fillcolor=CALLGRAPH_LIBFUNCS_COLOR
                     )
 
                 # Create an edge between the source function and the called function
-                self.dot.edge(
-                    source_function_name,
-                    called_function_name,
-                )
+                self.dot.edge(source_function_name, called_function_name)
 
-    def _print_callgraph(self) -> None:
+    def is_user_defined_function(self, function_name: str) -> bool:
+        """
+        Returns True if function_name matches the regex for user-defined functions,
+        False otherwise.
+        """
+        return bool(USER_DEFINED_FUNCTION_REGEXP.match(function_name))
+
+    def sanitize_name(self, name: str) -> str:
+        """
+        Replace ":" with "𐫵" and return the resulting string.
+        """
+        return name.replace(":", "𐫵")
+
+    def print_callgraph(self) -> None:
         """
         Render the dot call-graph
         """

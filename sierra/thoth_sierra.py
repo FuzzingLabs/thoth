@@ -21,6 +21,6 @@ def main() -> None:
 
     if args.call:
         callgraph = SierraCallGraph(parser)
-        callgraph._generate_callgraph()
+        callgraph.generate_callgraph()
 
-        callgraph._print_callgraph()
+        callgraph.print_callgraph()
