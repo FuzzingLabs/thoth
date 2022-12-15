@@ -4,7 +4,6 @@ import tempfile
 from thoth.app.decompiler.decompiler import Decompiler
 from thoth.app.dfg.dfg import DFG
 from thoth.app.symbex.symbex import SymbolicExecution
-from thoth.app.utils import str_to_bool
 from thoth.app.arguments import parse_args
 from thoth.app.analyzer import all_analyzers
 from thoth.app.analyzer.abstract_analyzer import category_classification_text
@@ -19,9 +18,6 @@ def main() -> int:
         Int: Return 0
     """
     args = parse_args()
-    if (args.call or args.cfg or args.dfg) and ("view" not in args):
-        print("Need to set -view option")
-        sys.exit()
 
     # Show analyzers help
     if args.analyzers_help is not None:
@@ -81,7 +77,7 @@ def main() -> int:
             folder=args.output_callgraph_folder,
             filename=filename,
             format=format,
-            view=str_to_bool(args.view),
+            view=args.view,
         )
 
     # Print the CFG
@@ -93,23 +89,21 @@ def main() -> int:
             filename=filename,
             format=format,
             function_name=args.function,
-            view=str_to_bool(args.view),
+            view=args.view,
         )
 
     # Print the DFG
     if args.dfg:
         contract_functions = disassembler.functions
         decompiler = Decompiler(functions=contract_functions)
-        decompiler.decompile_code(first_pass_only=True)
+        decompiler.decompile_code(first_pass_only=True, imported_functions=False)
 
         dfg = DFG(decompiler.ssa.memory)
         dfg._create_dfg()
         if args.taint:
             dfg._taint_functions_arguments()
         dfg._create_graph_representation()
-        dfg._print_dfg(
-            view=str_to_bool(args.view), folder=args.output_dfg_folder, format=args.format
-        )
+        dfg._print_dfg(view=args.view, folder=args.output_dfg_folder, format=args.format)
 
     # Symbolic execution
     if args.symbolic:

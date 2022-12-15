@@ -80,7 +80,7 @@ class Decompiler:
 
         if instruction.id in instruction.labels:
             source_code += self.print_instruction_decomp(
-                f"\nLABEL : {instruction.labels[instruction.id]}",
+                f"\nLABEL : {instruction.labels[instruction.id]}\n",
                 color=utils.color.GREEN,
             )
         if instruction.hint:
@@ -133,7 +133,7 @@ class Decompiler:
         decompiled_instruction = color + tabulations + data + utils.color.ENDC + end
         return decompiled_instruction
 
-    def decompile_code(self, first_pass_only: bool = False) -> str:
+    def decompile_code(self, first_pass_only: bool = False, imported_functions: bool = True) -> str:
         """
         Decompile the contract code
         Return the decompiled code
@@ -150,7 +150,7 @@ class Decompiler:
             self.ssa.new_function_init(function)
 
             # Imported function
-            if function.is_import:
+            if function.is_import and not imported_functions:
                 continue
 
             # Create a backup value of AP and FP registers
@@ -241,7 +241,8 @@ class Decompiler:
                         instructions[i], last=(count == len(function.instructions))
                     )
                     source_code += instructions[i]
-                    source_code += "\n"
+                    if instructions[i].strip():
+                        source_code += "\n"
             source_code += "\n"
 
         # Remove useless spaces

@@ -1,7 +1,7 @@
 # Thoth, the Cairo/Starknet bytecode analyzer, disassembler and decompiler
 <img src="./tests/coverage.svg"/> <img src ="https://img.shields.io/badge/python-3.10-blue.svg"/>
 
-Thoth (pronounced "taut" or "toss") is a Cairo/Starknet analyzer, disassembler & decompiler written in Python 3. Thoth's features also include the generation of the call graph, the control-flow graph (CFG) and the data-flow graph for a given Cairo/Starknet compilation artifact. [Demo video](https://www.youtube.com/watch?v=T0KvG8Zps6I)
+Thoth (pronounced "taut" or "toss") is a Cairo/Starknet analyzer, disassembler & decompiler written in Python 3. Thoth's features also include the generation of the call graph, the control-flow graph (CFG) and the data-flow graph for a given Cairo/Starknet compilation artifact. [Demo video](https://www.youtube.com/watch?v=T0KvG8Zps6I), [StarkNetCC 2022 slides](https://fuzzinglabs.com/wp-content/uploads/2022/11/Thoth_cairo_analyzer_starknetcc_lisbon_2022.pdf)
 
 ## Features
 - **Remote & Local**: Thoth can both analyze contracts deployed on Mainnet/Goerli and compiled locally on your machine. 
@@ -52,9 +52,9 @@ Example 2 with function call:
 The call flow graph represents calling relationships between functions of the contract. We tried to provide a maximum of information, such as the entry-point functions, the imports, decorators, etc.
 
 ``` python
-thoth local tests/json_files/cairo_array_sum.json -call -view True
+thoth local tests/json_files/cairo_array_sum.json -call -view
 # For a specific output format (pdf/svg/png):
-thoth local tests/json_files/cairo_array_sum.json -call -view True -format png
+thoth local tests/json_files/cairo_array_sum.json -call -view -format png
 ```
 The output file (pdf/svg/png) and the dot file are inside the `output-callgraph` folder.
 If needed, you can also visualize dot files online using [this](https://dreampuf.github.io/GraphvizOnline/) website. The legend can be found [here](images/callgraph_legend.png).
@@ -165,11 +165,11 @@ v9_b: 98
 ## Print the contract's data-flow graph (DFG)
 
 ``` python
-thoth local tests/json_files/cairo_double_function_and_if.json -dfg -view True
+thoth local tests/json_files/cairo_double_function_and_if.json -dfg -view
 # For a specific output format (pdf/svg/png):
-thoth local tests/json_files/cairo_double_function_and_if.json -dfg -view True -format png
+thoth local tests/json_files/cairo_double_function_and_if.json -dfg -view -format png
 # For tainting visualization:
-thoth remote --address 0x069e40D2c88F479c86aB3E379Da958c75724eC1d5b7285E14e7bA44FD2f746A8 -n mainnet  -dfg -view True --taint
+thoth remote --address 0x069e40D2c88F479c86aB3E379Da958c75724eC1d5b7285E14e7bA44FD2f746A8 -n mainnet  -dfg -view --taint
 ```
 The output file (pdf/svg/png) and the dot file are inside the `output-dfg` folder.
 
@@ -201,11 +201,11 @@ thoth local tests/json_files/cairo_array_sum.json -vvv
 ## Print the contract's control-flow graph (CFG)
 
 ``` python
-thoth local tests/json_files/cairo_double_function_and_if.json -cfg -view True
+thoth local tests/json_files/cairo_double_function_and_if.json -cfg -view
 # For a specific function:
-thoth local tests/json_files/cairo_double_function_and_if.json -cfg -view True -function "__main__.main"
+thoth local tests/json_files/cairo_double_function_and_if.json -cfg -view -function "__main__.main"
 # For a specific output format (pdf/svg/png):
-thoth local tests/json_files/cairo_double_function_and_if.json -cfg -view True -format png
+thoth local tests/json_files/cairo_double_function_and_if.json -cfg -view -format png
 ```
 The output file (pdf/svg/png) and the dot file are inside the `output-cfg` folder.
 

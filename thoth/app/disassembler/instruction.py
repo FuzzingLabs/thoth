@@ -41,6 +41,12 @@ class Instruction:
             else "+" + instruction_data.get("off2")
         )
         self.off2 = self.off2 if int(self.off2) != 0 else ""
+        self.off3 = (
+            instruction_data.get("off3")
+            if instruction_data.get("off3")[0] == "-"
+            else "+" + instruction_data.get("off3")
+        )
+        self.off3 = self.off3 if int(self.off3) != 0 else ""
         self.imm = instruction_data.get("imm")
         self.dstRegister = instruction_data.get("dst_register").split("Register.")[1]
         self.op0Register = instruction_data.get("op0_register").split("Register.")[1]
@@ -149,7 +155,7 @@ class Instruction:
         """
         assembly = ""
 
-        if "REGULAR" not in self.pcUpdate:
+        if "REGULAR" not in self.pcUpdate and self.imm != "None":
             assembly += self.print_instruction(f"{self.pcUpdate}", color=utils.color.RED)
             assembly += self.print_instruction(
                 field_element_repr(int(self.imm), self.prime), utils.color.BLUE
@@ -165,8 +171,18 @@ class Instruction:
                     f"# JMP {jump_to}",
                     color=utils.color.CYAN,
                 )
+        # dw statements
+        elif self.hint is None and self.imm == "None":
+
+            try:
+                dw_value = int(self.off3)
+                assembly += self.print_instruction(f"dw {dw_value}", color=utils.color.BLUE)
+            except:
+                assembly += self.print_instruction(f"{self.opcode}", color=utils.color.RED)
+        # hints
         else:
             assembly += self.print_instruction(f"{self.opcode}", color=utils.color.RED)
+
         return assembly
 
     def _handle_call(self):
