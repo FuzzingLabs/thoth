@@ -54,9 +54,12 @@ class SierraCallGraph:
                     called_function = statement.function
 
                 # Call to an user defined function
-                if self.is_user_defined_function(called_function.id):
+                if self._is_user_defined_function(called_function.id):
                     # Create a node for an user defined function
-                    called_function_name = self.sanitize_name(called_function.id)
+                    called_function_name = USER_DEFINED_FUNCTION_REGEXP.match(
+                        called_function.id
+                    ).group(2)
+                    called_function_name = self.sanitize_name(called_function_name)
                     self.dot.node(
                         name=called_function_name,
                         shape="rectangle",
@@ -74,7 +77,7 @@ class SierraCallGraph:
                 # Create an edge between the source function and the called function
                 self.dot.edge(source_function_name, called_function_name)
 
-    def is_user_defined_function(self, function_name: str) -> bool:
+    def _is_user_defined_function(self, function_name: str) -> bool:
         """
         Returns True if function_name matches the regex for user-defined functions,
         False otherwise.

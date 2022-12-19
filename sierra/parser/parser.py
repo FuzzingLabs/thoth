@@ -131,6 +131,10 @@ class SierraParser:
         # Load statements into functions objects
         self._load_functions_statements()
 
+        # Create basic blocks
+        for function in self.functions:
+            function.cfg._generate_basic_blocks()
+
     def print_cfg(self) -> None:
         """ """
         graph = Digraph(
@@ -140,7 +144,6 @@ class SierraParser:
             edge_attr=CFG_EDGE_ATTR,
         )
         for function in self.functions:
-            function.cfg._generate_basic_blocks()
             function.cfg._generate_cfg()
             graph.subgraph(function.cfg.dot)
         graph.render(view=True)

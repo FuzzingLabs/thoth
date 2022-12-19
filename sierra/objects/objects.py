@@ -207,14 +207,14 @@ class SierraControlFlowGraph:
                         Edge(
                             source=statement.offset,
                             destination=statement.edge_1_offset,
-                            type=EDGE_CONDITIONAL_FALSE,
+                            type=EDGE_CONDITIONAL_TRUE,
                         )
                     )
                     current_basic_block.edges.append(
                         Edge(
                             source=statement.offset,
                             destination=statement.edge_2_offset + 1,
-                            type=EDGE_CONDITIONAL_TRUE,
+                            type=EDGE_CONDITIONAL_FALSE,
                         )
                     )
                 # Conditional jump with 1 edge (JUMP)

@@ -13,7 +13,7 @@ def is_valid_file(parser: argparse.ArgumentParser, path: str) -> str:
 
 def parse_arguments() -> argparse.Namespace:
     """
-    PArse the thoth-sierra arguments
+    Parse the thoth-sierra arguments
     """
     # Create the parser
     parser = argparse.ArgumentParser(
@@ -32,6 +32,7 @@ def parse_arguments() -> argparse.Namespace:
     )
     parser.add_argument("--call", help="Generate a call-flow graph", action="store_true")
     parser.add_argument("--cfg", help="Generate a control-flow graph", action="store_true")
+    parser.add_argument("--decompile", "-d", help="Decompile the sierra file", action="store_true")
 
     # Parse the arguments
     args = parser.parse_args()

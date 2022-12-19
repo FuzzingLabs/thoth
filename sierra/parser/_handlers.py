@@ -147,9 +147,17 @@ def _handle_control_flow_command(self, statement: Tree) -> SierraConditionalBran
     else:
         jump_offset_1 = int(list(statement_idx[0].find_data("big_int"))[0].children[0].value)
         jump_offset_2 = int(list(statement_idx[1].find_data("big_int"))[0].children[0].value) - 1
+
+        function_arguments = []
+        function_arguments_trees = list(list(statement.find_data("var_ids"))[2].find_data("var_id"))
+        for function_argument_tree in function_arguments_trees:
+            function_argument = self.reconstructor.reconstruct(function_argument_tree)
+            function_argument_variable = self._get_variable_by_name(name=function_argument)
+            function_arguments.append(function_argument_variable)
+
         control_flow_command = SierraConditionalBranch(
             function=libfunc_command_id,
-            parameters=[],
+            parameters=function_arguments,
             edge_1_offset=jump_offset_1,
             edge_2_offset=jump_offset_2,
             raw_statement=raw_statement,
@@ -241,7 +249,7 @@ def _handle_function_declaration(self, function_declaration: Tree) -> None:
     return_values_types: List[SierraType] = []
     return_values_trees = list(
         list(function_declaration.find_data("concrete_type_ids"))[0].find_data("concrete_type_id")
-    )
+    )[1:]
     for return_value_tree in return_values_trees:
         return_value_type_id = self.reconstructor.reconstruct(return_value_tree)
         return_value_type = self._get_type_by_id(return_value_type_id)
