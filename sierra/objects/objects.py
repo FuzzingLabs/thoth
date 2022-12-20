@@ -1,6 +1,8 @@
 from graphviz import Digraph
 from typing import List, Tuple
 
+from sierra.utils import colors
+
 # CFG Edges types
 EDGE_UNCONDITIONAL = "unconditional"
 EDGE_CONDITIONAL_TRUE = "conditional_true"
@@ -308,6 +310,25 @@ class SierraVariableAssignation(SierraStatement):
         self.libfunc_arguments = function_arguments
         self.assigned_variables = assigned_variables
 
+    @property
+    def formatted_statement(self):
+        function_arguments = ", ".join([v.name for v in self.libfunc_arguments])
+        function_call = "%s%s%s(%s)" % (
+            colors.OKCYAN,
+            self.function.id,
+            colors.ENDC,
+            function_arguments,
+        )
+
+        # Variables assigned with a function call
+        if self.assigned_variables:
+            assigned_variables = ", ".join([v.name for v in self.assigned_variables])
+            formatted_statement = "%s = %s" % (assigned_variables, function_call)
+        # Function call without assignation
+        else:
+            formatted_statement = "%s" % function_call
+        return formatted_statement
+
 
 class SierraReturn(SierraStatement):
     """
@@ -317,3 +338,9 @@ class SierraReturn(SierraStatement):
     def __init__(self, variables: List[SierraVariable], *args, **kwargs) -> None:
         super(SierraReturn, self).__init__(*args, **kwargs)
         self.variables = variables
+
+    @property
+    def formatted_statement(self):
+        returned_variables = ", ".join([v.name for v in self.variables])
+        formatted_statement = "%sreturn%s (%s)" % (colors.RED, colors.ENDC, returned_variables)
+        return formatted_statement

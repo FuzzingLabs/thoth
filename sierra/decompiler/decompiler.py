@@ -51,9 +51,12 @@ class SierraDecompiler:
                     colors.OKGREEN,
                     colors.ENDC,
                 )
+            # Unconditional jump
+            elif isinstance(statement, SierraConditionalBranch):
+                pass
             # Default case
             else:
-                decompiled_basic_block += "%s%s\n" % (indentation, statement.raw_statement)
+                decompiled_basic_block += "%s%s\n" % (indentation, statement.formatted_statement)
 
         return decompiled_basic_block
 
