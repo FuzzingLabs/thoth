@@ -48,7 +48,7 @@ class SierraDecompiler:
                     indentation,
                     function_name,
                     function_arguments,
-                    colors.OKGREEN,
+                    colors.GREEN,
                     colors.ENDC,
                 )
             # Unconditional jump
@@ -93,20 +93,18 @@ class SierraDecompiler:
                 if edge_basic_block not in self.printed_blocks:
                     basic_blocks_str += (
                         "\t" * self.indentation
-                        + colors.OKGREEN
+                        + colors.GREEN
                         + "}"
                         + colors.ENDC
                         + " else "
-                        + colors.OKGREEN
+                        + colors.GREEN
                         + "{\n"
                         + colors.ENDC
                     )
                     self.indentation += 1
                     basic_blocks_str += self._basic_block_recursive(edge_basic_block)
                     self.indentation -= 1
-                    basic_blocks_str += (
-                        colors.OKGREEN + "\t" * self.indentation + "}\n" + colors.ENDC
-                    )
+                    basic_blocks_str += colors.GREEN + "\t" * self.indentation + "}\n" + colors.ENDC
 
         return basic_blocks_str
 
@@ -153,12 +151,12 @@ class SierraDecompiler:
             function_prototype = self._get_function_prototype(self.current_function)
             # Function body
             decompiled_code += colors.HEADER + function_prototype + colors.ENDC + "\n"
-            decompiled_code += colors.OKGREEN + "{" + colors.ENDC
+            decompiled_code += colors.GREEN + "{" + colors.ENDC
             decompiled_code += "\n"
             basic_blocks = self.current_function.cfg.basic_blocks
             for basic_block in basic_blocks:
                 decompiled_code += self._basic_block_recursive(basic_block=basic_block)
-            decompiled_code += colors.OKGREEN + "}" + colors.ENDC
+            decompiled_code += colors.GREEN + "}" + colors.ENDC
 
             # Space between functions
             if i != len(functions) - 1:

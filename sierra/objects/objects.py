@@ -314,7 +314,7 @@ class SierraVariableAssignation(SierraStatement):
     def formatted_statement(self):
         function_arguments = ", ".join([v.name for v in self.libfunc_arguments])
         function_call = "%s%s%s(%s)" % (
-            colors.OKCYAN,
+            colors.CYAN,
             self.function.id,
             colors.ENDC,
             function_arguments,

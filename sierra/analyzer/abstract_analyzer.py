@@ -73,7 +73,7 @@ impact_classification_text: Dict[ImpactClassification, str] = {
 }
 
 
-class SierraAbstractAnalyzer:
+class AbstractAnalyzer:
     """
     Base class from which all sierra analyzers inherit
     """
@@ -131,10 +131,10 @@ class SierraAbstractAnalyzer:
         # Impact
         impact = ""
         if self.CATEGORY == CategoryClassification.SECURITY:
-            impact_color = impact_classification_colors[self.IMPACT] if self.color else ""
+            impact_color = impact_classification_colors[self.IMPACT]
             impact = "(%s)" % (impact_color + impact_classification_text[self.IMPACT] + colors.ENDC)
 
-        category_color = category_classification_colors[self.CATEGORY] if self.color else ""
+        category_color = category_classification_colors[self.CATEGORY]
         title = "[%s%s%s] %s %s" % (
             category_color,
             category_classification_text[self.CATEGORY],

@@ -1,6 +1,9 @@
 import argparse
 import os.path
 
+from sierra.analyzer import all_analyzers
+from sierra.analyzer.abstract_analyzer import category_classification_text
+
 
 def is_valid_file(parser: argparse.ArgumentParser, path: str) -> str:
     """
@@ -26,13 +29,30 @@ def parse_arguments() -> argparse.Namespace:
     parser.add_argument(
         "-f",
         "--file",
-        required=True,
         help="Path of the sierra file",
         type=lambda path: is_valid_file(parser, path),
     )
     parser.add_argument("--call", help="Generate a call-flow graph", action="store_true")
     parser.add_argument("--cfg", help="Generate a control-flow graph", action="store_true")
     parser.add_argument("--decompile", "-d", help="Decompile the sierra file", action="store_true")
+
+    # Analyser
+    analyzers_names = [analyzer.ARGUMENT for analyzer in all_analyzers]
+    analyzers_categories_names = list(
+        [category.lower() for category in category_classification_text.values()]
+    )
+
+    parser.add_argument(
+        "-a",
+        "-analyze",
+        "--analyzers",
+        choices=analyzers_names + analyzers_categories_names,
+        help="Run analyzers",
+        nargs="*",
+    )
+    parser.add_argument(
+        "--analyzers-help", choices=analyzers_names, help="Show analyzers help", nargs="*"
+    )
 
     # Parse the arguments
     args = parser.parse_args()
