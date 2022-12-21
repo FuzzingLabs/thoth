@@ -108,29 +108,6 @@ class SierraDecompiler:
 
         return basic_blocks_str
 
-    def _get_function_prototype(self, function: SierraFunction) -> str:
-        """
-        Return the formatted function prototype
-        func <name> (<arguments, ...>) -> (<return values, ...>)
-        """
-
-        # Prototype elements
-        function_name = function.id
-        function_arguments = ", ".join(
-            ["%s: %s" % (a.representation_name, a.type[0].id) for a in function.parameters]
-        )
-        function_return_values = (
-            "(" + ", ".join([t[0].id for t in function.return_values_types]) + ")"
-        )
-
-        # Format the prototype
-        prototype = "func %s (%s) -> %s" % (
-            function_name,
-            function_arguments,
-            function_return_values,
-        )
-        return prototype
-
     def decompile_code(self) -> str:
         """
         Decompile the sierra program
@@ -148,7 +125,7 @@ class SierraDecompiler:
             self.indentation = 1
 
             # Prototype
-            function_prototype = self._get_function_prototype(self.current_function)
+            function_prototype = self.current_function.prototype
             # Function body
             decompiled_code += colors.HEADER + function_prototype + colors.ENDC + "\n"
             decompiled_code += colors.GREEN + "{" + colors.ENDC

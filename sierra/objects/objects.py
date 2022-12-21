@@ -78,6 +78,28 @@ class SierraFunction:
         # CFG
         self.cfg = SierraControlFlowGraph(self)
 
+    @property
+    def prototype(self) -> str:
+        """
+        Return the formatted function prototype
+        func <name> (<arguments, ...>) -> (<return values, ...>)
+        """
+
+        # Prototype elements
+        function_name = self.id
+        function_arguments = ", ".join(
+            ["%s: %s" % (a.representation_name, a.type[0].id) for a in self.parameters]
+        )
+        function_return_values = "(" + ", ".join([t[0].id for t in self.return_values_types]) + ")"
+
+        # Format the prototype
+        prototype = "func %s (%s) -> %s" % (
+            function_name,
+            function_arguments,
+            function_return_values,
+        )
+        return prototype
+
 
 class SierraBasicBlock:
     """
