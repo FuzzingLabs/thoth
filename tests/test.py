@@ -21,7 +21,7 @@ class TestDisassembler(unittest.TestCase):
         """
         Test the disassembler on all files
         """
-        all_test = glob.glob("./tests/json_files/*")
+        all_test = glob.glob("./tests/json_files/cairo_beta/*")
         crash = 0
         f = open("/dev/null", "w")
         save_stdout = sys.stdout
@@ -53,7 +53,7 @@ class TestDisassembler(unittest.TestCase):
         """
         Test all analyzers
         """
-        disassembler = Disassembler("./tests/json_files/cairo_amm.json")
+        disassembler = Disassembler("./tests/json_files/cairo_beta/cairo_amm.json")
         crash = 0
 
         for a in all_analyzers:
@@ -68,7 +68,7 @@ class TestDisassembler(unittest.TestCase):
         """
         Test the functions analyzer on cairo_return
         """
-        disassembler = Disassembler("./tests/json_files/cairo_return.json")
+        disassembler = Disassembler("./tests/json_files/cairo_beta/cairo_return.json")
         statistics_analyzer = analyzer.StatisticsAnalyzer(disassembler, color=False)
         statistics_analyzer._detect()
 
@@ -81,7 +81,7 @@ class TestDisassembler(unittest.TestCase):
         """
         Test the statistics analyzer on cairo_all_builtins
         """
-        disassembler = Disassembler("./tests/json_files/cairo_all_builtins.json")
+        disassembler = Disassembler("./tests/json_files/cairo_beta/cairo_all_builtins.json")
         statistics_analyzer = analyzer.StatisticsAnalyzer(disassembler)
         statistics_analyzer._detect()
 
@@ -94,7 +94,7 @@ class TestDisassembler(unittest.TestCase):
         """
         Test the functions analyzer on cairo_all_builtins
         """
-        disassembler = Disassembler("./tests/json_files/cairo_all_builtins.json")
+        disassembler = Disassembler("./tests/json_files/cairo_beta/cairo_all_builtins.json")
         functions_analyzer = analyzer.FunctionsAnalyzer(disassembler, color=False)
         functions_analyzer._detect()
 
@@ -107,7 +107,9 @@ class TestDisassembler(unittest.TestCase):
         """
         Test the statistics analyzer on cairo_direct_and_indirect_recursion
         """
-        disassembler = Disassembler("./tests/json_files/cairo_direct_and_indirect_recursion.json")
+        disassembler = Disassembler(
+            "./tests/json_files/cairo_beta/cairo_direct_and_indirect_recursion.json"
+        )
         statistics_analyzer = analyzer.StatisticsAnalyzer(disassembler)
         statistics_analyzer._detect()
 
@@ -120,7 +122,9 @@ class TestDisassembler(unittest.TestCase):
         """
         Test the functions analyzer on cairo_direct_and_indirect_recursion
         """
-        disassembler = Disassembler("./tests/json_files/cairo_direct_and_indirect_recursion.json")
+        disassembler = Disassembler(
+            "./tests/json_files/cairo_beta/cairo_direct_and_indirect_recursion.json"
+        )
         functions_analyzer = analyzer.FunctionsAnalyzer(disassembler, color=False)
         functions_analyzer._detect()
 
@@ -149,7 +153,7 @@ class TestDisassembler(unittest.TestCase):
         """
         Test the statistics analyzer on cairo_struct
         """
-        disassembler = Disassembler("./tests/json_files/cairo_struct.json")
+        disassembler = Disassembler("./tests/json_files/cairo_beta/cairo_struct.json")
         statistics_analyzer = analyzer.StatisticsAnalyzer(disassembler)
         statistics_analyzer._detect()
 
@@ -162,7 +166,7 @@ class TestDisassembler(unittest.TestCase):
         """
         Test statistics analyzer on test_cairo_puzzle
         """
-        disassembler = Disassembler("./tests/json_files/cairo_puzzle.json")
+        disassembler = Disassembler("./tests/json_files/cairo_beta/cairo_puzzle.json")
         statistics_analyzer = analyzer.StatisticsAnalyzer(disassembler)
         statistics_analyzer._detect()
 
@@ -175,7 +179,7 @@ class TestDisassembler(unittest.TestCase):
         """
         Test statistics analyzer on test_starknet_decorators3
         """
-        disassembler = Disassembler("./tests/json_files/starknet_decorators3.json")
+        disassembler = Disassembler("./tests/json_files/cairo_beta/starknet_decorators3.json")
         statistics_analyzer = analyzer.StatisticsAnalyzer(disassembler)
         statistics_analyzer._detect()
 
@@ -188,7 +192,7 @@ class TestDisassembler(unittest.TestCase):
         """
         Test the decorators output of the functions analyzer on starknet_decorators3
         """
-        disassembler = Disassembler("./tests/json_files/starknet_decorators3.json")
+        disassembler = Disassembler("./tests/json_files/cairo_beta/starknet_decorators3.json")
         functions_analyzer = analyzer.FunctionsAnalyzer(disassembler, color=False)
         functions_analyzer._detect()
 
@@ -229,7 +233,7 @@ class TestDisassembler(unittest.TestCase):
         """
         Test the statistics analyzer on starknet_l1_default
         """
-        disassembler = Disassembler("./tests/json_files/starknet_l1_default.json")
+        disassembler = Disassembler("./tests/json_files/cairo_beta/starknet_l1_default.json")
         statistics_analyzer = analyzer.StatisticsAnalyzer(disassembler)
         statistics_analyzer._detect()
 
@@ -242,7 +246,7 @@ class TestDisassembler(unittest.TestCase):
         """
         Test the Layer 1 interactions output on starknet_l1_default
         """
-        disassembler = Disassembler("./tests/json_files/starknet_l1_default.json")
+        disassembler = Disassembler("./tests/json_files/cairo_beta/starknet_l1_default.json")
         functions_analyzer = analyzer.FunctionsAnalyzer(disassembler, color=False)
         functions_analyzer._detect()
 
@@ -287,7 +291,9 @@ class TestDisassembler(unittest.TestCase):
         """
         Test the statistics analyzer on starknet_get_code_l2_dai_bridge
         """
-        disassembler = Disassembler("./tests/json_files/starknet_get_code_l2_dai_bridge.json")
+        disassembler = Disassembler(
+            "./tests/json_files/cairo_beta/starknet_get_code_l2_dai_bridge.json"
+        )
         statistics_analyzer = analyzer.StatisticsAnalyzer(disassembler)
         statistics_analyzer._detect()
 
@@ -300,7 +306,9 @@ class TestDisassembler(unittest.TestCase):
         """
         Test Layer 1 interactions output on starknet_send_message_to_l1
         """
-        disassembler = Disassembler("./tests/json_files/starknet_send_message_to_l1.json")
+        disassembler = Disassembler(
+            "./tests/json_files/cairo_beta/starknet_send_message_to_l1.json"
+        )
         functions_analyzer = analyzer.FunctionsAnalyzer(disassembler, color=False)
         functions_analyzer._detect()
 
@@ -317,7 +325,7 @@ class TestDisassembler(unittest.TestCase):
         """
         Test the ERC20 analyzer
         """
-        disassembler = Disassembler("./tests/json_files/starknet_erc20.json")
+        disassembler = Disassembler("./tests/json_files/cairo_beta/starknet_erc20.json")
         functions_analyzer = analyzer.ERC20Analyzer(disassembler, color=False)
         functions_analyzer._detect()
 
@@ -327,7 +335,7 @@ class TestDisassembler(unittest.TestCase):
         """
         Test the ERC721 analyzer
         """
-        disassembler = Disassembler("./tests/json_files/starknet_erc721.json")
+        disassembler = Disassembler("./tests/json_files/cairo_beta/starknet_erc721.json")
         functions_analyzer = analyzer.ERC721Analyzer(disassembler, color=False)
         functions_analyzer._detect()
 
@@ -337,7 +345,7 @@ class TestDisassembler(unittest.TestCase):
         """
         Test the Integer Overflow Detector
         """
-        disassembler = Disassembler("./tests/json_files/cairo_integer_overflow.json")
+        disassembler = Disassembler("./tests/json_files/cairo_beta/cairo_integer_overflow.json")
         integer_overflow_detector = analyzer.IntegerOverflowDetector(disassembler, color=False)
         integer_overflow_detector._detect()
 
@@ -347,7 +355,7 @@ class TestDisassembler(unittest.TestCase):
         """
         Test the Integer Overflow Detector
         """
-        disassembler = Disassembler("./tests/json_files/cairo_integer_overflow_2.json")
+        disassembler = Disassembler("./tests/json_files/cairo_beta/cairo_integer_overflow_2.json")
         integer_overflow_detector = analyzer.IntegerOverflowDetector(disassembler, color=False)
         integer_overflow_detector._detect()
 
@@ -358,7 +366,7 @@ class TestDisassembler(unittest.TestCase):
         """
         Test the DFG on cairo_integer_overflow
         """
-        disassembler = Disassembler("./tests/json_files/cairo_integer_overflow.json")
+        disassembler = Disassembler("./tests/json_files/cairo_beta/cairo_integer_overflow.json")
         decompiler = Decompiler(functions=disassembler.functions)
         decompiler.decompile_code(first_pass_only=True, imported_functions=False)
 
@@ -380,7 +388,7 @@ class TestDisassembler(unittest.TestCase):
         """
         Test the DFG tainting on cairo_integer_overflow_2
         """
-        disassembler = Disassembler("./tests/json_files/cairo_integer_overflow_2.json")
+        disassembler = Disassembler("./tests/json_files/cairo_beta/cairo_integer_overflow_2.json")
         decompiler = Decompiler(functions=disassembler.functions)
         decompiler.decompile_code(first_pass_only=True, imported_functions=False)
 
@@ -404,7 +412,7 @@ class TestDisassembler(unittest.TestCase):
         Test the variable naming analyzer on starknet_get_code_l2_dai_bridge
         """
         disassembler = Disassembler(
-            "./tests/json_files/starknet_get_full_contract_l2_dai_bridge.json"
+            "./tests/json_files/cairo_beta/starknet_get_full_contract_l2_dai_bridge.json"
         )
         statistics_analyzer = analyzer.FunctionNamingAnalyzer(disassembler)
         statistics_analyzer._detect()
@@ -420,7 +428,7 @@ class TestDisassembler(unittest.TestCase):
         """
         Test the variable naming analyzer on erc20_mintable
         """
-        disassembler = Disassembler("./tests/json_files/starknet_erc20_mintable.json")
+        disassembler = Disassembler("./tests/json_files/cairo_beta/starknet_erc20_mintable.json")
         statistics_analyzer = analyzer.VariableNamingAnalyzer(disassembler)
         statistics_analyzer._detect()
 
@@ -433,7 +441,9 @@ class TestDisassembler(unittest.TestCase):
         """
         Test the test cases generator analyzer on test_symbolic_execution_3
         """
-        disassembler = Disassembler("./tests/json_files/cairo_test_symbolic_execution_2.json")
+        disassembler = Disassembler(
+            "./tests/json_files/cairo_beta/cairo_test_symbolic_execution_2.json"
+        )
         contract_functions = disassembler.functions
         decompiler = Decompiler(functions=contract_functions)
         decompiler.decompile_code(first_pass_only=True)
@@ -464,7 +474,9 @@ class TestDisassembler(unittest.TestCase):
 
     def test_test_cases_generator_analyzer_2(self):
         """ """
-        disassembler = Disassembler("./tests/json_files/cairo_test_symbolic_execution_3.json")
+        disassembler = Disassembler(
+            "./tests/json_files/cairo_beta/cairo_test_symbolic_execution_3.json"
+        )
         contract_functions = disassembler.functions
         decompiler = Decompiler(functions=contract_functions)
         decompiler.decompile_code(first_pass_only=True)
