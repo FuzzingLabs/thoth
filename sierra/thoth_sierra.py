@@ -27,6 +27,10 @@ def main() -> None:
 
     # Parse a Sierra file
     sierra_file = args.file
+    if sierra_file is None:
+        print("You need to specify a sierra file path using the -f flag")
+        return
+
     try:
         parser = SierraParser(config.SIERRA_LARK_PARSER_PATH)
         parser.parse(sierra_file)
