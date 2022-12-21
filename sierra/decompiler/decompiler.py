@@ -117,7 +117,7 @@ class SierraDecompiler:
         # Prototype elements
         function_name = function.id
         function_arguments = ", ".join(
-            ["%s: %s" % (a.name, a.type[0].id) for a in function.parameters]
+            ["%s: %s" % (a.representation_name, a.type[0].id) for a in function.parameters]
         )
         function_return_values = (
             "(" + ", ".join([t[0].id for t in function.return_values_types]) + ")"

@@ -50,6 +50,7 @@ class SierraVariable:
 
     def __init__(self, name: int, type: SierraType = None) -> None:
         self.name = name
+        self.representation_name = "var_%s" % self.name
         self.type = type
 
 
@@ -312,7 +313,7 @@ class SierraVariableAssignation(SierraStatement):
 
     @property
     def formatted_statement(self):
-        function_arguments = ", ".join([v.name for v in self.libfunc_arguments])
+        function_arguments = ", ".join([v.representation_name for v in self.libfunc_arguments])
         function_call = "%s%s%s(%s)" % (
             colors.CYAN,
             self.function.id,
@@ -322,7 +323,7 @@ class SierraVariableAssignation(SierraStatement):
 
         # Variables assigned with a function call
         if self.assigned_variables:
-            assigned_variables = ", ".join([v.name for v in self.assigned_variables])
+            assigned_variables = ", ".join([v.representation_name for v in self.assigned_variables])
             formatted_statement = "%s = %s" % (assigned_variables, function_call)
         # Function call without assignation
         else:
@@ -341,6 +342,6 @@ class SierraReturn(SierraStatement):
 
     @property
     def formatted_statement(self):
-        returned_variables = ", ".join([v.name for v in self.variables])
+        returned_variables = ", ".join([v.representation_name for v in self.variables])
         formatted_statement = "%sreturn%s (%s)" % (colors.RED, colors.ENDC, returned_variables)
         return formatted_statement
