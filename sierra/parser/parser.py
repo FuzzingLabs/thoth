@@ -51,9 +51,19 @@ class SierraParser:
     def _get_type_by_id(self, type_id: str) -> Optional[SierraType]:
         """
         Find a type by id among the declared types
+        Create a type if it does not exist
         """
         type_match = [t for t in self.types if t.id == type_id]
-        return type_match
+
+        # If the type already exists
+        if type_match:
+            type = type_match[0]
+        # Create a type if it does not exist
+        else:
+            type = SierraType(id=type_id)
+            self.types.append(type)
+
+        return type
 
     def _get_variable_by_name(self, name: str, type: SierraType = None) -> None:
         """

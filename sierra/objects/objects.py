@@ -88,9 +88,9 @@ class SierraFunction:
         # Prototype elements
         function_name = self.id
         function_arguments = ", ".join(
-            ["%s: %s" % (a.representation_name, a.type[0].id) for a in self.parameters]
+            ["%s: %s" % (a.representation_name, a.type.id) for a in self.parameters]
         )
-        function_return_values = "(" + ", ".join([t[0].id for t in self.return_values_types]) + ")"
+        function_return_values = "(" + ", ".join([t.id for t in self.return_values_types]) + ")"
 
         # Format the prototype
         prototype = "func %s (%s) -> %s" % (
