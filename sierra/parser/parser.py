@@ -57,13 +57,13 @@ class SierraParser:
 
         # If the type already exists
         if type_match:
-            type = type_match[0]
+            type_result = type_match[0]
         # Create a type if it does not exist
         else:
-            type = SierraType(id=type_id)
-            self.types.append(type)
+            type_result = SierraType(id=type_id)
+            self.types.append(type_result)
 
-        return type
+        return type_result
 
     def _get_variable_by_name(self, name: str, type: SierraType = None) -> None:
         """

@@ -32,8 +32,6 @@ def parse_arguments() -> argparse.Namespace:
         help="Path of the sierra file",
         type=lambda path: is_valid_file(parser, path),
     )
-    parser.add_argument("--call", help="Generate a call-flow graph", action="store_true")
-    parser.add_argument("--cfg", help="Generate a control-flow graph", action="store_true")
     parser.add_argument("--decompile", "-d", help="Decompile the sierra file", action="store_true")
     parser.add_argument(
         "--format",
@@ -42,13 +40,19 @@ def parse_arguments() -> argparse.Namespace:
         choices=["pdf", "png", "svg"],
         default="pdf",
     )
-    parser.add_argument(
+
+    cfg = parser.add_argument_group("Call-Flow Graph")
+    cfg.add_argument("--cfg", help="Generate a control-flow graph", action="store_true")
+    cfg.add_argument(
         "-output_cfg_folder",
         type=str,
         default="output-cfg",
         help="Set the output folder of the CFG (default is ./output-cfg)",
     )
-    parser.add_argument(
+
+    callgraph = parser.add_argument_group("Call-Graph")
+    callgraph.add_argument("--call", help="Generate a call-graph", action="store_true")
+    callgraph.add_argument(
         "-output_callgraph_folder",
         type=str,
         default="output-callgraph",
