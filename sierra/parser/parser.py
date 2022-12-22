@@ -159,6 +159,5 @@ class SierraParser:
             function.cfg._generate_cfg()
             graph.subgraph(function.cfg.dot)
 
-        print(file_format)
         graph.format = file_format
         graph.render(directory=folder, view=True)
