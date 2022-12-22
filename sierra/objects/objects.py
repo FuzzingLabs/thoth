@@ -26,12 +26,15 @@ class SierraType:
     Sierra Type class
     """
 
-    def __init__(self, id: str) -> None:
+    def __init__(self, id: str, long_id: str = None) -> None:
         self.id = id
+        self.long_id = long_id
 
     @property
     def formatted_type(self) -> str:
-        formatted_type = colors.WARNING + "type %s" % self.id + colors.ENDC
+        formatted_type = colors.WARNING + "type %s " % self.id + colors.ENDC
+        if self.long_id is not None:
+            formatted_type += "(%s)" % self.long_id
         return formatted_type
 
 

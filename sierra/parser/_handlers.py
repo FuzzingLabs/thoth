@@ -19,7 +19,11 @@ def _handle_type_definition(self, type_definition: Tree) -> None:
     concrete_type_id = list(type_definition.find_data("concrete_type_id"))
     type_name = self.reconstructor.reconstruct(concrete_type_id[-1])
 
-    sierra_type = SierraType(id=type_name)
+    # Parse the long type id
+    concrete_type_long_id = list(type_definition.find_data("concrete_type_long_id"))
+    long_type_name = self.reconstructor.reconstruct(concrete_type_long_id[-1])
+
+    sierra_type = SierraType(id=type_name, long_id=long_type_name)
     self.types.append(sierra_type)
 
 
