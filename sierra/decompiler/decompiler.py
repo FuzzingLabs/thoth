@@ -108,6 +108,28 @@ class SierraDecompiler:
 
         return basic_blocks_str
 
+    def _types(self) -> str:
+        """
+        Return a string containing all the types definitions
+        """
+        types = ""
+        for type in self.program.types:
+            types += type.formatted_type
+            types += "\n"
+
+        return types
+
+    def _libfuncs(self) -> str:
+        """
+        Return a libfunc containing all the types definitions
+        """
+        libfuncs = ""
+        for libfunc in self.program.libfuncs:
+            libfuncs += libfunc.formatted_libfunc
+            libfuncs += "\n"
+
+        return libfuncs
+
     def decompile_code(self) -> str:
         """
         Decompile the sierra program
@@ -115,6 +137,14 @@ class SierraDecompiler:
 
         # Initialize the decompiled code
         decompiled_code = ""
+
+        # Add types definitions
+        decompiled_code += self._types()
+        decompiled_code += "\n"
+
+        # Add libfuncs
+        decompiled_code += self._libfuncs()
+        decompiled_code += "\n"
 
         # Decompile the functions
         functions = self.program.functions

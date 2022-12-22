@@ -29,6 +29,11 @@ class SierraType:
     def __init__(self, id: str) -> None:
         self.id = id
 
+    @property
+    def formatted_type(self) -> str:
+        formatted_type = colors.WARNING + "type %s" % self.id + colors.ENDC
+        return formatted_type
+
 
 class SierraStatement:
     """
@@ -131,6 +136,13 @@ class SierraLibFunc:
     def __init__(self, id: str, name: str) -> None:
         self.id = id
         self.name = name
+
+    @property
+    def formatted_libfunc(self) -> str:
+        formatted_libfunc = colors.BLUE + "libfunc %s " % self.id + colors.ENDC
+        if self.id != self.name:
+            formatted_libfunc += "(%s)" % self.name
+        return formatted_libfunc
 
 
 class SierraConditionalBranch(SierraStatement):
