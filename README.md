@@ -217,7 +217,7 @@ The output file (pdf/svg/png) and the dot file are inside the `output-cfg` folde
 
 ## How to find a Cairo/Starknet compilation artifact (json file)?
 
-Thoth support cairo and starknet compilation artifact (json file) generated after compilation using `cairo-compile` or `starknet-compile`. Thoth also support the json file returned by: `starknet get_full_contract`.
+Thoth supports cairo and starknet compilation artifact (json file) generated after compilation using `cairo-compile` or `starknet-compile`. Thoth also support the json file returned by: `starknet get_full_contract`.
 
 ## How to run the tests?
 

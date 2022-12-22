@@ -40,7 +40,7 @@ def main() -> None:
 
     # Control-Flow Graph
     if args.cfg:
-        parser.print_cfg()
+        parser.print_cfg(folder=args.output_cfg_folder, file_format=args.format)
         return
 
     # Call-Graph
@@ -48,7 +48,7 @@ def main() -> None:
         callgraph = SierraCallGraph(parser)
         callgraph.generate_callgraph()
 
-        callgraph.print_callgraph()
+        callgraph.print_callgraph(folder=args.output_callgraph_folder, file_format=args.format)
         return
 
     # Decompiler

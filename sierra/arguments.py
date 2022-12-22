@@ -35,6 +35,25 @@ def parse_arguments() -> argparse.Namespace:
     parser.add_argument("--call", help="Generate a call-flow graph", action="store_true")
     parser.add_argument("--cfg", help="Generate a control-flow graph", action="store_true")
     parser.add_argument("--decompile", "-d", help="Decompile the sierra file", action="store_true")
+    parser.add_argument(
+        "--format",
+        help="Decompile the sierra file",
+        nargs="?",
+        choices=["pdf", "png", "svg"],
+        default="pdf",
+    )
+    parser.add_argument(
+        "-output_cfg_folder",
+        type=str,
+        default="output-cfg",
+        help="Set the output folder of the CFG (default is ./output-cfg)",
+    )
+    parser.add_argument(
+        "-output_callgraph_folder",
+        type=str,
+        default="output-callgraph",
+        help="Set the output folder of the Call-Graph (default is ./output-callgraph)",
+    )
 
     # Analyser
     analyzers_names = [analyzer.ARGUMENT for analyzer in all_analyzers]
