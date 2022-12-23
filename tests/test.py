@@ -306,9 +306,7 @@ class TestDisassembler(unittest.TestCase):
         """
         Test Layer 1 interactions output on starknet_send_message_to_l1
         """
-        disassembler = Disassembler(
-            "./tests/json_files/cairo_0/starknet_send_message_to_l1.json"
-        )
+        disassembler = Disassembler("./tests/json_files/cairo_0/starknet_send_message_to_l1.json")
         functions_analyzer = analyzer.FunctionsAnalyzer(disassembler, color=False)
         functions_analyzer._detect()
 
