@@ -48,6 +48,9 @@ class SierraParser:
         # Defined variables
         self.variables: List[SierraVariable] = []
 
+        # Init values
+        SierraStatement.offset = 0
+
     def _get_type_by_id(self, type_id: str) -> Optional[SierraType]:
         """
         Find a type by id among the declared types
