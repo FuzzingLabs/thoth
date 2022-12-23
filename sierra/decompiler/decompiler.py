@@ -75,36 +75,44 @@ class SierraDecompiler:
         for edge in basic_block.edges:
             # If branch
             if edge.type == EDGE_CONDITIONAL_TRUE:
-                self.indentation += 1
-                edge_basic_block = [
-                    b
-                    for b in self.current_function.cfg.basic_blocks
-                    if edge.destination == b.start_offset
-                ][0]
-                basic_blocks_str += self._basic_block_recursive(edge_basic_block)
+                try:
+                    self.indentation += 1
+                    edge_basic_block = [
+                        b
+                        for b in self.current_function.cfg.basic_blocks
+                        if edge.destination == b.start_offset
+                    ][0]
+                    basic_blocks_str += self._basic_block_recursive(edge_basic_block)
+                # Handle empty if condition block
+                except Exception:
+                    pass
                 self.indentation -= 1
             # Else branch
             elif edge.type == EDGE_CONDITIONAL_FALSE:
-                edge_basic_block = [
-                    b
-                    for b in self.current_function.cfg.basic_blocks
-                    if edge.destination == b.start_offset
-                ][0]
-                if edge_basic_block not in self.printed_blocks:
-                    basic_blocks_str += (
-                        "\t" * self.indentation
-                        + colors.GREEN
-                        + "}"
-                        + colors.ENDC
-                        + " else "
-                        + colors.GREEN
-                        + "{\n"
-                        + colors.ENDC
-                    )
-                    self.indentation += 1
-                    basic_blocks_str += self._basic_block_recursive(edge_basic_block)
-                    self.indentation -= 1
-                    basic_blocks_str += colors.GREEN + "\t" * self.indentation + "}\n" + colors.ENDC
+                try:
+                    edge_basic_block = [
+                        b
+                        for b in self.current_function.cfg.basic_blocks
+                        if edge.destination == b.start_offset
+                    ][0]
+                    if edge_basic_block not in self.printed_blocks:
+                        basic_blocks_str += (
+                            "\t" * self.indentation
+                            + colors.GREEN
+                            + "}"
+                            + colors.ENDC
+                            + " else "
+                            + colors.GREEN
+                            + "{\n"
+                            + colors.ENDC
+                        )
+                        self.indentation += 1
+                        basic_blocks_str += self._basic_block_recursive(edge_basic_block)
+                # Handle empty else condition block
+                except Exception:
+                    pass
+                self.indentation -= 1
+                basic_blocks_str += colors.GREEN + "\t" * self.indentation + "}\n" + colors.ENDC
 
         return basic_blocks_str
 
