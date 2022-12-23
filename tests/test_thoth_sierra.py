@@ -1,21 +1,21 @@
 import glob
 import sys
 import unittest
-from sierra import config
 
+from sierra import config
 from sierra.parser.parser import SierraParser
 
 
-class TestDisassembler(unittest.TestCase):
+class TestSierra(unittest.TestCase):
     """
     Testing class
     """
 
-    def test_disassembler_no_file_should_crash(self):
+    def test_parser_no_file_should_crash(self):
         """
-        Test the disassembler on all files
+        Test the parser on all files
         """
-        all_test = glob.glob("/home/rog3r/Bureau/thoth/tests/sierra_files/*")
+        all_test = glob.glob("./tests/sierra_files/*")
         crash = 0
         f = open("/dev/null", "w")
         save_stdout = sys.stdout
