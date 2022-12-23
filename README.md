@@ -28,7 +28,7 @@ thoth -h
 # Remote contrat deployed on starknet (mainnet/goerli)
 thoth remote --address 0x0323D18E2401DDe9aFFE1908e9863cbfE523791690F32a2ff6aa66959841D31D --network mainnet -d
 # Local contract compiled locally (JSON file)
-thoth local tests/json_files/cairo_test_addition_if.json -d
+thoth local tests/json_files/cairo_0/cairo_test_addition_if.json -d
 ```
 
 Example 1 with strings:
@@ -52,9 +52,9 @@ Example 2 with function call:
 The call flow graph represents calling relationships between functions of the contract. We tried to provide a maximum of information, such as the entry-point functions, the imports, decorators, etc.
 
 ``` python
-thoth local tests/json_files/cairo_array_sum.json -call -view
+thoth local tests/json_files/cairo_0/cairo_array_sum.json -call -view
 # For a specific output format (pdf/svg/png):
-thoth local tests/json_files/cairo_array_sum.json -call -view -format png
+thoth local tests/json_files/cairo_0/cairo_array_sum.json -call -view -format png
 ```
 The output file (pdf/svg/png) and the dot file are inside the `output-callgraph` folder.
 If needed, you can also visualize dot files online using [this](https://dreampuf.github.io/GraphvizOnline/) website. The legend can be found [here](images/callgraph_legend.png).
@@ -87,31 +87,31 @@ The static analysis is performed using *analyzers* which can be either informati
 
 #### Run all the analyzers
 ``` python
-thoth local tests/json_files/cairo_array_sum.json -a
+thoth local tests/json_files/cairo_0/cairo_array_sum.json -a
 ```
 
 #### Selects which analyzers to run
 ``` python
-thoth local tests/json_files/cairo_array_sum.json -a erc20 erc721
+thoth local tests/json_files/cairo_0/cairo_array_sum.json -a erc20 erc721
 ```
 
 #### Only run a specific category of analyzers
 ``` python
-thoth local tests/json_files/cairo_array_sum.json -a security
-thoth local tests/json_files/cairo_array_sum.json -a optimization
-thoth local tests/json_files/cairo_array_sum.json -a analytics
+thoth local tests/json_files/cairo_0/cairo_array_sum.json -a security
+thoth local tests/json_files/cairo_0/cairo_array_sum.json -a optimization
+thoth local tests/json_files/cairo_0/cairo_array_sum.json -a analytics
 ```
 
 #### Print a list of all the availables analyzers
 ```
-thoth local tests/json_files/cairo_array_sum.json --analyzers-help
+thoth local tests/json_files/cairo_0/cairo_array_sum.json --analyzers-help
 ```
 
 ## Use the symbolic execution 
 
 ``` python
 # List all assigned variables using the `assignations` analyzer or using the decompiler `-d`
-thoth local tests/json_files/cairo_test_symbolic_execution.json -a assignations
+thoth local tests/json_files/cairo_0/cairo_test_symbolic_execution.json -a assignations
 [Optimization] Assignations 
   -  v4 = v0_x + -10
   -  v5 = v0_x + -20
@@ -124,12 +124,12 @@ thoth local tests/json_files/cairo_test_symbolic_execution.json -a assignations
 [+] 1 analyzer was run (1 detected)
 
 # Solve the variables values with contraints 
-thoth local tests/json_files/cairo_test_symbolic_execution.json --symbolic -function __main__.test_symbolic_execution -constraint v4==0 v6==0 -solve v0_x v1_y
+thoth local tests/json_files/cairo_0/cairo_test_symbolic_execution.json --symbolic -function __main__.test_symbolic_execution -constraint v4==0 v6==0 -solve v0_x v1_y
 v0_x: 10
 v1_y: 15
 
 # Replace a variable using the -variable flag 
-thoth local tests/json_files/cairo_test_symbolic_execution_3.json --symbolic -function __main__.test_symbolic_execution -constraint v13==0 v14==0 v15==0  -solve v0_f v1_u v2_z v3_z2 -variables v3_z2=26  
+thoth local tests/json_files/cairo_0/cairo_test_symbolic_execution_3.json --symbolic -function __main__.test_symbolic_execution -constraint v13==0 v14==0 v15==0  -solve v0_f v1_u v2_z v3_z2 -variables v3_z2=26  
 v0_f: 102
 v1_u: 117
 v2_z: 122
@@ -147,7 +147,7 @@ Or with a more complex case:
 Solve the variables arguments values with the symbolic execution:
 
 ```python
-thoth local tests/json_files/cairo_test_symbolic_execution_3.json --symbolic -function __main__.test_symbolic_execution -constraint v13==0 v14==0 v15==0 v16==0 v17==0 v18==0 v19==0 v20==0 v21==0 v22==0 v23==0 -solve v0_f v1_u v2_z v3_z2 v4_i v5_n v6_g v7_l v8_a v9_b v10_s
+thoth local tests/json_files/cairo_0/cairo_test_symbolic_execution_3.json --symbolic -function __main__.test_symbolic_execution -constraint v13==0 v14==0 v15==0 v16==0 v17==0 v18==0 v19==0 v20==0 v21==0 v22==0 v23==0 -solve v0_f v1_u v2_z v3_z2 v4_i v5_n v6_g v7_l v8_a v9_b v10_s
 
 v0_f: 102
 v10_s: 115
@@ -165,9 +165,9 @@ v9_b: 98
 ## Print the contract's data-flow graph (DFG)
 
 ``` python
-thoth local tests/json_files/cairo_double_function_and_if.json -dfg -view
+thoth local tests/json_files/cairo_0/cairo_double_function_and_if.json -dfg -view
 # For a specific output format (pdf/svg/png):
-thoth local tests/json_files/cairo_double_function_and_if.json -dfg -view -format png
+thoth local tests/json_files/cairo_0/cairo_double_function_and_if.json -dfg -view -format png
 # For tainting visualization:
 thoth remote --address 0x069e40D2c88F479c86aB3E379Da958c75724eC1d5b7285E14e7bA44FD2f746A8 -n mainnet  -dfg -view --taint
 ```
@@ -187,11 +187,11 @@ The output file (pdf/svg/png) and the dot file are inside the `output-dfg` folde
 # Remote contrat deployed on starknet (mainnet/goerli)
 thoth remote --address 0x0323D18E2401DDe9aFFE1908e9863cbfE523791690F32a2ff6aa66959841D31D --network mainnet -b
 # Local contract compiled locally (JSON file)
-thoth local tests/json_files/cairo_array_sum.json -b
+thoth local tests/json_files/cairo_0/cairo_array_sum.json -b
 # To get a pretty colored version:
-thoth local tests/json_files/cairo_array_sum.json -b -color
+thoth local tests/json_files/cairo_0/cairo_array_sum.json -b -color
 # To get a verbose version with more details about decoded bytecodes:
-thoth local tests/json_files/cairo_array_sum.json -vvv
+thoth local tests/json_files/cairo_0/cairo_array_sum.json -vvv
 ```
 
 <p align="center">
@@ -201,11 +201,11 @@ thoth local tests/json_files/cairo_array_sum.json -vvv
 ## Print the contract's control-flow graph (CFG)
 
 ``` python
-thoth local tests/json_files/cairo_double_function_and_if.json -cfg -view
+thoth local tests/json_files/cairo_0/cairo_double_function_and_if.json -cfg -view
 # For a specific function:
-thoth local tests/json_files/cairo_double_function_and_if.json -cfg -view -function "__main__.main"
+thoth local tests/json_files/cairo_0/cairo_double_function_and_if.json -cfg -view -function "__main__.main"
 # For a specific output format (pdf/svg/png):
-thoth local tests/json_files/cairo_double_function_and_if.json -cfg -view -format png
+thoth local tests/json_files/cairo_0/cairo_double_function_and_if.json -cfg -view -format png
 ```
 The output file (pdf/svg/png) and the dot file are inside the `output-cfg` folder.
 
