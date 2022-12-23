@@ -33,7 +33,7 @@ class SierraType:
     @property
     def formatted_type(self) -> str:
         formatted_type = colors.WARNING + "type %s " % self.id + colors.ENDC
-        if self.long_id is not None:
+        if self.long_id is not None and self.long_id != self.id:
             formatted_type += "(%s)" % self.long_id
         return formatted_type
 

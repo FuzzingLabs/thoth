@@ -4,10 +4,13 @@
 
 program: type_declaration* libfunc_declaration* statement* function*
 
+more_than: ">" 
+less_than: "<" 
+
 // Parse type declarations
 ?type_declaration: "type" concrete_type_id "=" concrete_type_long_id";"
 concrete_type_long_id: generic_type_id
-                     | generic_type_id"<"generic_args">"
+                     | generic_type_id less_than generic_args more_than 
 
 generic_type_id: path_label
                | "["unsigned_int"]"
@@ -21,7 +24,7 @@ concrete_type_ids: (concrete_type_id", ")*concrete_type_id
 // Parse libfunc declarations
 ?libfunc_declaration: "libfunc" concrete_libfunc_id "=" concrete_libfunc_long_id";"
 concrete_libfunc_long_id: generic_libfunc_id
-                        | generic_libfunc_id"<"generic_args">"
+                        | generic_libfunc_id less_than generic_args more_than 
 
 generic_libfunc_id: path_label
                   | "["unsigned_int"]"
@@ -80,15 +83,17 @@ branch_target: fallthrough
 
 basic_label: /[a-zA-Z_][a-zA-Z_0-9]*/
 
+two_dots: "::"
+
 path_label: basic_label
-          | path_label"::"basic_label
+          | path_label two_dots basic_label
 
 generic_args_string: generic_arg
                   | generic_args_string", "generic_arg
 
-concrete_label: path_label"::""<"generic_args_string">"
-              | path_label"::""<("generic_args_string")>"
-              | path_label"<"generic_args_string">"
+concrete_label: path_label two_dots  less_than generic_args_string more_than 
+              | path_label two_dots "<("generic_args_string")>"
+              | path_label less_than generic_args_string more_than 
               | path_label
 
 big_int: /-?[1-9][0-9]*|0/
