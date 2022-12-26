@@ -1,5 +1,11 @@
 from graphviz import Digraph
 from typing import List, Tuple
+from sierra.config import (
+    EDGE_CONDITIONAL_FALSE_COLOR,
+    EDGE_CONDITIONAL_TRUE_COLOR,
+    EDGE_FALLTHROUGH_COLOR,
+    EDGE_UNCONDITIONAL_COLOR,
+)
 
 from sierra.utils import colors
 
@@ -301,7 +307,7 @@ class SierraControlFlowGraph:
         basic_blocks_offsets = [b.start_offset for b in self.basic_blocks]
         for block in self.basic_blocks:
             # Create all the basicblock nodes
-            shape = "square"
+            shape = "rectangle"
             label_instruction = ""
             for statement in block.statements:
                 label_instruction += str(statement.offset) + " : " + statement.raw_statement + "\\l"
@@ -312,16 +318,16 @@ class SierraControlFlowGraph:
                 offset = edge.destination
                 # If branch
                 if edge.type == EDGE_CONDITIONAL_TRUE:
-                    color = "green"
+                    color = EDGE_CONDITIONAL_TRUE_COLOR
                 # Else branch
                 elif edge.type == EDGE_CONDITIONAL_FALSE:
-                    color = "red"
+                    color = EDGE_CONDITIONAL_FALSE_COLOR
                 # Jump
                 elif edge.type == EDGE_UNCONDITIONAL:
-                    color = "blue"
+                    color = EDGE_UNCONDITIONAL_COLOR
                 # Fallthrough
                 else:
-                    color = "black"
+                    color = EDGE_FALLTHROUGH_COLOR
 
                 if offset in basic_blocks_offsets:
                     self.dot.edge(

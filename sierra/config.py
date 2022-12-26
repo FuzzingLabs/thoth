@@ -28,6 +28,11 @@ CFG_EDGE_ATTR = {
     "penwidth": "2",
 }
 
+EDGE_CONDITIONAL_TRUE_COLOR = "green"
+EDGE_CONDITIONAL_FALSE_COLOR = "red"
+EDGE_UNCONDITIONAL_COLOR = "blue"
+EDGE_FALLTHROUGH_COLOR = "black"
+
 # Call graph configuration
 CALLGRAPH_CONFIG = {
     "default": {
@@ -62,7 +67,7 @@ CALLGRAPH_EDGE_ATTR = {
 }
 
 # User defined functions color
-CALLGRAPH_USER_DEFINED_FUNCTIONS_COLOR = "lightskyblue"
+CALLGRAPH_USER_DEFINED_FUNCTIONS_COLOR = "#95D2B3"
 
 # Libfunc colors
-CALLGRAPH_LIBFUNCS_COLOR = "salmon"
+CALLGRAPH_LIBFUNCS_COLOR = "#E86356"

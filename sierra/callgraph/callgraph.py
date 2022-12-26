@@ -74,7 +74,9 @@ class SierraCallGraph:
                     else:
                         called_function_name = self.sanitize_name(called_function.id)
                     self.dot.node(
-                        name=called_function_name, shape="oval", fillcolor=CALLGRAPH_LIBFUNCS_COLOR
+                        name=called_function_name,
+                        shape="ellipse",
+                        fillcolor=CALLGRAPH_LIBFUNCS_COLOR,
                     )
 
                 # Create an edge between the source function and the called function
