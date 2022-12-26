@@ -170,7 +170,7 @@ class SierraDecompiler:
             for basic_block in basic_blocks:
                 # Iniialize indentation
                 self.indentation = 1
-                
+
                 # Decompile the basic block
                 decompiled_code += self._basic_block_recursive(basic_block=basic_block)
             decompiled_code += colors.GREEN + "}" + colors.ENDC
