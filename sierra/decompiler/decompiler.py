@@ -163,14 +163,14 @@ class SierraDecompiler:
             # Prototype
             function_prototype = self.current_function.prototype
             # Function body
-            decompiled_code += colors.HEADER + function_prototype + colors.ENDC + "\n"
+            decompiled_code += function_prototype + "\n"
             decompiled_code += colors.GREEN + "{" + colors.ENDC
             decompiled_code += "\n"
             basic_blocks = self.current_function.cfg.basic_blocks
             for basic_block in basic_blocks:
                 # Iniialize indentation
                 self.indentation = 1
-                
+
                 # Decompile the basic block
                 decompiled_code += self._basic_block_recursive(basic_block=basic_block)
             decompiled_code += colors.GREEN + "}" + colors.ENDC

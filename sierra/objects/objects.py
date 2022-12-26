@@ -94,11 +94,18 @@ class SierraFunction:
         """
 
         # Prototype elements
-        function_name = self.id
+        function_name = f"{colors.BOLD}{self.id}{colors.ENDC}"
         function_arguments = ", ".join(
-            ["%s: %s" % (a.representation_name, a.type.id) for a in self.parameters]
+            [
+                f"{colors.HEADER}{a.representation_name}{colors.ENDC}: {colors.WARNING}{a.type.id}{colors.ENDC}"
+                for a in self.parameters
+            ]
         )
-        function_return_values = "(" + ", ".join([t.id for t in self.return_values_types]) + ")"
+        function_return_values = (
+            "("
+            + ", ".join([f"{colors.WARNING}{t.id}{colors.ENDC}" for t in self.return_values_types])
+            + ")"
+        )
 
         # Format the prototype
         prototype = "func %s (%s) -> %s" % (
@@ -352,7 +359,7 @@ class SierraVariableAssignation(SierraStatement):
     def formatted_statement(self):
         function_arguments = ", ".join([v.representation_name for v in self.libfunc_arguments])
         function_call = "%s%s%s(%s)" % (
-            colors.CYAN,
+            colors.BLUE,
             self.function.id,
             colors.ENDC,
             function_arguments,

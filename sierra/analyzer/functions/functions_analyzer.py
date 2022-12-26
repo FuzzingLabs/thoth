@@ -28,6 +28,6 @@ class FunctionsAnalyzer(AbstractAnalyzer):
 
         # Print the functions prototypes
         for function in contract_functions:
-            self.result.append(colors.HEADER + function.prototype + colors.ENDC)
+            self.result.append(function.prototype)
 
         return self.detected
