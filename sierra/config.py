@@ -8,8 +8,10 @@ SIERRA_LARK_PARSER_PATH = "{}/parser/sierra.lark".format(
 CFG_NODE_ATTR = {
     "style": "filled, solid",
     "shape": "rect, plaintext",
-    "color": "gray95",
+    "color": "#9E9E9E",
+    "fillcolor": "#F5F5F5",
     "fontname": "Helvetica,Arial,sans-serif",
+    "margin": "0.2",
 }
 
 CFG_GRAPH_ATTR = {
@@ -28,10 +30,10 @@ CFG_EDGE_ATTR = {
     "penwidth": "2",
 }
 
-EDGE_CONDITIONAL_TRUE_COLOR = "green"
-EDGE_CONDITIONAL_FALSE_COLOR = "red"
-EDGE_UNCONDITIONAL_COLOR = "blue"
-EDGE_FALLTHROUGH_COLOR = "black"
+EDGE_CONDITIONAL_TRUE_COLOR = "#8BC34A"
+EDGE_CONDITIONAL_FALSE_COLOR = "#C62828"
+EDGE_UNCONDITIONAL_COLOR = "#0D47A1"
+EDGE_FALLTHROUGH_COLOR = "#212121"
 
 # Call graph configuration
 CALLGRAPH_CONFIG = {
