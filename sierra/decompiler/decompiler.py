@@ -112,7 +112,8 @@ class SierraDecompiler:
                 except Exception:
                     pass
                 self.indentation -= 1
-                basic_blocks_str += colors.GREEN + "\t" * self.indentation + "}\n" + colors.ENDC
+                if basic_blocks_str:
+                    basic_blocks_str += colors.GREEN + "\t" * self.indentation + "}\n" + colors.ENDC
 
         return basic_blocks_str
 
@@ -159,9 +160,6 @@ class SierraDecompiler:
         for i in range(len(functions)):
             self.current_function = functions[i]
 
-            # Iniialize indentation
-            self.indentation = 1
-
             # Prototype
             function_prototype = self.current_function.prototype
             # Function body
@@ -170,6 +168,10 @@ class SierraDecompiler:
             decompiled_code += "\n"
             basic_blocks = self.current_function.cfg.basic_blocks
             for basic_block in basic_blocks:
+                # Iniialize indentation
+                self.indentation = 1
+                
+                # Decompile the basic block
                 decompiled_code += self._basic_block_recursive(basic_block=basic_block)
             decompiled_code += colors.GREEN + "}" + colors.ENDC
 
