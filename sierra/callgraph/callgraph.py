@@ -57,7 +57,7 @@ class SierraCallGraph:
                 if self._is_user_defined_function(called_function.id):
                     # Create a node for an user defined function
                     called_function_name = USER_DEFINED_FUNCTION_REGEXP.match(
-                        called_function.id
+                        called_function.name
                     ).group(2)
                     called_function_name = self.sanitize_name(called_function_name)
                     self.dot.node(
@@ -69,7 +69,10 @@ class SierraCallGraph:
                 # Call to a libfunc function
                 else:
                     # Create a node for a libfunc
-                    called_function_name = self.sanitize_name(called_function.id)
+                    if called_function.name != called_function.id:
+                        called_function_name = self.sanitize_name(called_function.name)
+                    else:
+                        called_function_name = self.sanitize_name(called_function.id)
                     self.dot.node(
                         name=called_function_name, shape="oval", fillcolor=CALLGRAPH_LIBFUNCS_COLOR
                     )
