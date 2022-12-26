@@ -160,6 +160,9 @@ class SierraDecompiler:
         for i in range(len(functions)):
             self.current_function = functions[i]
 
+            # Print the function number as a comment
+            decompiled_code += colors.MAGENTA + "// Function %s\n" % str(i + 1) + colors.ENDC
+
             # Prototype
             function_prototype = self.current_function.prototype
             # Function body
