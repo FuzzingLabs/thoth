@@ -1,0 +1,21 @@
+type Unit = Struct<ut@Tuple>;
+
+libfunc struct_construct<Unit> = struct_construct<Unit>;
+libfunc store_temp<Unit> = store_temp<Unit>;
+libfunc rename<Unit> = rename<Unit>;
+libfunc function_call<user@cairo_call::cairo_call::function> = function_call<user@cairo_call::cairo_call::function>;
+libfunc drop<Unit> = drop<Unit>;
+
+struct_construct<Unit>() -> ([0]);
+store_temp<Unit>([0]) -> ([0]);
+rename<Unit>([0]) -> ([1]);
+return([1]);
+function_call<user@cairo_call::cairo_call::function>() -> ([0]);
+drop<Unit>([0]) -> ();
+struct_construct<Unit>() -> ([1]);
+store_temp<Unit>([1]) -> ([1]);
+rename<Unit>([1]) -> ([2]);
+return([2]);
+
+cairo_call::cairo_call::function@0() -> (Unit);
+cairo_call::cairo_call::call_ret@4() -> (Unit);
