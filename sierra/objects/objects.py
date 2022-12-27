@@ -302,7 +302,7 @@ class SierraControlFlowGraph:
         cluster_name = "cluster_%s" % self.function.id
         self.dot = Digraph(cluster_name, comment=cluster_name)
         self.dot.attr(label=cluster_name)
-        # dot.attr('graph', splines='ortho', nodesep='1')
+
         # Create the basic blocks labels
         basic_blocks_offsets = [b.start_offset for b in self.basic_blocks]
         for block in self.basic_blocks:
@@ -334,7 +334,6 @@ class SierraControlFlowGraph:
                         SierraBasicBlock._name(block.start_offset),
                         SierraBasicBlock._name(offset),
                         color=color,
-                        splines="ortho",
                     )
 
     def _get_cfg(self) -> str:
