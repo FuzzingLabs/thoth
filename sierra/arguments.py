@@ -25,7 +25,7 @@ def parse_arguments() -> argparse.Namespace:
     """
     )
 
-    # Add arguments
+    # Global arguments
     parser.add_argument(
         "-f",
         "--file",
@@ -41,6 +41,7 @@ def parse_arguments() -> argparse.Namespace:
         default="pdf",
     )
 
+    # CFG
     cfg = parser.add_argument_group("Call-Flow Graph")
     cfg.add_argument("--cfg", help="Generate a control-flow graph", action="store_true")
     cfg.add_argument(
@@ -50,6 +51,7 @@ def parse_arguments() -> argparse.Namespace:
         help="Set the output folder of the CFG (default is ./output-cfg)",
     )
 
+    # Callgraph
     callgraph = parser.add_argument_group("Call-Graph")
     callgraph.add_argument("--call", help="Generate a call-graph", action="store_true")
     callgraph.add_argument(
@@ -59,7 +61,7 @@ def parse_arguments() -> argparse.Namespace:
         help="Set the output folder of the Call-Graph (default is ./output-callgraph)",
     )
 
-    # Analyser
+    # Analyzers
     analyzers_names = [analyzer.ARGUMENT for analyzer in all_analyzers]
     analyzers_categories_names = list(
         [category.lower() for category in category_classification_text.values()]
