@@ -43,7 +43,7 @@ thoth-sierra -f ./tests/sierra_files/fib_box.sierra --cfg --format png
 ## Run the analyzers
 
 ```
-thoth local tests/json_files/cairo_array_sum.json -a
+thoth-sierra -f tests/sierra_files/cairo_if_list.sierra -a
 ```
 <p align="center">
 	<img src="/images/thoth-sierra/thoth_sierra_analyzers.png" height="250"/>
