@@ -12,6 +12,7 @@ Thoth (pronounced "taut" or "toss") is a Cairo/Starknet analyzer, disassembler &
 - **[Data Flow analysis](#print-the-contracts-data-flow-graph-dfg)**: Thoth can generate a **Data Flow Graph** (DFG) for each function
 - **[Disassembler](#disassemble-the-contracts-compilation-artifact-json)**: Thoth can translate bytecode into assembly representation
 - **[Control Flow analysis](#print-the-contracts-control-flow-graph-cfg)**: Thoth can generate a **Control Flow Graph** (CFG)
+- **[Sierra files analysis](https://github.com/FuzzingLabs/thoth/blob/master/sierra/README.md)** : Thoth can analyze **Sierra** files 
 
 ## Installation
  
