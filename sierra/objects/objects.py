@@ -64,7 +64,7 @@ class SierraVariable:
 
     def __init__(self, name: int, type: SierraType = None) -> None:
         self.name = name
-        self.representation_name = "var_%s" % self.name
+        self.representation_name = "%s" % self.name
         self.type = type
 
 
