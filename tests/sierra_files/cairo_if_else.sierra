@@ -1,0 +1,31 @@
+type felt = felt;
+type NonZero<felt> = NonZero<felt>;
+type Unit = Struct<ut@Tuple>;
+
+libfunc felt_const<1> = felt_const<1>;
+libfunc store_temp<felt> = store_temp<felt>;
+libfunc felt_sub = felt_sub;
+libfunc felt_jump_nz = felt_jump_nz;
+libfunc branch_align = branch_align;
+libfunc jump = jump;
+libfunc drop<NonZero<felt>> = drop<NonZero<felt>>;
+libfunc struct_construct<Unit> = struct_construct<Unit>;
+libfunc store_temp<Unit> = store_temp<Unit>;
+libfunc rename<Unit> = rename<Unit>;
+
+felt_const<1>() -> ([0]);
+felt_const<1>() -> ([1]);
+store_temp<felt>([0]) -> ([0]);
+felt_sub([0], [1]) -> ([2]);
+store_temp<felt>([2]) -> ([2]);
+felt_jump_nz([2]) { fallthrough() 8([3]) };
+branch_align() -> ();
+jump() { 10() };
+drop<NonZero<felt>>([3]) -> ();
+branch_align() -> ();
+struct_construct<Unit>() -> ([4]);
+store_temp<Unit>([4]) -> ([4]);
+rename<Unit>([4]) -> ([5]);
+return([5]);
+
+cairo_if_else::cairo_if_else::call_if_else@0() -> (Unit);

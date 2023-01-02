@@ -15,16 +15,15 @@ setup(
     version=__version__,
     packages=find_packages(),
     python_requires=">=3.6",
-    install_requires=[
-        "z3-solver",
-        "graphviz",
-    ],
+    install_requires=["z3-solver", "graphviz", "lark"],
+    include_package_data=True,
+    package_data={
+        "": ["/sierra/parser/*"],
+    },
     license="AGPL-3.0",
     long_description=long_description,
     long_description_content_type="text/markdown",
     entry_points={
-        "console_scripts": [
-            "thoth = thoth.thoth:main",
-        ]
+        "console_scripts": ["thoth = thoth.thoth:main", "thoth-sierra = sierra.thoth_sierra:main"]
     },
 )
