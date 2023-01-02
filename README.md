@@ -124,8 +124,12 @@ thoth local tests/json_files/cairo_0/cairo_test_symbolic_execution.json -a assig
 
 [+] 1 analyzer was run (1 detected)
 
+# Set variables with a custom value
+thoth local tests/json_files/cairo_test_symbolic_execution.json --symbolic -function __main__.test_symbolic_execution -variables v0_x=1 -constraint v4==0 v6==0 -solve v1_y
+
 # Solve the variables values with contraints 
 thoth local tests/json_files/cairo_0/cairo_test_symbolic_execution.json --symbolic -function __main__.test_symbolic_execution -constraint v4==0 v6==0 -solve v0_x v1_y
+
 v0_x: 10
 v1_y: 15
 
