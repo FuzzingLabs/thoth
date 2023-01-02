@@ -136,6 +136,16 @@ v1_u: 117
 v2_z: 122
 v3_z2: 26
 
+# Find the right values for the variables to pass the assertions
+thoth local ./tests/json_files/cairo_0/cairo_test_symbolic_execution_4.json  --symbolic -function __main__.test_symbolic_execution -solve v2 v3 v4 v5 v6 v7 v8 v9 -assertions
+v2: 102
+v3: 117
+v4: 122
+v5: 122
+v6: 105
+v7: 110
+v8: 103
+v9: 108
 ```
 
 Or with a more complex case:

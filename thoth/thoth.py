@@ -123,6 +123,7 @@ def main() -> int:
             print(
                 "Symbolic execution: You need to set the -constraint flag e.g. - constraint v1==0 v2==0"
             )
+            return 1
 
         contract_functions = disassembler.functions
         decompiler = Decompiler(functions=contract_functions)
