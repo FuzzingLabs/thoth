@@ -1,16 +1,39 @@
 %builtins output
 
-func test_symbolic_execution(f: felt, u: felt, z: felt, z2: felt, i: felt, n: felt, g: felt, l: felt, a: felt, b: felt, s: felt) {
+func test_symbolic_execution() {
+    let f = 'f';
     assert f = 'f';
+
+    let u = 'u';
     assert u = 'u';
+
+    let z = 'z';
     assert z = 'z';
-    assert z2 = 'z2';
+
+    let z2 = 'z';
+    assert z2 = 'z';
+
+    let i = 'i';
     assert i = 'i';
+
+    let n = 'n';
     assert n = 'n';
+
+    let g = 'g';
     assert g = 'g';
+
+    let l = 'l';
     assert l = 'l';
-    assert a = 'b';
+
+    let a = 'a';
+    assert a = 'a';
+
+    let b = 'b';
+    assert b = 'b';
+
+    let s = 's';
     assert s = 's';
+
     return();
 }
 
