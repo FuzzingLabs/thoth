@@ -30,7 +30,9 @@ class TestCasesGeneratorAnalyzer(AbstractAnalyzer):
         decompiler = Decompiler(functions=contract_functions)
         decompiler.decompile_code(first_pass_only=True)
 
-        symbex = SymbolicExecution(decompiler.ssa.memory)
+        symbex = SymbolicExecution(
+            variables=decompiler.ssa.memory, assertions=decompiler.assertions
+        )
 
         for function in contract_functions:
             if function.is_import:

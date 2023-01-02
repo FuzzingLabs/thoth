@@ -42,6 +42,7 @@ class Decompiler:
         self.ssa = SSA()
         self.defined_variables: List[Variable] = []
         self.assertion = False
+        self.assertions = []
         self.current_basic_block: Optional[BasicBlock] = None
         self.first_pass = True
         self.block_new_variables = 0
@@ -141,7 +142,7 @@ class Decompiler:
         source_code = ""
 
         for function in self.functions:
-            # self.first_pass = True
+
             self.current_function = function
             self.tab_count = 0
             count = 0
@@ -247,4 +248,5 @@ class Decompiler:
 
         # Remove useless spaces
         source_code = source_code.strip()
+
         return source_code

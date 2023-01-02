@@ -11,11 +11,13 @@ class SymbolicExecution:
     Symbolic execution class
     """
 
-    def __init__(self, variables: List[Variable]) -> None:
+    def __init__(self, variables: List[Variable], assertions: List) -> None:
         self.solver = z3.Solver()
         self.variables: List[Variable] = variables
         self.z3_variables: List[ArithRef] = []
         self.constraints: List[ArithRef] = []
+        # Assertions
+        self.assertions = assertions
 
     def _create_z3_variables(self) -> None:
         """
@@ -216,6 +218,9 @@ class SymbolicExecution:
             self._create_z3_variables()
             # Create operations
             self._create_operations(path_variables)
+            # Assertions constraints
+            self.assertions_constraints = self._get_assertions_constraints()
+
             # Load variables values defined in CLI into Z3
             for variable in variables_values_list:
                 variable_name = [v for v in self.z3_variables if str(v) == variable[0][0]][0]
@@ -242,6 +247,15 @@ class SymbolicExecution:
                 result = sorted(result)
                 return result
         return []
+
+    def _get_assertions_constraints(self) -> List[ArithRef]:
+        """
+        Add the assertions to the constraints
+        """
+
+        for assertion in self.assertions:
+            variable_name = [v for v in self.z3_variables if assertion[0] == str(v)][0]
+            self.solver.add(variable_name == int(assertion[1]))
 
     def _generate_test_cases(self, function: Function) -> List[Tuple[str, int]]:
         """

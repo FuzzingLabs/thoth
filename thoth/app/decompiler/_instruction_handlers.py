@@ -21,6 +21,8 @@ def _handle_assert_eq_decomp(self, instruction: Instruction) -> str:
     source_code = ""
     is_assert = ""
     equal = "="
+    assertion = []
+
     # Generate the phi function representation
     phi_node_variables = []
 
@@ -77,6 +79,9 @@ def _handle_assert_eq_decomp(self, instruction: Instruction) -> str:
                 f"{is_assert}{variable[1]} {equal} {variable_value}",
                 color=utils.color.GREEN,
             )
+            if is_assert:
+                assertion = [variable[1], variable_value]
+
             # Variable value (hex or string)
             source_code += self.print_instruction_decomp(
                 f"// {value}",
@@ -121,6 +126,7 @@ def _handle_assert_eq_decomp(self, instruction: Instruction) -> str:
                 f"{is_assert}{variable[1]} {equal} [{operand}{sign}{value_off2}]",
                 color=utils.color.GREEN,
             )
+
         # <variable> = <variable>
         else:
             variable = self.ssa.get_variable(destination_register, destination_offset)
@@ -248,6 +254,9 @@ def _handle_assert_eq_decomp(self, instruction: Instruction) -> str:
     variable[2].function = self.current_function
     # Set variable basic block ID for the symbolic execution
     variable[2].basic_block_id = self.current_basic_block.id
+
+    if assertion:
+        self.assertions.append(assertion)
 
     return source_code
 
