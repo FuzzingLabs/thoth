@@ -446,7 +446,7 @@ class TestDisassembler(unittest.TestCase):
         decompiler = Decompiler(functions=contract_functions)
         decompiler.decompile_code(first_pass_only=True)
 
-        symbex = SymbolicExecution(decompiler.ssa.memory)
+        symbex = SymbolicExecution(variables=decompiler.ssa.memory, assertions=[])
 
         main_function = [
             f for f in contract_functions if f.name == "__main__.test_symbolic_execution"
@@ -479,7 +479,7 @@ class TestDisassembler(unittest.TestCase):
         decompiler = Decompiler(functions=contract_functions)
         decompiler.decompile_code(first_pass_only=True)
 
-        symbex = SymbolicExecution(decompiler.ssa.memory)
+        symbex = SymbolicExecution(variables=decompiler.ssa.memory, assertions=[])
 
         main_function = [
             f for f in contract_functions if f.name == "__main__.test_symbolic_execution"

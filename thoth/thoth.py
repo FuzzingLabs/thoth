@@ -119,16 +119,18 @@ def main() -> int:
         if not args.solve:
             print("Symbolic execution: You need to set the -solve flag, e.g. -solve v1 v2 v3")
             return 1
-        if not args.constraint:
+        if not args.constraint and not args.assertions:
             print(
                 "Symbolic execution: You need to set the -constraint flag e.g. - constraint v1==0 v2==0"
             )
+            return 1
 
         contract_functions = disassembler.functions
         decompiler = Decompiler(functions=contract_functions)
         decompiler.decompile_code(first_pass_only=True)
 
-        symbex = SymbolicExecution(decompiler.ssa.memory)
+        assertions = decompiler.assertions if args.assertions else []
+        symbex = SymbolicExecution(variables=decompiler.ssa.memory, assertions=assertions)
 
         try:
             function = [f for f in disassembler.functions if f.name == args.function][0]
