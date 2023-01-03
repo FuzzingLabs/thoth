@@ -85,7 +85,7 @@ class SymbolicExecution:
                     second_operand = int(operation[2].value)
                 else:
                     second_operand = [
-                        v for v in self.z3_variables if str(v) == operation[0].value[0]
+                        v for v in self.z3_variables if str(v) == operation[2].value[0]
                     ][0]
 
                 # Operation
@@ -233,6 +233,7 @@ class SymbolicExecution:
                     self.solver.add(variable_name == int(constraint[0][2]))
                 except:
                     continue
+
             # Solve the constraints
             if self.solver.check() == z3.sat:
                 model = self.solver.model()
