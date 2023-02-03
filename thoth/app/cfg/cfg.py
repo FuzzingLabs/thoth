@@ -236,7 +236,6 @@ class CFG:
 
         # Build the edges btw basicblocks
         for block in self.basicblocks:
-
             # Create all the basicblock nodes
             shape = "square"
             label_instruction = ""

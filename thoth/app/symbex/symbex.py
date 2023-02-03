@@ -33,7 +33,6 @@ class SymbolicExecution:
         Assign variables value in the z3 solver
         """
         for variable in variables:
-
             if variable.value is None:
                 continue
             if variable.value.type == VariableValueType.FUNCTION_CALL:
@@ -171,7 +170,10 @@ class SymbolicExecution:
         Use the symbolic execution to solve a list of constraints
         """
         # Parse the variables and constraints defined with the CLI arguments
-        constraint_regexp = re.compile("(v[0-9]{1,4}(_[a-zA-Z0-9_]+)?)==([0-9]+)")
+        variable_regexp = re.compile("v[0-9]{1,4}")
+        constraint_regexp = re.compile(
+            "(v[0-9]{1,4}(_[a-zA-Z0-9_]+)?)((==)|(!=))(([0-9]+)|(v[0-9]{1,4}))"
+        )
         variable_value_regexp = re.compile("(v[0-9]{1,4}(_[a-zA-Z0-9_]+)?)=([0-9]+)")
         solve_regexp = re.compile("(v[0-9]{1,4}(_[a-zA-Z0-9_]+)?)")
 
@@ -232,7 +234,22 @@ class SymbolicExecution:
             for constraint in constraints_list:
                 try:
                     variable_name = [v for v in self.z3_variables if str(v) == constraint[0][0]][0]
-                    self.solver.add(variable_name == int(constraint[0][2]))
+
+                    # Constraint with an integer
+                    if constraint[0][6]:
+                        right_side_expression = int(constraint[0][5])
+                    # Constraint with another variable
+                    else:
+                        right_side_expression = [
+                            v for v in self.z3_variables if str(v) == constraint[0][5]
+                        ][0]
+
+                    # Equality constraint
+                    if constraint[0][2] == "==":
+                        self.solver.add(variable_name == right_side_expression)
+                    # Inequality constraint
+                    else:
+                        self.solver.add(variable_name != right_side_expression)
                 except:
                     continue
 

@@ -153,6 +153,7 @@ OPCODE_RET_BIT = 13
 OPCODE_ASSERT_EQ_BIT = 14
 # RESERVED_BIT = 15.
 
+
 # https://github.com/starkware-libs/cairo-lang/blob/4e233516f52477ad158bc81a86ec2760471c1b65/src/starkware/cairo/lang/compiler/encode.py#L131
 def decode_instruction(encoding: int, imm: Optional[int] = None) -> Instruction:
     """Given 1 or 2 integers representing an instruction, returns the Instruction.

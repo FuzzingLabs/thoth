@@ -8,7 +8,6 @@ from sierra.decompiler.decompiler import SierraDecompiler
 
 
 def main() -> None:
-
     args = parse_arguments()
 
     # Show analyzers help
