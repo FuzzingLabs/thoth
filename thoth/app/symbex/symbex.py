@@ -33,7 +33,6 @@ class SymbolicExecution:
         Assign variables value in the z3 solver
         """
         for variable in variables:
-
             if variable.value is None:
                 continue
             if variable.value.type == VariableValueType.FUNCTION_CALL:

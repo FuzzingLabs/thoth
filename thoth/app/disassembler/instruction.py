@@ -173,7 +173,6 @@ class Instruction:
                 )
         # dw statements
         elif self.hint is None and self.imm == "None":
-
             try:
                 dw_value = int(self.off3)
                 assembly += self.print_instruction(f"dw {dw_value}", color=utils.color.BLUE)

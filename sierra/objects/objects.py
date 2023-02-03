@@ -255,7 +255,6 @@ class SierraControlFlowGraph:
             if isinstance(statement, SierraConditionalBranch):
                 # Conditional branch with 2 edges (JNZ)
                 if statement.edge_2_offset is not None:
-
                     current_basic_block.edges.append(
                         Edge(
                             source=statement.offset,

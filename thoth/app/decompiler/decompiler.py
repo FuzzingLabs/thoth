@@ -88,7 +88,6 @@ class Decompiler:
             source_code += self._handle_hint_decomp(instruction)
 
         if "ASSERT_EQ" in instruction.opcode:
-
             source_code += self._handle_assert_eq_decomp(instruction)
             if "REGULAR" not in instruction.apUpdate:
                 op = list(filter(None, re.split(r"(\d+)", instruction.apUpdate)))
@@ -142,7 +141,6 @@ class Decompiler:
         source_code = ""
 
         for function in self.functions:
-
             self.current_function = function
             self.tab_count = 0
             count = 0
@@ -215,7 +213,6 @@ class Decompiler:
 
             self.first_pass = False
             for block in function.cfg.basicblocks:
-
                 self.current_basic_block = block
                 self.block_new_variables = 0
                 instructions = block.instructions

@@ -48,7 +48,6 @@ class CallFlowGraph:
         ]
 
         for function in functions:
-
             # Default values
             shape = self.config["default"]["shape"]
             color = self.config["default"]["color"]

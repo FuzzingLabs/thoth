@@ -107,7 +107,6 @@ def main() -> int:
 
     # Symbolic execution
     if args.symbolic:
-
         # Mandatory arguments (function, solve, constraint)
         if args.function is None:
             print(
