@@ -141,6 +141,11 @@ thoth local tests/json_files/cairo_0/cairo_test_symbolic_execution.json --symbol
 v0_x: 11
 v1_y: 16
 
+# Use variables equalities/inequalities in the constraints 
+thoth local tests/json_files/cairo_0/cairo_test_symbolic_execution.json --symbolic -function __main__.test_symbolic_execution -constraint v4!=v6 -solve v0_x v1_y
+
+v0_x: 1
+
 # Replace a variable using the -variable flag 
 thoth local tests/json_files/cairo_0/cairo_test_symbolic_execution_3.json --symbolic -function __main__.test_symbolic_execution -constraint v13==0 v14==0 v15==0  -solve v0_f v1_u v2_z v3_z2 -variables v3_z2=26  
 v0_f: 102
