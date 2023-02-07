@@ -118,7 +118,6 @@ def main() -> int:
                     symbex_solves,
                 ) = load_symbex_yaml_config(args.config).values()
             except Exception:
-                print("Symbolic execution: Impossible to load the config from %s" % args.config)
                 return 1
         # Load the symbolic execution parameters from the command line
         else:
