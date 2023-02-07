@@ -8,6 +8,7 @@ from thoth.app.arguments import parse_args
 from thoth.app.analyzer import all_analyzers
 from thoth.app.analyzer.abstract_analyzer import category_classification_text
 from thoth.app.disassembler.disassembler import Disassembler
+from thoth.app.utils import load_symbex_yaml_config
 from thoth.app.starknet.starknet import StarkNet
 
 
@@ -107,22 +108,40 @@ def main() -> int:
 
     # Symbolic execution
     if args.symbolic:
-        # Mandatory arguments (function, solve, constraint)
-        if args.function is None:
-            print(
-                "Symbolic execution: You need to set the -function flag e.g. -function __main__.main"
-            )
-            functions_list = [f.name for f in disassembler.functions]
-            print("\nPossible values:\n\t%s" % ("\n\t".join(functions_list)))
-            return 1
-        if not args.solve:
-            print("Symbolic execution: You need to set the -solve flag, e.g. -solve v1 v2 v3")
-            return 1
-        if not args.constraint and not args.assertions:
-            print(
-                "Symbolic execution: You need to set the -constraint flag e.g. - constraint v1==0 v2==0"
-            )
-            return 1
+        # Load the symbolic execution parameters from a config file
+        if args.config:
+            try:
+                (
+                    symbex_function,
+                    symbex_constraints,
+                    symbex_variables,
+                    symbex_solves,
+                ) = load_symbex_yaml_config(args.config).values()
+            except Exception:
+                print("Symbolic execution: Impossible to load the config from %s" % args.config)
+                return 1
+        # Load the symbolic execution parameters from the command line
+        else:
+            # Mandatory arguments (function, solves, constraints)
+            if args.function is None:
+                print(
+                    "Symbolic execution: You need to set the -function flag e.g. -function __main__.main"
+                )
+                functions_list = [f.name for f in disassembler.functions]
+                print("\nPossible values:\n\t%s" % ("\n\t".join(functions_list)))
+                return 1
+            if not args.solves:
+                print("Symbolic execution: You need to set the -solve flag, e.g. -solves v1 v2 v3")
+                return 1
+            if not args.constraints and not args.assertions:
+                print(
+                    "Symbolic execution: You need to set the -constraints flag e.g. - constraints v1==0 v2==0"
+                )
+                return 1
+            symbex_function = args.function
+            symbex_constraints = args.constraints
+            symbex_variables = args.variables
+            symbex_solves = args.solves
 
         contract_functions = disassembler.functions
         decompiler = Decompiler(functions=contract_functions)
@@ -131,15 +150,18 @@ def main() -> int:
         assertions = decompiler.assertions if args.assertions else []
         symbex = SymbolicExecution(variables=decompiler.ssa.memory, assertions=assertions)
 
+        # Function parameter
         try:
-            function = [f for f in disassembler.functions if f.name == args.function][0]
+            function = [f for f in disassembler.functions if f.name == symbex_function][0]
         except:
+            print("Symbolic execution: Function %s doesn't exist" % symbex_function)
             return 1
+
         solve = symbex._solve(
             function=function,
-            constraints=args.constraint,
-            variables_values=args.variables,
-            solves=args.solve,
+            constraints=symbex_constraints,
+            variables_values=symbex_variables,
+            solves=symbex_solves,
         )
         if solve:
             for variable in solve:
