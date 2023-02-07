@@ -112,6 +112,8 @@ thoth local tests/json_files/cairo_0/cairo_array_sum.json --analyzers-help
 
 ## Use the symbolic execution 
 
+#### Using the command-line
+
 ``` python
 # List all assigned variables using the `assignations` analyzer or using the decompiler `-d`
 thoth local tests/json_files/cairo_0/cairo_test_symbolic_execution.json -a assignations
@@ -127,7 +129,7 @@ thoth local tests/json_files/cairo_0/cairo_test_symbolic_execution.json -a assig
 [+] 1 analyzer was run (1 detected)
 
 # Set variables with a custom value
-thoth local tests/json_files/cairo_test_symbolic_execution.json --symbolic -function __main__.test_symbolic_execution -variables v0_x=1 -constraint v4==0 v6==0 -solve v1_y
+thoth local tests/json_files/cairo_0/cairo_test_symbolic_execution.json --symbolic -function __main__.test_symbolic_execution -variables v0_x=1 -constraint v4==0 v6==0 -solve v1_y
 
 # Solve the variables values with constraints 
 thoth local tests/json_files/cairo_0/cairo_test_symbolic_execution.json --symbolic -function __main__.test_symbolic_execution -constraint v4==0 v6==0 -solve v0_x v1_y
@@ -188,6 +190,35 @@ v6_g: 103
 v7_l: 108
 v8_a: 97
 v9_b: 98
+```
+
+#### With a configuration file
+
+It is also possible to use symbolic execution with a YAML configuration file.
+
+An example with this `config.yaml` file:
+```yaml
+function: "__main__.test_symbolic_execution"
+constraints: 
+    - "v13>0"
+    - "v14>=0"
+    - "v15<=0"
+solves:
+   - "v0_f"
+   - "v1_u" 
+   - "v2_z"
+   - "v3_z2"
+variables:
+   - "v3_z2=26"
+```
+
+We can run this command:
+```python
+thoth local tests/json_files/cairo_0/cairo_test_symbolic_execution_3.json --symbolic -config ./config.yaml
+v0_f: 103
+v1_u: 117
+v2_z: 122
+v3_z2: 26
 ```
 
 ## Print the contract's data-flow graph (DFG)
