@@ -196,7 +196,7 @@ v9_b: 98
 
 It is also possible to use symbolic execution with a YAML configuration file.
 
-An example with this `config.yaml` file:
+For example with this `config.yaml` file:
 ```yaml
 function: "__main__.test_symbolic_execution"
 constraints: 
