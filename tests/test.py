@@ -437,7 +437,7 @@ class TestDisassembler(unittest.TestCase):
 
     def test_test_cases_generator_analyzer(self):
         """
-        Test the test cases generator analyzer on test_symbolic_execution_3
+        Test the test cases generator analyzer on test_symbolic_execution_2
         """
         disassembler = Disassembler(
             "./tests/json_files/cairo_0/cairo_test_symbolic_execution_2.json"
@@ -471,7 +471,9 @@ class TestDisassembler(unittest.TestCase):
         )
 
     def test_test_cases_generator_analyzer_2(self):
-        """ """
+        """
+        Test the test cases generator analyzer on test_symbolic_execution_3
+        """
         disassembler = Disassembler(
             "./tests/json_files/cairo_0/cairo_test_symbolic_execution_3.json"
         )
@@ -500,6 +502,158 @@ class TestDisassembler(unittest.TestCase):
                 ("v7_l", 109),
                 ("v8_a", 98),
                 ("v9_b", 99),
+            ],
+        )
+
+    def test_symbolic_execution_1(self):
+        """
+        Test the symbolic execution _solve() function on cairo_test_symbolic_execution with equalities constraints
+        """
+        disassembler = Disassembler("./tests/json_files/cairo_0/cairo_test_symbolic_execution.json")
+        contract_functions = disassembler.functions
+        decompiler = Decompiler(functions=contract_functions)
+        decompiler.decompile_code(first_pass_only=True)
+
+        symbex = SymbolicExecution(variables=decompiler.ssa.memory, assertions=[])
+
+        symbex_function = [
+            f for f in contract_functions if f.name == "__main__.test_symbolic_execution"
+        ][0]
+        symbex_constraints = ["v4==0", "v6==0"]
+        symbex_variables = []
+        symbex_solves = ["v0_x", "v1_y"]
+
+        test_solve = symbex._solve(
+            function=symbex_function,
+            constraints=symbex_constraints,
+            variables_values=symbex_variables,
+            solves=symbex_solves,
+        )
+
+        self.assertEqual(test_solve, [("v0_x", 10), ("v1_y", 15)])
+
+    def test_symbolic_execution_2(self):
+        """
+        Test the symbolic execution _solve() function on cairo_test_symbolic_execution with inequalities constraints
+        """
+        disassembler = Disassembler("./tests/json_files/cairo_0/cairo_test_symbolic_execution.json")
+        contract_functions = disassembler.functions
+        decompiler = Decompiler(functions=contract_functions)
+        decompiler.decompile_code(first_pass_only=True)
+
+        symbex = SymbolicExecution(variables=decompiler.ssa.memory, assertions=[])
+
+        symbex_function = [
+            f for f in contract_functions if f.name == "__main__.test_symbolic_execution"
+        ][0]
+        symbex_constraints = ["v4!=0", "v6!=0"]
+        symbex_variables = []
+        symbex_solves = ["v0_x", "v1_y"]
+
+        test_solve = symbex._solve(
+            function=symbex_function,
+            constraints=symbex_constraints,
+            variables_values=symbex_variables,
+            solves=symbex_solves,
+        )
+
+        self.assertEqual(test_solve, [("v0_x", 11), ("v1_y", 16)])
+
+    def test_symbolic_execution_3(self):
+        """
+        Test the symbolic execution _solve() function on cairo_test_symbolic_execution with variables inequalities constraints
+        """
+        disassembler = Disassembler("./tests/json_files/cairo_0/cairo_test_symbolic_execution.json")
+        contract_functions = disassembler.functions
+        decompiler = Decompiler(functions=contract_functions)
+        decompiler.decompile_code(first_pass_only=True)
+
+        symbex = SymbolicExecution(variables=decompiler.ssa.memory, assertions=[])
+
+        symbex_function = [
+            f for f in contract_functions if f.name == "__main__.test_symbolic_execution"
+        ][0]
+        symbex_constraints = ["v4!=v6"]
+        symbex_variables = []
+        symbex_solves = ["v0_x", "v1_y"]
+
+        test_solve = symbex._solve(
+            function=symbex_function,
+            constraints=symbex_constraints,
+            variables_values=symbex_variables,
+            solves=symbex_solves,
+        )
+
+        self.assertEqual(test_solve, [("v0_x", 1)])
+
+    def test_symbolic_execution_4(self):
+        """
+        Test the symbolic execution _solve() function on cairo_test_symbolic_execution with variables replacements and equalities constraints
+        """
+        disassembler = Disassembler(
+            "./tests/json_files/cairo_0/cairo_test_symbolic_execution_3.json"
+        )
+        contract_functions = disassembler.functions
+        decompiler = Decompiler(functions=contract_functions)
+        decompiler.decompile_code(first_pass_only=True)
+
+        symbex = SymbolicExecution(variables=decompiler.ssa.memory, assertions=[])
+
+        symbex_function = [
+            f for f in contract_functions if f.name == "__main__.test_symbolic_execution"
+        ][0]
+        symbex_constraints = ["v13==0", "v14==0", "v15==0"]
+        symbex_variables = ["v3_z2=26"]
+        symbex_solves = ["v0_f", "v1_u", "v2_z", "v3_z2"]
+
+        test_solve = symbex._solve(
+            function=symbex_function,
+            constraints=symbex_constraints,
+            variables_values=symbex_variables,
+            solves=symbex_solves,
+        )
+
+        self.assertEqual(test_solve, [("v0_f", 102), ("v1_u", 117), ("v2_z", 122), ("v3_z2", 26)])
+
+    def test_symbolic_execution_5(self):
+        """
+        Test the symbolic execution _solve() function on cairo_test_symbolic_execution with a variable replacement and assertions
+        """
+        disassembler = Disassembler(
+            "./tests/json_files/cairo_0/cairo_test_symbolic_execution_4.json"
+        )
+        contract_functions = disassembler.functions
+        decompiler = Decompiler(functions=contract_functions)
+        decompiler.decompile_code(first_pass_only=True)
+
+        assertions = decompiler.assertions
+        symbex = SymbolicExecution(variables=decompiler.ssa.memory, assertions=assertions)
+
+        symbex_function = [
+            f for f in contract_functions if f.name == "__main__.test_symbolic_execution"
+        ][0]
+        symbex_constraints = ["v4!=v6"]
+        symbex_variables = []
+        symbex_solves = ["v2", "v3", "v4", "v5", "v6", "v7", "v8", "v9"]
+
+        test_solve = symbex._solve(
+            function=symbex_function,
+            constraints=symbex_constraints,
+            variables_values=symbex_variables,
+            solves=symbex_solves,
+        )
+
+        self.assertEqual(
+            test_solve,
+            [
+                ("v2", 102),
+                ("v3", 117),
+                ("v4", 122),
+                ("v5", 122),
+                ("v6", 105),
+                ("v7", 110),
+                ("v8", 103),
+                ("v9", 108),
             ],
         )
 
