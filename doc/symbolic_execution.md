@@ -163,17 +163,17 @@ The we need to proove two things using **symbolic execution** to make a **formal
 
 - if `amount` is lower than `balance`, `new_balance` can't be < 0: 
 ```
-(v55 == 0 && v56 > 0)
+!(v55 == 0 && v56 < 0)
 ```
 
 - if `amount` is greater than `balance`, `balance` can't be < 0: 
 ```
-(v55 != 0 && v60 > 0)
+!(v55 != 0 && v60 < 0)
 ```
 
 If those two statements are verified then we proved that the returned balanced can not be negative.
 
-#### Proving `(v50 == 0 && v56 > 0)`
+#### Proving `!(v55 == 0 && v56 < 0)`
 
 We write the following rules into our `config.yaml` file:
 
@@ -181,7 +181,7 @@ We write the following rules into our `config.yaml` file:
 function: "__main__.test_formal_verification"
 constraints: 
     - "v55==0"
-    - "v56<=0"
+    - "v56<0"
 solves:
    - "v50_amount"
 ```
@@ -192,7 +192,7 @@ thoth local ./tests/json_files/cairo_0/cairo_test_formal_verification.json --sym
 No solutions.
 ```
 
-#### Proving `(v50 != 0 && v60 > 0)`
+#### Proving `!(v55 != 0 && v60 < 0)`
 
 We write the following rules into our `config.yaml` file:
 
@@ -200,9 +200,9 @@ We write the following rules into our `config.yaml` file:
 function: "__main__.test_formal_verification"
 constraints: 
     - "v55!=0"
-    - "v60<=0"
+    - "v60<0"
 solves:
-   - "v60"
+   - "v50_amount"
 ```
 And we run it:
 ```
@@ -211,4 +211,4 @@ thoth local ./tests/json_files/cairo_0/cairo_test_formal_verification.json --sym
 No solutions.
 ```
 
-We proved that there is no solution where the returned balance can be < 0.
+We proved that there is no solutions where the returned balance can be < 0.
