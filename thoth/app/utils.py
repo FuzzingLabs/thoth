@@ -1,4 +1,5 @@
 import sys
+import yaml
 from typing import List
 
 
@@ -127,3 +128,20 @@ def value_to_string(val: int, prime: int) -> str:
         return repr_str
     except Exception:
         return repr_hex
+
+
+def load_symbex_yaml_config(yaml_file: str) -> dict:
+    """
+    Load a symbolic execution config from a YAML file
+    """
+
+    yaml_data = yaml.safe_load(yaml_file)
+
+    symbex_config = {
+        "function": yaml_data["function"],
+        "constraints": yaml_data["constraints"],
+        "variables": yaml_data["variables"],
+        "solves": yaml_data["solves"],
+    }
+
+    return symbex_config

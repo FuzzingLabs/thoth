@@ -170,12 +170,12 @@ class SymbolicExecution:
         Use the symbolic execution to solve a list of constraints
         """
         # Parse the variables and constraints defined with the CLI arguments
-        variable_regexp = re.compile("v[0-9]{1,4}")
+        variable_regexp = re.compile("v\d{1,4}")
         constraint_regexp = re.compile(
-            "(v[0-9]{1,4}(_[a-zA-Z0-9_]+)?)((==)|(!=))(([0-9]+)|(v[0-9]{1,4}))"
+            "(v\d{1,4}(_\w+)?)((==)|(!=)|(>=)|(>)|(<=)|(<))((\d+)|(v\d{1,4}))"
         )
-        variable_value_regexp = re.compile("(v[0-9]{1,4}(_[a-zA-Z0-9_]+)?)=([0-9]+)")
-        solve_regexp = re.compile("(v[0-9]{1,4}(_[a-zA-Z0-9_]+)?)")
+        variable_value_regexp = re.compile("(v\d{1,4}(_\w+)?)=(\d+)")
+        solve_regexp = re.compile("(v\d{1,4}(_\w+)?)")
 
         # Constraints defined in the CLI arguments
         constraints_list = []
@@ -236,20 +236,32 @@ class SymbolicExecution:
                     variable_name = [v for v in self.z3_variables if str(v) == constraint[0][0]][0]
 
                     # Constraint with an integer
-                    if constraint[0][6]:
-                        right_side_expression = int(constraint[0][5])
+                    if constraint[0][10]:
+                        right_side_expression = int(constraint[0][10])
                     # Constraint with another variable
                     else:
                         right_side_expression = [
-                            v for v in self.z3_variables if str(v) == constraint[0][5]
+                            v for v in self.z3_variables if str(v) == constraint[0][11]
                         ][0]
 
                     # Equality constraint
                     if constraint[0][2] == "==":
                         self.solver.add(variable_name == right_side_expression)
                     # Inequality constraint
-                    else:
+                    elif constraint[0][2] == "!=":
                         self.solver.add(variable_name != right_side_expression)
+                    # Superior constraint
+                    elif constraint[0][2] == ">":
+                        self.solver.add(variable_name > right_side_expression)
+                    # Superior or equal constraint
+                    elif constraint[0][2] == ">=":
+                        self.solver.add(variable_name >= right_side_expression)
+                    # Inferior constraint
+                    elif constraint[0][2] == "<":
+                        self.solver.add(variable_name < right_side_expression)
+                    # Inferior or equal constraint
+                    elif constraint[0][2] == "<=":
+                        self.solver.add(variable_name <= right_side_expression)
                 except:
                     continue
 

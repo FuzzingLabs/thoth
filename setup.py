@@ -15,7 +15,7 @@ setup(
     version=__version__,
     packages=find_packages(),
     python_requires=">=3.6",
-    install_requires=["z3-solver", "graphviz", "lark"],
+    install_requires=["z3-solver", "graphviz", "lark", "pyyaml"],
     include_package_data=True,
     package_data={
         "": ["/sierra/parser/*"],
