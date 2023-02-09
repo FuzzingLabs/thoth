@@ -120,7 +120,7 @@ v3_z2: 26
 Thoth symbolic execution can also be used for formal verification purposes.
 
 <details><summary>Successful Formal Verification</summary>
-For example we have this function `test_formal_verification` in which an `amount` passed as argument is subtracted from a `balance` of `1000`.
+For example we have this function test_formal_verification in which an amount passed as argument is subtracted from a balance of 1000.
 
 ```cairo
 func test_formal_verification{range_check_ptr}(amount: felt) -> felt {
@@ -215,7 +215,7 @@ We proved that there is no solutions where the returned balance can be < 0.
 </details>
 
 <details><summary>Failed Formal Verification</summary>
-For example we have this function `test_formal_verification` in which an `amount` passed as argument is subtracted from a `balance` of `1000`.
+For example we have this function test_formal_verification in which an amount passed as argument is subtracted from a balance of 1000.
 
 ```cairo
 func test_formal_verification{range_check_ptr}(amount: felt) -> felt {
