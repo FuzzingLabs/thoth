@@ -105,7 +105,7 @@ thoth local tests/json_files/cairo_0/cairo_array_sum.json -a optimization
 thoth local tests/json_files/cairo_0/cairo_array_sum.json -a analytics
 ```
 
-#### Print a list of all the availables analyzers
+#### Print a list of all the available analyzers
 ```
 thoth local tests/json_files/cairo_0/cairo_array_sum.json --analyzers-help
 ```
@@ -169,7 +169,7 @@ The output file (pdf/svg/png) and the dot file are inside the `output-cfg` folde
 
 ## How to find a Cairo/Starknet compilation artifact (json file)?
 
-Thoth supports cairo and starknet compilation artifact (json file) generated after compilation using `cairo-compile` or `starknet-compile`. Thoth also support the json file returned by: `starknet get_full_contract`.
+Thoth supports cairo and starknet compilation artifact (json file) generated after compilation using `cairo-compile` or `starknet-compile`. Thoth also supports the json file returned by: `starknet get_full_contract`.
 
 ## How to run the tests?
 
@@ -220,7 +220,7 @@ end
 
 # Acknowledgments
 
-Thoth is inspired by a lot of differents security tools developped by friends such as: [Octopus](https://github.com/FuzzingLabs/octopus), [Slither](https://github.com/crytic/slither), [Mythril](https://github.com/ConsenSys/mythril), etc.
+Thoth is inspired by a lot of different security tools developed by friends such as: [Octopus](https://github.com/FuzzingLabs/octopus), [Slither](https://github.com/crytic/slither), [Mythril](https://github.com/ConsenSys/mythril), etc.
 
 # License
 
