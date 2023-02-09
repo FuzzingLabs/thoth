@@ -559,30 +559,30 @@ class TestDisassembler(unittest.TestCase):
 
         self.assertEqual(test_solve, [("v0_x", 11), ("v1_y", 16)])
 
-    # def test_symbolic_execution_3(self):
-    #     """
-    #     Test the symbolic execution _solve() function on cairo_test_symbolic_execution with variables inequalities constraints
-    #     """
-    #     disassembler = Disassembler("./tests/json_files/cairo_0/cairo_test_symbolic_execution.json")
-    #     contract_functions = disassembler.functions
-    #     decompiler = Decompiler(functions=contract_functions)
-    #     decompiler.decompile_code(first_pass_only=True)
+        # def test_symbolic_execution_3(self):
+        #     """
+        #     Test the symbolic execution _solve() function on cairo_test_symbolic_execution with variables inequalities constraints
+        #     """
+        #     disassembler = Disassembler("./tests/json_files/cairo_0/cairo_test_symbolic_execution.json")
+        #     contract_functions = disassembler.functions
+        #     decompiler = Decompiler(functions=contract_functions)
+        #     decompiler.decompile_code(first_pass_only=True)
 
-    #     symbex = SymbolicExecution(variables=decompiler.ssa.memory, assertions=[])
+        #     symbex = SymbolicExecution(variables=decompiler.ssa.memory, assertions=[])
 
-    #     symbex_function = [
-    #         f for f in contract_functions if f.name == "__main__.test_symbolic_execution"
-    #     ][0]
-    #     symbex_constraints = ["v4!=v6"]
-    #     symbex_variables = []
-    #     symbex_solves = ["v0_x", "v1_y"]
+        #     symbex_function = [
+        #         f for f in contract_functions if f.name == "__main__.test_symbolic_execution"
+        #     ][0]
+        #     symbex_constraints = ["v4!=v6"]
+        #     symbex_variables = []
+        #     symbex_solves = ["v0_x", "v1_y"]
 
-    #     test_solve = symbex._solve(
-    #         function=symbex_function,
-    #         constraints=symbex_constraints,
-    #         variables_values=symbex_variables,
-    #         solves=symbex_solves,
-    #     )
+        #     test_solve = symbex._solve(
+        #         function=symbex_function,
+        #         constraints=symbex_constraints,
+        #         variables_values=symbex_variables,
+        #         solves=symbex_solves,
+        #     )
 
         self.assertEqual(test_solve, [("v0_x", 1)])
 
