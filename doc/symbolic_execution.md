@@ -1,4 +1,3 @@
-
 # Symbolic Execution
 
 Thoth integrates a symbolic execution engine powered by *z3*. It allows to solve constraints and to perform formal verification.
@@ -120,6 +119,7 @@ v3_z2: 26
 
 Thoth symbolic execution can also be used for formal verification purposes.
 
+<details><summary>Successful Formal Verification</summary>
 For example we have this function `test_formal_verification` in which an `amount` passed as argument is subtracted from a `balance` of `1000`.
 
 ```cairo
@@ -159,7 +159,7 @@ func __main__.test_formal_verification{range_check_ptr : felt}(amount : felt){
 }
 
 ```
-The we need to proove two things using **symbolic execution** to make a **formal verification**: 
+We need to proove 2 things using **symbolic execution** to make a **formal verification**: 
 
 - if `amount` is lower than `balance`, `new_balance` can't be < 0: 
 ```
@@ -212,3 +212,95 @@ No solutions.
 ```
 
 We proved that there is no solutions where the returned balance can be < 0.
+</details>
+
+<details><summary>Failed Formal Verification</summary>
+For example we have this function `test_formal_verification` in which an `amount` passed as argument is subtracted from a `balance` of `1000`.
+
+```cairo
+func test_formal_verification{range_check_ptr}(amount: felt) -> felt {
+    let balance = 1000;
+    
+    let is_le = is_le_felt(balance, amount);
+    if (amount == 42) {
+        let new_balance = - 1;
+        return(new_balance);
+    }
+    if (is_le == 0) {
+        let new_balance = balance - amount;
+        return(new_balance);
+    } 
+    return(balance);
+}
+```
+
+We want to make a formal verification that the returned balance cannot be less than 0.
+
+First we need to decompile the JSON artififact to get the variables values.
+
+```cairo
+// Function 3
+func __main__.test_formal_verification{range_check_ptr : felt}(amount : felt){
+    v53 = v49_range_check_ptr
+    v54 = 1000    // 0x3e8
+    v55 = v50_amount
+    is_le_felt(v54, v55)
+    v56 = v50_amount - 42
+    if (v56 == 0) {
+        v57 = v54
+        v58 = -1    // -0x1
+        ret
+
+    }
+    if (v57 == 0) {
+        v59 = 1000    // 0x3e8
+        v60 = v56
+        assert v59 = v61 + v50_amount
+        ret
+
+    }
+    v62 = v59
+    v63 = 1000    // 0x3e8
+    ret
+}
+```
+We need to proove 3 things using **symbolic execution** to make a **formal verification**: 
+
+- if `amount` is equal to 42,  `new_balance` can't be < 0:
+```
+!(v56 == 0 && v58 < 0)
+```
+
+- if `amount` is lower than `balance`, `new_balance` can't be < 0: 
+```
+!(v57 == 0 && v59 < 0)
+```
+
+- if `amount` is greater than `balance`, `balance` can't be < 0: 
+```
+!(v57 != 0 && v63 < 0)
+```
+
+If those three statements are verified then we proved that the returned balanced can not be negative.
+
+#### Proving `!(v56 == 0 && v58 < 0)`
+
+We write the following rules into our `config.yaml` file:
+
+```yaml
+function: "__main__.test_formal_verification"
+constraints: 
+    - "v56==0"
+    - "v58<0"
+solves:
+   - "v50_amount"
+```
+And we run it:
+```
+thoth local tests/json_files/cairo_0/cairo_test_formal_verification_2.json --symbolic -config config.yaml                                                          
+
+v50_amount: 42
+```
+
+There is a solution, therefore `!(v56 == 0 && v58 < 0)` is false and the **formal verification failed.**
+</details>
