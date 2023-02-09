@@ -137,11 +137,15 @@ def load_symbex_yaml_config(yaml_file: str) -> dict:
 
     yaml_data = yaml.safe_load(yaml_file)
 
-    symbex_config = {
-        "function": yaml_data["function"],
-        "constraints": yaml_data["constraints"],
-        "variables": yaml_data["variables"],
-        "solves": yaml_data["solves"],
-    }
+    function = yaml_data["function"]
+    constraints = yaml_data["constraints"] if "constraints" in yaml_data else []
+    variables = yaml_data["variables"] if "variables" in yaml_data else []
+    solves = yaml_data["solves"]
 
+    symbex_config = {
+        "function": function,
+        "constraints": constraints,
+        "variables": variables,
+        "solves": solves,
+    }
     return symbex_config
