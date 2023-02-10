@@ -138,7 +138,7 @@ func test_formal_verification{range_check_ptr}(amount: felt) -> felt {
 
 We want to make a formal verification that the returned balance cannot be less than 0.
 
-First we need to decompile the JSON artififact to get the variables values.
+First we need to decompile the JSON artifact to get the variables values.
 
 ```cairo
 // Function 3
@@ -160,7 +160,7 @@ func __main__.test_formal_verification{range_check_ptr : felt}(amount : felt){
 }
 
 ```
-We need to proove 2 things using **symbolic execution** to make a **formal verification**: 
+We need to prove 2 things using **symbolic execution** to make a **formal verification**: 
 
 - if `amount` is lower than `balance`, `new_balance` can't be < 0: 
 ```
@@ -238,7 +238,7 @@ func test_formal_verification{range_check_ptr}(amount: felt) -> felt {
 
 We want to make a formal verification that the returned balance cannot be less than 0.
 
-First we need to decompile the JSON artififact to get the variables values.
+First we need to decompile the JSON artifact to get the variables values.
 
 ```cairo
 // Function 3
@@ -266,7 +266,7 @@ func __main__.test_formal_verification{range_check_ptr : felt}(amount : felt){
     ret
 }
 ```
-We need to proove 3 things using **symbolic execution** to make a **formal verification**: 
+We need to prove 3 things using **symbolic execution** to make a **formal verification**: 
 
 - if `amount` is equal to 42,  `new_balance` can't be < 0:
 ```
