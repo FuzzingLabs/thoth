@@ -75,7 +75,12 @@ def extract_function_prototype(
 
     if entry_points_by_type:
         for entry_type in entry_points_by_type.values():
-            entry_points += [str(int(entry["offset"], base=16)) for entry in entry_type]
+            # Base 16 offset
+            try:
+                entry_points += [str(int(entry["offset"], base=16)) for entry in entry_type]
+            # Base 10 offset (compiler_version >= 0.11.0)
+            except:
+                entry_points += [str(entry["offset"]) for entry in entry_type]
 
     # Get arguments and return value of function
     for offset in function_offset:
