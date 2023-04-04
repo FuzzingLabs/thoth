@@ -1,4 +1,4 @@
-func fib(n: felt) -> felt {
+fn fib(n: felt252) -> felt252 {
     if n == 0 {
         1
     } else if n == 1 {
