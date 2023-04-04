@@ -226,7 +226,6 @@ def extract_functions(json_type: str, json_data: dict) -> Tuple:
 
     # Cairo compiler >= 1.0.0
     else:
-
         function_offset["0"] = "unknown_function"
     return (function_offset, function_identifiers)
 
