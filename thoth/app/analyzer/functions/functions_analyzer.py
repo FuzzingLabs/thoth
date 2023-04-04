@@ -20,6 +20,9 @@ class FunctionsAnalyzer(AbstractAnalyzer):
     CATEGORY: CategoryClassification = CategoryClassification.ANALYTICS
 
     def _detect(self) -> bool:
+        if self.disassembler.cairo1:
+            return False
+
         # Colors
         header_color = colors.HEADER if self.color else ""
         red_color = colors.RED if self.color else ""

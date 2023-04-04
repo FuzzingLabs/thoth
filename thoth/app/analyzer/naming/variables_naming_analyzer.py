@@ -20,6 +20,9 @@ class VariableNamingAnalyzer(AbstractAnalyzer):
     CATEGORY: CategoryClassification = CategoryClassification.SECURITY
 
     def _detect(self) -> bool:
+        if self.disassembler.cairo1:
+            return False
+
         snake_case_regexp = r"^([a-z0-9]*_*[a-z0-9]*)*$"
 
         contract_functions = self.disassembler.functions

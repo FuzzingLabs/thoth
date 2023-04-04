@@ -65,6 +65,9 @@ class AssignationsAnalyzer(AbstractAnalyzer):
     CATEGORY: CategoryClassification = CategoryClassification.OPTIMIZATION
 
     def _detect(self) -> bool:
+        if self.disassembler.cairo1:
+            return False
+
         contract_functions = self.disassembler.functions
         self.decompiler = Decompiler(functions=contract_functions)
         self.decompiler.decompile_code(first_pass_only=True)
