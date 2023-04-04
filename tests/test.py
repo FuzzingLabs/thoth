@@ -21,7 +21,7 @@ class TestDisassembler(unittest.TestCase):
         """
         Test the disassembler on all files
         """
-        all_test = glob.glob("./tests/json_files/cairo_0/*")
+        all_test = glob.glob("./tests/json_files/*/*")
         crash = 0
         f = open("/dev/null", "w")
         save_stdout = sys.stdout
