@@ -293,6 +293,43 @@ class SierraControlFlowGraph:
 
         self.basic_blocks.append(current_basic_block)
 
+    def _get_paths(self) -> List[List[SierraBasicBlock]]:
+        """
+        Returns all the possible paths in a function
+        """
+
+        return []
+
+    def _children(self, block: SierraBasicBlock) -> List[SierraBasicBlock]:
+        """
+        Returns the children blocks of a basic block
+        """
+        children = []
+
+        edges_destinations = [edge.destination for edge in block.edges]
+
+        # Find all blocks having an edge with the current block as source
+        for basic_block in self.basic_blocks:
+            if basic_block.start_offset in edges_destinations:
+                children.append(basic_block)
+        return children
+
+    def _parents(self, block: SierraBasicBlock) -> List[SierraBasicBlock]:
+        """
+        Returns the parents blocks of a basic block
+        """
+        parents = []
+
+        start_offset = block.start_offset + 1
+
+        # Find all blocks having an edge with the current block as destination
+        for basic_block in self.basic_blocks:
+            edges_offset = [edge.destination for edge in basic_block.edges]
+            for offset in edges_offset:
+                if start_offset == offset:
+                    parents.append(basic_block)
+        return parents
+
     def _generate_cfg(self) -> None:
         """
         Generate the CFG dot graph

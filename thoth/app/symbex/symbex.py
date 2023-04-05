@@ -103,7 +103,7 @@ class SymbolicExecution:
 
     def _find_paths(self, function: Function) -> List[List[BasicBlock]]:
         """
-        Find all the possible paths betwwen the basic blocks in a function
+        Find all the possible paths between the basic blocks in a function
         """
         paths = []
 
