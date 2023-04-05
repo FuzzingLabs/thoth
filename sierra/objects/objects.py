@@ -298,7 +298,30 @@ class SierraControlFlowGraph:
         Returns all the possible paths in a function
         """
 
-        return []
+        paths = []
+
+        # Find paths starting blocks
+        for block in self.basic_blocks:
+            if len(self._parents(block)) == 0:
+                paths.append([block])
+
+        # Find all the paths
+        while True:
+            new_paths = []
+
+            for i in range(len(paths)):
+                last_block_children = self._children(paths[i][-1])
+                for child_block in last_block_children:
+                    new_paths.append(paths[i] + [child_block])
+                if len(last_block_children) == 0:
+                    new_paths.append(paths[i])
+
+            # No new paths
+            if new_paths == paths:
+                break
+            paths = new_paths
+
+        return paths
 
     def _children(self, block: SierraBasicBlock) -> List[SierraBasicBlock]:
         """
@@ -320,7 +343,7 @@ class SierraControlFlowGraph:
         """
         parents = []
 
-        start_offset = block.start_offset + 1
+        start_offset = block.start_offset
 
         # Find all blocks having an edge with the current block as destination
         for basic_block in self.basic_blocks:
