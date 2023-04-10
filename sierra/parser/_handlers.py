@@ -1,6 +1,7 @@
 from typing import List
 from lark.tree import Tree
 
+
 from sierra.objects.objects import (
     SierraConditionalBranch,
     SierraFunction,
@@ -240,7 +241,7 @@ def _handle_function_declaration(self, function_declaration: Tree) -> None:
         # Parameter variable id
         parameter_variable_name = self.reconstructor.reconstruct(
             list(parameter_tree.find_data("var_id"))[0]
-        )
+        )[1:-1]
         parameter_type_id = self.reconstructor.reconstruct(
             list(parameter_tree.find_data("concrete_type_id"))[0]
         )

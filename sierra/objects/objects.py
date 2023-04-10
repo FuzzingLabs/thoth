@@ -64,7 +64,7 @@ class SierraVariable:
 
     def __init__(self, name: int, type: SierraType = None) -> None:
         self.name = name
-        self.representation_name = "%s" % self.name
+        self.representation_name = "v%s" % self.name
         self.type = type
 
 
@@ -293,7 +293,7 @@ class SierraControlFlowGraph:
 
         self.basic_blocks.append(current_basic_block)
 
-    def _get_paths(self) -> List[List[SierraBasicBlock]]:
+    def paths(self) -> List[List[SierraBasicBlock]]:
         """
         Returns all the possible paths in a function
         """
@@ -321,7 +321,7 @@ class SierraControlFlowGraph:
                 break
             paths = new_paths
 
-        return paths
+        return paths[1:]
 
     def _children(self, block: SierraBasicBlock) -> List[SierraBasicBlock]:
         """

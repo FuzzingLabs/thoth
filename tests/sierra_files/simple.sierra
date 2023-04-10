@@ -1,0 +1,20 @@
+type felt252 = felt252;
+type Tuple<felt252, felt252> = Struct<ut@Tuple, felt252, felt252>;
+
+libfunc felt252_const<2> = felt252_const<2>;
+libfunc dup<felt252> = dup<felt252>;
+libfunc felt252_add = felt252_add;
+libfunc felt252_sub = felt252_sub;
+libfunc struct_construct<Tuple<felt252, felt252>> = struct_construct<Tuple<felt252, felt252>>;
+libfunc store_temp<Tuple<felt252, felt252>> = store_temp<Tuple<felt252, felt252>>;
+
+felt252_const<2>() -> ([1]);
+dup<felt252>([0]) -> ([0], [3]);
+felt252_add([3], [1]) -> ([2]);
+felt252_const<2>() -> ([4]);
+felt252_sub([0], [4]) -> ([5]);
+struct_construct<Tuple<felt252, felt252>>([2], [5]) -> ([6]);
+store_temp<Tuple<felt252, felt252>>([6]) -> ([7]);
+return([7]);
+
+simple::simple::something@0([0]: felt252) -> (Tuple<felt252, felt252>);

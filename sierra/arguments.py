@@ -61,6 +61,14 @@ def parse_arguments() -> argparse.Namespace:
         help="Set the output folder of the Call-Graph (default is ./output-callgraph)",
     )
 
+    # Symbolic execution
+    symbolic = parser.add_argument_group("Symbolic execution")
+    symbolic.add_argument("--symbolic", help="Use the symbolic execution", action="store_true")
+    symbolic.add_argument("-function", help="Select a specific function")
+    symbolic.add_argument("-constraints", nargs="+", help="", default=[])
+    symbolic.add_argument("-variables", nargs="+", help="", default=[])
+    symbolic.add_argument("-solves", nargs="+", help="", default=[])
+
     # Analyzers
     analyzers_names = [analyzer.ARGUMENT for analyzer in all_analyzers]
     analyzers_categories_names = list(
