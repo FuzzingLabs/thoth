@@ -105,7 +105,7 @@ def _handle_fallthrough(self, statement: Tree) -> SierraConditionalBranch:
     function_arguments = []
     function_arguments_trees = list(list(statement.find_data("var_ids"))[2].find_data("var_id"))
     for function_argument_tree in function_arguments_trees:
-        function_argument = self.reconstructor.reconstruct(function_argument_tree)
+        function_argument = self.reconstructor.reconstruct(function_argument_tree)[1:-1]
         function_argument_variable = self._get_variable_by_name(name=function_argument)
         function_arguments.append(function_argument_variable)
 
@@ -113,7 +113,7 @@ def _handle_fallthrough(self, statement: Tree) -> SierraConditionalBranch:
     fallthrough_arguments = []
     fallthrough_arguments_trees = list(list(statement.find_data("var_ids"))[1].find_data("big_int"))
     for fallthrough_argument_tree in fallthrough_arguments_trees:
-        fallthrough_arguments.append(fallthrough_argument_tree.children[0].value)
+        fallthrough_arguments.append(fallthrough_argument_tree.children[0].value[1:-1])
 
     fallthrough = SierraConditionalBranch(
         fallthrough=True,

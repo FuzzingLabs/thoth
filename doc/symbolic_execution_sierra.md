@@ -15,7 +15,7 @@ func symbolic::symbolic::symbolic_execution_test (v0: felt252, v1: felt252, v2: 
         v4 = felt252_const<102>()
         v5 = felt252_sub(v0, v4)
         v5 = store_temp<felt252>(v5)
-        if (felt252_is_zero([5]) == 0) {
+        if (felt252_is_zero(v5) == 0) {
                 branch_align()
                 drop<NonZero<felt252>>(v6)
         } else {
@@ -24,7 +24,7 @@ func symbolic::symbolic::symbolic_execution_test (v0: felt252, v1: felt252, v2: 
         v7 = felt252_const<117>()
         v8 = felt252_sub(v1, v7)
         v8 = store_temp<felt252>(v8)
-        if (felt252_is_zero([8]) == 0) {
+        if (felt252_is_zero(v8) == 0) {
                 branch_align()
                 drop<NonZero<felt252>>(v9)
         } else {
@@ -33,7 +33,7 @@ func symbolic::symbolic::symbolic_execution_test (v0: felt252, v1: felt252, v2: 
         v10 = felt252_const<122>()
         v11 = felt252_sub(v2, v10)
         v11 = store_temp<felt252>(v11)
-        if (felt252_is_zero([11]) == 0) {
+        if (felt252_is_zero(v11) == 0) {
                 branch_align()
                 drop<NonZero<felt252>>(v12)
         } else {
@@ -42,7 +42,7 @@ func symbolic::symbolic::symbolic_execution_test (v0: felt252, v1: felt252, v2: 
         v13 = felt252_const<122>()
         v14 = felt252_sub(v3, v13)
         v14 = store_temp<felt252>(v14)
-        if (felt252_is_zero([14]) == 0) {
+        if (felt252_is_zero(v14) == 0) {
                 branch_align()
                 drop<NonZero<felt252>>(v15)
         } else {
