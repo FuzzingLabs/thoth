@@ -17,6 +17,9 @@ class SierraSymbolicExecution:
     """
 
     from ._functions import (
+        bool_and,
+        bool_or,
+        bool_xor,
         dup,
         felt_add,
         felt_const,
@@ -38,6 +41,9 @@ class SierraSymbolicExecution:
         # All the function resolvers
         # TODO: Automatically add them using a decorator
         self.functions_resolvers: List[Callable] = [
+            self.bool_and,
+            self.bool_or,
+            self.bool_xor,
             self.felt_const,
             self.felt_sub,
             self.felt_add,
