@@ -75,18 +75,19 @@ A more complexe callgraph:
 
 The static analysis is performed using *analyzers* which can be either informative or security/optimization related.
 
-|Analyzer|Command-Line argument|Description|Impact|Precision|Category|
-|---|---|---|---|---|---|
-|**ERC20**|`erc20`|Detect if a contract is an ERC20 Token|Informational|High|Analytics|
-|**ERC721**|`erc721`|Detect if a contract is an ERC721 Token|Informational|High|Analytics|
-|**Strings**|`strings`|Detect strings inside a contract|Informational|High|Analytics|
-|**Functions**|`functions`|Retrieve informations about the contract's functions|Informational|High|Analytics|
-|**Statistics**|`statistics`|General statistics about the contract|Informational|High|Analytics|
-|**Test cases generator**|`tests`|Automatically generate test cases for each function of the contract|Informational|High|Analytics|
-|**Assignations**|`assignations`|List of variables assignations|Informational|High|Optimization|
-|**Integer overflow**|`int_overflow`|Detect direct integer overflow/underflow|High (direct) / Medium (indirect)|Medium|Security|
-|**Function naming**|`function_naming`|Detect functions names that are not in snake case|Informational|High|Security|
-|**Variable naming**|`variable_naming`|Detect variables names that are not in snake case|Informational|High|Security|
+|Analyzer|Command-Line argument|Description|Impact|Precision|Category|Bytecode|Sierra|
+|---|---|---|---|---|---|---|---|
+|**ERC20**|`erc20`|Detect if a contract is an ERC20 Token|Informational|High|Analytics|✔️|❌|
+|**ERC721**|`erc721`|Detect if a contract is an ERC721 Token|Informational|High|Analytics|✔️|❌|
+|**Strings**|`strings`|Detect strings inside a contract|Informational|High|Analytics|✔️|✔️|
+|**Functions**|`functions`|Retrieve informations about the contract's functions|Informational|High|Analytics|✔️|✔️|
+|**Statistics**|`statistics`|General statistics about the contract|Informational|High|Analytics|✔️|✔️|
+|**Test cases generator**|`tests`|Automatically generate test cases for each function of the contract|Informational|High|Analytics|✔️|❌|
+|**Assignations**|`assignations`|List of variables assignations|Informational|High|Optimization|✔️|❌|
+|**Integer overflow**|`int_overflow`|Detect direct integer overflow/underflow|High (direct) / Medium (indirect)|Medium|Security|✔️|❌|
+|**Function naming**|`function_naming`|Detect functions names that are not in snake case|Informational|High|Security|✔️|❌|
+|**Variable naming**|`variable_naming`|Detect variables names that are not in snake case|Informational|High|Security|✔️|❌|
+|**Delegate calls detector**|`delegate_call`|Detect delegate calls|Informational|High|Security|❌|✔️|
 
 #### Run all the analyzers
 ``` python
