@@ -43,7 +43,9 @@ class SierraDecompiler:
             # If condition
             if isinstance(statement, SierraConditionalBranch) and len(basic_block.edges) == 2:
                 function_name = statement.function
-                function_arguments = ", ".join([v.name for v in statement.parameters])
+                function_arguments = ", ".join(
+                    [v.representation_name for v in statement.parameters]
+                )
                 decompiled_basic_block += "%sif (%s(%s) == 0) %s{%s\n" % (
                     indentation,
                     function_name,

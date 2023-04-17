@@ -1,0 +1,26 @@
+type felt252 = felt252;
+type destructure::destructure::MyStruct = Struct<ut@destructure::destructure::MyStruct, felt252, felt252, felt252>;
+type Unit = Struct<ut@Tuple>;
+
+libfunc felt252_const<12> = felt252_const<12>;
+libfunc felt252_const<34> = felt252_const<34>;
+libfunc felt252_const<56> = felt252_const<56>;
+libfunc struct_construct<destructure::destructure::MyStruct> = struct_construct<destructure::destructure::MyStruct>;
+libfunc struct_deconstruct<destructure::destructure::MyStruct> = struct_deconstruct<destructure::destructure::MyStruct>;
+libfunc drop<felt252> = drop<felt252>;
+libfunc struct_construct<Unit> = struct_construct<Unit>;
+libfunc store_temp<Unit> = store_temp<Unit>;
+
+felt252_const<12>() -> ([0]);
+felt252_const<34>() -> ([1]);
+felt252_const<56>() -> ([2]);
+struct_construct<destructure::destructure::MyStruct>([0], [1], [2]) -> ([3]);
+struct_deconstruct<destructure::destructure::MyStruct>([3]) -> ([4], [5], [6]);
+drop<felt252>([4]) -> ();
+drop<felt252>([5]) -> ();
+drop<felt252>([6]) -> ();
+struct_construct<Unit>() -> ([7]);
+store_temp<Unit>([7]) -> ([8]);
+return([8]);
+
+destructure::destructure::main@0() -> (Unit);

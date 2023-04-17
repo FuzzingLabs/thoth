@@ -1,0 +1,10 @@
+type felt252 = felt252;
+
+libfunc felt252_const<24> = felt252_const<24>;
+libfunc store_temp<felt252> = store_temp<felt252>;
+
+felt252_const<24>() -> ([0]);
+store_temp<felt252>([0]) -> ([1]);
+return([1]);
+
+print_test::print_test::main@0() -> (felt252);

@@ -64,7 +64,7 @@ class SierraVariable:
 
     def __init__(self, name: int, type: SierraType = None) -> None:
         self.name = name
-        self.representation_name = "%s" % self.name
+        self.representation_name = "v%s" % self.name
         self.type = type
 
 
@@ -292,6 +292,66 @@ class SierraControlFlowGraph:
                     )
 
         self.basic_blocks.append(current_basic_block)
+
+    def paths(self) -> List[List[SierraBasicBlock]]:
+        """
+        Returns all the possible paths in a function
+        """
+
+        paths = []
+
+        # Find paths starting blocks
+        for block in self.basic_blocks:
+            if len(self._parents(block)) == 0:
+                paths.append([block])
+
+        # Find all the paths
+        while True:
+            new_paths = []
+
+            for i in range(len(paths)):
+                last_block_children = self._children(paths[i][-1])
+                for child_block in last_block_children:
+                    new_paths.append(paths[i] + [child_block])
+                if len(last_block_children) == 0:
+                    new_paths.append(paths[i])
+
+            # No new paths
+            if new_paths == paths:
+                break
+            paths = new_paths
+
+        return paths[1:]
+
+    def _children(self, block: SierraBasicBlock) -> List[SierraBasicBlock]:
+        """
+        Returns the children blocks of a basic block
+        """
+        children = []
+
+        edges_destinations = [edge.destination for edge in block.edges]
+
+        # Find all blocks having an edge with the current block as source
+        for basic_block in self.basic_blocks:
+            if basic_block.start_offset in edges_destinations:
+                children.append(basic_block)
+        return children
+
+    def _parents(self, block: SierraBasicBlock) -> List[SierraBasicBlock]:
+        """
+        Returns the parents blocks of a basic block
+        """
+        parents = []
+
+        start_offset = block.start_offset
+
+        # Find all blocks having an edge with the current block as destination
+        for basic_block in self.basic_blocks:
+            edges_offset = [edge.destination for edge in basic_block.edges]
+            for offset in edges_offset:
+                if start_offset == offset:
+                    parents.append(basic_block)
+        return parents
 
     def _generate_cfg(self) -> None:
         """
