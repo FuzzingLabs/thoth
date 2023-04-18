@@ -22,7 +22,7 @@ class StringsAnalyzer(AbstractAnalyzer):
     CATEGORY: CategoryClassification = CategoryClassification.ANALYTICS
 
     def _detect(self) -> bool:
-        self.detected = True
+        self.detected = False
 
         string_regex = r"const<([0-9]+)>"
 
@@ -31,6 +31,7 @@ class StringsAnalyzer(AbstractAnalyzer):
             match = re.findall(string_regex, libfunc.name)
             if match:
                 try:
+                    self.detected = True
                     string = binascii.unhexlify("{:x}".format(int(match[0]))).decode()
                     self.result.append(string)
                 except:
