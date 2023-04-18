@@ -98,9 +98,9 @@ class SierraCallGraph:
         """
         return name.replace(":", "𐫵")
 
-    def print_callgraph(self, folder: str, file_format: str) -> None:
+    def print_callgraph(self, folder: str, file_format: str, view: bool = True) -> None:
         """
         Render the dot call-graph
         """
         self.dot.format = file_format
-        self.dot.render(directory=folder, view=True)
+        self.dot.render(directory=folder, view=view)
