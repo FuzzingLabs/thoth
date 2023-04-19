@@ -1,0 +1,46 @@
+name: thoth-sierra control-flow graph
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  thoth:
+    runs-on: ubuntu-latest
+    env:
+      CI_COMMIT_MESSAGE: CI Generating contract's control-flow graph
+      CI_COMMIT_AUTHOR: ${{ github.event.repository.name }} CI
+    steps:
+      # Python setup
+      - name: Set up Python 3.9
+        uses: actions/setup-python@v4
+        with:
+          python-version: 3.9
+
+      # Install dependancies
+      - name: Install graphviz
+        run: |
+          find ~ -type d -name ".git"
+          sudo apt-get update
+          sudo apt-get install -y graphviz
+
+      # Install dependancies
+      - name: Install thoth
+        run: |
+          git clone -b version-0.8.0 https://github.com/FuzzingLabs/thoth
+          cd thoth
+          pip3 install .
+
+      # Generate CFGs
+      - name: Generate Control-Flow Graphs
+        run: |
+          rm -rf docs/cfg/*
+          mkdir -p docs/cfg
+
+          for file in $(find . -type f -name "*.sierra");
+              do 
+                  thoth-sierra -f $file --cfg --format png;
+                  mv ./output-cfg/cfg.gv.png ./docs/cfg/$(basename $file .sierra).png
+              done
+          
