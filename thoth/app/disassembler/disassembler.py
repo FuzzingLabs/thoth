@@ -16,6 +16,7 @@ from thoth.app.disassembler.abi_parser import (
     extract_prime,
     extract_references,
     extract_labels,
+    extract_version,
 )
 
 
@@ -42,6 +43,7 @@ class Disassembler:
         self.events = {}
         self.call_graph = None
         self.prime = None
+        self.cairo1 = False
         utils.globals()
         utils.color = utils.bcolors(color=color)
         self.analyze()
@@ -73,6 +75,7 @@ class Disassembler:
         self.hints = extract_hints(json_type, json_data)
         self.prime = extract_prime(json_type, json_data)
         self.labels = extract_labels(json_type, json_data)
+        self.cairo1 = extract_version(json_data)
 
         # Create the list of Functions
         functions_counter = 0

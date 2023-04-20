@@ -181,6 +181,18 @@ def extract_bytecode(json_type: str, json_data: dict) -> dict:
     return bytecode
 
 
+def extract_version(json_data: dict) -> bool:
+    """
+    Return True if the Cairo compiler version is >= 1.0.0, False otherwise
+    """
+    try:
+        cairo_version = json_data["compiler_version"]
+        is_cairo_1 = cairo_version.split(".")[0] == "1"
+        return is_cairo_1
+    except:
+        return False
+
+
 def extract_functions(json_type: str, json_data: dict) -> Tuple:
     """Get function name and put it in dictionnary with offset as key
 
@@ -195,6 +207,7 @@ def extract_functions(json_type: str, json_data: dict) -> Tuple:
     function_offset = {}
     function_identifiers = {}
 
+    # Cairo compiler < 1.0.0
     if json_type != "get_code":
         identifiers_data = (
             json_data["identifiers"]
@@ -210,6 +223,8 @@ def extract_functions(json_type: str, json_data: dict) -> Tuple:
         function_identifiers = extract_function_prototype(
             function_offset, identifiers_data, entry_points_by_type
         )
+
+    # Cairo compiler >= 1.0.0
     else:
         function_offset["0"] = "unknown_function"
     return (function_offset, function_identifiers)

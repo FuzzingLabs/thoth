@@ -57,11 +57,16 @@ def main() -> int:
 
     # Decompiler
     if args.decompile and args.analyzers is None:
-        print(disassembler.decompiler())
-        if args.output:
-            output = Disassembler(file, color=False).decompiler()
-            with args.output as output_file:
-                output_file.write(output)
+        if disassembler.cairo1:
+            print(
+                "Decompiler isn't supported yet on Cairo bytecode generated with compiler >= 1.0.0"
+            )
+        else:
+            print(disassembler.decompiler())
+            if args.output:
+                output = Disassembler(file, color=False).decompiler()
+                with args.output as output_file:
+                    output_file.write(output)
     # Disassembler
     elif args.disassembly and args.analyzers is None:
         print(disassembler.print_disassembly())

@@ -29,6 +29,7 @@ libfunc enum_match<core::bool> = enum_match<core::bool>;
 libfunc drop<Unit> = drop<Unit>;
 libfunc branch_align = branch_align;
 libfunc jump = jump;
+libfunc library_call_syscall = library_call_syscall;
 libfunc drop<Array<felt>> = drop<Array<felt>>;
 libfunc drop<Uninitialized<felt>> = drop<Uninitialized<felt>>;
 libfunc array_new<felt> = array_new<felt>;

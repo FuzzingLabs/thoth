@@ -1,18 +1,12 @@
+use array::ArrayTrait;
+use option::OptionTrait;
+
 // Calculates H(...H(H(0, 1), ..., n))...) where H is the Pedersen hash function.
-func hash_chain(n: felt, costs: BuiltinCosts) -> felt {
+fn hash_chain(n: felt252) -> felt252 {
     if n == 0 {
         return 0;
     }
 
-    match get_gas_all(costs) {
-        Option::Some(x) => {
-        },
-        Option::None(x) => {
-            let mut data = array_new::<felt>();
-            array_append::<felt>(data, 'OOG');
-            panic(data);
-        },
-    }
-
-    pedersen(hash_chain(n - 1, costs), n)
+    gas::withdraw_gas_all(get_builtin_costs()).expect('Out of gas');
+    pedersen(hash_chain(n - 1), n)
 }

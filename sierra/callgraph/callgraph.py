@@ -12,7 +12,9 @@ from sierra.parser.parser import SierraParser
 
 # User defined function are called using a libfunc named
 # function_call<user@function_id>
-USER_DEFINED_FUNCTION_REGEXP = re.compile(r"function_call(::)?<user@(?P<function_id>.+)>")
+USER_DEFINED_FUNCTION_REGEXP = re.compile(
+    r"(function_call|(\[[0-9]+\]))(::)?<user@(?P<function_id>.+)>"
+)
 
 
 class SierraCallGraph:
@@ -58,7 +60,8 @@ class SierraCallGraph:
                     # Create a node for an user defined function
                     called_function_name = USER_DEFINED_FUNCTION_REGEXP.match(
                         called_function.name
-                    ).group(2)
+                    ).group(4)
+
                     called_function_name = self.sanitize_name(called_function_name)
                     self.dot.node(
                         name=called_function_name,
@@ -95,9 +98,9 @@ class SierraCallGraph:
         """
         return name.replace(":", "𐫵")
 
-    def print_callgraph(self, folder: str, file_format: str) -> None:
+    def print_callgraph(self, folder: str, file_format: str, view: bool = True) -> None:
         """
         Render the dot call-graph
         """
         self.dot.format = file_format
-        self.dot.render(directory=folder, view=True)
+        self.dot.render(directory=folder, view=view)

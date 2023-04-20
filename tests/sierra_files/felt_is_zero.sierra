@@ -1,0 +1,31 @@
+type felt252 = felt252;
+type NonZero<felt252> = NonZero<felt252>;
+
+libfunc dup<felt252> = dup<felt252>;
+libfunc felt252_is_zero = felt252_is_zero;
+libfunc branch_align = branch_align;
+libfunc drop<felt252> = drop<felt252>;
+libfunc felt252_const<0> = felt252_const<0>;
+libfunc store_temp<felt252> = store_temp<felt252>;
+libfunc jump = jump;
+libfunc drop<NonZero<felt252>> = drop<NonZero<felt252>>;
+libfunc felt252_const<2> = felt252_const<2>;
+libfunc felt252_mul = felt252_mul;
+libfunc rename<felt252> = rename<felt252>;
+
+dup<felt252>([0]) -> ([0], [2]);
+felt252_is_zero([2]) { fallthrough() 7([1]) };
+branch_align() -> ();
+drop<felt252>([0]) -> ();
+felt252_const<0>() -> ([3]);
+store_temp<felt252>([3]) -> ([4]);
+jump() { 12() };
+branch_align() -> ();
+drop<NonZero<felt252>>([1]) -> ();
+felt252_const<2>() -> ([5]);
+felt252_mul([0], [5]) -> ([6]);
+store_temp<felt252>([6]) -> ([4]);
+rename<felt252>([4]) -> ([7]);
+return([7]);
+
+felt_is_zero::felt_is_zero::mul_if_not_zero@0([0]: felt252) -> (felt252);

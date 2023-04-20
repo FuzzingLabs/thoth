@@ -19,6 +19,9 @@ class ERC721Analyzer(AbstractAnalyzer):
     CATEGORY: CategoryClassification = CategoryClassification.ANALYTICS
 
     def _detect(self) -> bool:
+        if self.disassembler.cairo1:
+            return False
+
         # Cairo naming convention is snake case
         # https://docs.openzeppelin.com/contracts/2.x/api/token/erc721
         mandatory_erc721_functions_names = set(

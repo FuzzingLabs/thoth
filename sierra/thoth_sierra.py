@@ -3,8 +3,9 @@ from sierra.analyzer import all_analyzers
 from sierra.analyzer.abstract_analyzer import category_classification_text
 from sierra.arguments import parse_arguments
 from sierra.callgraph.callgraph import SierraCallGraph
-from sierra.parser.parser import SierraParser
 from sierra.decompiler.decompiler import SierraDecompiler
+from sierra.parser.parser import SierraParser
+from sierra.symbex.symbex import SierraSymbolicExecution
 
 
 def main() -> None:
@@ -33,13 +34,13 @@ def main() -> None:
     try:
         parser = SierraParser(config.SIERRA_LARK_PARSER_PATH)
         parser.parse(sierra_file)
-    except Exception:
+    except:
         print("%s is not a valid sierra file" % sierra_file)
         return
 
     # Control-Flow Graph
     if args.cfg:
-        parser.print_cfg(folder=args.output_cfg_folder, file_format=args.format)
+        parser.print_cfg(folder=args.output_cfg_folder, file_format=args.format, view=False)
         return
 
     # Call-Graph
@@ -47,7 +48,51 @@ def main() -> None:
         callgraph = SierraCallGraph(parser)
         callgraph.generate_callgraph()
 
-        callgraph.print_callgraph(folder=args.output_callgraph_folder, file_format=args.format)
+        callgraph.print_callgraph(
+            folder=args.output_callgraph_folder, file_format=args.format, view=False
+        )
+        return
+
+    if args.symbolic:
+        if args.function is None:
+            print(
+                "Symbolic execution: You need to set the -function flag e.g. -function __main__.main"
+            )
+            functions_list = [f.id for f in parser.functions]
+            print("\nPossible values:\n\t%s" % ("\n\t".join(functions_list)))
+            return
+
+        # Function parameter
+        symbex_function = args.function
+        try:
+            function = [f for f in parser.functions if f.id == symbex_function][0]
+        except:
+            print("Symbolic execution: Function %s doesn't exist" % symbex_function)
+            return 1
+
+        if not args.solves:
+            print("Symbolic execution: You need to set the -solve flag, e.g. -solves v1 v2 v3")
+            return 1
+        if not args.constraints:
+            print(
+                "Symbolic execution: You need to set the -constraints flag e.g. - constraints v1==0 v2==0"
+            )
+            return 1
+
+        symbex_constraints = args.constraints
+        symbex_solves = args.solves
+        symbex_variables = args.variables
+
+        symbolic_execution = SierraSymbolicExecution(function=function)
+        solve = symbolic_execution.solve(
+            constraints=symbex_constraints, solves=symbex_solves, variables_values=symbex_variables
+        )
+
+        if solve:
+            for variable in solve:
+                print("%s: %s" % (variable[0], variable[1]))
+        else:
+            print("No solution")
         return
 
     # Decompiler

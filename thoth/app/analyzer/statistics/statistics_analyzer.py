@@ -19,6 +19,9 @@ class StatisticsAnalyzer(AbstractAnalyzer):
     CATEGORY: CategoryClassification = CategoryClassification.ANALYTICS
 
     def _detect(self) -> bool:
+        if self.disassembler.cairo1:
+            return False
+
         self.detected = True
 
         # Statistics

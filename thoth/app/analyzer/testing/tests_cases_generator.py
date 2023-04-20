@@ -23,6 +23,9 @@ class TestCasesGeneratorAnalyzer(AbstractAnalyzer):
     CATEGORY: CategoryClassification = CategoryClassification.ANALYTICS
 
     def _detect(self) -> bool:
+        if self.disassembler.cairo1:
+            return False
+
         path_color = colors.HEADER if self.color else ""
         variable_color = colors.CYAN if self.color else ""
 

@@ -22,6 +22,9 @@ class IntegerOverflowDetector(AbstractAnalyzer):
     CATEGORY: CategoryClassification = CategoryClassification.SECURITY
 
     def _detect(self):
+        if self.disassembler.cairo1:
+            return False
+
         contract_functions = self.disassembler.functions
 
         self.decompiler = Decompiler(functions=contract_functions)

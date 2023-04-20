@@ -81,7 +81,7 @@ fallthrough: "fallthrough"
 branch_target: fallthrough
              | statement_idx
 
-basic_label: /[a-zA-Z_][a-zA-Z_0-9]*/
+basic_label: /[@a-zA-Z_][a-zA-Z_0-9\[\]]*/
 
 two_dots: "::"
 
@@ -90,8 +90,9 @@ path_label: basic_label
 
 generic_args_string: generic_arg
                   | generic_args_string", "generic_arg
+                  | generic_args_string","
 
-concrete_label: path_label two_dots  less_than generic_args_string more_than 
+concrete_label: (path_label two_dots less_than generic_args_string more_than two_dots?)*
               | path_label two_dots "<("generic_args_string")>"
               | path_label less_than generic_args_string more_than 
               | path_label
