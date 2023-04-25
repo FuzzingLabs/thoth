@@ -40,6 +40,11 @@ def parse_arguments() -> argparse.Namespace:
         choices=["pdf", "png", "svg"],
         default="pdf",
     )
+    parser.add_argument(
+        "--no-colors",
+        help="Don't use color for the decompiler output",
+        action="store_true",
+    )
 
     # CFG
     cfg = parser.add_argument_group("Call-Flow Graph")
