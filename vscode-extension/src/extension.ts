@@ -14,7 +14,7 @@ function activate(context: { subscriptions: any[]; }) {
     runThothSierraCFG();
   });
 
-  const runSierraCallgraph = vscode.commands.registerCommand('extension.runThothSierraCallgraph', () => {
+  const runSierraCallgraph = vscode.commands.registerCommand('extension.runThothSierraCallGraph', () => {
     runThothSierraCallGraph();
   });
 
@@ -30,10 +30,39 @@ function runThothSierraDecompiler() {
   }
   const filePath = activeEditor.document.uri.fsPath;
 
-  // Create a new terminal and run the thoth command on the file
-  const terminal = vscode.window.createTerminal('Thoth');
-  terminal.sendText(`thoth-sierra -f "${filePath}" -d`, true);
-  terminal.show();
+  // Create a new panel and set its content
+  const panel = vscode.window.createWebviewPanel(
+    'thothSierraDecompiler',
+    'Thoth Sierra Decompiler',
+    vscode.ViewColumn.Beside,
+    {}
+  );
+
+  // Run the thoth command on the file and update the panel content
+  const { spawn } = require('child_process');
+  const thothProcess = spawn('thoth-sierra', ['-f', filePath, '-d']);
+
+  let output = '';
+  thothProcess.stdout.on('data', (data: string) => {
+    output += data;
+    panel.webview.html = output;
+  });
+
+  thothProcess.stderr.on('data', (data: string) => {
+    output += data;
+    panel.webview.html = output;
+  });
+
+  thothProcess.on('close', (code: number) => {
+    if (code !== 0) {
+      output += `Thoth Sierra Analyzer exited with code ${code}.`;
+      panel.webview.html = output;
+    }
+  });
+
+  panel.onDidDispose(() => {
+    thothProcess.kill();
+  });
 }
 
 function runThothSierraAnalyzer() {
@@ -45,10 +74,39 @@ function runThothSierraAnalyzer() {
   }
   const filePath = activeEditor.document.uri.fsPath;
 
-  // Create a new terminal and run the thoth command on the file
-  const terminal = vscode.window.createTerminal('Thoth');
-  terminal.sendText(`thoth-sierra -f "${filePath}" -a`, true);
-  terminal.show();
+  // Create a new panel and set its content
+  const panel = vscode.window.createWebviewPanel(
+    'thothSierraAnalyzer',
+    'Thoth Sierra Analyzer',
+    vscode.ViewColumn.Beside,
+    {}
+  );
+
+  // Run the thoth command on the file and update the panel content
+  const { spawn } = require('child_process');
+  const thothProcess = spawn('thoth-sierra', ['-f', filePath, '-a']);
+
+  let output = '';
+  thothProcess.stdout.on('data', (data: string) => {
+    output += data;
+    panel.webview.html = output;
+  });
+
+  thothProcess.stderr.on('data', (data: string) => {
+    output += data;
+    panel.webview.html = output;
+  });
+
+  thothProcess.on('close', (code: number) => {
+    if (code !== 0) {
+      output += `Thoth Sierra Analyzer exited with code ${code}.`;
+      panel.webview.html = output;
+    }
+  });
+
+  panel.onDidDispose(() => {
+    thothProcess.kill();
+  });
 }
 
 function runThothSierraCFG() {
@@ -60,11 +118,44 @@ function runThothSierraCFG() {
   }
   const filePath = activeEditor.document.uri.fsPath;
 
-  // Create a new terminal and run the thoth command on the file
-  const terminal = vscode.window.createTerminal('Thoth');
-  terminal.sendText(`thoth-sierra -f "${filePath}" --cfg`, true);
-  terminal.show();
+  // Create a new panel and set its content
+  const panel = vscode.window.createWebviewPanel(
+    'thothSierraCFG',
+    'Thoth Sierra CFG',
+    vscode.ViewColumn.Beside,
+    {}
+  );
+
+  // Run the thoth command on the file and update the panel content
+  const { spawn } = require('child_process');
+  const thothProcess = spawn('thoth-sierra', ['-f', filePath, '--cfg', '-output_cfg_folder', '/tmp/cfgoutput', '--format', 'png']);
+  
+  let output = '';
+
+  const imagePath = '/tmp/cfgoutput/cfg.gv.png';
+  const onDiskPath = vscode.Uri.file(imagePath);
+  const imageUri = panel.webview.asWebviewUri(onDiskPath);
+  output += `<img src="${imageUri}" alt="${onDiskPath.path}"/>`;
+  
+  panel.webview.html = output;
+
+  thothProcess.stderr.on('data', (data: string) => {
+    output += data;
+    panel.webview2 = output;
+  });
+
+  thothProcess.on('close', (code: number) => {
+    if (code !== 0) {
+      output += `Thoth Sierra Analyzer exited with code ${code}.`;
+      panel.webview.html = output;
+    }
+  });
+
+  panel.onDidDispose(() => {
+    thothProcess.kill();
+  });
 }
+
 
 function runThothSierraCallGraph() {
   // Get the currently opened file
@@ -75,10 +166,42 @@ function runThothSierraCallGraph() {
   }
   const filePath = activeEditor.document.uri.fsPath;
 
-  // Create a new terminal and run the thoth command on the file
-  const terminal = vscode.window.createTerminal('Thoth');
-  terminal.sendText(`thoth-sierra -f "${filePath}" --call`, true);
-  terminal.show();
+  // Create a new panel and set its content
+  const panel = vscode.window.createWebviewPanel(
+    'thothSierraCallGraph',
+    'Thoth Sierra CallGraph',
+    vscode.ViewColumn.Beside,
+    {}
+  );
+
+  // Run the thoth command on the file and update the panel content
+  const { spawn } = require('child_process');
+  const thothProcess = spawn('thoth-sierra', ['-f', filePath, '--call', '-output_callgraph_folder', '/tmp/callgraphoutput', '--format', 'png']);
+  
+  let output = '';
+
+  const imagePath = '/tmp/callgraphoutput/cfg.gv.png';
+  const onDiskPath = vscode.Uri.file(imagePath);
+  const imageUri = panel.webview.asWebviewUri(onDiskPath);
+  output += `<img src="${imageUri}" alt="${onDiskPath.path}"/>`;
+  
+  panel.webview.html = output;
+
+  thothProcess.stderr.on('data', (data: string) => {
+    output += data;
+    panel.webview2 = output;
+  });
+
+  thothProcess.on('close', (code: number) => {
+    if (code !== 0) {
+      output += `Thoth Sierra Analyzer exited with code ${code}.`;
+      panel.webview.html = output;
+    }
+  });
+
+  panel.onDidDispose(() => {
+    thothProcess.kill();
+  });
 }
 
 
@@ -88,3 +211,7 @@ module.exports = {
   activate,
   deactivate
 };
+
+function getWebviewContent(arg0: any) {
+  throw new Error("Function not implemented.");
+}
