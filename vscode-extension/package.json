@@ -1,7 +1,7 @@
 {
   "name": "thoth-vscode",
   "displayName": "thoth-vscode",
-  "description": "",
+  "description": "Analyze Sierra files using thoth",
   "version": "0.0.1",
   "engines": {
     "vscode": "^1.77.0"
@@ -15,19 +15,19 @@
     "commands": [
       {
         "command": "extension.runThothSierraDecompiler",
-        "title": "thoth-sierra decompiler"
+        "title": "Run thoth-sierra decompiler"
       },
       {
         "command": "extension.runThothSierraAnalyzer",
-        "title": "thoth-sierra analyzers"
+        "title": "Run thoth-sierra analyzers"
       },
       {
         "command": "extension.runThothSierraCFG",
-        "title": "thoth-sierra CFG"
+        "title": "Run thoth-sierra CFG"
       },
       {
         "command": "extension.runThothSierraCallGraph",
-        "title": "thoth-sierra callgraph"
+        "title": "Run thoth-sierra callgraph"
       }
     ]
   },
@@ -50,9 +50,7 @@
     "eslint": "^8.36.0",
     "glob": "^8.1.0",
     "mocha": "^10.2.0",
-    "typescript": "^4.9.5"
-  },
-  "dependencies": {
+    "typescript": "^5.0.4",
     "vscode": "^1.1.37"
   }
 }
