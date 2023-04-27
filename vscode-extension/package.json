@@ -28,6 +28,26 @@
       {
         "command": "extension.runThothSierraCallGraph",
         "title": "Run thoth-sierra callgraph"
+      },
+      {
+        "command": "extension.runThothDecompiler",
+        "title": "Run thoth decompiler"
+      },
+      {
+        "command": "extension.runThothDisassembler",
+        "title": "Run thoth disassembler"
+      },
+      {
+        "command": "extension.runThothAnalyzer",
+        "title": "Run thoth analyzers"
+      },
+      {
+        "command": "extension.runThothCFG",
+        "title": "Run thoth CFG"
+      },
+      {
+        "command": "extension.runThothCallGraph",
+        "title": "Run thoth callgraph"
       }
     ]
   },
@@ -40,6 +60,7 @@
     "test": "node ./out/test/runTest.js"
   },
   "devDependencies": {
+    "@types/core-js": "^2.5.5",
     "@types/glob": "^8.1.0",
     "@types/mocha": "^10.0.1",
     "@types/node": "^16.18.24",
@@ -47,6 +68,7 @@
     "@typescript-eslint/eslint-plugin": "^5.56.0",
     "@typescript-eslint/parser": "^5.56.0",
     "@vscode/test-electron": "^2.3.0",
+    "core-js": "^3.30.1",
     "eslint": "^8.36.0",
     "glob": "^8.1.0",
     "mocha": "^10.2.0",

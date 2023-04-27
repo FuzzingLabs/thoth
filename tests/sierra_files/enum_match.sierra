@@ -3,7 +3,7 @@ type u16 = u16;
 type u32 = u32;
 type enum_match::enum_match::MyEnum = Enum<ut@enum_match::enum_match::MyEnum, u8, u16, u32>;
 
-libfunc enum_match<enum_match::enum_    match::MyEnum> = enum_match<enum_match::enum_match::MyEnum>;
+libfunc enum_match<enum_match::enum_match::MyEnum> = enum_match<enum_match::enum_match::MyEnum>;
 libfunc branch_align = branch_align;
 libfunc drop<u8> = drop<u8>;
 libfunc u16_const<1> = u16_const<1>;
