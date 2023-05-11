@@ -1,78 +1,120 @@
 {
-  "name": "thoth-vscode",
-  "displayName": "thoth-vscode",
-  "description": "Analyze Sierra files using thoth",
-  "version": "0.0.1",
-  "engines": {
-    "vscode": "^1.77.0"
+  "name":"thoth-vscode",
+  "displayName":"thoth-vscode",
+  "description":"Analyze Sierra files using thoth",
+  "version":"0.0.1",
+  "engines":{
+     "vscode":"^1.77.0"
   },
-  "categories": [
-    "Other"
+  "categories":[
+     "Other"
   ],
-  "activationEvents": [],
-  "main": "./out/extension.js",
-  "contributes": {
-    "commands": [
-      {
-        "command": "extension.runThothSierraDecompiler",
-        "title": "Run thoth-sierra decompiler"
-      },
-      {
-        "command": "extension.runThothSierraAnalyzer",
-        "title": "Run thoth-sierra analyzers"
-      },
-      {
-        "command": "extension.runThothSierraCFG",
-        "title": "Run thoth-sierra CFG"
-      },
-      {
-        "command": "extension.runThothSierraCallGraph",
-        "title": "Run thoth-sierra callgraph"
-      },
-      {
-        "command": "extension.runThothDecompiler",
-        "title": "Run thoth decompiler"
-      },
-      {
-        "command": "extension.runThothDisassembler",
-        "title": "Run thoth disassembler"
-      },
-      {
-        "command": "extension.runThothAnalyzer",
-        "title": "Run thoth analyzers"
-      },
-      {
-        "command": "extension.runThothCFG",
-        "title": "Run thoth CFG"
-      },
-      {
-        "command": "extension.runThothCallGraph",
-        "title": "Run thoth callgraph"
-      }
-    ]
-  },
-  "scripts": {
-    "vscode:prepublish": "npm run compile",
-    "compile": "tsc -p ./",
-    "watch": "tsc -watch -p ./",
-    "pretest": "npm run compile && npm run lint",
-    "lint": "eslint src --ext ts",
-    "test": "node ./out/test/runTest.js"
-  },
-  "devDependencies": {
-    "@types/core-js": "^2.5.5",
-    "@types/glob": "^8.1.0",
-    "@types/mocha": "^10.0.1",
-    "@types/node": "^16.18.24",
-    "@types/vscode": "^1.77.0",
-    "@typescript-eslint/eslint-plugin": "^5.56.0",
-    "@typescript-eslint/parser": "^5.56.0",
-    "@vscode/test-electron": "^2.3.0",
-    "core-js": "^3.30.1",
-    "eslint": "^8.36.0",
-    "glob": "^8.1.0",
-    "mocha": "^10.2.0",
-    "typescript": "^5.0.4",
-    "vscode": "^1.1.37"
+  "activationEvents":[
+     
+  ],
+  "main":"./out/extension.js",
+  "contributes":{
+     "commands":[
+        {
+           "command":"extension.runThothSierraDecompiler",
+           "title":"Run thoth-sierra decompiler"
+        },
+        {
+           "command":"extension.runThothSierraAnalyzer",
+           "title":"Run thoth-sierra analyzers"
+        },
+        {
+           "command":"extension.runThothSierraCFG",
+           "title":"Run thoth-sierra CFG"
+        },
+        {
+           "command":"extension.runThothSierraCallGraph",
+           "title":"Run thoth-sierra callgraph"
+        },
+        {
+           "command":"extension.runThothDecompiler",
+           "title":"Run thoth decompiler"
+        },
+        {
+           "command":"extension.runThothDisassembler",
+           "title":"Run thoth disassembler"
+        },
+        {
+           "command":"extension.runThothAnalyzer",
+           "title":"Run thoth analyzers"
+        },
+        {
+           "command":"extension.runThothCFG",
+           "title":"Run thoth CFG"
+        },
+        {
+           "command":"extension.runThothCallGraph",
+           "title":"Run thoth callgraph"
+        }
+     ],
+     "menus":{
+        "editor/context":[
+           {
+              "command":"extension.runThothSierraDecompiler",
+              "when":"resourceExtname == .sierra"
+           },
+           {
+              "command":"extension.runThothSierraAnalyzer",
+              "when":"resourceExtname == .sierra"
+           },
+           {
+              "command":"extension.runThothSierraCFG",
+              "when":"resourceExtname == .sierra"
+           },
+           {
+              "command":"extension.runThothSierraCallGraph",
+              "when":"resourceExtname == .sierra"
+           },
+           {
+              "command":"extension.runThothDecompiler",
+              "when":"resourceExtname == .json"
+           },
+           {
+              "command":"extension.runThothDisassembler",
+              "when":"resourceExtname == .json"
+           },
+           {
+              "command":"extension.runThothAnalyzer",
+              "when":"resourceExtname == .json"
+           },
+           {
+              "command":"extension.runThothCFG",
+              "when":"resourceExtname == .json"
+           },
+           {
+              "command":"extension.runThothCallGraph",
+              "when":"resourceExtname == .json"
+           }
+        ]
+     },
+     "scripts":{
+        "vscode:prepublish":"npm run compile",
+        "compile":"tsc -p ./",
+        "watch":"tsc -watch -p ./",
+        "pretest":"npm run compile && npm run lint",
+        "lint":"eslint src --ext ts",
+        "test":"node ./out/test/runTest.js"
+     },
+     "devDependencies":{
+        "@types/core-js":"^2.5.5",
+        "@types/glob":"^8.1.0",
+        "@types/mocha":"^10.0.1",
+        "@types/node":"^16.18.24",
+        "@types/vscode":"^1.77.0",
+        "@typescript-eslint/eslint-plugin":"^5.56.0",
+        "@typescript-eslint/parser":"^5.56.0",
+        "@vscode/test-electron":"^2.3.0",
+        "core-js":"^3.30.1",
+        "eslint":"^8.36.0",
+        "glob":"^8.1.0",
+        "mocha":"^10.2.0",
+        "typescript":"^5.0.4",
+        "vscode":"^1.1.37"
+     }
   }
 }
