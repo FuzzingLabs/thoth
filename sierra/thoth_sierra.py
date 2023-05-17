@@ -6,10 +6,14 @@ from sierra.callgraph.callgraph import SierraCallGraph
 from sierra.decompiler.decompiler import SierraDecompiler
 from sierra.parser.parser import SierraParser
 from sierra.symbex.symbex import SierraSymbolicExecution
+from sierra.utils import colors
 
 
 def main() -> None:
     args = parse_arguments()
+
+    # Output color
+    colors.__init__(color=not args.no_colors)
 
     # Show analyzers help
     if args.analyzers_help is not None:
@@ -95,7 +99,7 @@ def main() -> None:
             print("No solution")
         return
 
-    # Decompiler
+    # Decompiler output
     if args.decompile:
         decompiler = SierraDecompiler(program=parser)
         decompiled_code = decompiler.decompile_code()

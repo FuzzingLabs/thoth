@@ -65,7 +65,7 @@ Or with a more complex case:
 
 <p align="center">
 	<b> Source code </b></br>
-	<img src="/images/thoth/thoth_symbolic_execution_source.png"/></br>
+	<img src="/doc/images/thoth/thoth_symbolic_execution_source.png"/></br>
 </p>
 
 Solve the variables arguments values with the symbolic execution:
