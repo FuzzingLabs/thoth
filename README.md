@@ -1,5 +1,5 @@
 # Thoth, the Cairo/Starknet bytecode analyzer, disassembler and decompiler
-<img src="./tests/coverage.svg"/> <img src ="https://img.shields.io/badge/python-3.10-blue.svg"/>
+<img src ="https://img.shields.io/badge/python-3.10-blue.svg"/>
 
 Thoth (pronounced "taut" or "toss") is a Cairo/Starknet analyzer, disassembler & decompiler written in Python 3. Thoth's features include the generation of the call graph, the control-flow graph (CFG) and the data-flow graph for a given [Sierra file](/sierra/README.md) or Cairo/Starknet compilation artifact.
 
@@ -37,16 +37,16 @@ thoth local tests/json_files/cairo_0/cairo_test_addition_if.json -d
 Example 1 with strings:
 <p align="center">
 	<b> source code </b></br>
-	<img src="/images/thoth/thoth_decompile_sourcecode.png"/></br>
+	<img src="/doc/images/thoth/thoth_decompile_sourcecode.png"/></br>
 	<b> decompiler code </b></br>
-	<img src="/images/thoth/thoth_decompile.png"/></br>
+	<img src="/doc/images/thoth/thoth_decompile.png"/></br>
 </p>
 Example 2 with function call:
 <p align="center">
 	<b> source code </b></br>
-	<img src="/images/thoth/thoth_decompile_sourcecode_2.png"/></br>
+	<img src="/doc/images/thoth/thoth_decompile_sourcecode_2.png"/></br>
 	<b> decompiler code </b></br>
-	<img src="/images/thoth/thoth_decompile_2.png"/></br>
+	<img src="/doc/images/thoth/thoth_decompile_2.png"/></br>
 </p>
 
 
@@ -63,12 +63,12 @@ The output file (pdf/svg/png) and the dot file are inside the `output-callgraph`
 If needed, you can also visualize dot files online using [this](https://dreampuf.github.io/GraphvizOnline/) website. The legend can be found [here](images/callgraph_legend.png).
 
 <p align="center">
-	<img src="/images/thoth/thoth_callgraph_simple.png"/>
+	<img src="/doc/images/thoth/thoth_callgraph_simple.png"/>
 </p>
 
 A more complexe callgraph:
 <p align="center">
-	<img src="/images/thoth/starknet_get_full_contract_l2_dai_bridge.gv.png"/>
+	<img src="/doc/images/thoth/starknet_get_full_contract_l2_dai_bridge.gv.png"/>
 </p>
 
 ## Run the static analysis
@@ -127,11 +127,11 @@ thoth remote --address 0x069e40D2c88F479c86aB3E379Da958c75724eC1d5b7285E14e7bA44
 The output file (pdf/svg/png) and the dot file are inside the `output-dfg` folder.
 
 <p align="center">
-	<img src="/images/thoth/thoth_dataflow_graph.png"/>
+	<img src="/doc/images/thoth/thoth_dataflow_graph.png"/>
 </p>
 
 <p align="center">
-	<img src="/images/thoth/thoth_dfg_tainting.png"/>
+	<img src="/doc/images/thoth/thoth_dfg_tainting.png"/>
 </p>
 
 ## Disassemble the contract's compilation artifact (JSON)
@@ -148,7 +148,7 @@ thoth local tests/json_files/cairo_0/cairo_array_sum.json -vvv
 ```
 
 <p align="center">
-	<img src="/images/thoth/thoth_disas_color.png"/>
+	<img src="/doc/images/thoth/thoth_disas_color.png"/>
 </p>
 
 ## Print the contract's control-flow graph (CFG)
@@ -163,7 +163,7 @@ thoth local tests/json_files/cairo_0/cairo_double_function_and_if.json -cfg -vie
 The output file (pdf/svg/png) and the dot file are inside the `output-cfg` folder.
 
 <p align="center">
-	<img src="/images/thoth/cairo_double_function_and_if_cfg.png"/>
+	<img src="/doc/images/thoth/cairo_double_function_and_if_cfg.png"/>
 </p>
 
 # F.A.Q
