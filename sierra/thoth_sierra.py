@@ -1,11 +1,12 @@
 from sierra import config
 from sierra.analyzer import all_analyzers
 from sierra.analyzer.abstract_analyzer import category_classification_text
-from sierra.arguments import parse_arguments
+from sierra.arguments import parse_thoth_checker_arguments, parse_thoth_sierra_arguments
 from sierra.callgraph.callgraph import SierraCallGraph
 from sierra.decompiler.decompiler import SierraDecompiler
 from sierra.parser.parser import SierraParser
 from sierra.symbex.symbex import SierraSymbolicExecution
+from sierra.utils import load_symbex_yaml_config
 from sierra.utils import colors
 
 
@@ -14,7 +15,7 @@ def thoth_sierra() -> None:
     thoth-sierra command entry point
     """
 
-    args = parse_arguments()
+    args = parse_thoth_sierra_arguments()
 
     # Output color
     colors.__init__(color=not args.no_colors)
@@ -170,5 +171,49 @@ def thoth_checker() -> None:
     """
     thoth-checker command entry point
     """
+    args = parse_thoth_checker_arguments()
 
-    pass
+    print("[+] Thoth Symbolic bounded model checker\n")
+
+    # Parse a Sierra file
+    sierra_file = args.file
+    if sierra_file is None:
+        print("You need to specify a sierra file path using the -f flag")
+        return
+
+    try:
+        parser = SierraParser(config.SIERRA_LARK_PARSER_PATH)
+        parser.parse(sierra_file)
+    except:
+        print("%s is not a valid sierra file" % sierra_file)
+        return
+
+    # Load the symbolic execution parameters from a config file
+    if args.config:
+        try:
+            (
+                symbex_function,
+                symbex_constraints,
+                symbex_variables,
+                symbex_solves,
+            ) = load_symbex_yaml_config(args.config).values()
+        except Exception as e:
+            print(e)
+            return 1
+
+    try:
+        function = [f for f in parser.functions if f.id == symbex_function][0]
+    except:
+        print("Symbolic execution: Function %s doesn't exist" % symbex_function)
+        return 1
+
+    symbolic_execution = SierraSymbolicExecution(function=function)
+    solve = symbolic_execution.solve(
+        constraints=symbex_constraints, solves=symbex_solves, variables_values=symbex_variables
+    )
+
+    if solve:
+        print("All assertions passed")
+    else:
+        print("Assertions failed")
+    return

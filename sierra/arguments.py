@@ -14,7 +14,7 @@ def is_valid_file(parser: argparse.ArgumentParser, path: str) -> str:
     return path
 
 
-def parse_arguments() -> argparse.Namespace:
+def parse_thoth_sierra_arguments() -> argparse.Namespace:
     """
     Parse the thoth-sierra arguments
     """
@@ -90,6 +90,35 @@ def parse_arguments() -> argparse.Namespace:
     )
     parser.add_argument(
         "--analyzers-help", choices=analyzers_names, help="Show analyzers help", nargs="*"
+    )
+
+    # Parse the arguments
+    args = parser.parse_args()
+
+    return args
+
+
+def parse_thoth_checker_arguments() -> argparse.Namespace:
+    """
+    Parse the thoth-checker arguments
+    """
+
+    # Create the parser
+    parser = argparse.ArgumentParser(
+        description="""
+    thoth-checker is symbolic bounded model checker for sierra files.
+    """
+    )
+
+    # Global arguments
+    parser.add_argument(
+        "-f",
+        "--file",
+        help="Path of the sierra file",
+        type=lambda path: is_valid_file(parser, path),
+    )
+    parser.add_argument(
+        "--config", type=argparse.FileType("r"), help="YAML Config file", required=True
     )
 
     # Parse the arguments
