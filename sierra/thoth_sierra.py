@@ -9,7 +9,11 @@ from sierra.symbex.symbex import SierraSymbolicExecution
 from sierra.utils import colors
 
 
-def main() -> None:
+def thoth_sierra() -> None:
+    """
+    thoth-sierra command entry point
+    """
+
     args = parse_arguments()
 
     # Output color
@@ -160,3 +164,11 @@ def main() -> None:
             detected_analyzers_count,
         )
     )
+
+
+def thoth_checker() -> None:
+    """
+    thoth-checker command entry point
+    """
+
+    pass

@@ -24,6 +24,10 @@ setup(
     long_description=long_description,
     long_description_content_type="text/markdown",
     entry_points={
-        "console_scripts": ["thoth = thoth.thoth:main", "thoth-sierra = sierra.thoth_sierra:main"]
+        "console_scripts": [
+            "thoth = thoth.thoth:main",
+            "thoth-sierra = sierra.thoth_sierra:thoth_sierra",
+            "thoth-checker = sierra.thoth_sierra:thoth_checker",
+        ]
     },
 )
