@@ -35,7 +35,7 @@ class SierraParser:
         Sierra Parser initialization
         """
         # Lark parser
-        self.parser = Lark.open(lark_parser_path, ambiguity="explicit", maybe_placeholders=False)
+        self.parser = Lark.open(lark_parser_path, maybe_placeholders=False)
         # Lark reconstructor
         self.reconstructor = Reconstructor(self.parser)
 
