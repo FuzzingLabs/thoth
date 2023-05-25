@@ -38,8 +38,7 @@ def main() -> None:
     try:
         parser = SierraParser(config.SIERRA_LARK_PARSER_PATH)
         parser.parse(sierra_file)
-    except Exception as e:
-        print(e)
+    except Exception:
         print("%s is not a valid sierra file" % sierra_file)
         return
 
