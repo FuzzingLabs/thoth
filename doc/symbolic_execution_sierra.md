@@ -98,7 +98,11 @@ If all the assertions pass, the following message is outputed:
 All assertions passed
 ```
 
-### Successful check
+## Symbolic bounded model checker
+
+Thoth can also be used as a *symbolic bounded model checker* for sierra files. using the `thoth-checker` command.
+
+### First example: Successful check
 
 For example, we have this function in a contract:
 
@@ -149,9 +153,9 @@ func symbolic::symbolic::symbolic_execution_test (v0: felt252, v1: felt252, v2: 
 
 We want to formally verify that `v0` must be equal to 102 in order to pass the first condition using the symbolic bounded model checker.
 
-We need to prove 1 assertion using **symbolic execution** to make a formal verification:
+We need to prove 2 assertions using **symbolic execution** to make a formal verification:
 
-`!(v0 != 122 && v5 == 0)`
+`!(v0 != 122 && v5 == 0)` and `(v0 == 122 && v5 == 0)`
 
 If this assertion fails, it means that we formally verified that v0 must be equal to 122 in order to pass the first condition.
 
@@ -159,7 +163,7 @@ If this assertion fails, it means that we formally verified that v0 must be equa
 
 We write the following rules into our config.yaml file:
 
-```
+```yaml
 function: "symbolic::symbolic::symbolic_execution_test"
 constraints: 
     - "v0!=122"
@@ -173,7 +177,67 @@ And we run it:
 ```
 thoth-checker -f symbolic_execution_test.sierra --config config.yaml
 
+[+] Thoth Symbolic bounded model checker
+
 Assertions failed
 ```
 
-We proved that there is no solutions where `v0` can be != 122.
+#### Proving `(v0 == 122 && v5 == 0)`
+
+We write the following rules into our config.yaml file:
+
+```yaml
+function: "symbolic::symbolic::symbolic_execution_test"
+constraints: 
+    - "v0==122"
+    - "v5==0"
+solves:
+   - "v0"
+```
+
+And we run it:
+
+```
+thoth-checker -f symbolic_execution_test.sierra --config config.yaml
+
+[+] Thoth Symbolic bounded model checker
+
+All assertions passed
+```
+
+We proved that there is no solutions where `v0` can be != 122 to pass the first condition.
+
+### Second example: Failed check
+
+We want to formally verify that `v0` must be equal to 42 in order to pass the first condition using the symbolic bounded model checker.
+
+We need to prove 2 assertions using **symbolic execution** to make a formal verification:
+
+`!(v0 != 42 && v5 == 0)` and `(v0 == 42 && v5 == 0)`
+
+If this assertion fails, it means that we formally verified that v0 must be equal to 42 in order to pass the first condition.
+
+#### Proving `!(v0 != 42 && v5 == 0)`
+
+We write the following rules into our config.yaml file:
+
+```yaml
+function: "symbolic::symbolic::symbolic_execution_test"
+constraints: 
+    - "v0!=42"
+    - "v5==0"
+solves:
+   - "v0"
+```
+
+And we run it:
+
+```
+thoth-checker -f symbolic_execution_test.sierra --config config.yaml
+
+[+] Thoth Symbolic bounded model checker
+
+All assertions passed
+```
+
+There should be no cases where v0 is different from 42, so these assertions should not pass.
