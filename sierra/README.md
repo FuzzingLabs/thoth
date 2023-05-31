@@ -5,7 +5,7 @@
 ```
 
 <p align="center">
-    <img src="/images/thoth-sierra/thoth_sierra_decompiler.png" height="500"/>
+    <img src="/doc/images/thoth-sierra/thoth_sierra_decompiler.png" height="500"/>
 </p>
 
 ## Print the contract's Call Graph 
@@ -21,7 +21,7 @@ thoth-sierra -f ./tests/sierra_files/testing.sierra --call --format png
 ```
 
 <p align="center">
-	<img src="/images/thoth-sierra/thoth_sierra_callgraph.png" height="400"/>
+	<img src="/doc/images/thoth-sierra/thoth_sierra_callgraph.png" height="400"/>
 </p>
 
 ## Print the contract's Control-Flow Graph
@@ -37,7 +37,7 @@ thoth-sierra -f ./tests/sierra_files/fib_box.sierra --cfg --format png
 ```
 
 <p align="center">
-	<img src="/images/thoth-sierra/thoth_sierra_cfg.png" height="300"/>
+	<img src="/doc/images/thoth-sierra/thoth_sierra_cfg.png" height="300"/>
 </p>
 
 ## Run the analyzers
@@ -46,6 +46,6 @@ thoth-sierra -f ./tests/sierra_files/fib_box.sierra --cfg --format png
 thoth-sierra -f tests/sierra_files/cairo_if_list.sierra -a
 ```
 <p align="center">
-	<img src="/images/thoth-sierra/thoth_sierra_analyzers.png" height="250"/>
+	<img src="/doc/images/thoth-sierra/thoth_sierra_analyzers.png" height="250"/>
 </p>
 

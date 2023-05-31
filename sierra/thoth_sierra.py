@@ -6,7 +6,6 @@ from sierra.callgraph.callgraph import SierraCallGraph
 from sierra.decompiler.decompiler import SierraDecompiler
 from sierra.parser.parser import SierraParser
 from sierra.symbex.symbex import SierraSymbolicExecution
-from sierra.utils import load_symbex_yaml_config
 from sierra.utils import colors
 
 
@@ -43,7 +42,7 @@ def thoth_sierra() -> None:
     try:
         parser = SierraParser(config.SIERRA_LARK_PARSER_PATH)
         parser.parse(sierra_file)
-    except:
+    except Exception:
         print("%s is not a valid sierra file" % sierra_file)
         return
 
@@ -171,6 +170,9 @@ def thoth_checker() -> None:
     """
     thoth-checker command entry point
     """
+    # Output color
+    colors.__init__(color=True)
+
     args = parse_thoth_checker_arguments()
 
     print("[+] Thoth Symbolic bounded model checker\n")
@@ -188,32 +190,16 @@ def thoth_checker() -> None:
         print("%s is not a valid sierra file" % sierra_file)
         return
 
-    # Load the symbolic execution parameters from a config file
-    if args.config:
-        try:
-            (
-                symbex_function,
-                symbex_constraints,
-                symbex_variables,
-                symbex_solves,
-            ) = load_symbex_yaml_config(args.config).values()
-        except Exception as e:
-            print(e)
-            return 1
+    test_functions = [f for f in parser.functions if f.id.split("::")[-1].startswith("thoth_test")]
 
-    try:
-        function = [f for f in parser.functions if f.id == symbex_function][0]
-    except:
-        print("Symbolic execution: Function %s doesn't exist" % symbex_function)
-        return 1
+    for function in test_functions:
+        symbolic_execution = SierraSymbolicExecution(function=function)
+        solve = symbolic_execution.solve_test_function()
 
-    symbolic_execution = SierraSymbolicExecution(function=function)
-    solve = symbolic_execution.solve(
-        constraints=symbex_constraints, solves=symbex_solves, variables_values=symbex_variables
-    )
+        if solve:
+            result = colors.GREEN + "OK" + colors.ENDC
+        else:
+            result = colors.RED + "FAIL" + colors.ENDC
 
-    if solve:
-        print("All assertions passed")
-    else:
-        print("Assertions failed")
+        print("%s %s" % (function.id, result))
     return

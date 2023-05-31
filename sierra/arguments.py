@@ -106,7 +106,7 @@ def parse_thoth_checker_arguments() -> argparse.Namespace:
     # Create the parser
     parser = argparse.ArgumentParser(
         description="""
-    thoth-checker is symbolic bounded model checker for sierra files.
+    thoth-checker is a symbolic bounded model checker for sierra files.
     """
     )
 
@@ -116,9 +116,6 @@ def parse_thoth_checker_arguments() -> argparse.Namespace:
         "--file",
         help="Path of the sierra file",
         type=lambda path: is_valid_file(parser, path),
-    )
-    parser.add_argument(
-        "--config", type=argparse.FileType("r"), help="YAML Config file", required=True
     )
 
     # Parse the arguments

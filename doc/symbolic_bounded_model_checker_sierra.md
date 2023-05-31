@@ -1,0 +1,63 @@
+## Symbolic bounded model checker
+
+The symbolic execution of the sierra can be used to formally verify a contract using the `thoth-checker` app.
+
+It is possible to write the assertions directly in your Cairo program using the `assert()` function.
+
+### First example: successful check
+
+Here we have written an assertion to formally check that there can be a result where the sum of `a` and `b` is 10.
+
+```rs
+fn thoth_test_sum(mut a: felt252, mut b: felt252) {
+   let sum = a + b;
+   assert(sum == 10, '');
+}
+```
+
+We compile this Cairo code into Sierra using `cairo-compile`
+
+```
+cairo-compile ./test_checker.cairo ./test_checker.sierra -r
+```
+
+It is now possible to verify the assertion using `thoth-checker`
+
+```
+$ ~ thoth-checker -f ./test_checker.sierra
+
+[+] Thoth Symbolic bounded model checker
+
+test_checker::test_checker::thoth_test_sum OK
+```
+
+This assertion is therefore proven true using `thoth-checker`.
+
+### Second example: failed check
+
+Here we have written an assertion to formally check that there can be a result where `a * 2` is equal to 11, which is impossible.
+
+```rs
+fn thoth_test_product(mut a: felt252) {
+   let c = a * 2;
+   assert(c == 11, '');
+}
+```
+
+We compile this Cairo code into Sierra using `cairo-compile`
+
+```
+cairo-compile ./test_checker.cairo ./test_checker_2.sierra -r
+```
+
+It is now possible to verify the assertion using `thoth-checker`
+
+```
+$ ~ thoth-checker -f ./test_checker_2.sierra
+
+[+] Thoth Symbolic bounded model checker
+
+test_checker::test_checker::thoth_test_sum FAIL
+```
+
+We have therefore formally proved that this assertion is false.

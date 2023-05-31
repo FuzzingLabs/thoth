@@ -80,7 +80,7 @@ def felt_mul(
 
     variable = assigned_variables[0]
 
-    return self.solver.add(variable == function_arguments[0] / function_arguments[1])
+    return self.solver.add(variable == function_arguments[0] * function_arguments[1])
 
 
 def felt_add(

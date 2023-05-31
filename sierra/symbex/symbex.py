@@ -6,6 +6,7 @@ from z3 import *
 
 from sierra.objects.objects import (
     SierraBasicBlock,
+    SierraConditionalBranch,
     SierraFunction,
     SierraVariableAssignation,
 )
@@ -154,6 +155,28 @@ class SierraSymbolicExecution:
                 return result
         return []
 
+    def solve_test_function(self) -> True:
+        """
+        Find if a `thoth_test` function pass all its conditions (asserts)
+        """
+
+        for path in self.paths:
+            # Initialize solver for each napth
+            self.solver = z3.Solver()
+            self.z3_variables = []
+
+            # Load variables into z3
+            self._load_path_variables(path)
+
+            # Load conditions into z3
+            self._load_path_conditions(path)
+
+            # Solve the constraints
+            if not self.solver.check() == z3.sat:
+                return False
+
+        return True
+
     def _load_path_variables(self, basic_blocks: List[SierraBasicBlock]) -> None:
         """
         Load path variables into z3
@@ -172,6 +195,32 @@ class SierraSymbolicExecution:
                     BitVec(v.representation_name, 32) for v in statement.assigned_variables
                 ]
                 self._variable_assignation_to_z3(statement)
+
+    def _load_path_conditions(self, basic_blocks: List[SierraBasicBlock]) -> None:
+        """
+        Load path conditions into z3
+        """
+
+        # Load function arguments into z3 variables
+        self.z3_variables += [BitVec(p.representation_name, 32) for p in self.function.parameters]
+
+        # All the path statements
+        statements = list(itertools.chain.from_iterable([b.statements for b in basic_blocks]))
+
+        # Load the conditions
+        for statement in statements:
+            if (
+                isinstance(statement, SierraConditionalBranch)
+                and statement.edge_2_offset is not None
+            ):
+                function_name = statement.function
+                function_arguments = [v.representation_name for v in statement.parameters]
+
+                if function_name.endswith("is_zero"):
+                    variable_name = [
+                        v for v in self.z3_variables if str(v) == function_arguments[0]
+                    ][0]
+                    self.solver.add(variable_name == 0)
 
     def _function_arguments_to_z3(self, function: SierraFunction):
         """
