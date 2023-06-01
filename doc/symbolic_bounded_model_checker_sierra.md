@@ -2,7 +2,7 @@
 
 The symbolic execution of the sierra can be used to formally verify a contract using the `thoth-checker` app.
 
-It is possible to write the assertions directly in your Cairo program using the `assert()` function.
+It is possible to write the assertions directly in your Cairo program using the `assert()` function. thoth-checker will automatically test all functions whose name begins with `thoth_test`.
 
 ### First example: successful check
 
