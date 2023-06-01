@@ -173,9 +173,9 @@ class SierraSymbolicExecution:
 
             # Solve the constraints
             if not self.solver.check() == z3.sat:
-                return False
+                return (False, len(self.paths))
 
-        return True
+        return (True, len(self.paths))
 
     def _load_path_variables(self, basic_blocks: List[SierraBasicBlock]) -> None:
         """

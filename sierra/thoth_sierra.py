@@ -1,3 +1,4 @@
+import time
 from sierra import config
 from sierra.analyzer import all_analyzers
 from sierra.analyzer.abstract_analyzer import category_classification_text
@@ -192,14 +193,22 @@ def thoth_checker() -> None:
 
     test_functions = [f for f in parser.functions if f.id.split("::")[-1].startswith("thoth_test")]
 
-    for function in test_functions:
+    for i in range(len(test_functions)):
+        function = test_functions[i]
+
         symbolic_execution = SierraSymbolicExecution(function=function)
-        solve = symbolic_execution.solve_test_function()
+
+        start_time = time.time()
+        solve, paths = symbolic_execution.solve_test_function()
+        solve_duration = round(time.time() - start_time, 2)
 
         if solve:
-            result = colors.GREEN + "OK" + colors.ENDC
+            result = colors.GREEN + "PASS" + colors.ENDC
         else:
             result = colors.RED + "FAIL" + colors.ENDC
 
-        print("%s %s" % (function.id, result))
+        print(
+            "[%s] %s (test %s/%s, time: %ss, paths: %s)"
+            % (result, function.id, i + 1, len(test_functions), solve_duration, paths)
+        )
     return
