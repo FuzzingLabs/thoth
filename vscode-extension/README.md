@@ -25,7 +25,7 @@ To install it on your Visual Studio Code, navigate to the extension page and cli
 When you have a Sierra file or a JSON artifact open in VS Code, you can select the commands to launch with a **right click**
 
 <p align="center">
-  <img src="https://raw.githubusercontent.com/FuzzingLabs/thoth/feature/vscode-extension/vscode-extension/doc/run-commands-buttons.png" />
+  <img src="https://raw.githubusercontent.com/FuzzingLabs/thoth/master/vscode-extension/doc/run-commands-buttons.png" />
 </p>
 
 Available commands for Sierra files: 
