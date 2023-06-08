@@ -67,7 +67,7 @@ We have therefore formally proved that this assertion is false.
 Here we have written an assertion to formally check that sum is equal to 3.
 
 ```rs
-fn add(mut a: felt252, mut b: felt 252) {
+fn add(mut a: felt252, mut b: felt 252) -> felt252 {
    let c = a + b;
    c
 }
@@ -99,7 +99,7 @@ test_checker::test_checker::thoth_test_sum SUCCESS
 Here we have written an assertion to formally check that sum is equal to 6.
 
 ```rs
-fn add(mut a: felt252, mut b: felt 252) {
+fn add(mut a: felt252, mut b: felt 252) -> felt252 {
    let c = a + b;
    c
 }
