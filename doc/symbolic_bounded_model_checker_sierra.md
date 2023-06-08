@@ -64,7 +64,7 @@ We have therefore formally proved that this assertion is false.
 
 ## Third example: test a contract function
 
-Here we have written an assertion to formally check that sum is equal to 3.
+Here we have written an assertion to formally check that the `sum` variable is equal to 3.
 
 ```rs
 fn add(mut a: felt252, mut b: felt 252) -> felt252 {
@@ -96,7 +96,7 @@ test_checker::test_checker::thoth_test_sum SUCCESS
 
 ## Fourth example: test a contract function
 
-Here we have written an assertion to formally check that sum is equal to 6.
+Here we have written an assertion to formally check that the `sum` variable is equal to 6.
 
 ```rs
 fn add(mut a: felt252, mut b: felt 252) -> felt252 {
