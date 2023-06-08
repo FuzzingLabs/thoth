@@ -94,7 +94,7 @@ $ ~ thoth-checker -f ./test_checker_3.sierra
 test_checker::test_checker::thoth_test_sum SUCCESS (test 1/1, time: 0.07s, paths: 4)
 ```
 
-## Test a contract function 2
+## Test a contract function - 2
 
 Here we have written an assertion to formally check that the `sum` variable is equal to 6.
 
@@ -131,6 +131,8 @@ test_checker::test_checker::thoth_test_sum (test 1/1, time: 0.07s, paths: 4)
 
 Here we have written an assertion to formally check that the `sum` variable is equal to 2.
 
+**The symbolic bounded model checker can run for too long if used in a function with a loop because of the explosion in the number of paths.**
+
 ```rs
 fn add(mut a: felt252, mut b: felt 252) -> felt252 {
    let c = a + b;
@@ -159,12 +161,41 @@ We compile this Cairo code into Sierra using `cairo-compile`
 cairo-compile ./test_checker_5.cairo ./test_checker_5.sierra -r
 ```
 
+## Test a contract function with a loop (fibonacci)
+
+Here we have written an assertion to formally check that the `fib` variable is equal to 2.
+
+```rs
+fn fib(mut a: felt252, mut b: felt252, mut n: felt252) -> felt252 {
+    loop {
+        if n == 0 {
+            break a;
+        }
+        n = n - 1;
+        let temp = b;
+        b = a + b;
+        a = temp;
+    }
+}
+
+fn thoth_test_fib() {
+   let fib = fib(1, 1, 2);
+   assert(fib == 2, '');
+}
+```
+
+We compile this Cairo code into Sierra using `cairo-compile`
+
+```
+cairo-compile ./test_checker_6.cairo ./test_checker_6.sierra -r
+```
+
 It is now possible to verify the assertion using `thoth-checker`
 
 ```
-$ ~ thoth-checker -f ./test_checker_5.sierra
+$ ~ thoth-checker -f ./test_checker_6.sierra
 
 [+] Thoth Symbolic bounded model checker
 
-test_checker::test_checker::thoth_test_sum (test 1/1, time: 0.74s, paths: 12)
+test_checker::test_checker::thoth_test_sum (test 1/1, time: 0.92s, paths: 16)
 ```
