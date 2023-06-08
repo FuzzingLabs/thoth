@@ -28,7 +28,7 @@ $ ~ thoth-checker -f ./test_checker.sierra
 
 [+] Thoth Symbolic bounded model checker
 
-test_checker::test_checker::thoth_test_sum OK
+[PASS] test_checker::test_checker::thoth_test_sum (test 1/1, time: 0.07s, paths: 4)
 ```
 
 This assertion is therefore proven true using `thoth-checker`.
@@ -57,7 +57,7 @@ $ ~ thoth-checker -f ./test_checker_2.sierra
 
 [+] Thoth Symbolic bounded model checker
 
-test_checker::test_checker::thoth_test_sum FAIL
+[FAIL] test_checker::test_checker::thoth_test_product (test 1/1, time: 0.02s, paths: 4)
 ```
 
 We have therefore formally proved that this assertion is false.
