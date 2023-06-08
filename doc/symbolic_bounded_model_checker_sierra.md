@@ -91,7 +91,7 @@ $ ~ thoth-checker -f ./test_checker_3.sierra
 
 [+] Thoth Symbolic bounded model checker
 
-test_checker::test_checker::thoth_test_sum SUCCESS
+test_checker::test_checker::thoth_test_sum SUCCESS (test 1/1, time: 0.07s, paths: 4)
 ```
 
 ## Fourth example: test a contract function
@@ -124,5 +124,5 @@ $ ~ thoth-checker -f ./test_checker_4.sierra
 
 [+] Thoth Symbolic bounded model checker
 
-test_checker::test_checker::thoth_test_sum SUCCESS
+test_checker::test_checker::thoth_test_sum (test 1/1, time: 0.07s, paths: 4)
 ```
