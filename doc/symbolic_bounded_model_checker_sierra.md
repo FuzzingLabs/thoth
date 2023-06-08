@@ -62,7 +62,7 @@ $ ~ thoth-checker -f ./test_checker_2.sierra
 
 We have therefore formally proved that this assertion is false.
 
-## Test a contract function
+### Test a contract function
 
 Here we have written an assertion to formally check that the `sum` variable is equal to 3.
 
@@ -94,7 +94,7 @@ $ ~ thoth-checker -f ./test_checker_3.sierra
 test_checker::test_checker::thoth_test_sum SUCCESS (test 1/1, time: 0.07s, paths: 4)
 ```
 
-## Test a contract function - 2
+### Test a contract function - 2
 
 Here we have written an assertion to formally check that the `sum` variable is equal to 6.
 
@@ -127,7 +127,7 @@ $ ~ thoth-checker -f ./test_checker_4.sierra
 test_checker::test_checker::thoth_test_sum (test 1/1, time: 0.07s, paths: 4)
 ```
 
-## Test a contract function with a loop
+### Test a contract function with a loop
 
 Here we have written an assertion to formally check that the `sum` variable is equal to 2.
 
@@ -161,7 +161,7 @@ We compile this Cairo code into Sierra using `cairo-compile`
 cairo-compile ./test_checker_5.cairo ./test_checker_5.sierra -r
 ```
 
-## Test a contract function with a loop (fibonacci)
+### Test a contract function with a loop (fibonacci)
 
 Here we have written an assertion to formally check that the `fib` variable is equal to 2.
 
