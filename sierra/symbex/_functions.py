@@ -92,7 +92,7 @@ def felt_add(
     """
     Convert felt_add function call to a Z3 constraint
     """
-    function_regexp = r"felt(252)?_add"
+    function_regexp = r"felt(252)?_?add"
 
     if not re.match(function_regexp, function_name):
         return None

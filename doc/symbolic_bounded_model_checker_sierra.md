@@ -47,7 +47,7 @@ fn thoth_test_product(mut a: felt252) {
 We compile this Cairo code into Sierra using `cairo-compile`
 
 ```
-cairo-compile ./test_checker.cairo ./test_checker_2.sierra -r
+cairo-compile ./test_checker_2.cairo ./test_checker_2.sierra -r
 ```
 
 It is now possible to verify the assertion using `thoth-checker`
@@ -61,3 +61,68 @@ test_checker::test_checker::thoth_test_sum FAIL
 ```
 
 We have therefore formally proved that this assertion is false.
+
+## Third example: test a contract function
+
+Here we have written an assertion to formally check that sum is equal to 3.
+
+```rs
+fn add(mut a: felt252, mut b: felt 252) {
+   let c = a + b;
+   c
+}
+
+fn thoth_test_sum() {
+   let sum = add(1, 2);
+   assert(sum == 3, '');
+}
+```
+
+We compile this Cairo code into Sierra using `cairo-compile`
+
+```
+cairo-compile ./test_checker_3.cairo ./test_checker_3.sierra -r
+```
+
+It is now possible to verify the assertion using `thoth-checker`
+
+```
+$ ~ thoth-checker -f ./test_checker_3.sierra
+
+[+] Thoth Symbolic bounded model checker
+
+test_checker::test_checker::thoth_test_sum SUCCESS
+```
+
+## Fourth example: test a contract function
+
+Here we have written an assertion to formally check that sum is equal to 6.
+
+```rs
+fn add(mut a: felt252, mut b: felt 252) {
+   let c = a + b;
+   c
+}
+
+fn thoth_test_sum() {
+   let sum = add(1, 2);
+   let sum2 = add(sum, 3)
+   assert(sum2 == 6, '');
+}
+```
+
+We compile this Cairo code into Sierra using `cairo-compile`
+
+```
+cairo-compile ./test_checker_4.cairo ./test_checker_4.sierra -r
+```
+
+It is now possible to verify the assertion using `thoth-checker`
+
+```
+$ ~ thoth-checker -f ./test_checker_4.sierra
+
+[+] Thoth Symbolic bounded model checker
+
+test_checker::test_checker::thoth_test_sum SUCCESS
+```
