@@ -99,8 +99,9 @@ function runThothSierraDecompiler() {
     panel.webview.html = output;
   });
 
-  thothProcess.stderr.on('data', (data: { toString: () => string; }) => {
-    output += data.toString();
+  // Errors handling
+  thothProcess.stderr.on('exit', (data: string) => {
+    output = data.toString();
     panel.webview.html = output;
   });
 
@@ -148,8 +149,9 @@ function runThothSierraAnalyzer() {
     panel.webview.html = `<pre><code>${output}</code></pre>`;
   });
 
-  thothProcess.stderr.on('data', (data: string) => {
-    output += data;
+  // Errors handling
+  thothProcess.stderr.on('exit', (data: string) => {
+    output = data.toString();
     panel.webview.html = output;
   });
 
@@ -200,10 +202,14 @@ function runThothSierraCFG() {
   console.log(imageUri);
   output += `<img src="${imageUri}" alt="${onDiskPath.path}"/>`;
   
-  panel.webview.html = output;
+  // Display CFG output
+  thothProcess.on('exit', () => {
+    panel.webview.html = output;
+  });
 
+  // Errors handling
   thothProcess.stderr.on('exit', (data: string) => {
-    output += data;
+    output = data.toString();
     panel.webview.html = output;
   });
 
@@ -254,10 +260,14 @@ function runThothSierraCallGraph() {
   const imageUri = panel.webview.asWebviewUri(onDiskPath);
   output += `<img src="${imageUri}" alt="${onDiskPath.path}"/>`;
   
-  panel.webview.html = output;
+  // Display callgraph
+  thothProcess.on('exit', () => {
+    panel.webview.html = output;
+  });
 
+  // Errors handling
   thothProcess.stderr.on('exit', (data: string) => {
-    output += data;
+    output += data.toString();
     panel.webview.html = output;
   });
 
@@ -305,7 +315,8 @@ function runThothDecompiler() {
     panel.webview.html = output;
   });
 
-  thothProcess.stderr.on('data', (data: { toString: () => string; }) => {
+  // Errors handling
+  thothProcess.stderr.on('exit', (data: string) => {
     output += data.toString();
     panel.webview.html = output;
   });
@@ -354,7 +365,8 @@ function runThothDisassembler() {
     panel.webview.html = output;
   });
 
-  thothProcess.stderr.on('data', (data: { toString: () => string; }) => {
+  // Errors handling
+  thothProcess.stderr.on('exit', (data: string) => {
     output += data.toString();
     panel.webview.html = output;
   });
@@ -403,7 +415,8 @@ function runThothAnalyzer() {
     panel.webview.html = output;
   });
 
-  thothProcess.stderr.on('data', (data: { toString: () => string; }) => {
+  // Errors handling
+  thothProcess.stderr.on('exit', (data: string) => {
     output += data.toString();
     panel.webview.html = output;
   });
@@ -458,6 +471,12 @@ function runThothCFG() {
   
   panel.webview.html = output;
 
+  // Display CFG
+  thothProcess.on('exit', () => {
+    panel.webview.html = output;
+  });
+
+  // Errors handling
   thothProcess.stderr.on('exit', (data: string) => {
     output += data;
     panel.webview.html = output;
@@ -512,7 +531,13 @@ function runThothCallGraph() {
   output += `<img src="${imageUri}" alt="${onDiskPath.path}"/>`;
   
   panel.webview.html = output;
+  
+  // Display callgraph
+  thothProcess.on('exit', () => {
+    panel.webview.html = output;
+  });
 
+  // Errors handling
   thothProcess.stderr.on('exit', (data: string) => {
     output += data;
     panel.webview.html = output;

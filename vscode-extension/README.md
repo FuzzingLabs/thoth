@@ -13,6 +13,9 @@ npm install -g vsce
 git clone https://github.com/FuzzingLabs/thoth.git
 cd ./thoth/github-actions
 
+# Install dependancies
+npm install
+
 # Output a 'thoth-vscode-x.x.x.vsix' in the folder
 vsce package
 ```
