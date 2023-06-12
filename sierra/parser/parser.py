@@ -148,17 +148,24 @@ class SierraParser:
         for function in self.functions:
             function.cfg._generate_basic_blocks()
 
-    def print_cfg(self, folder: str, file_format: str, view: bool = True) -> None:
+    def print_cfg(self, folder: str, file_format: str, view: bool = True, function=None) -> None:
         """
         Print the CFG dot graph
         """
+        cfg_functions = self.functions
+
+        # Select only one function
+        if function is not None:
+            cfg_functions = [f for f in cfg_functions if f.id == function]
+
         graph = Digraph(
             name="cfg",
             node_attr=CFG_NODE_ATTR,
             graph_attr=CFG_GRAPH_ATTR,
             edge_attr=CFG_EDGE_ATTR,
         )
-        for function in self.functions:
+
+        for function in cfg_functions:
             function.cfg._generate_cfg()
             graph.subgraph(function.cfg.dot)
 

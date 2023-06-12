@@ -49,7 +49,12 @@ def thoth_sierra() -> None:
 
     # Control-Flow Graph
     if args.cfg:
-        parser.print_cfg(folder=args.output_cfg_folder, file_format=args.format, view=False)
+        parser.print_cfg(
+            folder=args.output_cfg_folder,
+            file_format=args.format,
+            view=False,
+            function=args.function,
+        )
         return
 
     # Call-Graph

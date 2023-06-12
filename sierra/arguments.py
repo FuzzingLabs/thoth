@@ -69,7 +69,7 @@ def parse_thoth_sierra_arguments() -> argparse.Namespace:
     # Symbolic execution
     symbolic = parser.add_argument_group("Symbolic execution")
     symbolic.add_argument("--symbolic", help="Use the symbolic execution", action="store_true")
-    symbolic.add_argument("-function", help="Select a specific function")
+    symbolic.add_argument("-function", "--function", help="Select a specific function")
     symbolic.add_argument("-constraints", nargs="+", help="", default=[])
     symbolic.add_argument("-variables", nargs="+", help="", default=[])
     symbolic.add_argument("-solves", nargs="+", help="", default=[])
