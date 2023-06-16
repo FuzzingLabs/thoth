@@ -14,6 +14,7 @@ Learn more about Thoth internals here: [Demo video](https://www.youtube.com/watc
 - **[Data Flow analysis](#print-the-contracts-data-flow-graph-dfg)**: Thoth can generate a **Data Flow Graph** (DFG) for each function
 - **[Disassembler](#disassemble-the-contracts-compilation-artifact-json)**: Thoth can translate bytecode into assembly representation
 - **[Control Flow analysis](#print-the-contracts-control-flow-graph-cfg)**: Thoth can generate a **Control Flow Graph** (CFG)
+- **[Cairo Fuzzer inputs generation](#generate-inputs-for-the-cairo-fuzzer)**: Thoth can generate inputs for the  [**Cairo fuzzer**](https://github.com/FuzzingLabs/cairo-fuzzer)
 - **[Sierra files analysis](/sierra/README.md)** : Thoth can analyze **Sierra** files 
 - **[Sierra files symbolic execution](/doc/symbolic_execution.md)** : Thoth allows **symbolic execution** on sierra files
 - **[Symbolic bounded model checker](/doc/symbolic_bounded_model_checker_sierra.md)** : Thoth can be used as a **Symbolic bounded model checker**
@@ -167,6 +168,14 @@ The output file (pdf/svg/png) and the dot file are inside the `output-cfg` folde
 <p align="center">
 	<img src="/doc/images/thoth/cairo_double_function_and_if_cfg.png"/>
 </p>
+
+## Generate inputs for the Cairo fuzzer
+
+You can generate inputs for the [Cairo fuzzer](https://github.com/FuzzingLabs/cairo-fuzzer) using this command
+
+```
+thoth local ./tests/json_files/cairo_0/cairo_test_symbolic_execution_2.json -a fuzzer
+```
 
 # F.A.Q
 
