@@ -1,7 +1,8 @@
+import time
 from sierra import config
 from sierra.analyzer import all_analyzers
 from sierra.analyzer.abstract_analyzer import category_classification_text
-from sierra.arguments import parse_arguments
+from sierra.arguments import parse_thoth_checker_arguments, parse_thoth_sierra_arguments
 from sierra.callgraph.callgraph import SierraCallGraph
 from sierra.decompiler.decompiler import SierraDecompiler
 from sierra.parser.parser import SierraParser
@@ -9,8 +10,12 @@ from sierra.symbex.symbex import SierraSymbolicExecution
 from sierra.utils import colors
 
 
-def main() -> None:
-    args = parse_arguments()
+def thoth_sierra() -> None:
+    """
+    thoth-sierra command entry point
+    """
+
+    args = parse_thoth_sierra_arguments()
 
     # Output color
     colors.__init__(color=not args.no_colors)
@@ -44,7 +49,12 @@ def main() -> None:
 
     # Control-Flow Graph
     if args.cfg:
-        parser.print_cfg(folder=args.output_cfg_folder, file_format=args.format, view=False)
+        parser.print_cfg(
+            folder=args.output_cfg_folder,
+            file_format=args.format,
+            view=False,
+            function=args.function,
+        )
         return
 
     # Call-Graph
@@ -160,3 +170,50 @@ def main() -> None:
             detected_analyzers_count,
         )
     )
+
+
+def thoth_checker() -> None:
+    """
+    thoth-checker command entry point
+    """
+    # Output color
+    colors.__init__(color=True)
+
+    args = parse_thoth_checker_arguments()
+
+    print("[+] Thoth Symbolic bounded model checker\n")
+
+    # Parse a Sierra file
+    sierra_file = args.file
+    if sierra_file is None:
+        print("You need to specify a sierra file path using the -f flag")
+        return
+
+    try:
+        parser = SierraParser(config.SIERRA_LARK_PARSER_PATH)
+        parser.parse(sierra_file)
+    except:
+        print("%s is not a valid sierra file" % sierra_file)
+        return
+
+    test_functions = [f for f in parser.functions if f.id.split("::")[-1].startswith("thoth_test")]
+
+    for i in range(len(test_functions)):
+        function = test_functions[i]
+
+        symbolic_execution = SierraSymbolicExecution(function=function)
+
+        start_time = time.time()
+        solve, paths = symbolic_execution.solve_test_function()
+        solve_duration = round(time.time() - start_time, 2)
+
+        if solve:
+            result = colors.GREEN + "PASS" + colors.ENDC
+        else:
+            result = colors.RED + "FAIL" + colors.ENDC
+
+        print(
+            "[%s] %s (test %s/%s, time: %ss, paths: %s)"
+            % (result, function.id, i + 1, len(test_functions), solve_duration, paths)
+        )
+    return

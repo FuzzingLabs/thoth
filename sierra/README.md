@@ -34,6 +34,9 @@ thoth-sierra -f ./tests/sierra_files/fib_box.sierra --cfg -output_callgraph_fold
 
 # Output the Control-Flow Graph in a specific format (pdf/png/svg, default is pdf)
 thoth-sierra -f ./tests/sierra_files/fib_box.sierra --cfg --format png
+
+# Create the CFG for a single function
+thoth-sierra -f ./tests/sierra_files/minimal_contract.sierra --cfg --function minimal_contract::minimal_contract::MinimalContract::__external::empty
 ```
 
 <p align="center">

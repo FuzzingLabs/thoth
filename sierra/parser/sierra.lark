@@ -91,6 +91,7 @@ path_label: basic_label
 generic_args_string: generic_arg
                   | generic_args_string", "generic_arg
                   | generic_args_string","
+                  | "("generic_args_string")"
 
 concrete_label: (path_label two_dots less_than generic_args_string more_than two_dots?)*
               | (path_label two_dots less_than generic_args_string more_than two_dots?) concrete_label

@@ -14,7 +14,7 @@ def is_valid_file(parser: argparse.ArgumentParser, path: str) -> str:
     return path
 
 
-def parse_arguments() -> argparse.Namespace:
+def parse_thoth_sierra_arguments() -> argparse.Namespace:
     """
     Parse the thoth-sierra arguments
     """
@@ -69,7 +69,7 @@ def parse_arguments() -> argparse.Namespace:
     # Symbolic execution
     symbolic = parser.add_argument_group("Symbolic execution")
     symbolic.add_argument("--symbolic", help="Use the symbolic execution", action="store_true")
-    symbolic.add_argument("-function", help="Select a specific function")
+    symbolic.add_argument("-function", "--function", help="Select a specific function")
     symbolic.add_argument("-constraints", nargs="+", help="", default=[])
     symbolic.add_argument("-variables", nargs="+", help="", default=[])
     symbolic.add_argument("-solves", nargs="+", help="", default=[])
@@ -90,6 +90,32 @@ def parse_arguments() -> argparse.Namespace:
     )
     parser.add_argument(
         "--analyzers-help", choices=analyzers_names, help="Show analyzers help", nargs="*"
+    )
+
+    # Parse the arguments
+    args = parser.parse_args()
+
+    return args
+
+
+def parse_thoth_checker_arguments() -> argparse.Namespace:
+    """
+    Parse the thoth-checker arguments
+    """
+
+    # Create the parser
+    parser = argparse.ArgumentParser(
+        description="""
+    thoth-checker is a symbolic bounded model checker for sierra files.
+    """
+    )
+
+    # Global arguments
+    parser.add_argument(
+        "-f",
+        "--file",
+        help="Path of the sierra file",
+        type=lambda path: is_valid_file(parser, path),
     )
 
     # Parse the arguments

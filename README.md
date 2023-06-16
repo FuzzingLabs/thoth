@@ -15,6 +15,8 @@ Learn more about Thoth internals here: [Demo video](https://www.youtube.com/watc
 - **[Disassembler](#disassemble-the-contracts-compilation-artifact-json)**: Thoth can translate bytecode into assembly representation
 - **[Control Flow analysis](#print-the-contracts-control-flow-graph-cfg)**: Thoth can generate a **Control Flow Graph** (CFG)
 - **[Sierra files analysis](/sierra/README.md)** : Thoth can analyze **Sierra** files 
+- **[Sierra files symbolic execution](/doc/symbolic_execution.md)** : Thoth allows **symbolic execution** on sierra files
+- **[Symbolic bounded model checker](/doc/symbolic_bounded_model_checker_sierra.md)** : Thoth can be used as a **Symbolic bounded model checker**
 
 ## Installation
  
