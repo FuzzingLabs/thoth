@@ -1,7 +1,7 @@
-# Thoth, the Cairo/Starknet bytecode analyzer, disassembler and decompiler
+# Thoth, the Cairo/Starknet security toolkit (analyzer, disassembler and decompiler)
 <img src ="https://img.shields.io/badge/python-3.10-blue.svg"/>
 
-Thoth (pronounced "taut" or "toss") is a Cairo/Starknet analyzer, disassembler & decompiler written in Python 3. Thoth's features include the generation of the call graph, the control-flow graph (CFG) and the data-flow graph for a given [Sierra file](/sierra/README.md) or Cairo/Starknet compilation artifact.
+Thoth (pronounced "taut" or "toss") is a Cairo/Starknet security toolkit including analyzers, disassemblers & decompilers written in Python 3. Thoth's features include the generation of the call graph, the control-flow graph (CFG) and the data-flow graph for a given [Sierra file](/sierra/README.md) or Cairo/Starknet compilation artifact. It also includes some really advanced tools like a Symbolic execution engine and Symbolic bounded model checker.
 
 Learn more about Thoth internals here: [Demo video](https://www.youtube.com/watch?v=T0KvG8Zps6I), [StarkNetCC 2022 slides](https://fuzzinglabs.com/wp-content/uploads/2022/11/Thoth_cairo_analyzer_starknetcc_lisbon_2022.pdf)
 
