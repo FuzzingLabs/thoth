@@ -41,7 +41,12 @@ class DeadCodeAnalyzer(AbstractAnalyzer):
             if libfunc_call.startswith("function_call<user@") and libfunc_call.endswith(">"):
                 # Remove function_call<> wrapper
                 function_name = libfunc_call[19:-1]
-                functions_call_counter[function_name] += 1
+
+                # Increment function calls counter
+                try:
+                    functions_call_counter[function_name] += 1
+                except:
+                    pass
 
         # Find unused functions
         for function in functions_call_counter:
