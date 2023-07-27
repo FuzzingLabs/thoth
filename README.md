@@ -93,6 +93,7 @@ The static analysis is performed using *analyzers* which can be either informati
 |**Delegate calls detector**|`delegate_call`|Detect delegate calls|Informational|High|Security|❌|✔️|
 |**Dead code detector**|`dead_code`|Detect dead code|Informational|High|Security|❌|✔️|
 |**Unused arguments detector**|`unused_arguments`|Detect unused arguments|Informational|High|Security|❌|✔️|
+|**User defined function call**|`user_defined`|Detect calls of user defined functions|Informational|High|Security|❌|✔️|
 
 #### Run all the analyzers
 ``` python
