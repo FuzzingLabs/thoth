@@ -91,6 +91,8 @@ The static analysis is performed using *analyzers* which can be either informati
 |**Function naming**|`function_naming`|Detect functions names that are not in snake case|Informational|High|Security|✔️|❌|
 |**Variable naming**|`variable_naming`|Detect variables names that are not in snake case|Informational|High|Security|✔️|❌|
 |**Delegate calls detector**|`delegate_call`|Detect delegate calls|Informational|High|Security|❌|✔️|
+|**Dead code detector**|`dead_code`|Detect dead code|Informational|High|Security|❌|✔️|
+|**Unused arguments detector**|`unused_arguments`|Detect unused arguments|Informational|High|Security|❌|✔️|
 
 #### Run all the analyzers
 ``` python
