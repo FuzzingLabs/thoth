@@ -1,6 +1,7 @@
 from sierra.analyzer.functions.functions_analyzer import FunctionsAnalyzer
 from sierra.analyzer.security.dead_code_analyzer import DeadCodeAnalyzer
 from sierra.analyzer.security.delegate_call_analyzer import DelegateCallAnalyzer
+from sierra.analyzer.security.integer_overflow_analyzer import IntegerOverflowAnalyzer
 from sierra.analyzer.security.user_defined_function_call_analyzer import (
     UserDefinedFunctionCallAnalyzer,
 )
@@ -11,10 +12,11 @@ from sierra.analyzer.strings.strings_analyzer import StringsAnalyzer
 
 all_analyzers = [
     # Security
-    UserDefinedFunctionCallAnalyzer,
     DeadCodeAnalyzer,
     DelegateCallAnalyzer,
+    IntegerOverflowAnalyzer,
     UnusedArgumentsAnalyzer,
+    UserDefinedFunctionCallAnalyzer,
     # Informational
     FunctionsAnalyzer,
     StatisticsAnalyzer,
