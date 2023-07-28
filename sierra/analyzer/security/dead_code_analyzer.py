@@ -1,3 +1,5 @@
+# Inspired by: https://github.com/crytic/caracal/blob/master/src/detectors/dead_code.rs
+
 from sierra.analyzer.abstract_analyzer import (
     AbstractAnalyzer,
     CategoryClassification,

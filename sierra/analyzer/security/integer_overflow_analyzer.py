@@ -1,3 +1,5 @@
+# Inspired by: https://www.zellic.io/blog/cairo-security-primer
+
 from sierra.analyzer.abstract_analyzer import (
     AbstractAnalyzer,
     CategoryClassification,
