@@ -14,12 +14,10 @@ all_analyzers = [
     # Secturity
     DelegateCallAnalyzer,
     IntegerOverflowAnalyzer,
-
     # Optimization
     DeadCodeAnalyzer,
     UnusedArgumentsAnalyzer,
     UserDefinedFunctionCallAnalyzer,
-    
     # Informational
     FunctionsAnalyzer,
     StatisticsAnalyzer,

@@ -33,7 +33,7 @@ class IntegerOverflowAnalyzer(AbstractAnalyzer):
                     function_arguments = [a.representation_name for a in statement.parameters]
                 else:
                     continue
-                
+
                 # Detect integer overflow
                 for argument in function_arguments:
                     risky_function = any(
