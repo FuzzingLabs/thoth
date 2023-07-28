@@ -12,7 +12,7 @@ class UserDefinedFunctionCallAnalyzer(AbstractAnalyzer):
     Detect user defined function call
     """
 
-    NAME = "user defined function call"
+    NAME = "User defined function call"
     ARGUMENT = "user_defined"
     HELP = "Find user defined function calls"
     IMPACT: ImpactClassification = ImpactClassification.MEDIUM

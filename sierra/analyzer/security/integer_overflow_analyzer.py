@@ -15,9 +15,9 @@ class IntegerOverflowAnalyzer(AbstractAnalyzer):
     NAME = "Integer overflow"
     ARGUMENT = "integer_overflow"
     HELP = "Detect Integer overflow"
-    IMPACT: ImpactClassification = ImpactClassification.HIGH
+    IMPACT: ImpactClassification = ImpactClassification.MEDIUM
     PRECISION: PrecisionClassification = PrecisionClassification.MEDIUM
-    CATEGORY: CategoryClassification = CategoryClassification.OPTIMIZATION
+    CATEGORY: CategoryClassification = CategoryClassification.SECURITY
 
     def _detect(self) -> bool:
         integer_overflow_functions = ["_sub", "_add", "_mul"]
@@ -33,7 +33,8 @@ class IntegerOverflowAnalyzer(AbstractAnalyzer):
                     function_arguments = [a.representation_name for a in statement.parameters]
                 else:
                     continue
-
+                
+                # Detect integer overflow
                 for argument in function_arguments:
                     risky_function = any(
                         [function.id.endswith(f) for f in integer_overflow_functions]

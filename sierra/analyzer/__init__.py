@@ -11,12 +11,15 @@ from sierra.analyzer.strings.strings_analyzer import StringsAnalyzer
 
 
 all_analyzers = [
-    # Security
-    DeadCodeAnalyzer,
+    # Secturity
     DelegateCallAnalyzer,
     IntegerOverflowAnalyzer,
+
+    # Optimization
+    DeadCodeAnalyzer,
     UnusedArgumentsAnalyzer,
     UserDefinedFunctionCallAnalyzer,
+    
     # Informational
     FunctionsAnalyzer,
     StatisticsAnalyzer,

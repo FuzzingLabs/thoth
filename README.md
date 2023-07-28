@@ -87,13 +87,13 @@ The static analysis is performed using *analyzers* which can be either informati
 |**Statistics**|`statistics`|General statistics about the contract|Informational|High|Analytics|✔️|✔️|
 |**Test cases generator**|`tests`|Automatically generate test cases for each function of the contract|Informational|High|Analytics|✔️|❌|
 |**Assignations**|`assignations`|List of variables assignations|Informational|High|Optimization|✔️|❌|
-|**Integer overflow**|`int_overflow`|Detect direct integer overflow/underflow|High (direct) / Medium (indirect)|Medium|Security|✔️|❌|
+|**Integer overflow**|`int_overflow`|Detect direct integer overflow/underflow|High (direct) / Medium (indirect)|Medium|Security|✔️|✔️|
 |**Function naming**|`function_naming`|Detect functions names that are not in snake case|Informational|High|Security|✔️|❌|
 |**Variable naming**|`variable_naming`|Detect variables names that are not in snake case|Informational|High|Security|✔️|❌|
 |**Delegate calls detector**|`delegate_call`|Detect delegate calls|Informational|High|Security|❌|✔️|
 |**Dead code detector**|`dead_code`|Detect dead code|Informational|High|Security|❌|✔️|
 |**Unused arguments detector**|`unused_arguments`|Detect unused arguments|Informational|High|Security|❌|✔️|
-|**User defined function call**|`user_defined`|Detect calls of user defined functions|Informational|High|Security|❌|✔️|
+|**User defined function call detector**|`user_defined`|Detect calls of user defined functions|Informational|High|Security|❌|✔️|
 
 #### Run all the analyzers
 ``` python
