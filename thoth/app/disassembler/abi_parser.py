@@ -188,7 +188,8 @@ def extract_version(json_data: dict) -> bool:
     try:
         cairo_version = json_data["compiler_version"]
         is_cairo_1 = cairo_version.split(".")[0] == "1"
-        return is_cairo_1
+        is_cairo_2 = cairo_version.split(".")[0] == "2"
+        return is_cairo_1 or is_cairo_2
     except:
         return False
 
