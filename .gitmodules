@@ -1,3 +1,6 @@
 [submodule "rust_bindings/cairo"]
 	path = rust_bindings/cairo
 	url = https://github.com/starkware-libs/cairo.git
+[submodule "contract-class-converter/cairo"]
+	path = contract-class-converter/cairo
+	url = https://github.com/starkware-libs/cairo.git
