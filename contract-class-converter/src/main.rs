@@ -1,8 +1,29 @@
 use cairo_lang_starknet::contract_class::ContractClass;
+use std::env;
 use std::fs::File;
 use std::io::Read;
 
 use serde_json;
+
+fn main() {
+    // Get the command-line arguments
+    let args: Vec<String> = env::args().collect();
+
+    // Check if a JSON file path is provided as an argument
+    if args.len() != 2 {
+        eprintln!("Usage: {} <json_file_path>", args[0]);
+        std::process::exit(1);
+    }
+
+    // Get the JSON file path from the command-line argument
+    let json_file_path = &args[1];
+
+    // Call the deserialize_sierra_json function with the provided JSON contract class file path
+    let result_sierra = deserialize_sierra_json(json_file_path);
+
+    // Print the result
+    println!("{}", result_sierra);
+}
 
 pub fn deserialize_sierra_json(json_file_path: &str) -> String {
     // Read the content of the file into a String
