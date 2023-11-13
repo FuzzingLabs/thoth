@@ -11,7 +11,8 @@ less_than: "<"
 boolean: "true"
        | "false"
 type_parameters: "[storable: " boolean", drop: "boolean", dup: "boolean", zero_sized: "boolean"]"
-?type_declaration: "type" concrete_type_id "=" concrete_type_long_id " "? /\[.+\]/" "*type_parameters*";"
+?type_declaration: "type" concrete_type_id "=" concrete_type_long_id" "*type_parameters*";"
+                 | "type" concrete_type_id "=" concrete_type_long_id";"
 concrete_type_long_id: generic_type_id
                      | generic_type_id less_than generic_args more_than 
 
