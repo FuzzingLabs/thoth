@@ -1,0 +1,3 @@
+[submodule "rust_bindings/cairo"]
+	path = rust_bindings/cairo
+	url = https://github.com/starkware-libs/cairo.git
