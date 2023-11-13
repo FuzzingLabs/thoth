@@ -1,13 +1,10 @@
 [package]
-name = "sierra_converter"
+name = "sierra-converter"
 version = "0.1.0"
 edition = "2021"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
-cairo-lang-sierra = { path = "../cairo/crates/cairo-lang-sierra"}
-cairo-lang-utils = { path = "../cairo/crates/cairo-lang-utils", version = "2.3.1" }
 cairo-lang-starknet = { path = "../cairo/crates/cairo-lang-starknet/" }
-
 serde_json = "1.0.108"

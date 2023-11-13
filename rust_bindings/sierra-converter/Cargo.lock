@@ -1399,12 +1399,10 @@ dependencies = [
 ]
 
 [[package]]
-name = "sierra_converter"
+name = "sierra-converter"
 version = "0.1.0"
 dependencies = [
- "cairo-lang-sierra",
  "cairo-lang-starknet",
- "cairo-lang-utils",
  "serde_json",
 ]
 
