@@ -1,3 +1,6 @@
+> [!IMPORTANT]
+> *thoth-sierra* has been rewritten in Rust in a new version: [sierra-analyzer](https://github.com/FuzzingLabs/thoth/tree/master/sierra-analyzer). It contains all the features of *thoth-sierra* (CFG, Callgraph, decompiler, detectors) and is more maintainable and efficient. 
+
 ## Decompile the Sierra file
 
 ```python
