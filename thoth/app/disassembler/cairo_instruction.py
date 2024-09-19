@@ -212,9 +212,11 @@ def decode_instruction(encoding: int, imm: Optional[int] = None) -> Instruction:
     res = {
         (1, 0): Instruction.Res.ADD,
         (0, 1): Instruction.Res.MUL,
-        (0, 0): Instruction.Res.UNCONSTRAINED
-        if pc_update is Instruction.PcUpdate.JNZ
-        else Instruction.Res.OP1,
+        (0, 0): (
+            Instruction.Res.UNCONSTRAINED
+            if pc_update is Instruction.PcUpdate.JNZ
+            else Instruction.Res.OP1
+        ),
     }[(flags >> RES_ADD_BIT) & 1, (flags >> RES_MUL_BIT) & 1]
 
     # JNZ opcode means res must be UNCONSTRAINED.

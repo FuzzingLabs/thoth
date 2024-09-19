@@ -427,8 +427,8 @@ def parse_to_json(json_data: str, json_type: dict) -> dict:
             incr = 2
         key = str(offset)
         bytecodes_to_json[actual_function]["instruction"][key] = {}
-        bytecodes_to_json[actual_function]["instruction"][key][
-            hex(bytecode_data[offset])
-        ] = decode_to_json(str(decoded))
+        bytecodes_to_json[actual_function]["instruction"][key][hex(bytecode_data[offset])] = (
+            decode_to_json(str(decoded))
+        )
         offset += incr
     return bytecodes_to_json

@@ -119,9 +119,11 @@ class Disassembler:
                     ret,
                     decorators,
                     self.labels,
-                    entry_point=self.json[function]["data"]["entry_point"]
-                    if json_type != "get_code"
-                    else True,
+                    entry_point=(
+                        self.json[function]["data"]["entry_point"]
+                        if json_type != "get_code"
+                        else True
+                    ),
                     is_import=is_import,
                 )
             )

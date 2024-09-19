@@ -4,3 +4,6 @@
 [submodule "contract-class-converter/cairo"]
 	path = contract-class-converter/cairo
 	url = https://github.com/starkware-libs/cairo.git
+[submodule "sierra-analyzer"]
+	path = sierra-analyzer
+	url = git@github.com:FuzzingLabs/sierra-analyzer.git
