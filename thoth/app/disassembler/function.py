@@ -139,11 +139,7 @@ class Function:
             prototype += (
                 " -> ("
                 if data_name == "ret" and data_content is not None
-                else "("
-                if data_name == "args"
-                else "{"
-                if data_name == "implicitargs"
-                else ""
+                else "(" if data_name == "args" else "{" if data_name == "implicitargs" else ""
             )
             if data_content is not None:
                 for idarg in data_content:
@@ -155,9 +151,7 @@ class Function:
             prototype += (
                 ")"
                 if (data_name == "args" or (data_name == "ret" and data_content is not None))
-                else "}"
-                if data_name == "implicitargs"
-                else ""
+                else "}" if data_name == "implicitargs" else ""
             )
         return prototype
 
