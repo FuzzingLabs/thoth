@@ -18,6 +18,7 @@ Learn more about Thoth internals here: [Demo video](https://www.youtube.com/watc
 - **[Sierra files analysis](/sierra/README.md)** : Thoth can analyze **Sierra** files 
 - **[Sierra files symbolic execution](/doc/symbolic_execution.md)** : Thoth allows **symbolic execution** on sierra files
 - **[Symbolic bounded model checker](/doc/symbolic_bounded_model_checker_sierra.md)** : Thoth can be used as a **Symbolic bounded model checker**
+- **[Use it with a Scarb project](#use-it-with-a-scarb-project)** : Thoth can be used in a project created with the Scarb toolchain
 
 ## Installation
  
@@ -178,6 +179,38 @@ You can generate inputs for the [Cairo fuzzer](https://github.com/FuzzingLabs/ca
 
 ```
 thoth local ./tests/json_files/cairo_0/cairo_test_symbolic_execution_2.json -a fuzzer
+```
+
+## Use it with a Scarb project
+
+Add these lines to your `Scarb.toml` : 
+
+```yaml
+[[target.starknet-contract]]
+sierra = true
+casm = true
+```
+
+Then build the project using Scarb :
+
+```sh
+scarb build
+```
+
+You can now run Thoth with the `--scarb` flag :
+
+```sh
+// Run the disassembler
+thoth local --scarb -b
+
+// Run the analyzer
+thoth local --scarb -a
+
+// Generate the control-flow graph
+thoth local --scarb --cfg
+
+// Generate the callgraph
+thoth local --scarb --call
 ```
 
 # F.A.Q
