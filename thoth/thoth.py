@@ -11,6 +11,7 @@ from thoth.app.disassembler.disassembler import Disassembler
 from thoth.app.utils import load_symbex_yaml_config
 from thoth.app.starknet.starknet import StarkNet
 
+
 def main() -> int:
     """Main function of Thoth
 
@@ -46,7 +47,7 @@ def main() -> int:
             if file:
                 break
         if not file:
-            print("You need to run \"scarb build\" before using the --scarb flag")
+            print('You need to run "scarb build" before using the --scarb flag')
             return 1
         filename = os.path.basename(file).split(".")[0]
     else:

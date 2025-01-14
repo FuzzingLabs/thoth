@@ -3,6 +3,7 @@ from .. import __version__
 from thoth.app.analyzer import all_analyzers
 from thoth.app.analyzer.abstract_analyzer import category_classification_text
 
+
 def parse_args() -> argparse.Namespace:
     """Parse the program arguments
 
@@ -215,7 +216,9 @@ For a specific output format (pdf/svg/png):
     # Use a JSON file
     file = contract_subparser.add_parser("local", parents=[root_parser])
     file.add_argument("--scarb", action="store_true", help="Use the scarb build output")
-    file.add_argument("path", type=argparse.FileType("r"), help="Cairo compiled JSON file", nargs='?')
+    file.add_argument(
+        "path", type=argparse.FileType("r"), help="Cairo compiled JSON file", nargs="?"
+    )
 
     # Download a contract from StarkNet mainnet/goerli
     contract = contract_subparser.add_parser("remote", parents=[root_parser])
