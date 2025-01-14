@@ -34,21 +34,38 @@ def main() -> int:
                 analyzer._print_help()
             return 0
 
-    # Load compiled contract from a file
-    if args.contract == "local":
-        file = args.path.name
-        filename = os.path.basename(args.path.name).split(".")[0]
-    # Load compiled contract from starknet API
+    # Handle the --scarb flag
+    if args.scarb:
+        target_dir = "./target/dev"
+        file_pattern = "compiled_contract_class.json"
+        file = None
+        for root, _, files in os.walk(target_dir):
+            for f in files:
+                if f.endswith(file_pattern):
+                    file = os.path.join(root, f)
+                    break
+            if file:
+                break
+        if not file:
+            print('You need to run "scarb build" before using the --scarb flag')
+            return 1
+        filename = os.path.basename(file).split(".")[0]
     else:
-        try:
-            contract = StarkNet(args.network).get_full_contract(args.address)
-        except Exception as e:
-            print(e)
-            exit()
-        file = tempfile.NamedTemporaryFile().name
-        with open(file, "w") as f:
-            f.write(contract)
-        filename = args.address
+        # Load compiled contract from a file
+        if args.contract == "local":
+            file = args.path.name
+            filename = os.path.basename(args.path.name).split(".")[0]
+        # Load compiled contract from starknet API
+        else:
+            try:
+                contract = StarkNet(args.network).get_full_contract(args.address)
+            except Exception as e:
+                print(e)
+                exit()
+            file = tempfile.NamedTemporaryFile().name
+            with open(file, "w") as f:
+                f.write(contract)
+            filename = args.address
 
     disassembler = Disassembler(file, color=args.color)
 

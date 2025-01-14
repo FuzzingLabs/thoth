@@ -15,7 +15,7 @@ def parse_args() -> argparse.Namespace:
     thoth_examples = """
 Examples:
 
-Disassemble the contract's compilation artifact from a JSON file:    
+Disassemble the contract's compilation artifact from a JSON file:
     thoth local tests/json_files/cairo_array_sum.json -b
 
 Disassemble the contract's compilation artifact from Starknet:
@@ -215,7 +215,10 @@ For a specific output format (pdf/svg/png):
 
     # Use a JSON file
     file = contract_subparser.add_parser("local", parents=[root_parser])
-    file.add_argument("path", type=argparse.FileType("r"), help="Cairo compiled JSON file")
+    file.add_argument("--scarb", action="store_true", help="Use the scarb build output")
+    file.add_argument(
+        "path", type=argparse.FileType("r"), help="Cairo compiled JSON file", nargs="?"
+    )
 
     # Download a contract from StarkNet mainnet/goerli
     contract = contract_subparser.add_parser("remote", parents=[root_parser])
@@ -234,4 +237,12 @@ For a specific output format (pdf/svg/png):
         help="Network of the contract, mainnet or goerli",
     )
 
-    return parser.parse_args()
+    args = parser.parse_args()
+
+    # Ensure that --path is not required when --scarb is provided
+    if args.contract == "local" and args.scarb and args.path is None:
+        args.path = None
+    elif args.contract == "local" and not args.scarb and args.path is None:
+        parser.error("The --path argument is required when --scarb is not provided")
+
+    return args
